@@ -1,12 +1,13 @@
 import React from 'react';
-import logoUrl from '../assets/suerta-logo.svg';
+import { Mail, Globe } from 'lucide-react';
 
 export default function Footer() {
   const styles = {
     footer: {
+      background: 'var(--color-bg)',
+      borderTop: '1px solid rgba(255, 255, 255, 0.05)',
       padding: '4rem 2rem 2rem 2rem',
-      borderTop: '1px solid rgba(255,255,255,0.05)',
-      background: '#111'
+      marginTop: 'auto'
     },
     container: {
       maxWidth: '1200px',
@@ -16,29 +17,35 @@ export default function Footer() {
       alignItems: 'center',
       gap: '2rem'
     },
-    logoContainer: {
+    logo: {
+      fontSize: '2rem',
+      fontWeight: '900',
+      fontFamily: 'var(--font-hero)',
+      letterSpacing: '-1px',
+      color: 'var(--color-text)',
+      textTransform: 'uppercase'
+    },
+    socialLinks: {
       display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      opacity: 0.8,
-      width: '60px'
+      gap: '1.5rem',
+      alignItems: 'center'
     },
-    logoImage: {
-      width: '100%',
-      height: 'auto'
+    iconText: {
+      color: 'var(--color-secondary)',
+      transition: 'var(--transition-fast)',
+      cursor: 'pointer',
+      fontSize: '1.2rem',
+      fontWeight: '600',
+      textDecoration: 'none'
     },
-    links: {
-      display: 'flex',
-      gap: '2rem'
+    icon: {
+      color: 'var(--color-secondary)',
+      transition: 'var(--transition-fast)',
+      cursor: 'pointer'
     },
-    link: {
+    copyright: {
       color: 'var(--color-secondary)',
       fontSize: '0.9rem',
-      transition: 'var(--transition-fast)'
-    },
-    copy: {
-      color: '#444',
-      fontSize: '0.8rem',
       marginTop: '2rem'
     }
   };
@@ -46,17 +53,15 @@ export default function Footer() {
   return (
     <footer style={styles.footer}>
       <div style={styles.container}>
-        <div style={styles.logoContainer}>
-          <img src={logoUrl} alt="Suerta Co" style={styles.logoImage} />
+        <div style={styles.logo}>SUERTA <span style={{ color: 'var(--color-gold)' }}>CO.</span></div>
+        <div style={styles.socialLinks}>
+          <a href="#" style={styles.iconText} onMouseOver={e => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={e => e.currentTarget.style.color = 'var(--color-secondary)'}>IG</a>
+          <a href="#" style={styles.iconText} onMouseOver={e => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={e => e.currentTarget.style.color = 'var(--color-secondary)'}>IN</a>
+          <a href="#" style={styles.iconText} onMouseOver={e => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={e => e.currentTarget.style.color = 'var(--color-secondary)'}>X</a>
+          <a href="mailto:hello@suerta.co" style={styles.icon} onMouseOver={e => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={e => e.currentTarget.style.color = 'var(--color-secondary)'}><Mail size={24} /></a>
         </div>
-        
-        <div style={styles.links}>
-          <a style={styles.link} href="mailto:hello@suerta.co" onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-text)'} onMouseOut={(e) => e.currentTarget.style.color = 'var(--color-secondary)'}>hello@suerta.co</a>
-          <a style={styles.link} href="https://instagram.com/suerta.co" target="_blank" rel="noreferrer" onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-text)'} onMouseOut={(e) => e.currentTarget.style.color = 'var(--color-secondary)'}>@suerta.co</a>
-        </div>
-
-        <div style={styles.copy}>
-          © {new Date().getFullYear()} Suerta Co. Eskişehir kökenli bir teknoloji stüdyosudur. Tüm hakları saklıdır.
+        <div style={styles.copyright}>
+          &copy; {new Date().getFullYear()} Suerta Co. Tüm hakları saklıdır.
         </div>
       </div>
     </footer>

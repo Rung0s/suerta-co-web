@@ -1,5 +1,5 @@
 import React from 'react';
-import { Monitor, Smartphone, ShieldCheck, Code, Zap } from 'lucide-react';
+import { Monitor, Smartphone, ShieldCheck, Code, Zap, Bot, ShoppingCart, LineChart } from 'lucide-react';
 import useScrollReveal from '../hooks/useScrollReveal';
 
 export default function ServicesSection() {
@@ -7,6 +7,9 @@ export default function ServicesSection() {
   const [ref2, isVisible2] = useScrollReveal(0.2);
   const [ref3, isVisible3] = useScrollReveal(0.2);
   const [ref4, isVisible4] = useScrollReveal(0.2);
+  const [ref5, isVisible5] = useScrollReveal(0.2);
+  const [ref6, isVisible6] = useScrollReveal(0.2);
+  const [ref7, isVisible7] = useScrollReveal(0.2);
 
   const styles = {
     section: {
@@ -36,14 +39,12 @@ export default function ServicesSection() {
       margin: '0 auto'
     },
     card: {
-      background: 'rgba(255, 255, 255, 0.02)',
-      border: '1px solid rgba(255, 255, 255, 0.05)',
-      borderRadius: '16px',
       padding: '3rem 2rem',
-      transition: 'var(--transition-smooth)',
       position: 'relative',
       overflow: 'hidden',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      display: 'flex',
+      flexDirection: 'column'
     },
     iconBox: {
       width: '60px',
@@ -105,6 +106,30 @@ export default function ServicesSection() {
       features: ['Suerta Kalkanı Güvenlik Altyapısı', 'Aylık Düzenli Yedekleme', 'Performans Optimizasyonu', 'Sürekli Destek'],
       ref: ref4,
       isVisible: isVisible4
+    },
+    {
+      icon: <Bot size={28} />,
+      title: 'Yapay Zekâ & Otomasyon',
+      desc: 'Tekrarlayan işleri manuel süreçlerden çıkarıyor, işletmenize özel yapay zekâ destekli sistemler kuruyoruz. Müşteri iletişiminden içerik üretimine kadar zaman kaybettiren süreçleri daha hızlı ve ölçülebilir hâle getiriyoruz.',
+      features: ['AI Chatbot ve Akıllı Asistanlar', 'WhatsApp ve Form Otomasyonları', 'Otomatik İçerik Sistemleri', 'İş Akışı Entegrasyonları'],
+      ref: ref5,
+      isVisible: isVisible5
+    },
+    {
+      icon: <ShoppingCart size={28} />,
+      title: 'E-Ticaret & Rezervasyon',
+      desc: 'Müşterilerinizi aracı platformlara yönlendirmeden doğrudan satış ve rezervasyon alabileceğiniz dijital sistemler geliştiriyoruz. Süreci yalnızca estetik değil, dönüşüm odaklı tasarlıyoruz.',
+      features: ['Komisyonsuz Rezervasyon Altyapısı', 'Shopify ve Ödeme Entegrasyonları', 'Mobil Uyumlu Satış Akışları', 'Sipariş ve Rezervasyon Yönetimi'],
+      ref: ref6,
+      isVisible: isVisible6
+    },
+    {
+      icon: <LineChart size={28} />,
+      title: 'Veri, Analitik & Büyüme',
+      desc: 'Dijital sistemlerinizi yalnızca yayına almıyor, nasıl performans gösterdiğini de ölçüyoruz. Kullanıcı davranışlarını analiz ederek satış, rezervasyon ve iletişim dönüşümlerini düzenli olarak geliştiriyoruz.',
+      features: ['Ziyaretçi ve Dönüşüm Takibi', 'Google Analytics ve Pixel Kurulumu', 'Dönüşüm Optimizasyonu', 'Performans ve Büyüme Raporları'],
+      ref: ref7,
+      isVisible: isVisible7
     }
   ];
 
@@ -118,39 +143,35 @@ export default function ServicesSection() {
       <div style={styles.grid}>
         {services.map((service, index) => (
           <div 
-            key={index} 
-            style={{...styles.card, opacity: service.isVisible ? 1 : 0, transform: service.isVisible ? 'translateY(0)' : 'translateY(40px)', transitionDelay: `${index * 0.1}s`}} 
-            className="service-card"
+            key={index}
+            style={{
+              opacity: service.isVisible ? 1 : 0, 
+              transform: service.isVisible ? 'translateY(0)' : 'translateY(60px)', 
+              transition: 'opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1), transform 1.5s cubic-bezier(0.16, 1, 0.3, 1)',
+              transitionDelay: `${index * 0.15}s`,
+              height: '100%'
+            }}
             ref={service.ref}
-            onMouseOver={(e) => {
-              e.currentTarget.style.transform = `translateY(-10px) ${service.isVisible ? '' : ''}`;
-              e.currentTarget.style.background = 'rgba(255, 236, 175, 0.03)';
-              e.currentTarget.style.borderColor = 'rgba(255, 236, 175, 0.2)';
-              e.currentTarget.querySelector('.icon-box').style.background = 'var(--color-gold)';
-              e.currentTarget.querySelector('.icon-box').style.color = '#111';
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.transform = `translateY(0) ${service.isVisible ? '' : ''}`;
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)';
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.05)';
-              e.currentTarget.querySelector('.icon-box').style.background = 'rgba(255, 236, 175, 0.05)';
-              e.currentTarget.querySelector('.icon-box').style.color = 'var(--color-gold)';
-            }}
           >
-            <div style={styles.iconBox} className="icon-box">
-              {service.icon}
+            <div style={styles.card} className="glass-panel service-card-fx">
+              <div style={styles.iconBox} className="icon-box">
+                {service.icon}
+              </div>
+              
+              <div style={{ flex: 1 }}>
+                <h3 style={styles.cardTitle}>{service.title}</h3>
+                <p style={styles.cardDesc}>{service.desc}</p>
+                
+                <ul style={styles.featureList}>
+                  {service.features.map((feature, fIndex) => (
+                    <li key={fIndex} style={styles.featureItem}>
+                      <Zap size={16} color="var(--color-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
-            <h3 style={styles.cardTitle}>{service.title}</h3>
-            <p style={styles.cardDesc}>{service.desc}</p>
-            
-            <ul style={styles.featureList}>
-              {service.features.map((feature, fIndex) => (
-                <li key={fIndex} style={styles.featureItem}>
-                  <Zap size={16} color="var(--color-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
           </div>
         ))}
       </div>

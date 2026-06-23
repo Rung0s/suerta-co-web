@@ -52,17 +52,14 @@ export default function ReferencesSection() {
       transition: 'opacity 0.8s ease-out 0.2s, transform 0.8s ease-out 0.2s'
     },
     card: {
-      width: '240px',
-      height: '140px',
-      background: 'rgba(255,255,255,0.02)',
-      border: '1px solid rgba(255,255,255,0.05)',
-      borderRadius: '12px',
+      width: '280px',
+      height: '160px',
+      padding: '1.5rem',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
       color: 'var(--color-secondary)',
-      transition: 'var(--transition-smooth)',
       cursor: 'pointer',
       position: 'relative',
       overflow: 'hidden'
@@ -262,18 +259,13 @@ export default function ReferencesSection() {
             <div 
               key={refItem.id} 
               style={styles.card}
+              className="glass-panel"
               onClick={() => setSelectedRef(refItem)}
               onMouseOver={(e) => {
-                e.currentTarget.style.borderColor = 'var(--color-gold)';
-                e.currentTarget.style.background = 'rgba(255,236,175,0.05)';
                 e.currentTarget.style.transform = 'translateY(-10px)';
-                e.currentTarget.style.boxShadow = '0 10px 30px rgba(255,236,175,0.1)';
               }}
               onMouseOut={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)';
-                e.currentTarget.style.background = 'rgba(255,255,255,0.02)';
                 e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'none';
               }}
             >
               <div style={{ position: 'absolute', top: '1rem', right: '1rem', fontSize: '0.75rem', color: 'var(--color-gold)', fontWeight: '600', padding: '0.2rem 0.6rem', background: 'rgba(255,236,175,0.1)', borderRadius: '4px' }}>

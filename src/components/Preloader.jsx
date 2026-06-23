@@ -5,10 +5,17 @@ export default function Preloader({ onComplete }) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
+    const hasVisited = sessionStorage.getItem('suertaHasVisited');
+    if (hasVisited) {
+      onComplete();
+      return;
+    }
+
     const timer = setTimeout(() => {
       setIsVisible(false);
-      setTimeout(onComplete, 800); // Wait for fade out animation
-    }, 2500);
+      sessionStorage.setItem('suertaHasVisited', 'true');
+      setTimeout(onComplete, 500); // Wait for faster fade out animation
+    }, 1500); // 1.5s display + 0.5s fade out = 2s total
     return () => clearTimeout(timer);
   }, [onComplete]);
 
@@ -27,10 +34,38 @@ export default function Preloader({ onComplete }) {
       transform: isVisible ? 'scale(1)' : 'scale(1.1)',
       pointerEvents: isVisible ? 'all' : 'none'
     },
-    logoWrapper: {
+    animationContainer: {
+      position: 'relative',
       width: '150px',
+      height: '150px',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    circleTop: {
+      position: 'absolute',
+      width: '60px',
+      height: '60px',
+      borderRadius: '50%',
+      background: 'var(--color-gold)',
+      filter: 'blur(4px)',
+      animation: 'topCircle 2s cubic-bezier(0.65, 0, 0.35, 1) forwards'
+    },
+    circleBottom: {
+      position: 'absolute',
+      width: '60px',
+      height: '60px',
+      borderRadius: '50%',
+      background: 'var(--color-accent)',
+      filter: 'blur(4px)',
+      animation: 'bottomCircle 2s cubic-bezier(0.65, 0, 0.35, 1) forwards'
+    },
+    logoWrapper: {
+      position: 'absolute',
+      width: '120px',
       height: 'auto',
-      animation: 'blobSpin 4s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite alternate'
+      animation: 'logoReveal 2.5s cubic-bezier(0.65, 0, 0.35, 1) forwards',
+      zIndex: 10
     },
     progressContainer: {
       width: '200px',
@@ -53,6 +88,23 @@ export default function Preloader({ onComplete }) {
     <div style={styles.overlay}>
       <style>
         {`
+          @keyframes topCircle {
+            0% { transform: translateY(-50vh) scale(0.5); opacity: 0; }
+            40% { transform: translateY(0) scale(1); opacity: 0.8; }
+            55% { transform: scale(1.5); opacity: 0; }
+            100% { transform: scale(1.5); opacity: 0; }
+          }
+          @keyframes bottomCircle {
+            0% { transform: translateY(50vh) scale(0.5); opacity: 0; }
+            40% { transform: translateY(0) scale(1); opacity: 0.8; }
+            55% { transform: scale(1.5); opacity: 0; }
+            100% { transform: scale(1.5); opacity: 0; }
+          }
+          @keyframes logoReveal {
+            0%, 50% { opacity: 0; transform: scale(0.8); }
+            70% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+          }
           @keyframes loadProgress {
             0% { width: 0%; }
             50% { width: 70%; }
@@ -60,8 +112,12 @@ export default function Preloader({ onComplete }) {
           }
         `}
       </style>
-      <div style={styles.logoWrapper}>
-        <img src={logoUrl} alt="Suerta Co" style={{ width: '100%', height: '100%', filter: 'drop-shadow(0 0 30px rgba(154, 22, 31, 0.5))' }} />
+      <div style={styles.animationContainer}>
+        <div style={styles.circleTop} />
+        <div style={styles.circleBottom} />
+        <div style={styles.logoWrapper}>
+          <img src={logoUrl} alt="Suerta Co" style={{ width: '100%', height: 'auto', filter: 'drop-shadow(0 0 20px rgba(255, 236, 175, 0.4))' }} />
+        </div>
       </div>
       <div style={styles.progressContainer}>
         <div style={styles.progressBar} />

@@ -1,0 +1,847 @@
+# MASTER DESIGN SYSTEM: SUERTA CO.
+
+## Pattern
+- **Name:** Bento Grid Showcase (Liquid Glass)
+- **Conversion Focus:** Scannable value props, high info density.
+- **Color Strategy:** Dark Theme `#0a0a0c`, Gold `#CA8A04` accent, Red `#9A161F` highlight.
+
+## Style: Liquid Glass
+- **Keywords:** Flowing glass, morphing, smooth transitions, fluid effects, translucent, animated blur.
+- **Effects:** Dynamic blur (backdrop-filter: blur(20px)), morphing elements, 400-600ms transition curves.
+
+## Colors
+- `--color-bg`: `#1A1A1D` (Antrasit: Ana Zemin)
+- `--color-text`: `#F2EDE4` (Krem: Ana Metinler)
+- `--color-accent`: `#9A161F` (Bordo: Ana Vurgular)
+- `--color-secondary`: `#5C6370` (Dijital Füme: İkincil Vurgular)
+- `--color-gold`: `#FFECAF` (Soft Sarı: Parlama ve Detaylar)
+- `--color-glass`: `rgba(242, 237, 228, 0.03)`
+- `--color-glass-border`: `rgba(242, 237, 228, 0.05)`
+
+## Typography
+- **Heading:** Bodoni Moda (Luxury, premium)
+- **Body:** Jost (Clean, modern, legible)
+- **CSS Usage:** `font-family: var(--font-heading)` and `var(--font-body)`
+
+## Shared Utilities
+- `.glass-panel`: Applies standard liquid glass effect with blur, translucent background, and subtle white border.
+- `var(--transition-liquid)`: For morphing and hover states.
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Jost:ital,wght@0,100..900;1,100..900&family=Outfit:wght@900&display=swap');
+
+:root {
+  --color-bg: #1A1A1D;
+  --color-text: #F2EDE4;
+  --color-secondary: #5C6370;
+  --color-gold: #FFECAF;
+  --color-accent: #9A161F;
+  --font-heading: 'Bodoni Moda', serif;
+  --font-body: 'Jost', sans-serif;
+  --font-hero: 'Outfit', sans-serif;
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-liquid: 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Spark Utility */
+.text-spark {
+  color: var(--color-gold);
+  text-shadow: 0 0 15px rgba(255, 236, 175, 0.6), 0 0 30px rgba(255, 236, 175, 0.2);
+  display: inline-block;
+  animation: sparkPulse 2s infinite alternate;
+}
+
+/* Animations */
+@keyframes sparkPulse {
+  0% { opacity: 0.8; text-shadow: 0 0 10px rgba(255, 236, 175, 0.4); }
+  100% { opacity: 1; text-shadow: 0 0 25px rgba(255, 236, 175, 0.8), 0 0 50px rgba(255, 236, 175, 0.4); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(2deg); }
+}
+
+@keyframes floatReverse {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(20px) rotate(-2deg); }
+}
+
+@keyframes blobSpin {
+  0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+  33% { transform: translate(-45%, -55%) rotate(120deg) scale(1.1); }
+  66% { transform: translate(-55%, -45%) rotate(240deg) scale(0.9); }
+  100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
+}
+
+@keyframes slideUpFade {
+  0% { opacity: 0; transform: translateY(40px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideRightFade {
+  0% { opacity: 0; transform: translateX(-40px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-slide-up {
+  animation: slideUpFade 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+.animate-slide-right {
+  animation: slideRightFade 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* Enhanced Glassmorphism */
+.glass-card {
+  background: rgba(26, 26, 29, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 236, 175, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transform: skewX(-25deg);
+  transition: 0.7s;
+}
+
+.glass-card:hover::before {
+  left: 150%;
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 236, 175, 0.4);
+  box-shadow: 0 15px 40px 0 rgba(154, 22, 31, 0.3), 0 0 20px 0 rgba(255, 236, 175, 0.1);
+}
+
+/* Bento Grid System */
+.bento-grid {
+  display: grid;
+  gap: 2.5rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .bento-item-featured {
+    grid-column: span 2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+  }
+  .bento-item-featured .icon-box {
+    margin-bottom: 0;
+    width: 80px;
+    height: 80px;
+  }
+}
+
+@media (max-width: 767px) {
+  .bento-item-featured {
+    flex-direction: column;
+  }
+}
+
+/* Service Card Smooth Hover Effects */
+.service-card-fx {
+  height: 100%;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.service-card-fx:hover {
+  transform: translateY(-15px) !important;
+  border-color: rgba(255, 236, 175, 0.4) !important;
+  box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.6), 0 0 30px 0 rgba(255, 236, 175, 0.05) !important;
+}
+.service-card-fx .icon-box {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+.service-card-fx:hover .icon-box {
+  background: var(--color-gold) !important;
+  color: #111 !important;
+  transform: scale(1.1) rotate(5deg) !important;
+}
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import HeroSection from './components/HeroSection';
+import ServicesSection from './components/ServicesSection';
+import AboutSection from './components/AboutSection';
+import ReferencesSection from './components/ReferencesSection';
+import ContactSection from './components/ContactSection';
+import TestimonialsSection from './components/TestimonialsSection';
+import Footer from './components/Footer';
+
+import Preloader from './components/Preloader';
+import CustomCursor from './components/CustomCursor';
+
+function App() {
+  const [loading, setLoading] = React.useState(true);
+
+  return (
+    <Router>
+      <CustomCursor />
+      {loading && <Preloader onComplete={() => setLoading(false)} />}
+      <div style={{ opacity: loading ? 0 : 1, transition: 'opacity 0.5s ease-in', display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <Navbar />
+        <main style={{ flex: 1 }}>
+          <Routes>
+            <Route path="/" element={
+              <>
+                <HeroSection />
+                <ServicesSection />
+                <ReferencesSection />
+                <TestimonialsSection />
+              </>
+            } />
+            <Route path="/about" element={<AboutSection />} />
+            <Route path="/services" element={<ServicesSection />} />
+            <Route path="/references" element={<ReferencesSection />} />
+            <Route path="/contact" element={<ContactSection />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
+  );
+}
+
+export default App;
+import React, { useEffect, useState } from 'react';
+import { ArrowRight, Zap, ChevronRight } from 'lucide-react';
+
+import logoUrl from '../assets/suerta-logo.svg';
+
+export default function HeroSection() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth) * 20 - 10,
+        y: (e.clientY / window.innerHeight) * 20 - 10
+      });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  const styles = {
+    section: {
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: '0 2rem',
+      position: 'relative',
+      overflow: 'hidden',
+      perspective: '1000px'
+    },
+    blob1: {
+      position: 'absolute',
+      width: '800px',
+      height: '800px',
+      background: 'radial-gradient(circle, rgba(154, 22, 31, 0.3) 0%, rgba(26, 26, 29, 0) 70%)',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      zIndex: -2,
+      animation: 'blobSpin 20s linear infinite',
+      pointerEvents: 'none'
+    },
+    blob2: {
+      position: 'absolute',
+      width: '600px',
+      height: '600px',
+      background: 'radial-gradient(circle, rgba(255, 236, 175, 0.1) 0%, rgba(26, 26, 29, 0) 60%)',
+      top: '40%',
+      left: '60%',
+      transform: 'translate(-50%, -50%)',
+      zIndex: -2,
+      animation: 'blobSpin 15s linear infinite reverse',
+      pointerEvents: 'none'
+    },
+    gridOverlay: {
+      position: 'absolute',
+      inset: 0,
+      backgroundSize: '50px 50px',
+      backgroundImage: 'linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px)',
+      zIndex: -1,
+      transform: `translate(${mousePosition.x * 2}px, ${mousePosition.y * 2}px)`,
+      transition: 'transform 0.1s ease-out'
+    },
+    content: {
+      textAlign: 'center',
+      maxWidth: '900px',
+      zIndex: 1,
+      transform: `translate(${mousePosition.x * -1}px, ${mousePosition.y * -1}px)`,
+      transition: 'transform 0.1s ease-out',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center'
+    },
+    logoWrapper: {
+      width: '160px',
+      marginBottom: '2rem',
+      filter: 'drop-shadow(0 0 30px rgba(154, 22, 31, 0.5))'
+    },
+    badge: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '0.75rem',
+      padding: '0.6rem 1.5rem',
+      background: 'linear-gradient(90deg, rgba(255,236,175,0.1), rgba(154,22,31,0.1))',
+      border: '1px solid rgba(255, 236, 175, 0.3)',
+      borderRadius: '50px',
+      fontSize: '0.9rem',
+      fontWeight: '700',
+      marginBottom: '2rem',
+      color: 'var(--color-gold)',
+      boxShadow: '0 0 20px rgba(255,236,175,0.1)',
+      textTransform: 'uppercase',
+      letterSpacing: '1px'
+    },
+    title: {
+      fontSize: 'clamp(5rem, 12vw, 9rem)',
+      lineHeight: '1',
+      marginBottom: '1.5rem',
+      letterSpacing: '-2px',
+      textShadow: '0 20px 40px rgba(0,0,0,0.5)',
+      fontFamily: 'var(--font-hero)',
+      fontWeight: '900',
+      textTransform: 'uppercase'
+    },
+    subtitle: {
+      fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
+      color: 'var(--color-secondary)',
+      marginBottom: '4rem',
+      maxWidth: '700px',
+      margin: '0 auto 4rem auto',
+      fontWeight: '300'
+    },
+    ctaGroup: {
+      display: 'flex',
+      gap: '1.5rem',
+      justifyContent: 'center',
+      flexWrap: 'wrap'
+    },
+    btnPrimary: {
+      position: 'relative',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.5rem',
+      padding: '1.2rem 2.5rem',
+      background: 'linear-gradient(135deg, var(--color-gold), #e0c870)',
+      color: '#111',
+      border: 'none',
+      borderRadius: '8px',
+      fontSize: '1.1rem',
+      fontWeight: '800',
+      cursor: 'pointer',
+      transition: 'var(--transition-smooth)',
+      overflow: 'hidden',
+      boxShadow: '0 10px 30px rgba(255,236,175,0.3)'
+    },
+    btnSecondary: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.5rem',
+      padding: '1.2rem 2.5rem',
+      background: 'rgba(255,255,255,0.03)',
+      color: 'var(--color-text)',
+      border: '1px solid rgba(255,255,255,0.1)',
+      borderRadius: '8px',
+      fontSize: '1.1rem',
+      fontWeight: '600',
+      cursor: 'pointer',
+      transition: 'var(--transition-smooth)',
+      backdropFilter: 'blur(10px)'
+    },
+    floatingCard1: {
+      position: 'absolute',
+      top: '20%',
+      left: '10%',
+      width: '250px',
+      padding: '1.5rem',
+      borderRadius: '16px',
+      animation: 'float 6s ease-in-out infinite',
+      transformStyle: 'preserve-3d',
+      zIndex: 0
+    },
+    floatingCard2: {
+      position: 'absolute',
+      bottom: '25%',
+      right: '10%',
+      width: '280px',
+      padding: '1.5rem',
+      borderRadius: '16px',
+      animation: 'floatReverse 8s ease-in-out infinite',
+      transformStyle: 'preserve-3d',
+      zIndex: 0
+    }
+  };
+
+  return (
+    <section style={styles.section}>
+      <div style={styles.blob1} />
+      <div style={styles.blob2} />
+      <div style={styles.gridOverlay} />
+
+      {/* 3D Floating Elements */}
+      <div style={styles.floatingCard1} className="glass-card animate-slide-right delay-300">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+          <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--color-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Zap size={20} color="#fff" />
+          </div>
+          <div>
+            <div style={{ fontSize: '0.8rem', color: 'var(--color-secondary)' }}>Delivery Speed</div>
+            <div style={{ fontSize: '1.2rem', fontWeight: '800', color: 'var(--color-text)' }}>48 Hours</div>
+          </div>
+        </div>
+        <div style={{ height: '4px', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', overflow: 'hidden' }}>
+          <div style={{ width: '100%', height: '100%', background: 'var(--color-gold)', boxShadow: '0 0 10px var(--color-gold)' }}></div>
+        </div>
+      </div>
+
+      <div style={styles.floatingCard2} className="glass-card animate-slide-up delay-500">
+         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+            <span style={{ fontSize: '0.9rem', color: 'var(--color-secondary)' }}>Vibe Check</span>
+            <span style={{ color: 'var(--color-gold)', fontWeight: '800' }}>100%</span>
+         </div>
+         <div style={{ display: 'flex', gap: '0.5rem' }}>
+            {[1, 2, 3, 4, 5].map(i => (
+              <div key={i} style={{ height: '30px', flex: 1, background: `rgba(255, 236, 175, ${0.2 * i})`, borderRadius: '4px' }}></div>
+            ))}
+         </div>
+      </div>
+
+      <div style={styles.content}>
+        <div style={styles.badge} className="animate-slide-up delay-100">
+          <Zap size={16} />
+          <span>Yeni Nesil Dijital Stüdyo</span>
+        </div>
+        
+        <h1 style={styles.title} className="animate-slide-up delay-200">
+          SUERTA <span className="text-spark">CO.</span>
+        </h1>
+        
+        <p style={styles.subtitle} className="animate-slide-up delay-200">
+          Sıradan dijital varlıkları reddediyoruz. Suerta Co. ile markanızı, kullanıcıları içine çeken ve <strong>iz bırakan bir deneyime</strong> dönüştürün.
+        </p>
+        
+        <div style={styles.ctaGroup} className="animate-slide-up delay-300">
+          <button 
+            style={styles.btnPrimary} 
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'translateY(-5px) scale(1.05)';
+              e.currentTarget.style.boxShadow = '0 20px 40px rgba(255,236,175,0.5)';
+            }} 
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'translateY(0) scale(1)';
+              e.currentTarget.style.boxShadow = '0 10px 30px rgba(255,236,175,0.3)';
+            }}
+          >
+            Vizyonunuzu Paylaşın <ArrowRight size={20} />
+          </button>
+          
+          <button 
+            style={styles.btnSecondary}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
+              e.currentTarget.style.borderColor = 'rgba(255,236,175,0.5)';
+            }} 
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
+              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
+            }}
+          >
+            Kreasyonlarımızı İncele <ChevronRight size={20} />
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+}
+import React from 'react';
+import { Monitor, Smartphone, ShieldCheck, Code, Zap, Bot, ShoppingCart, LineChart } from 'lucide-react';
+import useScrollReveal from '../hooks/useScrollReveal';
+
+export default function ServicesSection() {
+  const [ref1, isVisible1] = useScrollReveal();
+  const [ref2, isVisible2] = useScrollReveal(0.2);
+  const [ref3, isVisible3] = useScrollReveal(0.2);
+  const [ref4, isVisible4] = useScrollReveal(0.2);
+  const [ref5, isVisible5] = useScrollReveal(0.2);
+  const [ref6, isVisible6] = useScrollReveal(0.2);
+  const [ref7, isVisible7] = useScrollReveal(0.2);
+
+  const styles = {
+    section: {
+      padding: '8rem 2rem',
+      position: 'relative',
+      zIndex: 1
+    },
+    header: {
+      textAlign: 'center',
+      marginBottom: '5rem',
+      opacity: isVisible1 ? 1 : 0,
+      transform: isVisible1 ? 'translateY(0)' : 'translateY(40px)',
+      transition: 'opacity 0.8s ease-out, transform 0.8s ease-out'
+    },
+    title: {
+      fontSize: '2.5rem',
+      marginBottom: '1rem'
+    },
+    subtitle: {
+      color: 'var(--color-secondary)'
+    },
+    grid: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+      gap: '2.5rem',
+      maxWidth: '1200px',
+      margin: '0 auto'
+    },
+    card: {
+      padding: '3rem 2rem',
+      position: 'relative',
+      overflow: 'hidden',
+      cursor: 'pointer',
+      display: 'flex',
+      flexDirection: 'column'
+    },
+    iconBox: {
+      width: '60px',
+      height: '60px',
+      borderRadius: '12px',
+      background: 'rgba(255, 236, 175, 0.05)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginBottom: '2rem',
+      color: 'var(--color-gold)',
+      transition: 'var(--transition-smooth)'
+    },
+    cardTitle: {
+      fontSize: '1.5rem',
+      marginBottom: '1rem'
+    },
+    cardDesc: {
+      color: 'var(--color-secondary)',
+      lineHeight: '1.7',
+      marginBottom: '2rem'
+    },
+    featureList: {
+      listStyle: 'none',
+      padding: 0,
+      margin: 0
+    },
+    featureItem: {
+      display: 'flex',
+      alignItems: 'flex-start',
+      gap: '0.75rem',
+      color: 'var(--color-text)',
+      marginBottom: '1rem',
+      fontSize: '0.95rem'
+    }
+  };
+
+  const services = [
+    {
+      icon: <Monitor size={28} />,
+      title: 'Dijital Vitrin (Web & UI/UX)',
+      desc: 'Markanızın ilk intibası her şeydir. Ziyaretçilerinizi müşteriye dönüştüren, estetik açıdan kusursuz, hızlı ve mobil uyumlu kurumsal web siteleri tasarlıyoruz.',
+      features: ['Karanlık Mod & Premium Estetik', 'SEO Uyumlu Altyapı', 'Pürüzsüz Animasyonlar', 'Yüksek Dönüşüm Oranlı (CRO) Tasarım'],
+      ref: ref2,
+      isVisible: isVisible2
+    },
+    {
+      icon: <Code size={28} />,
+      title: 'Operasyonel Yazılım',
+      desc: 'İşletmenizin arka planında dönen karmaşık süreçleri dijitalleştiriyoruz. Restoranlar için QR menüler, oteller için rezervasyon sistemleri veya özel CRM çözümleri üretiyoruz.',
+      features: ['Özel Fonksiyonel Çözümler', 'Sıfır Hata (Zero-Bug) Hedefi', 'Hızlı Entegrasyon', 'Kullanıcı Dostu Paneller'],
+      ref: ref3,
+      isVisible: isVisible3
+    },
+    {
+      icon: <ShieldCheck size={28} />,
+      title: 'Sürekli Gelişim & Güvenlik',
+      desc: 'Teslim ettik bitti demiyoruz. Sisteminizi 7/24 izliyor, siber tehditlere karşı koruyor ve teknolojik yeniliklere anında adapte ederek güncel kalmasını sağlıyoruz.',
+      features: ['Suerta Kalkanı Güvenlik Altyapısı', 'Aylık Düzenli Yedekleme', 'Performans Optimizasyonu', 'Sürekli Destek'],
+      ref: ref4,
+      isVisible: isVisible4
+    },
+    {
+      icon: <Bot size={28} />,
+      title: 'Yapay Zekâ & Otomasyon',
+      desc: 'Tekrarlayan işleri manuel süreçlerden çıkarıyor, işletmenize özel yapay zekâ destekli sistemler kuruyoruz. Müşteri iletişiminden içerik üretimine kadar zaman kaybettiren süreçleri daha hızlı ve ölçülebilir hâle getiriyoruz.',
+      features: ['AI Chatbot ve Akıllı Asistanlar', 'WhatsApp ve Form Otomasyonları', 'Otomatik İçerik Sistemleri', 'İş Akışı Entegrasyonları'],
+      ref: ref5,
+      isVisible: isVisible5
+    },
+    {
+      icon: <ShoppingCart size={28} />,
+      title: 'E-Ticaret & Rezervasyon',
+      desc: 'Müşterilerinizi aracı platformlara yönlendirmeden doğrudan satış ve rezervasyon alabileceğiniz dijital sistemler geliştiriyoruz. Süreci yalnızca estetik değil, dönüşüm odaklı tasarlıyoruz.',
+      features: ['Komisyonsuz Rezervasyon Altyapısı', 'Shopify ve Ödeme Entegrasyonları', 'Mobil Uyumlu Satış Akışları', 'Sipariş ve Rezervasyon Yönetimi'],
+      ref: ref6,
+      isVisible: isVisible6
+    },
+    {
+      icon: <LineChart size={28} />,
+      title: 'Veri, Analitik & Büyüme',
+      desc: 'Dijital sistemlerinizi yalnızca yayına almıyor, nasıl performans gösterdiğini de ölçüyoruz. Kullanıcı davranışlarını analiz ederek satış, rezervasyon ve iletişim dönüşümlerini düzenli olarak geliştiriyoruz.',
+      features: ['Ziyaretçi ve Dönüşüm Takibi', 'Google Analytics ve Pixel Kurulumu', 'Dönüşüm Optimizasyonu', 'Performans ve Büyüme Raporları'],
+      ref: ref7,
+      isVisible: isVisible7
+    }
+  ];
+
+  return (
+    <section id="services" style={styles.section}>
+      <div style={styles.header} ref={ref1}>
+        <h2 style={styles.title}>Neler Yapıyoruz?</h2>
+        <p style={styles.subtitle}>İşletmenizi bir üst seviyeye taşıyacak, uçtan uca dijital çözümler sunuyoruz.</p>
+      </div>
+
+      <div style={styles.grid}>
+        {services.map((service, index) => (
+          <div 
+            key={index}
+            style={{
+              opacity: service.isVisible ? 1 : 0, 
+              transform: service.isVisible ? 'translateY(0)' : 'translateY(60px)', 
+              transition: 'opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1), transform 1.5s cubic-bezier(0.16, 1, 0.3, 1)',
+              transitionDelay: `${index * 0.15}s`,
+              height: '100%'
+            }}
+            ref={service.ref}
+          >
+            <div style={styles.card} className="glass-panel service-card-fx">
+              <div style={styles.iconBox} className="icon-box">
+                {service.icon}
+              </div>
+              
+              <div style={{ flex: 1 }}>
+                <h3 style={styles.cardTitle}>{service.title}</h3>
+                <p style={styles.cardDesc}>{service.desc}</p>
+                
+                <ul style={styles.featureList}>
+                  {service.features.map((feature, fIndex) => (
+                    <li key={fIndex} style={styles.featureItem}>
+                      <Zap size={16} color="var(--color-gold)" style={{ flexShrink: 0, marginTop: '2px' }} />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+import React from 'react';
+import { Quote } from 'lucide-react';
+import useScrollReveal from '../hooks/useScrollReveal';
+
+export default function TestimonialsSection() {
+  const [ref1, isVisible1] = useScrollReveal();
+
+  const testimonials = [
+    {
+      id: 1,
+      name: 'A. P.',
+      company: 'Emsa Hotel',
+      text: 'Otelimizin dijital dönüşümünde Suerta Co. ile çalışmak verdiğimiz en doğru karardı. Komisyonsuz rezervasyon sistemi sayesinde doğrudan satışlarımız %40 arttı. Tasarımın şıklığı ve sistemin hızı gerçekten muazzam.',
+    },
+    {
+      id: 2,
+      name: 'S. S.',
+      company: 'Euromos Art',
+      text: 'Sanat galerimiz için oluşturdukları dijital vitrin tek kelimeyle kusursuz. Eserlerimizi lüks ve zarif bir arayüzle sergilememizi sağladılar. Estetik vizyonları ve teknik becerileri çok üst düzeyde.',
+    },
+    {
+      id: 3,
+      name: 'M. K.',
+      company: 'Nova Mimarlık',
+      text: 'Projelerimizi sergilediğimiz portfolyo sitesi inanılmaz bir hıza ve pürüzsüz animasyonlara kavuştu. Kullanıcı deneyimine (UX) bu kadar odaklanan bir ekiple çalışmak çok keyifliydi.',
+    }
+  ];
+
+  const styles = {
+    section: {
+      padding: '8rem 2rem',
+      position: 'relative',
+      zIndex: 1,
+      background: 'rgba(154, 22, 31, 0.01)',
+      borderTop: '1px solid rgba(255,255,255,0.02)'
+    },
+    header: {
+      textAlign: 'center',
+      marginBottom: '4rem',
+      opacity: isVisible1 ? 1 : 0,
+      transform: isVisible1 ? 'translateY(0)' : 'translateY(40px)',
+      transition: 'opacity 0.8s ease-out, transform 0.8s ease-out'
+    },
+    title: {
+      fontSize: '2.5rem',
+      marginBottom: '1rem'
+    },
+    grid: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+      gap: '2.5rem',
+      maxWidth: '1200px',
+      margin: '0 auto'
+    },
+    card: {
+      padding: '3rem 2rem',
+      position: 'relative',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      transition: 'var(--transition-liquid)'
+    },
+    quoteIcon: {
+      color: 'var(--color-gold)',
+      opacity: 0.3,
+      marginBottom: '1.5rem'
+    },
+    text: {
+      fontSize: '1.05rem',
+      lineHeight: '1.8',
+      color: 'var(--color-text)',
+      marginBottom: '2rem',
+      fontStyle: 'italic'
+    },
+    authorBox: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '1rem'
+    },
+    avatar: {
+      width: '45px',
+      height: '45px',
+      borderRadius: '50%',
+      background: 'rgba(255,236,175,0.1)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: 'var(--color-gold)',
+      fontWeight: '700',
+      fontSize: '1.1rem'
+    },
+    authorName: {
+      fontWeight: '700',
+      fontSize: '1rem'
+    },
+    authorCompany: {
+      color: 'var(--color-gold)',
+      fontSize: '0.85rem',
+      textTransform: 'uppercase',
+      letterSpacing: '1px'
+    }
+  };
+
+  return (
+    <section style={styles.section}>
+      <div style={styles.header} ref={ref1}>
+        <h2 style={styles.title}>Ortaklarımızın Gözünden</h2>
+        <p style={{ color: 'var(--color-secondary)' }}>Birlikte büyüdüğümüz ve dijital sahnede başarıya ulaştırdığımız markalar.</p>
+      </div>
+
+      <div style={styles.grid}>
+        {testimonials.map((t, i) => (
+          <div 
+            key={t.id}
+            className="glass-panel"
+            style={{
+              ...styles.card,
+              opacity: isVisible1 ? 1 : 0,
+              transform: isVisible1 ? 'translateY(0)' : 'translateY(40px)',
+              transition: `opacity 1s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.15}s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.15}s, box-shadow 0.6s ease, border-color 0.6s ease`
+            }}
+          >
+            <div>
+              <Quote size={32} style={styles.quoteIcon} />
+              <p style={styles.text}>"{t.text}"</p>
+            </div>
+            <div style={styles.authorBox}>
+              <div style={styles.avatar}>{t.name.charAt(0)}</div>
+              <div>
+                <div style={styles.authorName}>{t.name}</div>
+                <div style={styles.authorCompany}>{t.company}</div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}

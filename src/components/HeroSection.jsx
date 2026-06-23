@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, Zap, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import MagneticButton from './MagneticButton';
+import StaggeredText from './StaggeredText';
 
 import logoUrl from '../assets/suerta-logo.svg';
 
@@ -97,9 +100,11 @@ export default function HeroSection() {
       fontSize: 'clamp(5rem, 12vw, 9rem)',
       lineHeight: '1',
       marginBottom: '1.5rem',
-      letterSpacing: '-4px',
+      letterSpacing: '-2px',
       textShadow: '0 20px 40px rgba(0,0,0,0.5)',
-      fontFamily: '"Inter", sans-serif'
+      fontFamily: 'var(--font-hero)',
+      fontWeight: '900',
+      textTransform: 'uppercase'
     },
     subtitle: {
       fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
@@ -171,10 +176,14 @@ export default function HeroSection() {
     }
   };
 
-  return (
+    return (
     <section style={styles.section}>
-      <div style={styles.blob1} />
-      <div style={styles.blob2} />
+      <div style={{ position: 'absolute', inset: 0, transform: `translate(${mousePosition.x * 4}px, ${mousePosition.y * 4}px)`, transition: 'transform 0.1s ease-out', pointerEvents: 'none', zIndex: -2 }}>
+        <div style={styles.blob1} />
+      </div>
+      <div style={{ position: 'absolute', inset: 0, transform: `translate(${mousePosition.x * -5}px, ${mousePosition.y * -5}px)`, transition: 'transform 0.1s ease-out', pointerEvents: 'none', zIndex: -2 }}>
+        <div style={styles.blob2} />
+      </div>
       <div style={styles.gridOverlay} />
 
       {/* 3D Floating Elements */}
@@ -212,7 +221,7 @@ export default function HeroSection() {
         </div>
         
         <h1 style={styles.title} className="animate-slide-up delay-200">
-          SUERTA <span className="text-spark">CO.</span>
+          <StaggeredText text="SUERTA CO." delay={0.2} />
         </h1>
         
         <p style={styles.subtitle} className="animate-slide-up delay-200">
@@ -220,33 +229,23 @@ export default function HeroSection() {
         </p>
         
         <div style={styles.ctaGroup} className="animate-slide-up delay-300">
-          <button 
-            style={styles.btnPrimary} 
-            onMouseOver={(e) => {
-              e.currentTarget.style.transform = 'translateY(-5px) scale(1.05)';
-              e.currentTarget.style.boxShadow = '0 20px 40px rgba(255,236,175,0.5)';
-            }} 
-            onMouseOut={(e) => {
-              e.currentTarget.style.transform = 'translateY(0) scale(1)';
-              e.currentTarget.style.boxShadow = '0 10px 30px rgba(255,236,175,0.3)';
-            }}
-          >
-            Vizyonunuzu Paylaşın <ArrowRight size={20} />
-          </button>
+          <Link to="/contact" style={{ textDecoration: 'none' }}>
+            <MagneticButton 
+              style={styles.btnPrimary} 
+              className="magnetic-btn-primary"
+            >
+              Vizyonunuzu Paylaşın <ArrowRight size={20} />
+            </MagneticButton>
+          </Link>
           
-          <button 
-            style={styles.btnSecondary}
-            onMouseOver={(e) => {
-              e.currentTarget.style.background = 'rgba(255,255,255,0.1)';
-              e.currentTarget.style.borderColor = 'rgba(255,236,175,0.5)';
-            }} 
-            onMouseOut={(e) => {
-              e.currentTarget.style.background = 'rgba(255,255,255,0.03)';
-              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)';
-            }}
-          >
-            Kreasyonlarımızı İncele <ChevronRight size={20} />
-          </button>
+          <Link to="/services" style={{ textDecoration: 'none' }}>
+            <MagneticButton 
+              style={styles.btnSecondary}
+              className="magnetic-btn-secondary"
+            >
+              Kreasyonlarımızı İncele <ChevronRight size={20} />
+            </MagneticButton>
+          </Link>
         </div>
       </div>
     </section>

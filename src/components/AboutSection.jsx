@@ -1,5 +1,4 @@
 import React from 'react';
-import { Github, Linkedin, Instagram } from 'lucide-react';
 import useScrollReveal from '../hooks/useScrollReveal';
 
 export default function AboutSection() {
@@ -39,15 +38,11 @@ export default function AboutSection() {
       display: 'block'
     },
     contentBox: {
-      background: 'rgba(26, 26, 29, 0.4)',
-      backdropFilter: 'blur(20px)',
-      border: '1px solid rgba(255, 236, 175, 0.1)',
       borderRadius: '16px',
       padding: '4rem',
       opacity: isVisible2 ? 1 : 0,
       transform: isVisible2 ? 'translateY(0)' : 'translateY(40px)',
-      transition: 'opacity 0.8s ease-out, transform 0.8s ease-out',
-      boxShadow: '0 20px 40px rgba(0,0,0,0.2)'
+      transition: 'opacity 0.8s ease-out, transform 0.8s ease-out'
     },
     paragraph: {
       fontSize: '1.2rem',
@@ -69,12 +64,9 @@ export default function AboutSection() {
       transition: 'opacity 0.8s ease-out, transform 0.8s ease-out'
     },
     memberCard: {
-      background: 'rgba(255, 255, 255, 0.02)',
-      border: '1px solid rgba(255, 255, 255, 0.05)',
       borderRadius: '16px',
       padding: '2.5rem',
       textAlign: 'center',
-      transition: 'var(--transition-smooth)',
       position: 'relative',
       overflow: 'hidden'
     },
@@ -146,22 +138,7 @@ export default function AboutSection() {
   return (
     <section id="about" style={styles.section}>
       <div style={styles.container}>
-        <div style={styles.header} ref={ref1}>
-          <span style={styles.subtitle}>Biz Kimiz?</span>
-          <h2 style={styles.title}>Geleneksel Ajans Yapısını Reddediyoruz</h2>
-        </div>
 
-        <div style={styles.contentBox} ref={ref2}>
-          <p style={styles.paragraph}>
-            Suerta Co., Eskişehir kökenli butik bir teknoloji ve tasarım stüdyosudur. İsmini İspanyolcada "Şans" anlamına gelen <i>Suerte</i> kelimesinden alan markamız, çalıştığı her işletme için dijital dünyanın şans kapılarını aralamayı misyon edinir.
-          </p>
-          <p style={styles.paragraph}>
-            Bizler sadece kod yazan veya tasarım yapan bir ekip değiliz. <span style={styles.highlight}>Markaların ruhunu dijital ortama aktaran mimarlarız.</span> Bürokratik süreçlerle, gereksiz teknik jargonlarla vakit kaybettirmiyoruz. Temel amacımız; işletmelerin ihtiyaç duyduğu o "wow" etkisini, kusursuz çalışan bir altyapı ve satışa dönüştüren stratejilerle harmanlamaktır.
-          </p>
-          <p style={styles.paragraph} style={{...styles.paragraph, marginBottom: 0}}>
-            Aylarca süren toplantılar yerine, doğrudan sahada yanınızda yer alıyor, ihtiyacınızı analiz ediyor ve en etkili dijital silahınızı (Web, Yazılım, E-ticaret) hızla üreterek markanızı bir üst seviyeye taşıyoruz.
-          </p>
-        </div>
 
         <div ref={ref3} id="team" style={{ paddingTop: '2rem' }}>
           <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
@@ -173,14 +150,7 @@ export default function AboutSection() {
               <div 
                 key={idx} 
                 style={styles.memberCard}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-10px)';
-                  e.currentTarget.style.borderColor = 'rgba(255,236,175,0.2)';
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.05)';
-                }}
+                className="glass-panel service-card-fx"
               >
                 <div style={styles.avatarPlaceholder}>{member.initial}</div>
                 <h4 style={styles.memberName}>{member.name}</h4>
@@ -188,9 +158,9 @@ export default function AboutSection() {
                 <p style={styles.memberDesc}>{member.desc}</p>
                 
                 <div style={styles.socialLinks}>
-                  <a href="#" style={styles.socialIcon} onMouseOver={e => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={e => e.currentTarget.style.color = 'var(--color-secondary)'}><Github size={20} /></a>
-                  <a href="#" style={styles.socialIcon} onMouseOver={e => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={e => e.currentTarget.style.color = 'var(--color-secondary)'}><Linkedin size={20} /></a>
-                  <a href="#" style={styles.socialIcon} onMouseOver={e => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={e => e.currentTarget.style.color = 'var(--color-secondary)'}><Instagram size={20} /></a>
+                  <a href="#" style={styles.socialIcon} onMouseOver={e => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={e => e.currentTarget.style.color = 'var(--color-secondary)'}>GitHub</a>
+                  <a href="#" style={styles.socialIcon} onMouseOver={e => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={e => e.currentTarget.style.color = 'var(--color-secondary)'}>LinkedIn</a>
+                  <a href="#" style={styles.socialIcon} onMouseOver={e => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={e => e.currentTarget.style.color = 'var(--color-secondary)'}>Instagram</a>
                 </div>
               </div>
             ))}

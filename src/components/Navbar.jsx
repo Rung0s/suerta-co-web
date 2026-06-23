@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 import logoUrl from '../assets/suerta-logo.svg';
 
@@ -21,89 +22,100 @@ export default function Navbar() {
       top: 0,
       left: 0,
       right: 0,
-      zIndex: 100,
-      padding: '1rem 2rem',
+      height: '80px',
       display: 'flex',
-      justifyContent: 'space-between',
       alignItems: 'center',
-      transition: 'var(--transition-smooth)',
-      background: isScrolled ? 'rgba(26, 26, 29, 0.9)' : 'transparent',
-      backdropFilter: isScrolled ? 'blur(15px)' : 'none',
-      borderBottom: isScrolled ? '1px solid rgba(255, 236, 175, 0.05)' : '1px solid transparent'
+      justifyContent: 'space-between',
+      padding: '0 5%',
+      zIndex: 100,
+      background: isScrolled ? 'rgba(10, 10, 12, 0.8)' : 'transparent',
+      backdropFilter: isScrolled ? 'blur(20px)' : 'none',
+      borderBottom: isScrolled ? '1px solid rgba(255,255,255,0.05)' : 'none',
+      transition: 'var(--transition-smooth)'
     },
     logoContainer: {
       display: 'flex',
       alignItems: 'center',
-      gap: '0.75rem',
-      cursor: 'pointer'
-    },
-    logoIcon: {
-      position: 'relative',
-      width: '45px',
-      height: '45px',
-      transition: 'transform 0.3s ease',
-      filter: 'drop-shadow(0 0 10px rgba(154, 22, 31, 0.3))'
-    },
-    logoImage: {
-      width: '100%',
-      height: '100%',
-      objectFit: 'contain'
+      gap: '1rem',
+      cursor: 'pointer',
+      textDecoration: 'none'
     },
     logoText: {
       fontSize: '1.5rem',
-      fontWeight: '800',
-      letterSpacing: '-0.5px'
+      fontWeight: '900',
+      letterSpacing: '2px',
+      color: 'var(--color-text)',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.5rem'
     },
     desktopMenu: {
       display: 'flex',
-      gap: '2.5rem',
-      alignItems: 'center'
+      alignItems: 'center',
+      gap: '2.5rem'
     },
     link: {
+      color: 'var(--color-text)',
+      textDecoration: 'none',
       fontSize: '0.9rem',
       fontWeight: '600',
-      transition: 'var(--transition-fast)',
-      cursor: 'pointer'
+      letterSpacing: '1px',
+      textTransform: 'uppercase',
+      transition: 'var(--transition-fast)'
     },
     ctaButton: {
-      padding: '0.6rem 1.2rem',
-      background: 'var(--color-accent)',
+      padding: '0.8rem 1.8rem',
+      background: 'transparent',
       color: 'var(--color-text)',
-      border: 'none',
-      borderRadius: '4px',
+      border: '1px solid rgba(255, 236, 175, 0.3)',
+      borderRadius: '50px',
+      fontSize: '0.9rem',
       fontWeight: '600',
+      letterSpacing: '1px',
+      textTransform: 'uppercase',
       cursor: 'pointer',
-      transition: 'var(--transition-fast)'
+      transition: 'var(--transition-smooth)',
+      display: 'inline-block',
+      textDecoration: 'none'
     }
   };
 
   return (
     <nav style={navStyles.nav}>
-      <div 
+      <Link 
+        to="/"
         style={navStyles.logoContainer}
         onMouseOver={(e) => e.currentTarget.querySelector('img').style.transform = 'scale(1.1) rotate(5deg)'}
-        onMouseOut={(e) => e.currentTarget.querySelector('img').style.transform = 'scale(1) rotate(0)'}
+        onMouseOut={(e) => e.currentTarget.querySelector('img').style.transform = 'scale(1) rotate(0deg)'}
       >
-        <div style={navStyles.logoIcon}>
-          <img src={logoUrl} alt="Suerta Co Logo" style={navStyles.logoImage} />
+        <img src={logoUrl} alt="Suerta Logo" style={{ width: '40px', height: 'auto', transition: 'var(--transition-smooth)' }} />
+        <div style={navStyles.logoText}>
+          SUERTA <span style={{ color: 'var(--color-gold)' }}>CO.</span>
         </div>
-        <span style={{ fontSize: '1.5rem', fontWeight: '900', letterSpacing: '-0.5px' }}>SUERTA CO.</span>
-      </div>
+      </Link>
 
       {/* Desktop Menu */}
       <div style={navStyles.desktopMenu} className="desktop-menu">
-        <a style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} href="#about">Hakkımızda</a>
-        <a style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} href="#services">Hizmetler</a>
-        <a style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} href="#references">Referanslar</a>
-        <a style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} href="#team">Ekibimiz</a>
-        <a 
-          style={{...navStyles.ctaButton, textDecoration: 'none', display: 'inline-block'}} 
-          href="#contact"
-          onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'} 
-          onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+        <Link style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} to="/about">Hakkımızda</Link>
+        <Link style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} to="/services">Hizmetler</Link>
+        <Link style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} to="/references">Referanslar</Link>
+        <Link style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} to="/about#team">Ekibimiz</Link>
+        <Link 
+          style={navStyles.ctaButton} 
+          to="/contact"
+          onMouseOver={(e) => {
+            e.currentTarget.style.background = 'var(--color-gold)';
+            e.currentTarget.style.color = '#111';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+          }} 
+          onMouseOut={(e) => {
+            e.currentTarget.style.background = 'transparent';
+            e.currentTarget.style.color = 'var(--color-text)';
+            e.currentTarget.style.transform = 'translateY(0)';
+          }}
         >
           Bize Ulaşın
-        </a>
+        </Link>
       </div>
     </nav>
   );

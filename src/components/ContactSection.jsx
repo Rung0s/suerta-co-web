@@ -1,6 +1,7 @@
 import React from 'react';
-import { Mail, MapPin, Instagram, ArrowRight } from 'lucide-react';
+import { Mail, MapPin, ArrowRight } from 'lucide-react';
 import useScrollReveal from '../hooks/useScrollReveal';
+import MagneticButton from './MagneticButton';
 
 export default function ContactSection() {
   const [ref1, isVisible1] = useScrollReveal();
@@ -58,14 +59,11 @@ export default function ContactSection() {
       color: 'var(--color-gold)'
     },
     formBlock: {
-      background: 'rgba(255, 255, 255, 0.02)',
-      border: '1px solid rgba(255, 255, 255, 0.05)',
       borderRadius: '24px',
       padding: '3rem',
       opacity: isVisible2 ? 1 : 0,
       transform: isVisible2 ? 'translateX(0)' : 'translateX(40px)',
-      transition: 'opacity 0.8s ease-out 0.2s, transform 0.8s ease-out 0.2s',
-      boxShadow: '0 20px 40px rgba(0,0,0,0.2)'
+      transition: 'opacity 0.8s ease-out 0.2s, transform 0.8s ease-out 0.2s'
     },
     inputGroup: {
       marginBottom: '1.5rem'
@@ -147,7 +145,7 @@ export default function ContactSection() {
               hello@suerta.co
             </a>
             <a href="https://instagram.com/suerta.co" target="_blank" rel="noreferrer" style={styles.contactItem} onMouseOver={e => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={e => e.currentTarget.style.color = 'var(--color-text)'}>
-              <div style={styles.iconBox}><Instagram size={20} /></div>
+              <div style={styles.iconBox}>IG</div>
               @suerta.co
             </a>
             <div style={styles.contactItem}>
@@ -171,19 +169,12 @@ export default function ContactSection() {
               <label style={styles.label}>Projenizden Bahsedin</label>
               <textarea style={styles.textarea} className="contact-input" placeholder="Hayalinizdeki projeyi kısaca anlatın..."></textarea>
             </div>
-            <button 
+            <MagneticButton 
               style={styles.submitBtn}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 10px 20px rgba(255,236,175,0.3)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}
+              className="magnetic-btn-primary"
             >
               Mesaj Gönder <ArrowRight size={20} />
-            </button>
+            </MagneticButton>
           </form>
         </div>
       </div>
