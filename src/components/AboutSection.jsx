@@ -171,7 +171,7 @@ export default function AboutSection() {
             Sıradanlığa Karşı <span style={styles.visionHighlight}>Estetik Bir İsyan</span>
           </h2>
           <p style={styles.visionText}>
-            Dijital dünya, birbirinin kopyası sıkıcı şablonlar ve ruhsuz tasarımlarla dolu. Biz <strong>Suerta Co.</strong> olarak bu gürültünün içinde piyasadaki o büyük estetik açığı kapatmak için varız. Sadece kod yazmıyoruz; markanızın karakterini yansıtan, kullanıcıyı içine çeken "Site of the Year" (SOTY) standartlarında dijital sanat eserleri inşa ediyoruz. Amacımız ziyaretçilerinizi etkilemek değil, onlarda kalıcı bir iz bırakmak.
+            Dijital dünya, birbirinin kopyası sıkıcı şablonlar ve ruhsuz tasarımlarla dolu. Biz <strong>Suerta Co.</strong> olarak bu gürültünün içinde piyasadaki o büyük estetik açığı kapatmak için varız. Sadece kod yazmıyoruz; markanızın karakterini yansıtan, kullanıcıyı içine çeken dijital sanat eserleri inşa ediyoruz. Amacımız ziyaretçilerinizi etkilemek değil, onlarda kalıcı bir iz bırakmak.
           </p>
         </div>
 
@@ -180,10 +180,6 @@ export default function AboutSection() {
           <div style={styles.statBox}>
             <div style={styles.statNumber}>100%</div>
             <div style={styles.statLabel}>Bespoke Tasarım</div>
-          </div>
-          <div style={styles.statBox}>
-            <div style={styles.statNumber}>SOTY</div>
-            <div style={styles.statLabel}>Estetik Vizyon</div>
           </div>
           <div style={styles.statBox}>
             <div style={styles.statLabel} style={{...styles.statLabel, marginTop: '2rem'}}>Şablon Yok. Kopyalama Yok. Sadece Saf Yaratıcılık.</div>

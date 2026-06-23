@@ -98,7 +98,6 @@ export default function HeroSection() {
       lineHeight: '1',
       marginBottom: '1.5rem',
       letterSpacing: '-2px',
-      textShadow: '0 20px 40px rgba(0,0,0,0.5)',
       fontFamily: 'var(--font-hero)',
       fontWeight: '900',
       textTransform: 'uppercase'

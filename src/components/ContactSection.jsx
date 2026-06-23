@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Mail, MapPin, ArrowRight } from 'lucide-react';
 import useScrollReveal from '../hooks/useScrollReveal';
 import MagneticButton from './MagneticButton';
@@ -6,6 +6,37 @@ import MagneticButton from './MagneticButton';
 export default function ContactSection() {
   const [ref1, isVisible1] = useScrollReveal();
   const [ref2, isVisible2] = useScrollReveal(0.2);
+  const [submitStatus, setSubmitStatus] = useState('idle');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitStatus('loading');
+    
+    const form = e.target;
+    const formData = new FormData(form);
+
+    try {
+      // AJAX ile gönderim yapıyoruz (sayfa değişmesin diye /ajax/ kullanılıyor)
+      const response = await fetch("https://formsubmit.co/ajax/suerta.info@gmail.com", {
+        method: "POST",
+        headers: { 
+            'Accept': 'application/json'
+        },
+        body: formData
+      });
+      
+      if (response.ok) {
+        setSubmitStatus('success');
+        form.reset();
+      } else {
+        setSubmitStatus('idle');
+        alert("Bir hata oluştu, lütfen tekrar deneyin.");
+      }
+    } catch (error) {
+      setSubmitStatus('idle');
+      alert("Bağlantı hatası oluştu, lütfen tekrar deneyin.");
+    }
+  };
 
   const styles = {
     section: {
@@ -169,27 +200,53 @@ export default function ContactSection() {
 
         {/* Sağ Kolon - Form */}
         <div style={styles.formBlock} className="form-block" ref={ref2}>
-          <form onSubmit={e => e.preventDefault()}>
-            <div style={styles.inputGroup}>
-              <input type="text" style={styles.input} className="contact-input" placeholder="Adınız Soyadınız" />
+          {submitStatus === 'success' ? (
+            <div style={{ textAlign: 'center', padding: '3rem 1rem' }}>
+              <div style={{ width: '80px', height: '80px', borderRadius: '50%', background: 'var(--color-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 2rem auto' }}>
+                <Mail size={40} color="#fff" />
+              </div>
+              <h3 style={{ fontSize: '2rem', fontFamily: 'var(--font-heading)', marginBottom: '1rem' }}>Mesajınız İletildi!</h3>
+              <p style={{ color: 'var(--color-secondary)', fontSize: '1.1rem' }}>En kısa sürede sizinle iletişime geçeceğiz. Kahveler hazır!</p>
+              <button 
+                onClick={() => setSubmitStatus('idle')}
+                style={{...styles.submitBtn, width: 'auto', padding: '1rem 2rem', margin: '3rem auto 0 auto', background: 'transparent', border: '1px solid var(--color-gold)'}}
+              >
+                Yeni Mesaj Gönder
+              </button>
             </div>
-            <div style={styles.inputGroup}>
-              <input type="email" style={styles.input} className="contact-input" placeholder="E-posta Adresiniz" />
-            </div>
-            <div style={styles.inputGroup}>
-              <textarea 
-                style={{...styles.input, minHeight: '100px', resize: 'vertical'}} 
-                className="contact-input" 
-                placeholder="Projenizden bahsedin..."
-              />
-            </div>
-            <MagneticButton 
-              style={styles.submitBtn}
-              className="contact-btn"
-            >
-              Mesajı Gönder <ArrowRight size={20} />
-            </MagneticButton>
-          </form>
+          ) : (
+            <form onSubmit={handleSubmit}>
+              {/* Konu Başlığı */}
+              <input type="hidden" name="_subject" value="Suerta Co. Websitesi'nden Yeni Bir Mesaj Var!" />
+              {/* Captcha Kapatma */}
+              <input type="hidden" name="_captcha" value="false" />
+              {/* E-posta Şablonu */}
+              <input type="hidden" name="_template" value="table" />
+              
+              <div style={styles.inputGroup}>
+                <input type="text" name="name" style={styles.input} className="contact-input" placeholder="Adınız Soyadınız" required />
+              </div>
+              <div style={styles.inputGroup}>
+                <input type="email" name="email" style={styles.input} className="contact-input" placeholder="E-posta Adresiniz" required />
+              </div>
+              <div style={styles.inputGroup}>
+                <textarea 
+                  name="message"
+                  style={{...styles.input, minHeight: '100px', resize: 'vertical'}} 
+                  className="contact-input" 
+                  placeholder="Projenizden bahsedin..."
+                  required
+                />
+              </div>
+              <MagneticButton 
+                style={{...styles.submitBtn, opacity: submitStatus === 'loading' ? 0.7 : 1, cursor: submitStatus === 'loading' ? 'not-allowed' : 'pointer'}}
+                className="contact-btn"
+                disabled={submitStatus === 'loading'}
+              >
+                {submitStatus === 'loading' ? 'Gönderiliyor...' : 'Mesajı Gönder'} <ArrowRight size={20} />
+              </MagneticButton>
+            </form>
+          )}
         </div>
 
       </div>

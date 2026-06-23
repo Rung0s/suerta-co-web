@@ -65,7 +65,8 @@ export default function Preloader({ onComplete }) {
       width: '120px',
       height: 'auto',
       animation: 'logoReveal 2.5s cubic-bezier(0.65, 0, 0.35, 1) forwards',
-      zIndex: 10
+      zIndex: 10,
+      transform: 'translateX(-20px)'
     },
     progressContainer: {
       width: '200px',
@@ -116,14 +117,14 @@ export default function Preloader({ onComplete }) {
         <div style={styles.circleTop} />
         <div style={styles.circleBottom} />
         <div style={styles.logoWrapper}>
-          <SuertaLogo size={180} animated={true} />
+          <SuertaLogo size={140} animated={true} />
         </div>
       </div>
       <div style={styles.progressContainer}>
         <div style={styles.progressBar} />
       </div>
       <div style={{ marginTop: '1rem', color: 'var(--color-gold)', fontSize: '0.8rem', letterSpacing: '3px', textTransform: 'uppercase' }} className="animate-pulse">
-        DİJİTAL DENEYİM HAZIRLANIYOR...
+        MARKANIZ PROFESYONELLEŞİYOR...
       </div>
     </div>
   );

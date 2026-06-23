@@ -90,7 +90,7 @@ export default function Navbar() {
         onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
         onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
       >
-        <SuertaLogo size={120} animated={false} />
+        <SuertaLogo size={100} animated={false} />
       </Link>
 
       {/* Desktop Menu */}
