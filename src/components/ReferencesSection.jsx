@@ -1,116 +1,223 @@
-import React, { useState, useEffect } from 'react';
-import { X, ExternalLink, ChevronRight } from 'lucide-react';
-import useScrollReveal from '../hooks/useScrollReveal';
+import React, { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { X } from 'lucide-react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function ReferencesSection() {
-  const [ref, isVisible] = useScrollReveal();
-  const [selectedRef, setSelectedRef] = useState(null);
+  const containerRef = useRef(null);
+  const imagesRef = useRef([]);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [hoveredProject, setHoveredProject] = useState(null);
 
-  // Prevent background scrolling when modal is open
+  const references = [
+    { 
+      id: 1, 
+      name: "Emsa Otel", 
+      desc: "Otel Rezervasyon Sistemi",
+      service: "Web Tasarım & Yazılım",
+      image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&q=80",
+      link: "https://emsaotel.com.tr"
+    },
+    { 
+      id: 2, 
+      name: "Roasters", 
+      desc: "QR Menü & Masa Sipariş",
+      service: "Operasyonel Altyapı",
+      image: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=1600&q=80",
+      link: "https://roasters.menu"
+    },
+    { 
+      id: 3, 
+      name: "GastroPub", 
+      desc: "Kurumsal Web & Etkinlik",
+      service: "Dijital Vitrin",
+      image: "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1600&q=80",
+      link: "https://gastropubesk.com"
+    },
+    { 
+      id: 4, 
+      name: "Nova Mimarlık", 
+      desc: "Portfolyo ve UI/UX",
+      service: "Tasarım & Geliştirme",
+      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80",
+      link: "https://novamimarlik.com"
+    }
+  ];
+
+  // Modal açıkken arkadaki sayfanın kaymasını engelle
   useEffect(() => {
-    if (selectedRef) {
+    if (selectedProject) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [selectedRef]);
+    return () => { document.body.style.overflow = 'unset'; }
+  }, [selectedProject]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      imagesRef.current.forEach((img) => {
+        if (!img) return;
+        
+        gsap.fromTo(img, 
+          { yPercent: -15 },
+          {
+            yPercent: 15,
+            ease: "none",
+            scrollTrigger: {
+              trigger: img.parentElement,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true
+            }
+          }
+        );
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const styles = {
     section: {
-      padding: '8rem 2rem',
-      background: 'rgba(154, 22, 31, 0.02)',
-      borderTop: '1px solid rgba(255,255,255,0.02)',
-      borderBottom: '1px solid rgba(255,255,255,0.02)',
-      position: 'relative'
+      padding: '10rem 0',
+      background: '#0a0a0c',
+      position: 'relative',
+      zIndex: 1
     },
     header: {
-      textAlign: 'center',
-      marginBottom: '4rem',
-      opacity: isVisible ? 1 : 0,
-      transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
-      transition: 'opacity 0.8s ease-out, transform 0.8s ease-out'
+      padding: '0 5vw',
+      marginBottom: '8rem'
     },
     title: {
-      fontSize: '2.5rem',
-      marginBottom: '1rem'
+      fontSize: 'clamp(3rem, 6vw, 6rem)',
+      fontFamily: 'var(--font-heading)',
+      color: 'var(--color-text)',
+      margin: 0,
+      lineHeight: '1'
     },
     subtitle: {
+      color: 'var(--color-gold)',
+      fontSize: '1.2rem',
+      marginTop: '1rem',
+      letterSpacing: '2px',
+      textTransform: 'uppercase'
+    },
+    projectContainer: {
+      width: '100%',
+      height: '90vh',
+      position: 'relative',
+      marginBottom: '15rem',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    },
+    imageWrapper: {
+      width: '80%',
+      height: '100%',
+      position: 'relative',
+      overflow: 'hidden',
+      borderRadius: '24px',
+      cursor: 'pointer'
+    },
+    parallaxImage: {
+      width: '100%',
+      height: '130%',
+      position: 'absolute',
+      top: '-15%',
+      left: 0,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      filter: 'brightness(0.6)',
+      transition: 'filter 0.5s ease, transform 0.5s ease'
+    },
+    hoverOverlay: {
+      position: 'absolute',
+      inset: 0,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: 'rgba(0,0,0,0.4)',
+      opacity: 0,
+      transition: 'opacity 0.4s ease',
+      pointerEvents: 'none' // Click passes through to imageWrapper
+    },
+    hoverText: {
+      color: 'var(--color-text)',
+      fontSize: '2rem',
+      fontWeight: 'bold',
+      letterSpacing: '2px',
+      textTransform: 'uppercase',
+      padding: '1rem 3rem',
+      border: '2px solid var(--color-gold)',
+      borderRadius: '50px',
+      backdropFilter: 'blur(10px)',
+      background: 'rgba(255, 236, 175, 0.1)'
+    },
+    contentOverlay: {
+      position: 'absolute',
+      bottom: '-3rem',
+      left: '5vw',
+      zIndex: 2,
+      pointerEvents: 'none'
+    },
+    projectName: {
+      fontSize: 'clamp(4rem, 12vw, 15rem)',
+      fontFamily: 'var(--font-heading)',
+      color: 'var(--color-text)',
+      margin: 0,
+      lineHeight: '0.8',
+      textShadow: '0 20px 40px rgba(0,0,0,0.5)'
+    },
+    projectMeta: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '1rem',
+      background: 'rgba(10, 10, 12, 0.8)',
+      backdropFilter: 'blur(10px)',
+      padding: '1rem 2rem',
+      borderRadius: '50px',
+      border: '1px solid rgba(255,255,255,0.1)',
+      marginTop: '2rem'
+    },
+    serviceTag: {
+      color: 'var(--color-gold)',
+      fontWeight: '600',
+      letterSpacing: '1px'
+    },
+    descTag: {
       color: 'var(--color-secondary)'
     },
-    grid: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'center',
-      gap: '2rem',
-      maxWidth: '1000px',
-      margin: '0 auto',
-      opacity: isVisible ? 1 : 0,
-      transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
-      transition: 'opacity 0.8s ease-out 0.2s, transform 0.8s ease-out 0.2s'
-    },
-    card: {
-      width: '280px',
-      height: '160px',
-      padding: '1.5rem',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      color: 'var(--color-secondary)',
-      cursor: 'pointer',
-      position: 'relative',
-      overflow: 'hidden'
-    },
-    cardName: {
-      fontSize: '1.2rem',
-      fontWeight: '700',
-      color: 'var(--color-text)',
-      marginBottom: '0.5rem'
-    },
-    cardDesc: {
-      fontSize: '0.8rem',
-      opacity: 0.7
-    },
-    modalOverlay: {
+    modalContainer: {
       position: 'fixed',
       inset: 0,
-      background: 'rgba(10, 10, 12, 0.8)',
-      backdropFilter: 'blur(20px)',
-      zIndex: 1000,
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      opacity: selectedRef ? 1 : 0,
-      pointerEvents: selectedRef ? 'all' : 'none',
-      transition: 'opacity 0.4s ease'
-    },
-    modalContent: {
-      width: '90%',
-      maxWidth: '1000px',
-      height: '80vh',
-      background: 'var(--color-bg)',
-      border: '1px solid rgba(255, 236, 175, 0.1)',
-      borderRadius: '24px',
+      zIndex: 9999,
+      background: '#0a0a0c',
       display: 'flex',
       flexDirection: 'column',
-      position: 'relative',
-      transform: selectedRef ? 'translateY(0) scale(1)' : 'translateY(50px) scale(0.95)',
-      transition: 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-      boxShadow: '0 40px 80px rgba(0,0,0,0.5)',
-      overflow: 'hidden'
+      opacity: selectedProject ? 1 : 0,
+      pointerEvents: selectedProject ? 'all' : 'none',
+      transition: 'opacity 0.5s ease'
     },
     modalHeader: {
-      padding: '2rem',
-      borderBottom: '1px solid rgba(255,255,255,0.05)',
+      height: '70px',
       display: 'flex',
+      alignItems: 'center',
       justifyContent: 'space-between',
-      alignItems: 'center'
+      padding: '0 2rem',
+      background: '#111',
+      borderBottom: '1px solid rgba(255,255,255,0.1)'
     },
-    closeBtn: {
-      background: 'rgba(255,255,255,0.05)',
+    modalTitle: {
+      color: 'var(--color-gold)',
+      fontSize: '1.2rem',
+      fontWeight: '600',
+      letterSpacing: '1px'
+    },
+    closeButton: {
+      background: 'rgba(255,255,255,0.1)',
       border: 'none',
       width: '40px',
       height: '40px',
@@ -120,236 +227,98 @@ export default function ReferencesSection() {
       justifyContent: 'center',
       color: 'var(--color-text)',
       cursor: 'pointer',
-      transition: 'background 0.2s'
+      transition: 'background 0.3s ease'
     },
-    modalBody: {
-      display: 'flex',
+    iframeContainer: {
       flex: 1,
-      overflow: 'hidden'
-    },
-    modalSidebar: {
-      width: '350px',
-      padding: '2rem',
-      borderRight: '1px solid rgba(255,255,255,0.05)',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '2rem',
-      overflowY: 'auto'
-    },
-    modalBrowser: {
-      flex: 1,
-      background: '#0a0a0c',
-      padding: '2rem',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      position: 'relative'
-    },
-    browserWindow: {
       width: '100%',
-      height: '100%',
-      background: '#151517',
-      borderRadius: '12px',
-      border: '1px solid rgba(255,255,255,0.05)',
-      display: 'flex',
-      flexDirection: 'column',
-      overflow: 'hidden',
-      boxShadow: '0 20px 40px rgba(0,0,0,0.3)'
-    },
-    browserTopbar: {
-      height: '40px',
-      background: '#1a1a1d',
-      borderBottom: '1px solid rgba(255,255,255,0.05)',
-      display: 'flex',
-      alignItems: 'center',
-      padding: '0 1rem',
-      gap: '0.5rem'
-    },
-    browserDot: {
-      width: '12px',
-      height: '12px',
-      borderRadius: '50%',
-      background: 'rgba(255,255,255,0.2)'
-    },
-    browserContent: {
-      flex: 1,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '2rem',
-      textAlign: 'center',
-      background: 'linear-gradient(45deg, #111, #1a1a1d)'
+      background: '#fff' // Web siteleri genelde beyazdır, yüklenirken temiz görünsün
     }
   };
 
-  const references = [
-    { 
-      id: 1, 
-      name: "Emsa Otel", 
-      desc: "Otel Rezervasyon Sistemi",
-      year: "2024",
-      service: "Web Tasarım & Yazılım",
-      longDesc: "Eskişehir'in köklü otellerinden Emsa Otel için tamamen sıfırdan, komisyonsuz ve doğrudan rezervasyon alabilen özel bir dijital altyapı inşa ettik. Mobil uyumlu arayüzü ve hızlı ödeme adımları ile dönüşüm oranları %40 artırıldı.",
-      tags: ["Web Tasarım", "React", "Rezervasyon Motoru"],
-      link: "emsaotel.com.tr"
-    },
-    { 
-      id: 2, 
-      name: "Roasters Coffee", 
-      desc: "QR Menü & Masa Sipariş",
-      year: "2024",
-      service: "Operasyonel Altyapı",
-      longDesc: "Yeni nesil kahve dükkanı Roasters için, müşterilerin masalarından kalkmadan sipariş verebildiği, dinamik güncellenebilen ve arka planda stok takibi yapan entegre bir QR menü sistemi geliştirdik.",
-      tags: ["QR Menü", "Mobil Arayüz", "Otomasyon"],
-      link: "roasters.menu"
-    },
-    { 
-      id: 3, 
-      name: "GastroPub Esk", 
-      desc: "Kurumsal Web & Etkinlik",
-      year: "2023",
-      service: "Dijital Vitrin",
-      longDesc: "GastroPub'ın dijital vitrinini baştan yarattık. Etkinlik takvimi, dinamik galeri ve rezervasyon formu ile mekanın enerjisini dijital dünyaya taşıdık.",
-      tags: ["UI/UX Tasarım", "SEO", "Etkinlik Yönetimi"],
-      link: "gastropubesk.com"
-    },
-    { 
-      id: 4, 
-      name: "Klinik Art", 
-      desc: "Estetik Kliniği Platformu",
-      year: "2023",
-      service: "Web Tasarım & Kurumsal",
-      longDesc: "Sağlık turizmi ve yerel hastalar için tasarlanmış, çoklu dil destekli, SEO odaklı ve online randevu alınabilen güvenilir bir kurumsal kimlik projesi.",
-      tags: ["Çoklu Dil", "Kurumsal Kimlik", "Randevu Sistemi"],
-      link: "klinikart.com"
-    },
-    { 
-      id: 5, 
-      name: "Nova Mimarlık", 
-      desc: "Portfolyo ve UI/UX",
-      year: "2024",
-      service: "Tasarım & Geliştirme",
-      longDesc: "Ödüllü mimarlık ofisi Nova için projelerini estetik ve minimalist bir şekilde sergileyebilecekleri, yüksek performanslı ve pürüzsüz geçişlere sahip bir portfolyo sitesi hazırladık.",
-      tags: ["UI/UX", "Portfolyo", "Animasyon"],
-      link: "novamimarlik.com"
-    },
-    { 
-      id: 6, 
-      name: "FitLife Studio", 
-      desc: "Online Randevu & Takip",
-      year: "2023",
-      service: "Operasyonel Altyapı",
-      longDesc: "Butik spor salonu FitLife için üyelerin ders programlarını takip edebildiği, online rezervasyon yapabildiği ve antrenörlerin müşteri yönetebildiği özel bir sistem kurduk.",
-      tags: ["Randevu Sistemi", "Web App", "Veritabanı"],
-      link: "fitlife.studio"
-    }
-  ];
-
   return (
     <>
-      <section id="references" style={styles.section}>
-        <div style={styles.header} ref={ref}>
-          <h2 style={styles.title}>Referanslarımız</h2>
-          <p style={styles.subtitle}>Bize güvenen ve dijital dönüşümlerini birlikte inşa ettiğimiz markalar.</p>
+      <section ref={containerRef} id="references" style={styles.section}>
+        <div style={styles.header}>
+          <h2 style={styles.title}>İmza Attığımız<br/>Projeler.</h2>
+          <div style={styles.subtitle}>Case Studies</div>
         </div>
 
-        <div style={styles.grid}>
-          {references.map((refItem) => (
-            <div 
-              key={refItem.id} 
-              style={styles.card}
-              className="glass-panel"
-              onClick={() => setSelectedRef(refItem)}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = 'translateY(-10px)';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
-            >
-              <div style={{ position: 'absolute', top: '1rem', right: '1rem', fontSize: '0.75rem', color: 'var(--color-gold)', fontWeight: '600', padding: '0.2rem 0.6rem', background: 'rgba(255,236,175,0.1)', borderRadius: '4px' }}>
-                {refItem.year}
+        <div>
+          {references.map((project, index) => {
+            const isHovered = hoveredProject === project.id;
+            return (
+              <div key={project.id} style={styles.projectContainer}>
+                {/* Parallax Görsel */}
+                <div 
+                  style={{
+                    ...styles.imageWrapper,
+                    marginLeft: index % 2 === 0 ? 'auto' : '0',
+                    marginRight: index % 2 === 0 ? '0' : 'auto'
+                  }}
+                  onMouseEnter={() => setHoveredProject(project.id)}
+                  onMouseLeave={() => setHoveredProject(null)}
+                  onClick={() => setSelectedProject(project)}
+                >
+                  <div 
+                    ref={el => imagesRef.current[index] = el}
+                    style={{
+                      ...styles.parallaxImage,
+                      backgroundImage: `url(${project.image})`,
+                      filter: isHovered ? 'brightness(0.4) scale(1.02)' : 'brightness(0.6) scale(1)'
+                    }} 
+                  />
+                  <div style={{...styles.hoverOverlay, opacity: isHovered ? 1 : 0}}>
+                    <div style={{...styles.hoverText, transform: isHovered ? 'translateY(0)' : 'translateY(20px)', transition: 'transform 0.4s ease'}}>
+                      Projeyi Keşfet
+                    </div>
+                  </div>
+                </div>
+
+                {/* Devasa Proje İsmi */}
+                <div style={{
+                  ...styles.contentOverlay,
+                  left: index % 2 === 0 ? '5vw' : 'auto',
+                  right: index % 2 === 0 ? 'auto' : '5vw',
+                  textAlign: index % 2 === 0 ? 'left' : 'right'
+                }}>
+                  <h3 style={styles.projectName}>{project.name}</h3>
+                  <div style={styles.projectMeta}>
+                    <span style={styles.serviceTag}>{project.service}</span>
+                    <span style={{color: 'rgba(255,255,255,0.2)'}}>|</span>
+                    <span style={styles.descTag}>{project.desc}</span>
+                  </div>
+                </div>
               </div>
-              <div style={styles.cardName}>{refItem.name}</div>
-              <div style={styles.cardDesc}>{refItem.service}</div>
-              <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', marginTop: '0.2rem' }}>{refItem.desc}</div>
-              <div style={{ marginTop: '1rem', opacity: 0.5 }}>
-                <ChevronRight size={20} />
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
-      {/* Modal Overlay */}
-      <div style={styles.modalOverlay} onClick={() => setSelectedRef(null)}>
-        <div style={styles.modalContent} onClick={e => e.stopPropagation()}>
-          <div style={styles.modalHeader}>
-            <div>
-              <h3 style={{ fontSize: '1.8rem', margin: 0 }}>{selectedRef?.name}</h3>
-              <div style={{ color: 'var(--color-gold)', fontSize: '0.9rem', marginTop: '0.25rem' }}>{selectedRef?.desc}</div>
-            </div>
-            <button 
-              style={styles.closeBtn} 
-              onClick={() => setSelectedRef(null)}
-              onMouseOver={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
-              onMouseOut={e => e.currentTarget.style.background = 'rgba(255,255,255,0.05)'}
-            >
-              <X size={24} />
-            </button>
-          </div>
-          
-          <div style={styles.modalBody}>
-            {/* Sidebar Details */}
-            <div style={styles.modalSidebar}>
-              <div>
-                <h4 style={{ color: 'var(--color-secondary)', fontSize: '0.9rem', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Proje Özeti</h4>
-                <p style={{ lineHeight: '1.7', fontSize: '1.05rem' }}>{selectedRef?.longDesc}</p>
-              </div>
-              
-              <div>
-                <h4 style={{ color: 'var(--color-secondary)', fontSize: '0.9rem', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '1px' }}>Teknolojiler & Kapsam</h4>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  {selectedRef?.tags.map((tag, i) => (
-                    <span key={i} style={{ padding: '0.4rem 0.8rem', background: 'rgba(255,255,255,0.05)', borderRadius: '50px', fontSize: '0.85rem' }}>
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div style={{ marginTop: 'auto' }}>
-                <a 
-                  href={`https://${selectedRef?.link}`} 
-                  target="_blank" 
-                  rel="noreferrer"
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--color-gold)', textDecoration: 'none', fontWeight: '600' }}
-                >
-                  Canlı Projeyi İncele <ExternalLink size={18} />
-                </a>
-              </div>
-            </div>
-
-            {/* Browser Preview Area */}
-            <div style={styles.modalBrowser}>
-              <div style={styles.browserWindow}>
-                <div style={styles.browserTopbar}>
-                  <div style={{...styles.browserDot, background: '#ff5f56'}} />
-                  <div style={{...styles.browserDot, background: '#ffbd2e'}} />
-                  <div style={{...styles.browserDot, background: '#27c93f'}} />
-                  <div style={{ marginLeft: '1rem', flex: 1, background: 'rgba(255,255,255,0.05)', borderRadius: '4px', height: '24px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', color: 'rgba(255,255,255,0.5)' }}>
-                    {selectedRef?.link}
-                  </div>
-                </div>
-                <div style={styles.browserContent}>
-                  <div style={{ fontSize: '3rem', fontWeight: '900', opacity: 0.1, letterSpacing: '5px' }}>{selectedRef?.name.toUpperCase()}</div>
-                  <div style={{ marginTop: '1rem', color: 'var(--color-gold)', fontSize: '1.2rem' }}>UI/UX Önizleme Simülasyonu</div>
-                  <p style={{ marginTop: '1rem', color: 'var(--color-secondary)', maxWidth: '400px' }}>Bu alanda projenin bitmiş hali, ekran görüntüleri veya canlı bir iframe önizlemesi yer alacaktır.</p>
-                </div>
-              </div>
-            </div>
-          </div>
+      {/* Full Screen Iframe Modal */}
+      <div style={styles.modalContainer}>
+        <div style={styles.modalHeader}>
+          <div style={styles.modalTitle}>{selectedProject?.name} - Canlı Önizleme</div>
+          <button 
+            style={styles.closeButton} 
+            onClick={() => setSelectedProject(null)}
+            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 236, 175, 0.2)'}
+            onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+          >
+            <X size={24} color="var(--color-gold)" />
+          </button>
+        </div>
+        <div style={styles.iframeContainer}>
+          {selectedProject && (
+            <iframe 
+              src={selectedProject.link} 
+              title={selectedProject.name}
+              width="100%" 
+              height="100%" 
+              style={{ border: 'none' }}
+              allowFullScreen
+            />
+          )}
         </div>
       </div>
     </>

@@ -17,7 +17,6 @@ import WhatsAppButton from './components/WhatsAppButton';
 import Preloader from './components/Preloader';
 import CustomCursor from './components/CustomCursor';
 import PageTransition from './components/PageTransition';
-import Marquee from './components/Marquee';
 import NotFound from './components/NotFound';
 import LiquidGlassBlob from './components/LiquidGlassBlob';
 import SignatureScene from './components/SignatureScene';
@@ -32,7 +31,6 @@ function AnimatedRoutes() {
           <PageTransition>
             <HeroSection />
             <SignatureScene />
-            <Marquee />
             <ServicesSection />
             <ReferencesSection />
             <TestimonialsSection />
