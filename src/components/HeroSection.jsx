@@ -177,13 +177,7 @@ export default function HeroSection() {
   };
 
     return (
-    <section style={styles.section}>
-      <div style={{ position: 'absolute', inset: 0, transform: `translate(${mousePosition.x * 4}px, ${mousePosition.y * 4}px)`, transition: 'transform 0.1s ease-out', pointerEvents: 'none', zIndex: -2 }}>
-        <div style={styles.blob1} />
-      </div>
-      <div style={{ position: 'absolute', inset: 0, transform: `translate(${mousePosition.x * -5}px, ${mousePosition.y * -5}px)`, transition: 'transform 0.1s ease-out', pointerEvents: 'none', zIndex: -2 }}>
-        <div style={styles.blob2} />
-      </div>
+    <section id="home" style={styles.section}>
       <div style={styles.gridOverlay} />
 
       {/* 3D Floating Elements */}
