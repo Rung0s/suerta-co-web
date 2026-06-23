@@ -1,138 +1,242 @@
-import React from 'react';
-import { Quote } from 'lucide-react';
-import useScrollReveal from '../hooks/useScrollReveal';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+
+const testimonials = [
+  { 
+    id: 1, 
+    text: "Otelimizin dijital dönüşümünde Suerta Co. ile çalışmak verdiğimiz en doğru karardı. Komisyonsuz rezervasyon sistemi sayesinde doğrudan satışlarımız %40 arttı. Tasarımın şıklığı gerçekten muazzam.", 
+    author: "EMSA OTEL", 
+    role: "Yönetim Kurulu"
+  },
+  { 
+    id: 2, 
+    text: "Sanat galerimiz için oluşturdukları dijital vitrin tek kelimeyle kusursuz. Eserlerimizi lüks ve zarif bir arayüzle sergilememizi sağladılar. Estetik vizyonları çok üst düzeyde.", 
+    author: "ROASTERS", 
+    role: "Kurucu Ortak"
+  },
+  { 
+    id: 3, 
+    text: "Projelerimizi sergilediğimiz portfolyo sitesi inanılmaz bir hıza ve pürüzsüz animasyonlara kavuştu. Kullanıcı deneyimine (UX) bu kadar odaklanan bir ekiple çalışmak çok keyifliydi.", 
+    author: "NOVA MİMARLIK", 
+    role: "Baş Mimar"
+  }
+];
 
 export default function TestimonialsSection() {
-  const [ref1, isVisible1] = useScrollReveal();
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const testimonials = [
-    {
-      id: 1,
-      name: 'A. P.',
-      company: 'Emsa Hotel',
-      text: 'Otelimizin dijital dönüşümünde Suerta Co. ile çalışmak verdiğimiz en doğru karardı. Komisyonsuz rezervasyon sistemi sayesinde doğrudan satışlarımız %40 arttı. Tasarımın şıklığı ve sistemin hızı gerçekten muazzam.',
-    },
-    {
-      id: 2,
-      name: 'S. S.',
-      company: 'Euromos Art',
-      text: 'Sanat galerimiz için oluşturdukları dijital vitrin tek kelimeyle kusursuz. Eserlerimizi lüks ve zarif bir arayüzle sergilememizi sağladılar. Estetik vizyonları ve teknik becerileri çok üst düzeyde.',
-    },
-    {
-      id: 3,
-      name: 'M. K.',
-      company: 'Nova Mimarlık',
-      text: 'Projelerimizi sergilediğimiz portfolyo sitesi inanılmaz bir hıza ve pürüzsüz animasyonlara kavuştu. Kullanıcı deneyimine (UX) bu kadar odaklanan bir ekiple çalışmak çok keyifliydi.',
-    }
-  ];
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
+  };
 
   const styles = {
     section: {
-      padding: '8rem 2rem',
+      backgroundColor: 'transparent',
+      padding: '10rem 2rem',
       position: 'relative',
-      zIndex: 1,
-      background: 'rgba(154, 22, 31, 0.01)',
-      borderTop: '1px solid rgba(255,255,255,0.02)'
+      overflow: 'hidden',
+      zIndex: 1
+    },
+    container: {
+      maxWidth: '1200px',
+      margin: '0 auto',
+      position: 'relative'
     },
     header: {
       textAlign: 'center',
-      marginBottom: '4rem',
-      opacity: isVisible1 ? 1 : 0,
-      transform: isVisible1 ? 'translateY(0)' : 'translateY(40px)',
-      transition: 'opacity 0.8s ease-out, transform 0.8s ease-out'
+      marginBottom: '4rem'
     },
     title: {
-      fontSize: '2.5rem',
-      marginBottom: '1rem'
+      fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+      fontFamily: 'var(--font-main)',
+      color: 'var(--color-text)',
+      marginBottom: '1rem',
+      fontWeight: '800',
+      textTransform: 'uppercase'
     },
-    grid: {
-      display: 'grid',
-      gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-      gap: '2.5rem',
-      maxWidth: '1200px',
-      margin: '0 auto'
+    subtitle: {
+      color: 'var(--color-gold)',
+      letterSpacing: '2px',
+      textTransform: 'uppercase',
+      fontSize: '0.9rem'
+    },
+    sliderWrapper: {
+      position: 'relative',
+      height: '500px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
     },
     card: {
-      padding: '3rem 2rem',
-      position: 'relative',
+      position: 'absolute',
+      width: '100%',
+      maxWidth: '700px',
+      padding: '4rem 3rem',
+      borderRadius: '30px',
+      background: 'rgba(20, 20, 20, 0.4)', // Cam taban
+      border: '1px solid rgba(255, 255, 255, 0.05)',
+      boxShadow: '0 30px 60px rgba(0,0,0,0.5)',
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'space-between',
-      transition: 'var(--transition-liquid)'
+      alignItems: 'center',
+      textAlign: 'center',
+      // Backdrop filter is applied via motion style to animate blur
     },
     quoteIcon: {
-      color: 'var(--color-gold)',
-      opacity: 0.3,
-      marginBottom: '1.5rem'
+      color: 'var(--color-accent)', // Bordo
+      marginBottom: '2rem',
+      opacity: 0.8
     },
     text: {
-      fontSize: '1.05rem',
+      fontSize: 'clamp(1.1rem, 2vw, 1.4rem)',
       lineHeight: '1.8',
+      fontFamily: 'var(--font-main)',
       color: 'var(--color-text)',
-      marginBottom: '2rem',
-      fontStyle: 'italic'
+      marginBottom: '3rem',
+      fontStyle: 'italic',
+      fontWeight: '300'
     },
     authorBox: {
       display: 'flex',
+      flexDirection: 'column',
       alignItems: 'center',
-      gap: '1rem'
+      gap: '0.5rem'
     },
-    avatar: {
-      width: '45px',
-      height: '45px',
+    authorName: {
+      fontFamily: 'var(--font-main)',
+      fontSize: '1.5rem',
+      fontWeight: '800',
+      color: 'var(--color-gold)',
+      letterSpacing: '2px',
+      textTransform: 'uppercase'
+    },
+    authorRole: {
+      fontSize: '0.85rem',
+      color: 'rgba(255, 255, 255, 0.5)',
+      textTransform: 'uppercase',
+      letterSpacing: '2px'
+    },
+    controls: {
+      display: 'flex',
+      justifyContent: 'center',
+      gap: '2rem',
+      marginTop: '3rem'
+    },
+    button: {
+      background: 'transparent',
+      border: '1px solid rgba(255, 255, 255, 0.2)',
       borderRadius: '50%',
-      background: 'rgba(255,236,175,0.1)',
+      width: '60px',
+      height: '60px',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      color: 'var(--color-gold)',
-      fontWeight: '700',
-      fontSize: '1.1rem'
-    },
-    authorName: {
-      fontWeight: '700',
-      fontSize: '1rem'
-    },
-    authorCompany: {
-      color: 'var(--color-gold)',
-      fontSize: '0.85rem',
-      textTransform: 'uppercase',
-      letterSpacing: '1px'
+      color: 'var(--color-text)',
+      cursor: 'pointer',
+      transition: 'all 0.3s ease'
     }
   };
 
   return (
-    <section style={styles.section}>
-      <div style={styles.header} ref={ref1}>
-        <h2 style={styles.title}>Ortaklarımızın Gözünden</h2>
-        <p style={{ color: 'var(--color-secondary)' }}>Birlikte büyüdüğümüz ve dijital sahnede başarıya ulaştırdığımız markalar.</p>
-      </div>
+    <section style={styles.section} id="testimonials">
+      <div style={styles.container}>
+        
+        <div style={styles.header}>
+          <h2 style={styles.title}>Ortaklıklar</h2>
+          <div style={styles.subtitle}>Birlikte Büyüdüğümüz Markalar</div>
+        </div>
 
-      <div style={styles.grid}>
-        {testimonials.map((t, i) => (
-          <div 
-            key={t.id}
-            className="glass-panel"
-            style={{
-              ...styles.card,
-              opacity: isVisible1 ? 1 : 0,
-              transform: isVisible1 ? 'translateY(0)' : 'translateY(40px)',
-              transition: `opacity 1s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.15}s, transform 1s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.15}s, box-shadow 0.6s ease, border-color 0.6s ease`
+        <div style={styles.sliderWrapper}>
+          <AnimatePresence initial={false}>
+            {testimonials.map((t, index) => {
+              // Göreceli konumu hesapla: 0 (aktif), -1 (sol), 1 (sağ)
+              let offset = index - currentIndex;
+              if (offset < -1) offset += testimonials.length;
+              if (offset > 1) offset -= testimonials.length;
+
+              const isActive = offset === 0;
+
+              return (
+                <motion.div
+                  key={t.id}
+                  initial={{ 
+                    x: offset > 0 ? 300 : -300, 
+                    opacity: 0, 
+                    scale: 0.8 
+                  }}
+                  animate={{
+                    x: offset * 400, // Sağdaki 400px sağa, soldaki 400px sola
+                    opacity: isActive ? 1 : 0.4,
+                    scale: isActive ? 1 : 0.85,
+                    zIndex: isActive ? 10 : 5,
+                    filter: isActive ? 'blur(0px)' : 'blur(10px)',
+                    backdropFilter: isActive ? 'blur(20px)' : 'blur(5px)'
+                  }}
+                  transition={{ 
+                    duration: 0.6, 
+                    ease: [0.16, 1, 0.3, 1] 
+                  }}
+                  style={{
+                    ...styles.card,
+                    borderTop: isActive ? '2px solid var(--color-accent)' : '1px solid rgba(255, 255, 255, 0.05)',
+                    // Eğer aktif değilse arkadaki kartların tıklamalarını devre dışı bırak
+                    pointerEvents: isActive ? 'auto' : 'none'
+                  }}
+                >
+                  <Quote size={40} style={styles.quoteIcon} />
+                  <p style={styles.text}>"{t.text}"</p>
+                  
+                  <div style={styles.authorBox}>
+                    <div style={styles.authorName}>{t.author}</div>
+                    <div style={styles.authorRole}>{t.role}</div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </div>
+
+        {/* Kontroller */}
+        <div style={styles.controls}>
+          <button 
+            style={styles.button} 
+            onClick={handlePrev}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'var(--color-accent)';
+              e.currentTarget.style.borderColor = 'var(--color-accent)';
+              e.currentTarget.style.color = '#fff';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent';
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+              e.currentTarget.style.color = 'var(--color-text)';
             }}
           >
-            <div>
-              <Quote size={32} style={styles.quoteIcon} />
-              <p style={styles.text}>"{t.text}"</p>
-            </div>
-            <div style={styles.authorBox}>
-              <div style={styles.avatar}>{t.name.charAt(0)}</div>
-              <div>
-                <div style={styles.authorName}>{t.name}</div>
-                <div style={styles.authorCompany}>{t.company}</div>
-              </div>
-            </div>
-          </div>
-        ))}
+            <ChevronLeft size={24} />
+          </button>
+          <button 
+            style={styles.button} 
+            onClick={handleNext}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'var(--color-accent)';
+              e.currentTarget.style.borderColor = 'var(--color-accent)';
+              e.currentTarget.style.color = '#fff';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent';
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+              e.currentTarget.style.color = 'var(--color-text)';
+            }}
+          >
+            <ChevronRight size={24} />
+          </button>
+        </div>
+
       </div>
     </section>
   );

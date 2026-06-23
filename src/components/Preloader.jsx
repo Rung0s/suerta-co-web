@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import logoUrl from '../assets/suerta-logo.svg';
+import SuertaLogo from './SuertaLogo';
 
 export default function Preloader({ onComplete }) {
   const [isVisible, setIsVisible] = useState(true);
@@ -14,8 +14,8 @@ export default function Preloader({ onComplete }) {
     const timer = setTimeout(() => {
       setIsVisible(false);
       sessionStorage.setItem('suertaHasVisited', 'true');
-      setTimeout(onComplete, 500); // Wait for faster fade out animation
-    }, 1500); // 1.5s display + 0.5s fade out = 2s total
+      setTimeout(onComplete, 800); // 0.8s fade out süresi kadar bekle
+    }, 3000); // 3 saniye ekranda kalma
     return () => clearTimeout(timer);
   }, [onComplete]);
 
@@ -116,14 +116,14 @@ export default function Preloader({ onComplete }) {
         <div style={styles.circleTop} />
         <div style={styles.circleBottom} />
         <div style={styles.logoWrapper}>
-          <img src={logoUrl} alt="Suerta Co" style={{ width: '100%', height: 'auto', filter: 'drop-shadow(0 0 20px rgba(255, 236, 175, 0.4))' }} />
+          <SuertaLogo size={180} animated={true} />
         </div>
       </div>
       <div style={styles.progressContainer}>
         <div style={styles.progressBar} />
       </div>
       <div style={{ marginTop: '1rem', color: 'var(--color-gold)', fontSize: '0.8rem', letterSpacing: '3px', textTransform: 'uppercase' }} className="animate-pulse">
-        Sistem Başlatılıyor
+        DİJİTAL DENEYİM HAZIRLANIYOR...
       </div>
     </div>
   );

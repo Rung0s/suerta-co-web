@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import MagneticButton from './MagneticButton';
 import StaggeredText from './StaggeredText';
 
-import logoUrl from '../assets/suerta-logo.svg';
-
 export default function HeroSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -62,8 +60,7 @@ export default function HeroSection() {
       backgroundSize: '50px 50px',
       backgroundImage: 'linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px)',
       zIndex: -1,
-      transform: `translate(${mousePosition.x * 2}px, ${mousePosition.y * 2}px)`,
-      transition: 'transform 0.1s ease-out'
+      backgroundPosition: `${mousePosition.x * 2}px ${mousePosition.y * 2}px`
     },
     content: {
       textAlign: 'center',
@@ -208,12 +205,7 @@ export default function HeroSection() {
          </div>
       </div>
 
-      <div style={styles.content}>
-        <div style={styles.badge} className="animate-slide-up delay-100">
-          <Zap size={16} />
-          <span>Yeni Nesil Dijital Stüdyo</span>
-        </div>
-        
+      <div style={{...styles.content, marginTop: '20vh'}}>
         <h1 style={styles.title} className="animate-slide-up delay-200">
           <StaggeredText text="SUERTA CO." delay={0.2} />
         </h1>
@@ -221,26 +213,6 @@ export default function HeroSection() {
         <p style={styles.subtitle} className="animate-slide-up delay-200">
           Sıradan dijital varlıkları reddediyoruz. Suerta Co. ile markanızı, kullanıcıları içine çeken ve <strong>iz bırakan bir deneyime</strong> dönüştürün.
         </p>
-        
-        <div style={styles.ctaGroup} className="animate-slide-up delay-300">
-          <Link to="/contact" style={{ textDecoration: 'none' }}>
-            <MagneticButton 
-              style={styles.btnPrimary} 
-              className="magnetic-btn-primary"
-            >
-              Vizyonunuzu Paylaşın <ArrowRight size={20} />
-            </MagneticButton>
-          </Link>
-          
-          <Link to="/services" style={{ textDecoration: 'none' }}>
-            <MagneticButton 
-              style={styles.btnSecondary}
-              className="magnetic-btn-secondary"
-            >
-              Kreasyonlarımızı İncele <ChevronRight size={20} />
-            </MagneticButton>
-          </Link>
-        </div>
       </div>
     </section>
   );

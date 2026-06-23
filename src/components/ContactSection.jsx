@@ -9,16 +9,16 @@ export default function ContactSection() {
 
   const styles = {
     section: {
-      padding: '8rem 2rem',
+      padding: '10rem 2rem',
       position: 'relative',
-      background: 'linear-gradient(to top, rgba(154, 22, 31, 0.05), transparent)'
+      background: 'linear-gradient(to top, rgba(154, 22, 31, 0.08), transparent)'
     },
     container: {
       maxWidth: '1200px',
       margin: '0 auto',
       display: 'grid',
-      gridTemplateColumns: '1fr 1fr',
-      gap: '4rem',
+      gridTemplateColumns: '1.2fr 1fr',
+      gap: '6rem',
       alignItems: 'center'
     },
     infoBlock: {
@@ -27,92 +27,88 @@ export default function ContactSection() {
       transition: 'opacity 0.8s ease-out, transform 0.8s ease-out'
     },
     title: {
-      fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+      fontSize: 'clamp(3rem, 6vw, 5.5rem)',
+      fontFamily: 'var(--font-heading)',
       lineHeight: '1.1',
       marginBottom: '1.5rem',
-      letterSpacing: '-1px'
+      color: 'var(--color-text)'
     },
     subtitle: {
-      color: 'var(--color-secondary)',
+      color: 'rgba(255, 255, 255, 0.7)',
       fontSize: '1.2rem',
-      marginBottom: '3rem',
-      maxWidth: '400px'
+      fontFamily: 'var(--font-main)',
+      marginBottom: '4rem',
+      maxWidth: '450px',
+      lineHeight: '1.6'
     },
     contactItem: {
       display: 'flex',
       alignItems: 'center',
-      gap: '1rem',
-      marginBottom: '1.5rem',
-      fontSize: '1.1rem',
+      gap: '1.5rem',
+      marginBottom: '2rem',
+      fontSize: '1.2rem',
+      fontFamily: 'var(--font-main)',
       color: 'var(--color-text)',
       textDecoration: 'none',
-      transition: 'color 0.2s'
+      transition: 'all 0.3s ease',
+      cursor: 'pointer'
     },
     iconBox: {
-      width: '45px',
-      height: '45px',
+      width: '60px',
+      height: '60px',
       borderRadius: '50%',
-      background: 'rgba(255, 236, 175, 0.05)',
+      background: 'linear-gradient(145deg, rgba(154,22,31,0.2), rgba(255,236,175,0.05))',
+      border: '1px solid rgba(154,22,31,0.3)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      color: 'var(--color-gold)'
+      color: 'var(--color-gold)',
+      transition: 'all 0.3s ease'
     },
     formBlock: {
-      borderRadius: '24px',
-      padding: '3rem',
+      borderRadius: '30px',
+      padding: '4rem',
+      background: 'rgba(20, 20, 20, 0.4)',
+      backdropFilter: 'blur(20px)',
+      border: '1px solid rgba(255, 255, 255, 0.05)',
+      boxShadow: '0 30px 60px rgba(0,0,0,0.4)',
       opacity: isVisible2 ? 1 : 0,
       transform: isVisible2 ? 'translateX(0)' : 'translateX(40px)',
       transition: 'opacity 0.8s ease-out 0.2s, transform 0.8s ease-out 0.2s'
     },
     inputGroup: {
-      marginBottom: '1.5rem'
-    },
-    label: {
-      display: 'block',
-      marginBottom: '0.5rem',
-      fontSize: '0.9rem',
-      color: 'var(--color-secondary)'
+      marginBottom: '2rem',
+      position: 'relative'
     },
     input: {
       width: '100%',
-      padding: '1rem',
-      background: 'rgba(0, 0, 0, 0.2)',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      borderRadius: '8px',
+      padding: '1.5rem 0 1rem 0',
+      background: 'transparent',
+      border: 'none',
+      borderBottom: '2px solid rgba(255, 255, 255, 0.1)',
       color: 'var(--color-text)',
-      fontSize: '1rem',
+      fontSize: '1.2rem',
+      fontFamily: 'var(--font-main)',
       outline: 'none',
-      transition: 'border-color 0.3s'
-    },
-    textarea: {
-      width: '100%',
-      padding: '1rem',
-      background: 'rgba(0, 0, 0, 0.2)',
-      border: '1px solid rgba(255, 255, 255, 0.1)',
-      borderRadius: '8px',
-      color: 'var(--color-text)',
-      fontSize: '1rem',
-      outline: 'none',
-      minHeight: '120px',
-      resize: 'vertical',
       transition: 'border-color 0.3s'
     },
     submitBtn: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      gap: '0.5rem',
+      gap: '1rem',
       width: '100%',
-      padding: '1.2rem',
-      background: 'linear-gradient(135deg, var(--color-gold), #e0c870)',
-      color: '#111',
+      padding: '1.5rem',
+      background: 'var(--color-accent)', // Bordo
+      color: '#fff',
       border: 'none',
-      borderRadius: '8px',
-      fontSize: '1.1rem',
-      fontWeight: '800',
+      borderRadius: '50px',
+      fontSize: '1.2rem',
+      fontFamily: 'var(--font-main)',
+      fontWeight: '600',
       cursor: 'pointer',
-      transition: 'transform 0.2s, box-shadow 0.2s'
+      marginTop: '2rem',
+      transition: 'all 0.3s ease'
     }
   };
 
@@ -120,63 +116,82 @@ export default function ContactSection() {
     <section id="contact" style={styles.section}>
       <style>
         {`
-          .contact-input:focus {
-            border-color: var(--color-gold) !important;
+          .contact-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
           }
-          @media (max-width: 768px) {
+          .contact-input:focus {
+            border-bottom-color: var(--color-gold) !important;
+          }
+          .contact-link:hover .contact-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: var(--color-accent);
+            color: #fff;
+          }
+          .contact-btn:hover {
+            background: #ffecaf !important;
+            color: #111 !important;
+          }
+          @media (max-width: 992px) {
             .contact-grid {
               grid-template-columns: 1fr !important;
-              gap: 2rem !important;
+              gap: 4rem !important;
             }
             .form-block {
-              padding: 2rem !important;
+              padding: 2.5rem !important;
             }
           }
         `}
       </style>
       <div style={styles.container} className="contact-grid">
+        
+        {/* Sol Kolon - Bilgi */}
         <div style={styles.infoBlock} ref={ref1}>
-          <h2 style={styles.title}>Birlikte <span style={{ color: 'var(--color-gold)' }}>Yaratalım.</span></h2>
-          <p style={styles.subtitle}>İşletmenizin dijital potansiyelini açığa çıkarmak için kahve içmeye bekleriz.</p>
+          <h2 style={styles.title}>Birlikte <br/><span style={{ color: 'var(--color-gold)', fontStyle: 'italic' }}>Yaratalım.</span></h2>
+          <p style={styles.subtitle}>
+            Bir fikriniz mi var? Veya markanızı dijital dünyada baştan yaratmak mı istiyorsunuz? Kahveler bizden, sohbet sizden.
+          </p>
           
-          <div style={{ marginTop: '3rem' }}>
-            <a href="mailto:hello@suerta.co" style={styles.contactItem} onMouseOver={e => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={e => e.currentTarget.style.color = 'var(--color-text)'}>
-              <div style={styles.iconBox}><Mail size={20} /></div>
+          <div style={{ marginTop: '4rem' }}>
+            <a href="mailto:hello@suerta.co" style={styles.contactItem} className="contact-link">
+              <div style={styles.iconBox} className="contact-icon"><Mail size={24} /></div>
               hello@suerta.co
             </a>
-            <a href="https://instagram.com/suerta.co" target="_blank" rel="noreferrer" style={styles.contactItem} onMouseOver={e => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={e => e.currentTarget.style.color = 'var(--color-text)'}>
-              <div style={styles.iconBox}>IG</div>
+            <a href="https://instagram.com/suerta.co" target="_blank" rel="noreferrer" style={styles.contactItem} className="contact-link">
+              <div style={styles.iconBox} className="contact-icon" style={{...styles.iconBox, fontFamily: 'var(--font-heading)', fontStyle: 'italic', fontSize: '1.2rem'}}>IG</div>
               @suerta.co
             </a>
-            <div style={styles.contactItem}>
-              <div style={styles.iconBox}><MapPin size={20} /></div>
+            <div style={styles.contactItem} className="contact-link">
+              <div style={styles.iconBox} className="contact-icon"><MapPin size={24} /></div>
               Eskişehir, Türkiye
             </div>
           </div>
         </div>
 
+        {/* Sağ Kolon - Form */}
         <div style={styles.formBlock} className="form-block" ref={ref2}>
           <form onSubmit={e => e.preventDefault()}>
             <div style={styles.inputGroup}>
-              <label style={styles.label}>Adınız Soyadınız</label>
-              <input type="text" style={styles.input} className="contact-input" placeholder="John Doe" />
+              <input type="text" style={styles.input} className="contact-input" placeholder="Adınız Soyadınız" />
             </div>
             <div style={styles.inputGroup}>
-              <label style={styles.label}>E-posta Adresiniz</label>
-              <input type="email" style={styles.input} className="contact-input" placeholder="hello@example.com" />
+              <input type="email" style={styles.input} className="contact-input" placeholder="E-posta Adresiniz" />
             </div>
             <div style={styles.inputGroup}>
-              <label style={styles.label}>Projenizden Bahsedin</label>
-              <textarea style={styles.textarea} className="contact-input" placeholder="Hayalinizdeki projeyi kısaca anlatın..."></textarea>
+              <textarea 
+                style={{...styles.input, minHeight: '100px', resize: 'vertical'}} 
+                className="contact-input" 
+                placeholder="Projenizden bahsedin..."
+              />
             </div>
             <MagneticButton 
               style={styles.submitBtn}
-              className="magnetic-btn-primary"
+              className="contact-btn"
             >
-              Mesaj Gönder <ArrowRight size={20} />
+              Mesajı Gönder <ArrowRight size={20} />
             </MagneticButton>
           </form>
         </div>
+
       </div>
     </section>
   );

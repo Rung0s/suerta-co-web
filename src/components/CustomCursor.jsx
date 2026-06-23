@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 export default function CustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const updatePosition = (e) => {
@@ -18,12 +19,18 @@ export default function CustomCursor() {
       }
     };
 
+    const handleModalToggle = (e) => {
+      setIsModalOpen(e.detail);
+    };
+
     window.addEventListener('mousemove', updatePosition);
     window.addEventListener('mouseover', updateHoverState);
+    window.addEventListener('modalToggle', handleModalToggle);
 
     return () => {
       window.removeEventListener('mousemove', updatePosition);
       window.removeEventListener('mouseover', updateHoverState);
+      window.removeEventListener('modalToggle', handleModalToggle);
     };
   }, []);
 
@@ -40,7 +47,8 @@ export default function CustomCursor() {
       pointerEvents: 'none',
       zIndex: 9999,
       transition: 'width 0.2s, height 0.2s',
-      mixBlendMode: 'difference'
+      mixBlendMode: 'difference',
+      opacity: isModalOpen ? 0 : 1
     },
     ring: {
       position: 'fixed',
@@ -53,19 +61,25 @@ export default function CustomCursor() {
       transform: 'translate(-50%, -50%)',
       pointerEvents: 'none',
       zIndex: 9998,
-      transition: 'width 0.2s ease-out, height 0.2s ease-out, background-color 0.2s',
+      transition: 'width 0.2s ease-out, height 0.2s ease-out, background-color 0.2s, opacity 0.2s',
       backgroundColor: isHovering ? 'rgba(255, 236, 175, 0.1)' : 'transparent',
-      backdropFilter: isHovering ? 'blur(2px)' : 'none'
+      backdropFilter: isHovering ? 'blur(2px)' : 'none',
+      opacity: isModalOpen ? 0 : 1
     }
   };
 
-  // Hide default cursor
+  // Hide default cursor globally unless modal is open
   useEffect(() => {
-    document.body.style.cursor = 'none';
+    if (isModalOpen) {
+      document.body.style.cursor = 'auto';
+    } else {
+      document.body.style.cursor = 'none';
+    }
+    
     return () => {
       document.body.style.cursor = 'auto';
     };
-  }, []);
+  }, [isModalOpen]);
 
   return (
     <>

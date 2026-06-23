@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { motion } from 'framer-motion';
 import { X } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ReferencesSection() {
   const containerRef = useRef(null);
+  const projectsRef = useRef([]);
   const imagesRef = useRef([]);
   const [selectedProject, setSelectedProject] = useState(null);
   const [hoveredProject, setHoveredProject] = useState(null);
@@ -46,34 +48,52 @@ export default function ReferencesSection() {
     }
   ];
 
-  // Modal açıkken arkadaki sayfanın kaymasını engelle
   useEffect(() => {
     if (selectedProject) {
       document.body.style.overflow = 'hidden';
+      window.dispatchEvent(new CustomEvent('modalToggle', { detail: true }));
     } else {
       document.body.style.overflow = 'unset';
+      window.dispatchEvent(new CustomEvent('modalToggle', { detail: false }));
     }
-    return () => { document.body.style.overflow = 'unset'; }
+    return () => { 
+      document.body.style.overflow = 'unset'; 
+      window.dispatchEvent(new CustomEvent('modalToggle', { detail: false }));
+    }
   }, [selectedProject]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      imagesRef.current.forEach((img) => {
-        if (!img) return;
-        
-        gsap.fromTo(img, 
-          { yPercent: -15 },
-          {
-            yPercent: 15,
-            ease: "none",
-            scrollTrigger: {
-              trigger: img.parentElement,
-              start: "top bottom",
-              end: "bottom top",
-              scrub: true
+      projectsRef.current.forEach((projectEl, i) => {
+        if (!projectEl) return;
+        const img = imagesRef.current[i];
+
+        // 1. ÖNCE Parallax animasyonunu kur (daha geniş bir alanı kapsadığı için önce tanımlanmalı)
+        if (img) {
+          gsap.fromTo(img, 
+            { yPercent: -15 },
+            {
+              yPercent: 15,
+              ease: "none",
+              scrollTrigger: {
+                trigger: projectEl,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true
+              }
             }
-          }
-        );
+          );
+        }
+
+        // 2. SONRA Pinning (kilitleme) trigger'ını kur ve zıplamayı önlemek için anticipatePin ekle
+        ScrollTrigger.create({
+          trigger: projectEl,
+          start: "center center",
+          end: "+=50%", // Ekranda yarım boy bekleme süresi
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: 1
+        });
       });
     }, containerRef);
 
@@ -92,11 +112,11 @@ export default function ReferencesSection() {
       marginBottom: '8rem'
     },
     title: {
-      fontSize: 'clamp(3rem, 6vw, 6rem)',
-      fontFamily: 'var(--font-heading)',
-      color: 'var(--color-text)',
-      margin: 0,
-      lineHeight: '1'
+      fontSize: 'clamp(1rem, 2vw, 1.5rem)',
+      color: '#ffffff',
+      textTransform: 'uppercase',
+      letterSpacing: '2px',
+      margin: 0
     },
     subtitle: {
       color: 'var(--color-gold)',
@@ -142,16 +162,16 @@ export default function ReferencesSection() {
       background: 'rgba(0,0,0,0.4)',
       opacity: 0,
       transition: 'opacity 0.4s ease',
-      pointerEvents: 'none' // Click passes through to imageWrapper
+      pointerEvents: 'none'
     },
     hoverText: {
       color: 'var(--color-text)',
-      fontSize: '2rem',
+      fontSize: '1rem',
       fontWeight: 'bold',
-      letterSpacing: '2px',
+      letterSpacing: '3px',
       textTransform: 'uppercase',
-      padding: '1rem 3rem',
-      border: '2px solid var(--color-gold)',
+      padding: '0.8rem 2rem',
+      border: '1px solid var(--color-gold)',
       borderRadius: '50px',
       backdropFilter: 'blur(10px)',
       background: 'rgba(255, 236, 175, 0.1)'
@@ -165,7 +185,9 @@ export default function ReferencesSection() {
     },
     projectName: {
       fontSize: 'clamp(4rem, 12vw, 15rem)',
-      fontFamily: 'var(--font-heading)',
+      fontFamily: 'var(--font-main)',
+      fontWeight: '800',
+      textTransform: 'uppercase',
       color: 'var(--color-text)',
       margin: 0,
       lineHeight: '0.8',
@@ -190,16 +212,30 @@ export default function ReferencesSection() {
     descTag: {
       color: 'var(--color-secondary)'
     },
-    modalContainer: {
+    modalOverlay: {
       position: 'fixed',
       inset: 0,
       zIndex: 9999,
-      background: '#0a0a0c',
+      background: 'rgba(10, 10, 12, 0.7)',
+      backdropFilter: 'blur(20px)',
       display: 'flex',
-      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
       opacity: selectedProject ? 1 : 0,
       pointerEvents: selectedProject ? 'all' : 'none',
-      transition: 'opacity 0.5s ease'
+      transition: 'opacity 0.4s ease'
+    },
+    modalContent: {
+      width: '90vw',
+      height: '85vh',
+      background: '#0a0a0c',
+      borderRadius: '24px',
+      display: 'flex',
+      flexDirection: 'column',
+      overflow: 'hidden',
+      boxShadow: '0 40px 100px rgba(0,0,0,0.8)',
+      transform: selectedProject ? 'scale(1) translateY(0)' : 'scale(0.95) translateY(20px)',
+      transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)'
     },
     modalHeader: {
       height: '70px',
@@ -232,7 +268,7 @@ export default function ReferencesSection() {
     iframeContainer: {
       flex: 1,
       width: '100%',
-      background: '#fff' // Web siteleri genelde beyazdır, yüklenirken temiz görünsün
+      background: '#fff'
     }
   };
 
@@ -240,15 +276,18 @@ export default function ReferencesSection() {
     <>
       <section ref={containerRef} id="references" style={styles.section}>
         <div style={styles.header}>
-          <h2 style={styles.title}>İmza Attığımız<br/>Projeler.</h2>
-          <div style={styles.subtitle}>Case Studies</div>
+          <h2 style={styles.title}>İmza Attığımız Projeler</h2>
         </div>
 
         <div>
           {references.map((project, index) => {
             const isHovered = hoveredProject === project.id;
             return (
-              <div key={project.id} style={styles.projectContainer}>
+              <div 
+                key={project.id} 
+                ref={el => projectsRef.current[index] = el}
+                style={styles.projectContainer}
+              >
                 {/* Parallax Görsel */}
                 <div 
                   style={{
@@ -293,32 +332,68 @@ export default function ReferencesSection() {
             );
           })}
         </div>
+
+        {/* Çok Daha Fazlası Butonu */}
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0 0 4rem 0', marginTop: '-5rem', position: 'relative', zIndex: 10 }}>
+          <a 
+            href="/referanslar" 
+            style={{ textDecoration: 'none' }}
+          >
+            <motion.div
+              initial={{ opacity: 0, clipPath: 'polygon(0 0, 0 0, 0 100%, 0 100%)' }}
+              whileInView={{ opacity: 1, clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 100%)' }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+              viewport={{ once: false, margin: "-20px" }}
+              style={{
+                fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
+                fontFamily: 'var(--font-heading)',
+                fontStyle: 'italic',
+                color: 'var(--color-gold)',
+                textAlign: 'center',
+                transition: 'text-shadow 0.4s ease',
+                display: 'inline-block',
+                fontWeight: '300',
+                paddingRight: '0.5rem'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.textShadow = '0 0 15px rgba(255, 236, 175, 0.4)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.textShadow = 'none';
+              }}
+            >
+              Çok Daha Fazlası...
+            </motion.div>
+          </a>
+        </div>
       </section>
 
-      {/* Full Screen Iframe Modal */}
-      <div style={styles.modalContainer}>
-        <div style={styles.modalHeader}>
-          <div style={styles.modalTitle}>{selectedProject?.name} - Canlı Önizleme</div>
-          <button 
-            style={styles.closeButton} 
-            onClick={() => setSelectedProject(null)}
-            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 236, 175, 0.2)'}
-            onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
-          >
-            <X size={24} color="var(--color-gold)" />
-          </button>
-        </div>
-        <div style={styles.iframeContainer}>
-          {selectedProject && (
-            <iframe 
-              src={selectedProject.link} 
-              title={selectedProject.name}
-              width="100%" 
-              height="100%" 
-              style={{ border: 'none' }}
-              allowFullScreen
-            />
-          )}
+      {/* Buzlu Arkaplan ve Oval Modal */}
+      <div style={styles.modalOverlay} onClick={() => setSelectedProject(null)}>
+        <div style={styles.modalContent} onClick={e => e.stopPropagation()}>
+          <div style={styles.modalHeader}>
+            <div style={styles.modalTitle}>{selectedProject?.name} - Canlı Önizleme</div>
+            <button 
+              style={styles.closeButton} 
+              onClick={() => setSelectedProject(null)}
+              onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255, 236, 175, 0.2)'}
+              onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+            >
+              <X size={24} color="var(--color-gold)" />
+            </button>
+          </div>
+          <div style={styles.iframeContainer}>
+            {selectedProject && (
+              <iframe 
+                src={selectedProject.link} 
+                title={selectedProject.name}
+                width="100%" 
+                height="100%" 
+                style={{ border: 'none' }}
+                allowFullScreen
+              />
+            )}
+          </div>
         </div>
       </div>
     </>

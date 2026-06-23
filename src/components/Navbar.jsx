@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-import logoUrl from '../assets/suerta-logo.svg';
+import SuertaLogo from './SuertaLogo';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -38,7 +38,8 @@ export default function Navbar() {
       alignItems: 'center',
       gap: '1rem',
       cursor: 'pointer',
-      textDecoration: 'none'
+      textDecoration: 'none',
+      transition: 'transform 0.3s ease'
     },
     logoText: {
       fontSize: '1.5rem',
@@ -84,14 +85,12 @@ export default function Navbar() {
     <nav style={navStyles.nav}>
       <Link 
         to="/"
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         style={navStyles.logoContainer}
-        onMouseOver={(e) => e.currentTarget.querySelector('img').style.transform = 'scale(1.1) rotate(5deg)'}
-        onMouseOut={(e) => e.currentTarget.querySelector('img').style.transform = 'scale(1) rotate(0deg)'}
+        onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+        onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
       >
-        <img src={logoUrl} alt="Suerta Logo" style={{ width: '40px', height: 'auto', transition: 'var(--transition-smooth)' }} />
-        <div style={navStyles.logoText}>
-          SUERTA <span style={{ color: 'var(--color-gold)' }}>CO.</span>
-        </div>
+        <SuertaLogo size={120} animated={false} />
       </Link>
 
       {/* Desktop Menu */}
@@ -99,7 +98,7 @@ export default function Navbar() {
         <Link style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} to="/about">Hakkımızda</Link>
         <Link style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} to="/services">Hizmetler</Link>
         <Link style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} to="/references">Referanslar</Link>
-        <Link style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} to="/about#team">Ekibimiz</Link>
+        <Link style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} to="/team">Ekibimiz</Link>
         <Link 
           style={navStyles.ctaButton} 
           to="/contact"

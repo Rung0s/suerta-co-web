@@ -20,6 +20,7 @@ import PageTransition from './components/PageTransition';
 import NotFound from './components/NotFound';
 import LiquidGlassBlob from './components/LiquidGlassBlob';
 import SignatureScene from './components/SignatureScene';
+import TeamSection from './components/TeamSection';
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -38,6 +39,7 @@ function AnimatedRoutes() {
           </PageTransition>
         } />
         <Route path="/about" element={<PageTransition><AboutSection /></PageTransition>} />
+        <Route path="/team" element={<PageTransition><TeamSection /></PageTransition>} />
         <Route path="/services" element={<PageTransition><ServicesSection /></PageTransition>} />
         <Route path="/references" element={<PageTransition><ReferencesSection /></PageTransition>} />
         <Route path="/contact" element={<PageTransition><ContactSection /></PageTransition>} />

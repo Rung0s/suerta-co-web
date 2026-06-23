@@ -71,14 +71,22 @@ export default function ServicesSection() {
       overflow: 'hidden'
     },
     header: {
-      marginBottom: '2rem', // Uzaklık azaltıldı
+      marginBottom: '1rem',
       marginTop: '2rem'
     },
-    mainTitle: {
-      fontSize: 'clamp(1rem, 2vw, 1.5rem)',
-      color: 'var(--color-secondary)',
-      textTransform: 'uppercase',
-      letterSpacing: '2px'
+    title: {
+      fontSize: 'clamp(1.5rem, 2.5vw, 2.5rem)',
+      fontFamily: 'var(--font-heading)',
+      color: '#ffffff',
+      margin: 0
+    },
+    subtitle: {
+      color: 'var(--color-gold)',
+      fontSize: '1rem',
+      fontFamily: 'var(--font-main)',
+      marginTop: '1rem',
+      letterSpacing: '2px',
+      textTransform: 'uppercase'
     },
     contentLayout: {
       display: 'flex',
@@ -100,10 +108,11 @@ export default function ServicesSection() {
       alignItems: 'center'
     },
     menuItem: {
-      fontSize: 'clamp(2rem, 4vw, 4rem)',
-      fontFamily: 'var(--font-heading)',
+      fontSize: 'clamp(2rem, 3.5vw, 3.5rem)',
+      fontFamily: 'var(--font-main)',
+      fontWeight: '600',
       margin: 0,
-      lineHeight: '1',
+      lineHeight: '1.1',
       cursor: 'pointer',
       transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
       letterSpacing: '-1px'
@@ -142,7 +151,7 @@ export default function ServicesSection() {
     <div style={styles.wrapper}>
       <section ref={containerRef} id="services" style={styles.section}>
         <div style={styles.header}>
-          <h2 style={styles.mainTitle}>Uzmanlık Alanlarımız</h2>
+          <h2 style={styles.title}>Uzmanlık Alanlarımız</h2>
         </div>
 
         <div style={styles.contentLayout}>
