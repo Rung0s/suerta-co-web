@@ -70,14 +70,17 @@ export default function HeroSection() {
     },
     content: {
       position: 'absolute',
-      top: isMobile ? '15%' : '25%', // Explicitly force vertical position
+      // Mobilde dikeyde tam ortala (3D küre kaldırıldığı için başlık ortada dursun),
+      // masaüstünde eski konum + parallax korunur.
+      top: isMobile ? '50%' : '25%',
       left: '50%',
       width: '100%',
       textAlign: 'center',
       maxWidth: '900px',
-      zIndex: 1,
-      // X ekseninde -50% ile ortala, Y ekseni top değeriyle kontrol edilecek. Parallax korundu.
-      transform: `translate(calc(-50% + ${mousePosition.x * -1}px), ${mousePosition.y * -1}px)`,
+      zIndex: 2,
+      transform: isMobile
+        ? 'translate(-50%, -50%)'
+        : `translate(calc(-50% + ${mousePosition.x * -1}px), ${mousePosition.y * -1}px)`,
       transition: 'transform 0.1s ease-out',
       display: 'flex',
       flexDirection: 'column',
@@ -209,6 +212,25 @@ export default function HeroSection() {
   return (
     <section id="home" style={styles.section} className="hero-section-container">
       <div style={styles.gridOverlay} className="hero-grid-overlay" />
+
+      {/* Mobil: 3D küre yerine hafif bir arka plan videosu (küreden çok daha performanslı) */}
+      {isMobile && (
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.55 }}
+          >
+            <source src="/hero-mobile.webm" type="video/webm" />
+            <source src="/hero-mobile.mp4" type="video/mp4" />
+          </video>
+          {/* Metnin okunması için karartma katmanı */}
+          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 50% 45%, rgba(10,10,12,0.35) 0%, rgba(10,10,12,0.75) 70%, #0a0a0c 100%)' }} />
+        </div>
+      )}
 
       {/* 3D Floating Elements */}
       <div style={styles.floatingCard1} className="glass-card luxury-card floating-card-1 animate-slide-right delay-300">

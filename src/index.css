@@ -339,20 +339,10 @@ a {
     padding: 4rem 1.2rem;
   }
   
-  /* Mobilde kartları gizlemek yerine akışa dahil edip küçültüyoruz */
+  /* Mobilde dekoratif yüzen kartları gizle: ortalanmış başlık + video ile
+     temiz bir hero için (bu kartlar zaten placeholder içerikliydi). */
   .floating-card-1, .floating-card-2 {
-    position: relative !important;
-    transform: none !important;
-    animation: none !important;
-    width: 100% !important;
-    max-width: 320px;
-    margin: 1rem auto;
-    left: auto !important;
-    top: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    display: flex !important;
-    flex-direction: column;
+    display: none !important;
   }
 
   .hero-section-container {
