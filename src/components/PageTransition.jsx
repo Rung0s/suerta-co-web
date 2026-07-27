@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 
 const pageVariants = {
@@ -23,10 +23,8 @@ const pageTransition = {
 };
 
 export default function PageTransition({ children }) {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
+  // Not: Scroll konumu App.jsx içindeki AnimatedRoutes tarafından merkezi
+  // olarak yönetiliyor (yeni sayfada en üste, geri/ileri'de kaldığı yere).
   return (
     <motion.div
       initial="initial"

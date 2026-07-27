@@ -4,7 +4,12 @@ export default function MagneticButton({ children, style, className, onClick }) 
   const buttonRef = useRef(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
+  // Dokunmatik cihazlarda mıknatıs efekti anlamsız ve emüle mouse eventleri
+  // butonu kaymış bırakabiliyor — efekti tamamen devre dışı bırak (tıklama normal çalışır)
+  const isTouchDevice = typeof window !== 'undefined' && window.matchMedia('(hover: none)').matches;
+
   const handleMouseMove = (e) => {
+    if (isTouchDevice) return;
     if (!buttonRef.current) return;
     const { clientX, clientY } = e;
     const { left, top, width, height } = buttonRef.current.getBoundingClientRect();

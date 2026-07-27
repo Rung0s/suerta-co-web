@@ -19,7 +19,8 @@ export default function StaggeredText({ text, className, style, delay = 0 }) {
                   animation: `slideUpReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards`,
                   animationDelay: `${delay + currentIdx * 0.05}s`,
                   opacity: 0,
-                  transform: 'translateY(100%)'
+                  transform: 'translateY(100%)',
+                  color: char === '.' ? 'var(--color-accent)' : 'inherit'
                 }}
               >
                 {char}

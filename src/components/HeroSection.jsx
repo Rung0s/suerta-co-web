@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowRight, Zap, ChevronRight } from 'lucide-react';
+import { Zap, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import MagneticButton from './MagneticButton';
 import StaggeredText from './StaggeredText';
+import useIsMobile from '../hooks/useIsMobile';
 
 export default function HeroSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const isMobile = useIsMobile(768);
 
   useEffect(() => {
+    // Mobil cihazlarda (dokunmatik ekranlarda) tıklamaların yazıyı kaydırmasını engellemek için parallax'ı devre dışı bırak
+    if (isMobile) return;
+
     const handleMouseMove = (e) => {
       setMousePosition({
         x: (e.clientX / window.innerWidth) * 20 - 10,
@@ -16,16 +20,18 @@ export default function HeroSection() {
     };
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  }, [isMobile]);
 
   const styles = {
     section: {
       minHeight: '100vh',
       display: 'flex',
       flexDirection: 'column',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       alignItems: 'center',
-      padding: '0 2rem',
+      paddingTop: isMobile ? '3vh' : '20vh', // Mobilde "çooook daha yukarı" olması için 12vh'den 3vh'ye düşürüldü
+      paddingLeft: '2rem',
+      paddingRight: '2rem',
       position: 'relative',
       overflow: 'hidden',
       perspective: '1000px'
@@ -63,14 +69,19 @@ export default function HeroSection() {
       backgroundPosition: `${mousePosition.x * 2}px ${mousePosition.y * 2}px`
     },
     content: {
+      position: 'absolute',
+      top: isMobile ? '15%' : '25%', // Explicitly force vertical position
+      left: '50%',
+      width: '100%',
       textAlign: 'center',
       maxWidth: '900px',
       zIndex: 1,
-      transform: `translate(${mousePosition.x * -1}px, ${mousePosition.y * -1}px)`,
+      // X ekseninde -50% ile ortala, Y ekseni top değeriyle kontrol edilecek. Parallax korundu.
+      transform: `translate(calc(-50% + ${mousePosition.x * -1}px), ${mousePosition.y * -1}px)`,
       transition: 'transform 0.1s ease-out',
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     logoWrapper: {
       width: '160px',
@@ -94,7 +105,7 @@ export default function HeroSection() {
       letterSpacing: '1px'
     },
     title: {
-      fontSize: 'clamp(5rem, 12vw, 9rem)',
+      fontSize: 'clamp(3rem, 12vw, 9rem)',
       lineHeight: '1',
       marginBottom: '1.5rem',
       letterSpacing: '-2px',
@@ -103,55 +114,78 @@ export default function HeroSection() {
       textTransform: 'uppercase'
     },
     subtitle: {
-      fontSize: 'clamp(1.2rem, 2.5vw, 1.5rem)',
+      fontSize: 'clamp(1rem, 2.5vw, 1.5rem)',
       color: 'var(--color-secondary)',
-      marginBottom: '4rem',
+      marginBottom: '1.75rem',
       maxWidth: '700px',
-      margin: '0 auto 4rem auto',
-      fontWeight: '300'
+      margin: '0 auto 3rem auto',
+      fontWeight: '400',
+      padding: '0 0.9rem',
+      textShadow: '0 2px 10px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.6)' // Okunabilirliği artırdık
     },
-    ctaGroup: {
+    ctaRow: {
       display: 'flex',
-      gap: '1.5rem',
+      gap: '1.25rem',
+      flexWrap: 'wrap',
       justifyContent: 'center',
-      flexWrap: 'wrap'
+      alignItems: 'center'
     },
-    btnPrimary: {
-      position: 'relative',
-      display: 'flex',
+    ctaPrimary: {
+      display: 'inline-flex',
       alignItems: 'center',
-      gap: '0.5rem',
-      padding: '1.2rem 2.5rem',
-      background: 'linear-gradient(135deg, var(--color-gold), #e0c870)',
-      color: '#111',
-      border: 'none',
-      borderRadius: '8px',
-      fontSize: '1.1rem',
-      fontWeight: '800',
-      cursor: 'pointer',
-      transition: 'var(--transition-smooth)',
-      overflow: 'hidden',
-      boxShadow: '0 10px 30px rgba(255,236,175,0.3)'
-    },
-    btnSecondary: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '0.5rem',
-      padding: '1.2rem 2.5rem',
-      background: 'rgba(255,255,255,0.03)',
-      color: 'var(--color-text)',
-      border: '1px solid rgba(255,255,255,0.1)',
-      borderRadius: '8px',
-      fontSize: '1.1rem',
+      gap: '0.75rem',
+      padding: '1rem 2.5rem',
+      background: 'var(--color-accent)',
+      color: '#fff',
+      borderRadius: '50px',
       fontWeight: '600',
+      fontSize: '1rem',
+      letterSpacing: '1px',
+      textTransform: 'uppercase',
+      textDecoration: 'none',
+      boxShadow: '0 10px 30px rgba(154, 22, 31, 0.3)',
+      transition: 'all 0.3s ease'
+    },
+    ctaSecondary: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '0.75rem',
+      padding: '1rem 2.5rem',
+      background: 'transparent',
+      color: 'var(--color-text)',
+      border: '1px solid rgba(255, 236, 175, 0.3)',
+      borderRadius: '50px',
+      fontWeight: '600',
+      fontSize: '1rem',
+      letterSpacing: '1px',
+      textTransform: 'uppercase',
+      textDecoration: 'none',
+      transition: 'all 0.3s ease'
+    },
+    scrollIndicator: {
+      position: 'absolute',
+      // Mobilde ve masaüstünde farklı bottom (alt boşluk) değerleri
+      bottom: isMobile ? '3rem' : '1.5rem',
+      left: isMobile ? '45%' : '48%', // Mobilde %45 (aynı kalır), PC'de hafif sol (%48)
+      transform: 'translateX(-50%)',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '0.2rem',
       cursor: 'pointer',
-      transition: 'var(--transition-smooth)',
-      backdropFilter: 'blur(10px)'
+      zIndex: 10
+    },
+    scrollText: {
+      fontSize: '0.75rem',
+      letterSpacing: '3px',
+      textTransform: 'uppercase',
+      color: 'var(--color-secondary)',
+      fontWeight: '600'
     },
     floatingCard1: {
       position: 'absolute',
       top: '20%',
-      left: '10%',
+      left: '15%',
       width: '250px',
       padding: '1.5rem',
       borderRadius: '16px',
@@ -172,12 +206,12 @@ export default function HeroSection() {
     }
   };
 
-    return (
-    <section id="home" style={styles.section}>
-      <div style={styles.gridOverlay} />
+  return (
+    <section id="home" style={styles.section} className="hero-section-container">
+      <div style={styles.gridOverlay} className="hero-grid-overlay" />
 
       {/* 3D Floating Elements */}
-      <div style={styles.floatingCard1} className="glass-card animate-slide-right delay-300">
+      <div style={styles.floatingCard1} className="glass-card luxury-card floating-card-1 animate-slide-right delay-300">
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
           <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--color-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Zap size={20} color="#fff" />
@@ -192,26 +226,72 @@ export default function HeroSection() {
         </div>
       </div>
 
-      <div style={styles.floatingCard2} className="glass-card animate-slide-up delay-500">
-         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-            <span style={{ fontSize: '0.9rem', color: 'var(--color-secondary)' }}>Vibe Check</span>
-            <span style={{ color: 'var(--color-gold)', fontWeight: '800' }}>100%</span>
-         </div>
-         <div style={{ display: 'flex', gap: '0.5rem' }}>
-            {[1, 2, 3, 4, 5].map(i => (
-              <div key={i} style={{ height: '30px', flex: 1, background: `rgba(255, 236, 175, ${0.2 * i})`, borderRadius: '4px' }}></div>
-            ))}
-         </div>
+      <div style={styles.floatingCard2} className="glass-card luxury-card floating-card-2 animate-slide-up delay-500">
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+          <span style={{ fontSize: '0.9rem', color: 'var(--color-secondary)' }}>Vibe Check</span>
+          <span style={{ color: 'var(--color-gold)', fontWeight: '800' }}>100%</span>
+        </div>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          {[1, 2, 3, 4, 5].map(i => (
+            <div key={i} style={{ height: '30px', flex: 1, background: `rgba(255, 236, 175, ${0.2 * i})`, borderRadius: '4px' }}></div>
+          ))}
+        </div>
       </div>
 
-      <div style={{...styles.content, marginTop: '20vh'}}>
+      <div style={styles.content} className="hero-content">
         <h1 style={styles.title} className="animate-slide-up delay-200">
           <StaggeredText text="SUERTA CO." delay={0.2} />
         </h1>
-        
+
         <p style={styles.subtitle} className="animate-slide-up delay-200">
-          Sıradan dijital varlıkları reddediyoruz. Suerta Co. ile markanızı, kullanıcıları içine çeken ve <strong>iz bırakan bir deneyime</strong> dönüştürün.
+          Sıradan dijital varlıkları reddediyoruz. suerta co. ile markanızı, kullanıcıları içine çeken ve <strong style={{ color: '#fff' }}>iz bırakan bir deneyime</strong> dönüştürün.
         </p>
+
+        <div style={styles.ctaRow} className="animate-slide-up delay-300 hero-cta-row">
+          <Link
+            to="/iletisim"
+            style={styles.ctaPrimary}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-3px)';
+              e.currentTarget.style.boxShadow = '0 15px 40px rgba(154, 22, 31, 0.5)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 10px 30px rgba(154, 22, 31, 0.3)';
+            }}
+          >
+            Bize Ulaşın
+          </Link>
+          <Link
+            to="/referanslar"
+            style={styles.ctaSecondary}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'var(--color-gold)';
+              e.currentTarget.style.color = '#111';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent';
+              e.currentTarget.style.color = 'var(--color-text)';
+            }}
+          >
+            Portföyü Gör
+          </Link>
+        </div>
+      </div>
+
+      {/* Premium Scroll Down Indicator */}
+      <div
+        style={styles.scrollIndicator}
+        className="scroll-indicator animate-slide-up delay-500"
+        onClick={() => {
+          const nextSection = document.getElementById('signature');
+          if (nextSection) nextSection.scrollIntoView({ behavior: 'smooth' });
+        }}
+      >
+        <span style={styles.scrollText}>Keşfet</span>
+        <div className="scroll-arrow-anim">
+          <ChevronDown size={24} color="var(--color-gold)" />
+        </div>
       </div>
     </section>
   );

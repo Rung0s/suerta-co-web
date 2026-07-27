@@ -1,16 +1,16 @@
-import React from 'react';
+import { useState } from 'react';
 
 export default function SuertaLogo({ size = 120, animated = false }) {
   const globeSize = size * 0.8;
   const orbitSize = size * 1.2;
 
-  const stars = React.useMemo(() => {
-    return [...Array(15)].map((_, i) => ({
+  const [stars] = useState(() => {
+    return [...Array(15)].map(() => ({
       top: `${Math.random() * 100}%`,
       left: `${Math.random() * 100}%`,
       size: Math.random() * 2 + 1,
     }));
-  }, []);
+  });
 
   return (
     <div style={{ position: 'relative', width: size, height: size }}>
@@ -70,7 +70,7 @@ export default function SuertaLogo({ size = 120, animated = false }) {
         color: '#ffffff', letterSpacing: '0px', zIndex: 4,
         textShadow: '0 4px 10px rgba(0,0,0,0.9)', whiteSpace: 'nowrap'
       }}>
-        SUERTA CO.
+        SUERTA CO<span style={{ color: 'var(--color-accent)' }}>.</span>
       </div>
       
       <style>

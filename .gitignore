@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Yerel deneysel/araç dosyaları
+.netlify/
+fetch_netlify.js
+netlify_output.txt

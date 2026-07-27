@@ -10,6 +10,7 @@ export default function LiquidGlassBlob() {
 
   const [hovered, setHovered] = useState(false);
   const [activeNode, setActiveNode] = useState(null);
+  const [scale, setScale] = useState(1);
 
   const radius = 2.3;
 
@@ -25,7 +26,21 @@ export default function LiquidGlassBlob() {
       };
     };
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setScale(0.45); // Mobilde küreyi daha da küçült
+      } else {
+        setScale(0.85); // Masaüstünde de bir tık küçültebiliriz dengeli olması için
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   // Etkileşimli yörünge durakları
@@ -69,7 +84,7 @@ export default function LiquidGlassBlob() {
       
       {/* İkisi beraber salınım yapsın diye ana Float grubunun içine aldık */}
       <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-        <group ref={interactiveGroupRef}>
+        <group ref={interactiveGroupRef} scale={[scale, scale, scale]}>
           
           <mesh 
             ref={meshRef}
@@ -99,7 +114,7 @@ export default function LiquidGlassBlob() {
             {/* İnce Yörünge Çizgisi (Torus) */}
             <mesh>
               <torusGeometry args={[radius, 0.005, 16, 100]} />
-              <meshBasicMaterial color="rgba(154, 22, 31, 0.5)" transparent={true} />
+              <meshBasicMaterial color="#9a161f" transparent={true} opacity={0.5} />
             </mesh>
 
             {/* Yörünge Üzerindeki Tıklanabilir Duraklar */}
@@ -126,7 +141,7 @@ export default function LiquidGlassBlob() {
                     }}
                   >
                     <sphereGeometry args={[isActive ? 0.06 : 0.03, 16, 16]} />
-                    <meshBasicMaterial color={isActive ? "#ffecaf" : "rgba(255, 236, 175, 0.8)"} />
+                    <meshBasicMaterial color="#ffecaf" transparent={true} opacity={isActive ? 1 : 0.8} />
                     
                     <pointLight distance={2} intensity={isActive ? 0.6 : 0.15} color={isActive ? "#ffecaf" : "#ffffff"} />
                     

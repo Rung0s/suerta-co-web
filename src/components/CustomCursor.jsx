@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function CustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [isTouchDevice] = useState(() => {
+    return typeof window !== 'undefined' && window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+  });
 
   useEffect(() => {
     const updatePosition = (e) => {
@@ -81,10 +85,12 @@ export default function CustomCursor() {
     };
   }, [isModalOpen]);
 
+  if (isTouchDevice) return null;
+
   return (
     <>
-      <div style={styles.ring} />
-      <div style={{...styles.dot, width: isHovering ? '0px' : '8px', height: isHovering ? '0px' : '8px'}} />
+      <div className="custom-cursor-ring" style={styles.ring} />
+      <div className="custom-cursor-dot" style={{...styles.dot, width: isHovering ? '0px' : '8px', height: isHovering ? '0px' : '8px'}} />
     </>
   );
 }

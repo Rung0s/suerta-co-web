@@ -1,5 +1,7 @@
 import React from 'react';
 import useScrollReveal from '../hooks/useScrollReveal';
+import { teamData } from '../data/team';
+import TiltCard from './TiltCard';
 
 export default function TeamSection() {
   const [ref1, isVisible1] = useScrollReveal();
@@ -96,26 +98,7 @@ export default function TeamSection() {
     }
   };
 
-  const team = [
-    {
-      name: 'Sunay',
-      role: 'Frontend / AI Mimarı',
-      desc: 'Pixel-perfect UI ve yapay zeka destekli kod mimarisinin ardındaki zeka.',
-      initial: 'S'
-    },
-    {
-      name: 'Erdem',
-      role: 'Backend / Veritabanı',
-      desc: 'Ölçeklenebilir sistem mimarisi ve kusursuz veri akışı yönetiminin beyni.',
-      initial: 'E'
-    },
-    {
-      name: 'Tunahan',
-      role: 'Ürün / Tasarım',
-      desc: 'Kullanıcı deneyimi, yaratıcı strateji ve estetik vizyonun kalbi.',
-      initial: 'T'
-    }
-  ];
+  const team = teamData;
 
   return (
     <section id="team" style={styles.section}>
@@ -130,20 +113,17 @@ export default function TeamSection() {
         
         <div ref={ref2} style={styles.teamGrid}>
           {team.map((member, idx) => (
-            <div 
+            <TiltCard 
               key={idx} 
               style={styles.memberCard}
+              tiltMax={8}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'var(--color-gold)';
-                e.currentTarget.style.transform = 'translateY(-10px)';
-                e.currentTarget.style.boxShadow = '0 20px 50px rgba(0,0,0,0.6)';
-                e.currentTarget.querySelector('.avatar').style.transform = 'scale(1.1)';
+                const avatar = e.currentTarget.querySelector('.avatar');
+                if (avatar) avatar.style.transform = 'scale(1.1)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.05)';
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = 'none';
-                e.currentTarget.querySelector('.avatar').style.transform = 'scale(1)';
+                const avatar = e.currentTarget.querySelector('.avatar');
+                if (avatar) avatar.style.transform = 'scale(1)';
               }}
             >
               <div style={{...styles.avatarPlaceholder, transition: 'transform 0.4s ease'}} className="avatar">
@@ -152,7 +132,7 @@ export default function TeamSection() {
               <h4 style={styles.memberName}>{member.name}</h4>
               <div style={styles.memberRole}>{member.role}</div>
               <p style={styles.memberDesc}>{member.desc}</p>
-            </div>
+            </TiltCard>
           ))}
         </div>
 

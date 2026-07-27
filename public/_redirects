@@ -1,0 +1,3 @@
+# Netlify SPA fallback — prerender edilmiş statik dosyalar önce sunulur,
+# yalnızca eşleşmeyen yollar client-side router için index.html'e düşer.
+/*    /index.html   200

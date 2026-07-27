@@ -1,115 +1,165 @@
-import React, { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Quote } from 'lucide-react';
+import { Quote, ChevronLeft, ChevronRight } from 'lucide-react';
+import useIsMobile from '../hooks/useIsMobile';
 
 const testimonials = [
   { 
     id: 1, 
-    text: "Otelimizin dijital dönüşümünde Suerta Co. ile çalışmak verdiğimiz en doğru karardı. Komisyonsuz rezervasyon sistemi sayesinde doğrudan satışlarımız %40 arttı. Tasarımın şıklığı gerçekten muazzam.", 
+    text: "Otelimizin dijital dönüşümünde suerta co. ile çalışmak verdiğimiz en doğru karardı. Komisyonsuz rezervasyon sistemi sayesinde doğrudan satışlarımız %40 arttı. Tasarımın şıklığı gerçekten muazzam.", 
     author: "EMSA OTEL", 
     role: "Yönetim Kurulu"
   },
   { 
     id: 2, 
-    text: "Sanat galerimiz için oluşturdukları dijital vitrin tek kelimeyle kusursuz. Eserlerimizi lüks ve zarif bir arayüzle sergilememizi sağladılar. Estetik vizyonları çok üst düzeyde.", 
-    author: "ROASTERS", 
+    text: "Eğitim platformumuzu dijitale taşırken hem öğrenci deneyimi hem de modern bir arayüz arıyorduk. Kusursuz UX tasarımı ve performans odaklı LMS altyapıları ile beklentimizin çok üstüne çıktılar.", 
+    author: "RÖNESANS EDU", 
     role: "Kurucu Ortak"
   },
   { 
     id: 3, 
-    text: "Projelerimizi sergilediğimiz portfolyo sitesi inanılmaz bir hıza ve pürüzsüz animasyonlara kavuştu. Kullanıcı deneyimine (UX) bu kadar odaklanan bir ekiple çalışmak çok keyifliydi.", 
-    author: "NOVA MİMARLIK", 
-    role: "Baş Mimar"
+    text: "Evcil hayvan ürünleri sattığımız e-ticaret sitemiz, hem mobil alışveriş akışında hem de hızında inanılmaz bir seviyeye ulaştı. Özel sepet ve ödeme optimizasyonları dönüşüm oranımızı katladı.", 
+    author: "PAWSEC SHOP", 
+    role: "E-Ticaret Müdürü"
+  },
+  { 
+    id: 4, 
+    text: "Bir dijital ajans olarak kendi portfolyomuzu yansıtırken çok daha seçiciydik. suerta co., aradığımız premium 'dark mode' estetiğini mükemmel animasyonlarla birleştirerek harika bir iş çıkardı.", 
+    author: "ARGÜMAN FABRİKASI", 
+    role: "Ajans Başkanı"
   }
 ];
 
 export default function TestimonialsSection() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [[currentIndex, direction], setCurrentIndex] = useState([0, 0]);
+  const [isPaused, setIsPaused] = useState(false);
+  const isMobile = useIsMobile(768);
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-  };
+  const paginate = useCallback((newDirection) => {
+    setCurrentIndex(([prevIndex]) => {
+      let nextIndex = prevIndex + newDirection;
+      if (nextIndex < 0) nextIndex = testimonials.length - 1;
+      if (nextIndex >= testimonials.length) nextIndex = 0;
+      return [nextIndex, newDirection];
+    });
+  }, []);
 
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
+  // Otomatik dönme (Auto-play) zamanlayıcısı (5 saniyede bir)
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      paginate(1);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [isPaused, paginate]);
+
+  const slideVariants = {
+    enter: (dir) => ({
+      x: dir > 0 ? 120 : -120,
+      opacity: 0,
+      scale: 0.95,
+      filter: 'blur(8px)'
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      scale: 1,
+      filter: 'blur(0px)',
+      transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] }
+    },
+    exit: (dir) => ({
+      x: dir < 0 ? 120 : -120,
+      opacity: 0,
+      scale: 0.95,
+      filter: 'blur(8px)',
+      transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] }
+    })
   };
 
   const styles = {
     section: {
-      backgroundColor: 'transparent',
-      padding: '10rem 2rem',
       position: 'relative',
+      padding: isMobile ? '5rem 1rem' : '7rem 2rem',
+      background: 'linear-gradient(to bottom, #0a0a0c 0%, rgba(255, 255, 255, 0.01) 50%, #0a0a0c 100%)',
       overflow: 'hidden',
       zIndex: 1
     },
     container: {
       maxWidth: '1200px',
       margin: '0 auto',
-      position: 'relative'
+      position: 'relative',
+      width: '100%'
     },
     header: {
       textAlign: 'center',
-      marginBottom: '4rem'
+      marginBottom: isMobile ? '3.5rem' : '5rem',
+      position: 'relative',
+      zIndex: 20
     },
     title: {
-      fontSize: 'clamp(2.5rem, 5vw, 4rem)',
+      fontSize: 'clamp(2.2rem, 4vw, 3.8rem)',
       fontFamily: 'var(--font-main)',
       color: 'var(--color-text)',
-      marginBottom: '1rem',
+      marginBottom: '0.8rem',
       fontWeight: '800',
-      textTransform: 'uppercase'
+      textTransform: 'uppercase',
+      letterSpacing: '-0.5px'
     },
     subtitle: {
       color: 'var(--color-gold)',
-      letterSpacing: '2px',
+      letterSpacing: '3px',
       textTransform: 'uppercase',
-      fontSize: '0.9rem'
+      fontSize: '0.9rem',
+      fontWeight: '600'
     },
     sliderWrapper: {
       position: 'relative',
-      height: '500px',
+      minHeight: isMobile ? '420px' : '320px',
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
+      width: '100%',
+      maxWidth: '850px',
+      margin: '0 auto',
     },
     card: {
-      position: 'absolute',
       width: '100%',
-      maxWidth: '700px',
-      padding: '4rem 3rem',
+      padding: isMobile ? '2.5rem 1.5rem' : '3.5rem 4rem',
+      boxSizing: 'border-box',
       borderRadius: '30px',
-      background: 'rgba(20, 20, 20, 0.4)', // Cam taban
-      border: '1px solid rgba(255, 255, 255, 0.05)',
-      boxShadow: '0 30px 60px rgba(0,0,0,0.5)',
+      background: 'rgba(255, 255, 255, 0.02)',
+      border: '1px solid rgba(255, 255, 255, 0.08)',
+      boxShadow: '0 30px 60px rgba(0,0,0,0.6)',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       textAlign: 'center',
-      // Backdrop filter is applied via motion style to animate blur
+      position: 'relative'
     },
     quoteIcon: {
-      color: 'var(--color-accent)', // Bordo
-      marginBottom: '2rem',
+      color: 'var(--color-accent)', 
+      marginBottom: '1.5rem',
       opacity: 0.8
     },
     text: {
-      fontSize: 'clamp(1.1rem, 2vw, 1.4rem)',
+      fontSize: isMobile ? '1.05rem' : '1.25rem',
       lineHeight: '1.8',
       fontFamily: 'var(--font-main)',
       color: 'var(--color-text)',
-      marginBottom: '3rem',
+      marginBottom: '2.5rem',
       fontStyle: 'italic',
-      fontWeight: '300'
+      fontWeight: '300',
+      maxWidth: '700px'
     },
     authorBox: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      gap: '0.5rem'
+      gap: '0.4rem'
     },
     authorName: {
       fontFamily: 'var(--font-main)',
-      fontSize: '1.5rem',
+      fontSize: isMobile ? '1.3rem' : '1.5rem',
       fontWeight: '800',
       color: 'var(--color-gold)',
       letterSpacing: '2px',
@@ -123,24 +173,44 @@ export default function TestimonialsSection() {
     },
     controls: {
       display: 'flex',
+      alignItems: 'center',
       justifyContent: 'center',
-      gap: '2rem',
-      marginTop: '3rem'
+      gap: '1.5rem',
+      marginTop: isMobile ? '2.5rem' : '3.5rem',
+      position: 'relative',
+      zIndex: 20
     },
-    button: {
-      background: 'transparent',
-      border: '1px solid rgba(255, 255, 255, 0.2)',
+    navButton: {
+      width: '46px',
+      height: '46px',
       borderRadius: '50%',
-      width: '60px',
-      height: '60px',
+      background: 'rgba(255, 255, 255, 0.05)',
+      border: '1px solid rgba(255, 255, 255, 0.15)',
+      color: 'var(--color-text)',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      color: 'var(--color-text)',
       cursor: 'pointer',
-      transition: 'all 0.3s ease'
+      transition: 'all 0.3s ease',
+      outline: 'none'
+    },
+    dotsContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.8rem'
+    },
+    dot: {
+      height: '10px',
+      borderRadius: '5px',
+      cursor: 'pointer',
+      transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+      border: 'none',
+      outline: 'none',
+      padding: 0
     }
   };
+
+  const currentTestimonial = testimonials[currentIndex];
 
   return (
     <section style={styles.section} id="testimonials">
@@ -151,89 +221,95 @@ export default function TestimonialsSection() {
           <div style={styles.subtitle}>Birlikte Büyüdüğümüz Markalar</div>
         </div>
 
-        <div style={styles.sliderWrapper}>
-          <AnimatePresence initial={false}>
-            {testimonials.map((t, index) => {
-              // Göreceli konumu hesapla: 0 (aktif), -1 (sol), 1 (sağ)
-              let offset = index - currentIndex;
-              if (offset < -1) offset += testimonials.length;
-              if (offset > 1) offset -= testimonials.length;
-
-              const isActive = offset === 0;
-
-              return (
-                <motion.div
-                  key={t.id}
-                  initial={{ 
-                    x: offset > 0 ? 300 : -300, 
-                    opacity: 0, 
-                    scale: 0.8 
-                  }}
-                  animate={{
-                    x: offset * 400, // Sağdaki 400px sağa, soldaki 400px sola
-                    opacity: isActive ? 1 : 0.4,
-                    scale: isActive ? 1 : 0.85,
-                    zIndex: isActive ? 10 : 5,
-                    filter: isActive ? 'blur(0px)' : 'blur(10px)',
-                    backdropFilter: isActive ? 'blur(20px)' : 'blur(5px)'
-                  }}
-                  transition={{ 
-                    duration: 0.6, 
-                    ease: [0.16, 1, 0.3, 1] 
-                  }}
-                  style={{
-                    ...styles.card,
-                    borderTop: isActive ? '2px solid var(--color-accent)' : '1px solid rgba(255, 255, 255, 0.05)',
-                    // Eğer aktif değilse arkadaki kartların tıklamalarını devre dışı bırak
-                    pointerEvents: isActive ? 'auto' : 'none'
-                  }}
-                >
-                  <Quote size={40} style={styles.quoteIcon} />
-                  <p style={styles.text}>"{t.text}"</p>
-                  
-                  <div style={styles.authorBox}>
-                    <div style={styles.authorName}>{t.author}</div>
-                    <div style={styles.authorRole}>{t.role}</div>
-                  </div>
-                </motion.div>
-              );
-            })}
+        <div 
+          style={styles.sliderWrapper}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+        >
+          <AnimatePresence custom={direction} mode="wait">
+            <motion.div
+              key={currentIndex}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="luxury-card"
+              style={styles.card}
+            >
+              <Quote size={36} style={styles.quoteIcon} />
+              <p style={styles.text}>"{currentTestimonial.text}"</p>
+              
+              <div style={styles.authorBox}>
+                <div style={styles.authorName}>{currentTestimonial.author}</div>
+                <div style={styles.authorRole}>{currentTestimonial.role}</div>
+              </div>
+            </motion.div>
           </AnimatePresence>
         </div>
 
-        {/* Kontroller */}
+        {/* Kontroller: Oklar ve Gösterge Noktaları */}
         <div style={styles.controls}>
           <button 
-            style={styles.button} 
-            onClick={handlePrev}
+            style={styles.navButton}
+            onClick={() => paginate(-1)}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'var(--color-accent)';
-              e.currentTarget.style.borderColor = 'var(--color-accent)';
-              e.currentTarget.style.color = '#fff';
+              e.currentTarget.style.borderColor = 'var(--color-gold)';
+              e.currentTarget.style.background = 'rgba(255, 236, 175, 0.1)';
+              e.currentTarget.style.color = 'var(--color-gold)';
+              e.currentTarget.style.transform = 'scale(1.08)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'transparent';
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
               e.currentTarget.style.color = 'var(--color-text)';
+              e.currentTarget.style.transform = 'scale(1)';
             }}
+            aria-label="Önceki Yorum"
           >
-            <ChevronLeft size={24} />
+            <ChevronLeft size={22} />
           </button>
+
+          <div style={styles.dotsContainer}>
+            {testimonials.map((t, idx) => {
+              const isActive = idx === currentIndex;
+              return (
+                <button
+                  key={t.id}
+                  onClick={() => {
+                    const dir = idx > currentIndex ? 1 : -1;
+                    setCurrentIndex([idx, dir]);
+                  }}
+                  style={{
+                    ...styles.dot,
+                    width: isActive ? '32px' : '10px',
+                    background: isActive ? 'var(--color-gold)' : 'rgba(255, 255, 255, 0.2)',
+                    boxShadow: isActive ? '0 0 15px rgba(255, 236, 175, 0.6)' : 'none'
+                  }}
+                  aria-label={`${t.author} Yorumu`}
+                />
+              );
+            })}
+          </div>
+
           <button 
-            style={styles.button} 
-            onClick={handleNext}
+            style={styles.navButton}
+            onClick={() => paginate(1)}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'var(--color-accent)';
-              e.currentTarget.style.borderColor = 'var(--color-accent)';
-              e.currentTarget.style.color = '#fff';
+              e.currentTarget.style.borderColor = 'var(--color-gold)';
+              e.currentTarget.style.background = 'rgba(255, 236, 175, 0.1)';
+              e.currentTarget.style.color = 'var(--color-gold)';
+              e.currentTarget.style.transform = 'scale(1.08)';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'transparent';
-              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.15)';
+              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
               e.currentTarget.style.color = 'var(--color-text)';
+              e.currentTarget.style.transform = 'scale(1)';
             }}
+            aria-label="Sonraki Yorum"
           >
-            <ChevronRight size={24} />
+            <ChevronRight size={22} />
           </button>
         </div>
 

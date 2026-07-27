@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="glowGold" cx="82%" cy="18%" r="60%">
+      <stop offset="0%" stop-color="#FFECAF" stop-opacity="0.28"/>
+      <stop offset="70%" stop-color="#FFECAF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowCrimson" cx="12%" cy="90%" r="65%">
+      <stop offset="0%" stop-color="#9A161F" stop-opacity="0.45"/>
+      <stop offset="70%" stop-color="#9A161F" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="#0a0a0c"/>
+  <rect width="1200" height="630" fill="url(#glowCrimson)"/>
+  <rect width="1200" height="630" fill="url(#glowGold)"/>
+  <rect x="1" y="1" width="1198" height="628" fill="none" stroke="#FFECAF" stroke-opacity="0.12" stroke-width="2"/>
+  <text x="90" y="300" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="150" fill="#FFECAF" letter-spacing="-2">suerta co.</text>
+  <text x="96" y="380" font-family="Arial, Helvetica, sans-serif" font-size="46" font-weight="700" fill="#F2EDE4" letter-spacing="2">MARKANIZIN ŞANSI</text>
+  <text x="96" y="470" font-family="Arial, Helvetica, sans-serif" font-size="30" fill="#8A93A2">Web Tasarım · E-Ticaret · Operasyonel Sistemler · Yapay Zeka</text>
+  <text x="96" y="560" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="600" fill="#FFECAF" letter-spacing="1">suerta.co</text>
+</svg>

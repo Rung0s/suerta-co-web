@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import MagneticButton from './MagneticButton';
 
 export default function Footer() {
@@ -60,11 +61,11 @@ export default function Footer() {
       position: 'relative'
     },
     giantText: {
-      fontSize: 'clamp(5rem, 15vw, 18rem)',
+      fontSize: 'clamp(2.5rem, 12vw, 18rem)',
       fontFamily: 'var(--font-hero)',
       fontWeight: '900',
       lineHeight: '0.8',
-      letterSpacing: '-2vw',
+      letterSpacing: '-1vw',
       color: 'var(--color-text)',
       opacity: '0.9',
       margin: 0,
@@ -99,7 +100,7 @@ export default function Footer() {
   };
 
   return (
-    <footer style={styles.footer}>
+    <footer style={styles.footer} className="footer-section">
       <style>
         {`
           .footer-link:hover {
@@ -110,47 +111,74 @@ export default function Footer() {
             background: var(--color-text) !important;
             color: #000 !important;
           }
+          @media (max-width: 768px) {
+            .footer-section {
+              padding: 4rem 1.5rem 2rem 1.5rem !important;
+            }
+            .footer-top-row {
+              flex-direction: column !important;
+              gap: 3rem !important;
+              align-items: flex-start !important;
+            }
+            .footer-col {
+              gap: 1rem !important;
+              align-items: flex-start !important;
+              width: 100% !important;
+            }
+            .footer-col-title {
+              margin-bottom: 0.5rem !important;
+              text-align: left !important;
+            }
+            .footer-link {
+              text-align: left !important;
+              justify-content: flex-start !important;
+            }
+            .footer-bottom-row {
+              flex-direction: column !important;
+              gap: 2rem !important;
+              text-align: center !important;
+            }
+            .footer-giant-text {
+              margin-top: 3rem !important;
+            }
+          }
         `}
       </style>
       <div style={styles.container}>
         
         {/* Üst Kısım: Menüler */}
-        <div style={styles.topRow}>
-          <div style={styles.col}>
-            <div style={styles.colTitle}>Navigasyon</div>
-            <a href="#services" style={styles.link} className="footer-link">Uzmanlık Alanlarımız</a>
-            <a href="#about" style={styles.link} className="footer-link">Vizyon</a>
-            <a href="#references" style={styles.link} className="footer-link">Referanslar</a>
+        <div style={styles.topRow} className="footer-top-row">
+          <div style={styles.col} className="footer-col">
+            <div style={styles.colTitle} className="footer-col-title">Navigasyon</div>
+            <Link to="/hizmetlerimiz" style={styles.link} className="footer-link">Uzmanlık Alanlarımız</Link>
+            <Link to="/hakkimizda" style={styles.link} className="footer-link">Vizyon</Link>
+            <Link to="/referanslar" style={styles.link} className="footer-link">Referanslar</Link>
           </div>
           
-          <div style={styles.col}>
-            <div style={styles.colTitle}>Sosyal Ağlar</div>
+          <div style={styles.col} className="footer-col">
+            <div style={styles.colTitle} className="footer-col-title">Sosyal Ağlar</div>
             <a href="https://instagram.com/suerta.co" target="_blank" rel="noreferrer" style={styles.link} className="footer-link">Instagram <ArrowUpRight size={18} /></a>
-            <a href="#" style={styles.link} className="footer-link">Twitter / X <ArrowUpRight size={18} /></a>
-            <a href="#" style={styles.link} className="footer-link">LinkedIn <ArrowUpRight size={18} /></a>
           </div>
 
-          <div style={styles.col}>
-            <div style={styles.colTitle}>İletişim</div>
-            <a href="mailto:hello@suerta.co" style={styles.link} className="footer-link">hello@suerta.co</a>
-            <span style={{...styles.link, cursor: 'default', opacity: 0.7}}>Eskişehir, Türkiye</span>
+          <div style={styles.col} className="footer-col">
+            <div style={styles.colTitle} className="footer-col-title">İletişim</div>
+            <a href="mailto:suerta.info@gmail.com" style={styles.link} className="footer-link">suerta.info@gmail.com</a>
+            <span style={{...styles.link, cursor: 'default', opacity: 0.7}} className="footer-link">Eskişehir, Türkiye</span>
           </div>
         </div>
 
         {/* Devasa Tipografi */}
-        <div style={styles.giantTextContainer}>
+        <div style={styles.giantTextContainer} className="footer-giant-text">
           <h1 style={styles.giantText}>SUERTA<span style={{marginLeft: '1.5vw'}}>CO</span><span style={{color: 'var(--color-accent)'}}>.</span></h1>
         </div>
 
         {/* Alt Bilgiler */}
-        <div style={styles.bottomRow}>
+        <div style={styles.bottomRow} className="footer-bottom-row">
           <div style={styles.copyright}>
-            &copy; {new Date().getFullYear()} Suerta Co. Dijital Lüks. Tüm hakları saklıdır.
+            &copy; {new Date().getFullYear()} suerta co. Dijital Lüks. Tüm hakları saklıdır.
           </div>
-          <MagneticButton>
-            <button style={styles.backToTop} className="back-to-top" onClick={scrollToTop}>
-              Yukarı Dön
-            </button>
+          <MagneticButton style={styles.backToTop} className="back-to-top" onClick={scrollToTop}>
+            Yukarı Dön
           </MagneticButton>
         </div>
 

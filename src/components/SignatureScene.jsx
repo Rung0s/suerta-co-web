@@ -1,41 +1,6 @@
-import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import React from 'react';
 
 export default function SignatureScene() {
-  const containerRef = useRef(null);
-  const signatureRef = useRef(null);
-  const textRef = useRef(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 80%", // Animasyon daha erken başlar
-          end: "center 40%", // Animasyon sayfanın ortalarında tamamen bitmiş olur
-          scrub: 0.5, // Gecikme azaltıldı, daha tepkisel
-        }
-      });
-
-      // El yazısının soldan sağa çizilme efekti (Clip Path animasyonu)
-      tl.fromTo(signatureRef.current, 
-        { clipPath: "polygon(0 0, 0 0, 0 100%, 0 100%)" },
-        { clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)", duration: 1.5, ease: "power1.inOut" }
-      )
-      // Metnin devasa yükselişi
-      .fromTo(textRef.current, 
-        { y: 100, opacity: 0, scale: 0.8 }, 
-        { y: 0, opacity: 1, scale: 1, duration: 1.5, ease: "back.out(1.7)" }, 
-        "-=0.5"
-      );
-    }, containerRef);
-
-    return () => ctx.revert();
-  }, []);
-
   const styles = {
     section: {
       minHeight: '100vh',
@@ -53,18 +18,17 @@ export default function SignatureScene() {
       position: 'relative'
     },
     signatureText: {
-      fontFamily: "'Great Vibes', cursive",
-      fontSize: 'clamp(5rem, 15vw, 12rem)',
+      fontFamily: 'var(--font-signature)',
+      fontSize: 'clamp(10rem, 15vw, 13rem)',
       color: 'var(--color-gold)',
       lineHeight: '1',
       fontWeight: '400',
       textShadow: '0 0 20px rgba(255, 236, 175, 0.3)',
-      // Clip path animasyonu için gerekli ayarlar
       paddingRight: '1rem', // Son harfin kesilmemesi için
       display: 'inline-block'
     },
     text: {
-      fontSize: 'clamp(2.5rem, 8vw, 6rem)',
+      fontSize: 'clamp(3rem, 8vw, 6rem)',
       fontFamily: 'var(--font-heading)',
       color: 'var(--color-text)',
       textAlign: 'center',
@@ -82,20 +46,44 @@ export default function SignatureScene() {
   };
 
   return (
-    <section ref={containerRef} style={styles.section}>
+    <section id="signature" style={styles.section} className="signature-scene">
       <style>
         {`
-          @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+          /* El yazısı soldan sağa çizilir */
+          @keyframes sigDraw {
+            from { clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+            to   { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+          }
+          /* Başlık aşağıdan yükselir */
+          @keyframes sigRise {
+            from { opacity: 0; transform: translateY(60px) scale(0.92); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+          }
+          .sig-draw {
+            animation: sigDraw 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+          }
+          .sig-rise {
+            animation: sigRise 1s cubic-bezier(0.34, 1.56, 0.64, 1) 0.4s both;
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .sig-draw, .sig-rise { animation: none; }
+          }
+          @media (max-width: 768px) {
+            .signature-scene {
+              min-height: 50vh !important;
+              padding: 3rem 1.5rem !important;
+            }
+          }
         `}
       </style>
       <div style={styles.signatureContainer}>
-        <div ref={signatureRef} style={styles.signatureText}>
+        <div className="sig-draw" style={styles.signatureText}>
           suerta
         </div>
       </div>
-      
-      <h2 ref={textRef} style={styles.text}>
-        Markanızın <br/>
+
+      <h2 className="sig-rise" style={styles.text}>
+        Markanızın <br />
         <span style={styles.highlight}>Şansı</span>
       </h2>
     </section>

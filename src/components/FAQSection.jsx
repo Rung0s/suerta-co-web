@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const faqs = [
@@ -15,12 +15,22 @@ const faqs = [
   {
     id: 3,
     question: "SADECE TASARIM MI YAPIYORSUNUZ?",
-    answer: "Hayır, Suerta Co. tam kapsamlı bir dijital ajanstır. Konsept tasarımdan başlayarak, yazılım geliştirme, yapay zeka entegrasyonları ve performans optimizasyonlarına kadar uçtan uca hizmet veriyoruz."
+    answer: "Hayır, suerta co. tam kapsamlı bir dijital ajanstır. Konsept tasarımdan başlayarak, yazılım geliştirme, yapay zeka entegrasyonları ve performans optimizasyonlarına kadar uçtan uca hizmet veriyoruz."
   },
   {
     id: 4,
     question: "NE KADAR SÜREDE TESLİM EDİYORSUNUZ?",
     answer: "Projenin kapsamına göre değişmekle birlikte, standart bir kurumsal web sitesi veya butik e-ticaret platformu ortalama 4 ila 8 hafta içerisinde kusursuz bir şekilde yayına hazır hale gelir."
+  },
+  {
+    id: 5,
+    question: "BAŞKA İLLERE PROJE ÜRETİYOR MUSUNUZ?",
+    answer: "Evet, Samsun, İstanbul ve Eskişehir başta olmak üzere Türkiye'nin her şehrine ve globale proje üretiyoruz. Kusursuz online iletişim ve proje yönetim araçlarımız sayesinde mesafe fark etmeksizin süreci şeffafça yürütüyoruz."
+  },
+  {
+    id: 6,
+    question: "SİTEMİ KENDİM GÜNCELLEYEBİLİR MİYİM?",
+    answer: "Kesinlikle. Geliştirdiğimiz tüm projelerde, kod bilginiz olmadan da metin, görsel ve ürün değişikliklerini kolayca yapabileceğiniz kullanıcı dostu, güvenli yönetim panelleri (CMS) sunuyor ve teslimatta eğitimini veriyoruz."
   }
 ];
 
@@ -53,13 +63,14 @@ export default function FAQSection() {
       letterSpacing: '2px'
     },
     accordionItem: {
-      background: 'rgba(255, 255, 255, 0.02)',
-      backdropFilter: 'blur(10px)',
-      border: '1px solid rgba(255, 255, 255, 0.05)',
+      backdropFilter: 'blur(40px)',
+      WebkitBackdropFilter: 'blur(40px)',
+      border: '1px solid rgba(255, 255, 255, 0.08)',
       borderRadius: '20px',
       marginBottom: '1rem',
       overflow: 'hidden',
-      transition: 'background 0.3s ease'
+      transition: 'background 0.3s ease',
+      boxShadow: '0 8px 32px 0 rgba(0, 0, 0, 0.3)'
     },
     questionHeader: {
       width: '100%',
@@ -117,7 +128,7 @@ export default function FAQSection() {
                 key={faq.id} 
                 style={{
                   ...styles.accordionItem,
-                  background: isOpen ? 'rgba(255, 255, 255, 0.05)' : 'rgba(255, 255, 255, 0.02)'
+                  background: isOpen ? 'rgba(255, 255, 255, 0.08)' : 'rgba(255, 255, 255, 0.03)'
                 }}
               >
                 <button 
