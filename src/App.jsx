@@ -153,7 +153,11 @@ function AnimatedRoutes() {
 }
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  // Prerender (puppeteer) sırasında navigator.webdriver true olur. Bu modda
+  // ağır 3D sahneyi, preloader'ı ve Lenis'i atlıyoruz: build çok daha hızlı olur
+  // ve gerçek kullanıcı yine tam deneyimi alır (React istemcide sıfırdan render eder).
+  const isPrerender = typeof navigator !== 'undefined' && navigator.webdriver === true;
+  const [isLoading, setIsLoading] = useState(!isPrerender);
   const [showCanvas, setShowCanvas] = useState(true);
   const isMobile = useIsMobile(768);
 
@@ -169,6 +173,8 @@ function App() {
   }, []);
 
   useEffect(() => {
+    // Prerender modunda Lenis'i başlatma (gereksiz rAF yükü olmasın)
+    if (isPrerender) return;
     // Lenis Smooth Scrolling
     const lenis = new Lenis({
       duration: 1.2,
@@ -222,9 +228,11 @@ function App() {
             transition: 'opacity 1s ease, visibility 1s ease'
           }}
         >
-          <Canvas camera={{ position: [0, 0, 5], fov: 45 }} frameloop={showCanvas ? 'always' : 'never'}>
-            <LiquidGlassBlob />
-          </Canvas>
+          {!isPrerender && (
+            <Canvas camera={{ position: [0, 0, 5], fov: 45 }} frameloop={showCanvas ? 'always' : 'never'}>
+              <LiquidGlassBlob />
+            </Canvas>
+          )}
         </div>
 
         <div style={{ position: 'relative', zIndex: 1 }}>

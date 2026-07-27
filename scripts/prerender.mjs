@@ -79,14 +79,21 @@ async function run() {
     for (const route of ROUTES) {
       const page = await browser.newPage();
       await page.setViewport({ width: 1280, height: 900 });
-      await page.goto(`http://localhost:${PORT}${route}`, { waitUntil: 'networkidle0', timeout: 45000 });
-      // Preloader bitip içerik (main) gelene ve metin dolana kadar bekle
+      // SEO için gereksiz ağır kaynakları (görsel/font/medya) engelle → çok daha hızlı
+      await page.setRequestInterception(true);
+      page.on('request', (req) => {
+        const type = req.resourceType();
+        if (type === 'image' || type === 'media' || type === 'font') req.abort();
+        else req.continue();
+      });
+      await page.goto(`http://localhost:${PORT}${route}`, { waitUntil: 'domcontentloaded', timeout: 45000 });
+      // İçerik (main) gelene ve metin dolana kadar bekle (prerender modunda preloader yok)
       await page.waitForFunction(
         () => document.querySelector('main') && document.body.innerText.replace(/\s/g, '').length > 400,
         { timeout: 30000 }
       );
       // Seo useEffect'inin head etiketlerini yazması için kısa bekleme
-      await new Promise((r) => setTimeout(r, 700));
+      await new Promise((r) => setTimeout(r, 250));
 
       let html = await page.content();
       // React'in yeniden render sırasında flash'ı azaltmak için body'yi tekrar temizlemesi normaldir.
