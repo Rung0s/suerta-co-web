@@ -373,6 +373,23 @@ a {
   }
 }
 
+/* ==========================================================================
+   MOBİL PERFORMANS: pahalı katmanları hafiflet (jank önleme)
+   - Dev blur'lu (140px) ışık huzmelerinin sürekli dönüş animasyonu, mobilde
+     her karede kocaman bir katmanı yeniden derleyip takılmaya yol açıyor.
+     Mobilde animasyonu durdur, blur'u ve maliyeti düşür.
+   ========================================================================== */
+@media (max-width: 768px) {
+  .ambient-glow {
+    animation: none !important;
+    filter: blur(70px);
+    opacity: 0.14;
+  }
+  .noise-overlay {
+    opacity: 0.015;
+  }
+}
+
 /* Premium Scroll Indicator Animation */
 .scroll-indicator {
   transition: opacity 0.3s ease;

@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { referencesData, categories } from '../data/references';
+import useIsMobile from '../hooks/useIsMobile';
 
 export default function ReferencesPage() {
   const [activeCategory, setActiveCategory] = useState("Tümü");
   const [selectedProject] = useState(null);
+  const navigate = useNavigate();
+  const isMobile = useIsMobile(768);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -162,20 +166,24 @@ export default function ReferencesPage() {
         ))}
       </div>
 
-      <motion.div layout style={styles.grid}>
+      <motion.div {...(isMobile ? {} : { layout: true })} style={styles.grid}>
         <AnimatePresence>
           {filteredData.map(item => (
             <motion.div
-              layoutId={`card-${item.id}`}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.4 }}
+              // Mobilde layout animasyonlarını (pahalı ölçüm/yeniden derleme) atla,
+              // sadece hafif bir opacity geçişi bırak → akıcı kaydırma.
+              {...(isMobile
+                ? { initial: { opacity: 0 }, animate: { opacity: 1 }, transition: { duration: 0.3 } }
+                : {
+                    layoutId: `card-${item.id}`,
+                    initial: { opacity: 0, scale: 0.9 },
+                    animate: { opacity: 1, scale: 1 },
+                    exit: { opacity: 0, scale: 0.9 },
+                    transition: { duration: 0.4 },
+                  })}
               key={item.id}
               className="luxury-card"
-              onClick={() => {
-                window.location.href = `/referanslar/${item.id}`;
-              }}
+              onClick={() => navigate(`/referanslar/${item.id}`)}
               style={{...styles.card, textDecoration: 'none'}}
               onMouseEnter={(e) => {
                 e.currentTarget.querySelector('.card-img').style.transform = 'scale(1.08)';

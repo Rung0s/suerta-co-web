@@ -228,7 +228,7 @@ function App() {
             transition: 'opacity 1s ease, visibility 1s ease'
           }}
         >
-          {!isPrerender && (
+          {!isPrerender && !isMobile && (
             <Canvas camera={{ position: [0, 0, 5], fov: 45 }} frameloop={showCanvas ? 'always' : 'never'}>
               <LiquidGlassBlob />
             </Canvas>
