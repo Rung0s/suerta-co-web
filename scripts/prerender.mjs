@@ -7,7 +7,24 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { extname, join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import puppeteer from 'puppeteer';
+
+// Ortama göre tarayıcı: Vercel/serverless'te @sparticuz/chromium (sistem
+// kütüphanesi gerektirmeyen Chromium), yerelde puppeteer'ın kendi Chromium'u.
+const IS_SERVERLESS = !!(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME || process.env.NETLIFY);
+
+async function launchBrowser() {
+  if (IS_SERVERLESS) {
+    const chromium = (await import('@sparticuz/chromium')).default;
+    const puppeteer = (await import('puppeteer-core')).default;
+    return puppeteer.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+    });
+  }
+  const puppeteer = (await import('puppeteer')).default;
+  return puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+}
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST = join(__dirname, '..', 'dist');
@@ -56,7 +73,7 @@ function startServer() {
 
 async function run() {
   const server = await startServer();
-  const browser = await puppeteer.launch({ headless: 'new', args: ['--no-sandbox'] });
+  const browser = await launchBrowser();
   let ok = 0;
   try {
     for (const route of ROUTES) {
@@ -89,4 +106,9 @@ async function run() {
   console.log(`\nPrerender tamamlandı: ${ok}/${ROUTES.length} route.`);
 }
 
-run().catch((e) => { console.error('Prerender HATASI:', e); process.exit(1); });
+// Prerender başarısız olsa bile deploy'u düşürme: SPA yine yayınlanır.
+// (Tarayıcı başlatılamazsa statik HTML üretilmez ama site çalışır.)
+run().catch((e) => {
+  console.warn('\n⚠ Prerender atlandı (build devam ediyor):', e.message);
+  process.exit(0);
+});
