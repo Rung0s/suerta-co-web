@@ -167,8 +167,8 @@ export default function HeroSection() {
     },
     scrollIndicator: {
       position: 'absolute',
-      // Mobilde ve masaüstünde farklı bottom (alt boşluk) değerleri
-      bottom: isMobile ? '3rem' : '1.5rem',
+      // Mobilde "Bize Ulaşın" ile çakışmaması için daha aşağıya alındı
+      bottom: isMobile ? '0.5rem' : '1.5rem',
       left: isMobile ? '45%' : '48%', // Mobilde %45 (aynı kalır), PC'de hafif sol (%48)
       transform: 'translateX(-50%)',
       display: 'flex',
