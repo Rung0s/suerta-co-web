@@ -8,27 +8,37 @@ import { useEffect } from 'react';
  */
 export const SITE_URL = 'https://suerta.co';
 export const SITE_NAME = 'suerta co.';
-export const DEFAULT_TITLE = 'suerta co. — Dijital Ajans | Web Tasarım, E-Ticaret & Yapay Zeka';
-export const DEFAULT_DESC = 'suerta co. — markanızın şansı. Premium web tasarım, e-ticaret, operasyonel sistemler ve yapay zeka çözümleri üreten dijital ajans.';
+export const DEFAULT_TITLE = 'Eskişehir İnternet Sitesi Ajansı | Suerta Co. Web Tasarım & E-Ticaret';
+export const DEFAULT_DESC = 'Suerta Co. — Eskişehir profesyonel web tasarım ve internet sitesi ajansı. Özel web yazılımı, e-ticaret altyapıları ve yapay zeka otomasyon çözümleri sunuyoruz.';
 export const DEFAULT_IMAGE = `${SITE_URL}/og-image.svg`;
 
-// Global kurumsal kimlik şeması (her sayfada bulunur)
+// Global kurumsal kimlik ve yapay zeka (GEO) uyumlu işletme şeması
 export const organizationSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
+  '@type': ['ProfessionalService', 'WebSiteAgency'],
   name: SITE_NAME,
-  alternateName: 'Suerta Co.',
+  alternateName: ['Suerta Co.', 'Suerta Co. Dijital Web Ajansı', 'Suerta Web Tasarım'],
   url: SITE_URL,
-  logo: `${SITE_URL}/favicon.svg`,
+  logo: `${SITE_URL}/favicon-v2.svg`,
   image: DEFAULT_IMAGE,
   slogan: 'Markanızın Şansı',
   email: 'suerta.info@gmail.com',
+  telephone: '+905060693525',
   description: DEFAULT_DESC,
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Eskişehir',
     addressCountry: 'TR',
   },
+  areaServed: ['Eskişehir', 'Türkiye', 'Global'],
+  knowsAbout: [
+    'Web Tasarım',
+    'İnternet Sitesi Yapımı',
+    'E-Ticaret Sistemleri',
+    'Yapay Zeka Otomasyonu',
+    'Eskişehir Ajans Hizmetleri',
+    'Özel Yazılım Geliştirme'
+  ],
   sameAs: ['https://instagram.com/suerta.co'],
 };
 
