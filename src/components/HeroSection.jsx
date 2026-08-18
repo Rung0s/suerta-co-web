@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { Zap, ChevronDown } from 'lucide-react';
+import { Zap, ChevronDown, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import StaggeredText from './StaggeredText';
 import useIsMobile from '../hooks/useIsMobile';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function HeroSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const isMobile = useIsMobile(768);
+  const { t, isEN } = useLanguage();
 
   useEffect(() => {
     // Mobil cihazlarda (dokunmatik ekranlarda) tıklamaların yazıyı kaydırmasını engellemek için parallax'ı devre dışı bırak
@@ -266,7 +268,15 @@ export default function HeroSection() {
         </h1>
 
         <p style={styles.subtitle} className="animate-slide-up delay-200">
-          Sıradan dijital varlıkları reddediyoruz. suerta co. ile markanızı, kullanıcıları içine çeken ve <strong style={{ color: '#fff' }}>iz bırakan bir deneyime</strong> dönüştürün.
+          {isEN ? (
+            <>
+              Rejecting generic digital presence. Transform your brand with Suerta Co. into an <strong style={{ color: '#fff' }}>unforgettable, high-conversion experience</strong>.
+            </>
+          ) : (
+            <>
+              Sıradan dijital varlıkları reddediyoruz. suerta co. ile markanızı, kullanıcıları içine çeken ve <strong style={{ color: '#fff' }}>iz bırakan bir deneyime</strong> dönüştürün.
+            </>
+          )}
         </p>
 
         <div style={styles.ctaRow} className="animate-slide-up delay-300 hero-cta-row">
@@ -282,8 +292,41 @@ export default function HeroSection() {
               e.currentTarget.style.boxShadow = '0 10px 30px rgba(154, 22, 31, 0.3)';
             }}
           >
-            Bize Ulaşın
+            {t('hero.ctaPrimary')}
           </Link>
+
+          <a
+            href={`https://wa.me/905060693525?text=${encodeURIComponent(t('whatsapp.message'))}`}
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.6rem',
+              padding: '1rem 2.2rem',
+              background: 'linear-gradient(135deg, #25D366 0%, #128C7E 100%)',
+              color: '#fff',
+              borderRadius: '50px',
+              fontWeight: '700',
+              fontSize: '0.95rem',
+              letterSpacing: '0.5px',
+              textDecoration: 'none',
+              boxShadow: '0 10px 25px rgba(37, 211, 102, 0.35)',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
+              e.currentTarget.style.boxShadow = '0 15px 35px rgba(37, 211, 102, 0.5)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0) scale(1)';
+              e.currentTarget.style.boxShadow = '0 10px 25px rgba(37, 211, 102, 0.35)';
+            }}
+          >
+            <MessageCircle size={20} />
+            {t('hero.ctaWhatsApp')}
+          </a>
+
           <Link
             to="/referanslar"
             style={styles.ctaSecondary}
@@ -296,7 +339,7 @@ export default function HeroSection() {
               e.currentTarget.style.color = 'var(--color-text)';
             }}
           >
-            Portföyü Gör
+            {t('hero.ctaSecondary')}
           </Link>
         </div>
       </div>
@@ -310,7 +353,7 @@ export default function HeroSection() {
           if (nextSection) nextSection.scrollIntoView({ behavior: 'smooth' });
         }}
       >
-        <span style={styles.scrollText}>Keşfet</span>
+        <span style={styles.scrollText}>{t('hero.scroll')}</span>
         <div className="scroll-arrow-anim">
           <ChevronDown size={24} color="var(--color-gold)" />
         </div>

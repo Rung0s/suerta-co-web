@@ -29,6 +29,8 @@ import SignatureScene from './components/SignatureScene';
 import TeamSection from './components/TeamSection';
 import Seo, { SITE_URL, breadcrumbSchema } from './components/Seo';
 import useIsMobile from './hooks/useIsMobile';
+import { LanguageProvider } from './context/LanguageContext';
+import LanguageWelcomeModal from './components/LanguageWelcomeModal';
 
 // Ana sayfa için WebSite şeması (arama motorları / AI için site kimliği)
 const websiteSchema = {
@@ -203,56 +205,60 @@ function App() {
   }, []);
 
   return (
-    <Router>
-      <div className="app" style={{ position: 'relative' }}>
-        {/* Lüks Sinematik Film Dokusu (Grain Overlay) */}
-        <div className="noise-overlay" />
-        
-        {/* Atmosferik Arka Plan Işık Huzmeleri (Mesh Glows) */}
-        <div className="ambient-glow ambient-glow-gold" />
-        <div className="ambient-glow ambient-glow-crimson" />
+    <LanguageProvider>
+      <Router>
+        <div className="app" style={{ position: 'relative' }}>
+          <LanguageWelcomeModal />
 
-        {/* 3D Arka Plan Sahnesi - Performans için scroll ile duraklatılır */}
-        <div
-          className="bg-3d-canvas-container"
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100vh',
-            zIndex: 0,
-            pointerEvents: 'none',
-            opacity: showCanvas ? 1 : 0,
-            visibility: showCanvas ? 'visible' : 'hidden',
-            transition: 'opacity 1s ease, visibility 1s ease'
-          }}
-        >
-          {!isPrerender && !isMobile && (
-            <Canvas camera={{ position: [0, 0, 5], fov: 45 }} frameloop={showCanvas ? 'always' : 'never'}>
-              <LiquidGlassBlob />
-            </Canvas>
-          )}
-        </div>
+          {/* Lüks Sinematik Film Dokusu (Grain Overlay) */}
+          <div className="noise-overlay" />
+          
+          {/* Atmosferik Arka Plan Işık Huzmeleri (Mesh Glows) */}
+          <div className="ambient-glow ambient-glow-gold" />
+          <div className="ambient-glow ambient-glow-crimson" />
 
-        <div style={{ position: 'relative', zIndex: 1 }}>
-          <AnimatePresence mode="wait">
-            {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
-          </AnimatePresence>
-          {!isMobile && <CustomCursor />}
-          {!isLoading && (
-            <>
-              <Navbar />
-              <main style={{ flex: 1 }}>
-                <AnimatedRoutes />
-              </main>
-              <Footer />
-              <WhatsAppButton />
-            </>
-          )}
+          {/* 3D Arka Plan Sahnesi - Performans için scroll ile duraklatılır */}
+          <div
+            className="bg-3d-canvas-container"
+            style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100vh',
+              zIndex: 0,
+              pointerEvents: 'none',
+              opacity: showCanvas ? 1 : 0,
+              visibility: showCanvas ? 'visible' : 'hidden',
+              transition: 'opacity 1s ease, visibility 1s ease'
+            }}
+          >
+            {!isPrerender && !isMobile && (
+              <Canvas camera={{ position: [0, 0, 5], fov: 45 }} frameloop={showCanvas ? 'always' : 'never'}>
+                <LiquidGlassBlob />
+              </Canvas>
+            )}
+          </div>
+
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <AnimatePresence mode="wait">
+              {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
+            </AnimatePresence>
+            {!isMobile && <CustomCursor />}
+            {!isLoading && (
+              <>
+                <Navbar />
+                <main style={{ flex: 1 }}>
+                  <AnimatedRoutes />
+                </main>
+                <Footer />
+                <WhatsAppButton />
+              </>
+            )}
+          </div>
         </div>
-      </div>
-    </Router>
+      </Router>
+    </LanguageProvider>
   );
 }
 

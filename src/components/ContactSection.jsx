@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Mail, MapPin, ArrowRight, MessageCircle, Check, ChevronRight, ChevronLeft, Globe, ShoppingBag, Bot, Code, Send } from 'lucide-react';
 import useScrollReveal from '../hooks/useScrollReveal';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function ContactSection() {
+  const { t, isEN } = useLanguage();
   const [ref1, isVisible1] = useScrollReveal();
   const [ref2, isVisible2] = useScrollReveal(0.2);
   const [submitStatus, setSubmitStatus] = useState('idle');
@@ -14,23 +16,54 @@ export default function ContactSection() {
   const [step, setStep] = useState(1);
 
   // Wizard Seçim State'i
-  const [selectedServices, setSelectedServices] = useState(['Web Tasarım & Kurumsal Kimlik']);
-  const [selectedTimeline, setSelectedTimeline] = useState('Standart (1-2 Ay)');
-  const [selectedBudget, setSelectedBudget] = useState('10.000 - 20.000 TL');
+  const [selectedServices, setSelectedServices] = useState([
+    isEN ? 'Web Design & UI/UX' : 'Web Tasarım & Kurumsal Kimlik'
+  ]);
+  const [selectedTimeline, setSelectedTimeline] = useState(
+    isEN ? 'Standard (1-2 Months)' : 'Standart (1-2 Ay)'
+  );
+  const [selectedBudget, setSelectedBudget] = useState(
+    isEN ? '$5,000 - $10,000 USD' : '10.000 - 20.000 TL'
+  );
   const [wizardName, setWizardName] = useState('');
   const [wizardContact, setWizardContact] = useState('');
   const [wizardNote, setWizardNote] = useState('');
 
   // Hizmet Seçenekleri
   const serviceOptions = [
-    { id: 'web', title: 'Web Tasarım & Arayüz', desc: 'Markanıza özel sıfırdan tasarım ve animasyonlu mimari.', icon: Globe },
-    { id: 'ecom', title: 'E-Ticaret & Dönüşüm', desc: 'Yüksek hızlı, özel ödeme ve sepet altyapıları.', icon: ShoppingBag },
-    { id: 'ai', title: 'Yapay Zeka & Otomasyon', desc: 'AI ajanlar, akıllı asistanlar ve iş süreçleri otomasyonu.', icon: Bot },
-    { id: 'custom', title: 'Özel Yazılım Platformu', desc: 'LMS, rezervasyon, CRM ve özel operasyonel sistemler.', icon: Code },
+    {
+      id: 'web',
+      title: isEN ? 'Bespoke Web Design & UI/UX' : 'Web Tasarım & Arayüz',
+      desc: isEN ? 'Custom-coded high impact digital architecture & smooth motion design.' : 'Markanıza özel sıfırdan tasarım ve animasyonlu mimari.',
+      icon: Globe
+    },
+    {
+      id: 'ecom',
+      title: isEN ? 'E-Commerce & High-Conversion' : 'E-Ticaret & Dönüşüm',
+      desc: isEN ? 'Ultra-fast custom checkout & global payment gateway integrations.' : 'Yüksek hızlı, özel ödeme ve sepet altyapıları.',
+      icon: ShoppingBag
+    },
+    {
+      id: 'ai',
+      title: isEN ? 'AI Agents & Automation' : 'Yapay Zeka & Otomasyon',
+      desc: isEN ? 'Smart AI assistants, workflow automation & intelligent bots.' : 'AI ajanlar, akıllı asistanlar ve iş süreçleri otomasyonu.',
+      icon: Bot
+    },
+    {
+      id: 'custom',
+      title: isEN ? 'Custom Software Platforms' : 'Özel Yazılım Platformu',
+      desc: isEN ? 'Tailored LMS, CRM, booking systems & enterprise platforms.' : 'LMS, rezervasyon, CRM ve özel operasyonel sistemler.',
+      icon: Code
+    },
   ];
 
-  const timelineOptions = ['Acil (2-4 Hafta)', 'Standart (1-2 Ay)', 'Kapsamlı (3+ Ay)'];
-  const budgetOptions = ['5.000 - 10.000 TL', '10.000 - 20.000 TL', '20.000 - 50.000 TL', '50.000+ TL'];
+  const timelineOptions = isEN
+    ? ['Express (2-4 Weeks)', 'Standard (1-2 Months)', 'Enterprise (3+ Months)']
+    : ['Acil (2-4 Hafta)', 'Standart (1-2 Ay)', 'Kapsamlı (3+ Ay)'];
+
+  const budgetOptions = isEN
+    ? ['$3,000 - $5,000 USD', '$5,000 - $10,000 USD', '$10,000 - $25,000 USD', '$25,000+ USD']
+    : ['5.000 - 10.000 TL', '10.000 - 20.000 TL', '20.000 - 50.000 TL', '50.000+ TL'];
 
   const toggleService = (title) => {
     if (selectedServices.includes(title)) {

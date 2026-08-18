@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Clock, ArrowUpRight, Phone, Mail } from 'lucide-react';
+import { Menu, X, Clock, ArrowUpRight, Phone, Mail, Globe, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import SuertaLogo from './SuertaLogo';
 import useIsMobile from '../hooks/useIsMobile';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
   const isMobile = useIsMobile(768);
+  const { language, setLanguage, toggleLanguage, t, isEN } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,7 +27,7 @@ export default function Navbar() {
   useEffect(() => {
     const updateTime = () => {
       try {
-        const timeStr = new Date().toLocaleTimeString('tr-TR', { 
+        const timeStr = new Date().toLocaleTimeString(language === 'EN' ? 'en-US' : 'tr-TR', { 
           timeZone: 'Europe/Istanbul', 
           hour: '2-digit', 
           minute: '2-digit' 
@@ -36,9 +38,9 @@ export default function Navbar() {
       }
     };
     updateTime();
-    const timer = setInterval(updateTime, 10000); // 10 saniyede bir güncelle
+    const timer = setInterval(updateTime, 10000);
     return () => clearInterval(timer);
-  }, []);
+  }, [language]);
 
   // Mobil menü açıkken arkadaki sayfanın kaymasını engelle
   useEffect(() => {
@@ -62,7 +64,7 @@ export default function Navbar() {
       justifyContent: 'space-between',
       padding: '0 5%',
       zIndex: 100,
-      background: isScrolled ? 'rgba(10, 10, 12, 0.85)' : 'transparent',
+      background: isScrolled ? 'rgba(10, 10, 12, 0.88)' : 'transparent',
       backdropFilter: isScrolled ? 'blur(20px)' : 'none',
       borderBottom: isScrolled ? '1px solid rgba(255,255,255,0.06)' : 'none',
       transition: 'var(--transition-smooth)'
@@ -78,40 +80,57 @@ export default function Navbar() {
     desktopMenu: {
       display: 'flex',
       alignItems: 'center',
-      gap: '2.5rem'
+      gap: '2rem'
     },
     link: {
       color: 'var(--color-text)',
       textDecoration: 'none',
-      fontSize: '0.9rem',
+      fontSize: '0.85rem',
       fontWeight: '600',
       letterSpacing: '1px',
       textTransform: 'uppercase',
       transition: 'var(--transition-fast)'
     },
     ctaButton: {
-      padding: '0.8rem 1.8rem',
+      padding: '0.75rem 1.6rem',
       background: 'transparent',
       color: 'var(--color-text)',
-      border: '1px solid rgba(255, 236, 175, 0.3)',
+      border: '1px solid rgba(255, 236, 175, 0.4)',
       borderRadius: '50px',
-      fontSize: '0.9rem',
-      fontWeight: '600',
+      fontSize: '0.85rem',
+      fontWeight: '700',
       letterSpacing: '1px',
       textTransform: 'uppercase',
       cursor: 'pointer',
       transition: 'var(--transition-smooth)',
-      display: 'inline-block',
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '0.5rem',
       textDecoration: 'none'
+    },
+    langBtn: {
+      background: 'rgba(255, 255, 255, 0.06)',
+      border: '1px solid rgba(255, 236, 175, 0.3)',
+      color: 'var(--color-gold)',
+      padding: '0.5rem 1rem',
+      borderRadius: '30px',
+      fontSize: '0.8rem',
+      fontWeight: '800',
+      letterSpacing: '1px',
+      cursor: 'pointer',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.4rem',
+      transition: 'all 0.3s ease'
     }
   };
 
   const mobileLinks = [
-    { num: '01', title: 'HAKKIMIZDA', path: '/hakkimizda' },
-    { num: '02', title: 'HİZMETLERİMİZ', path: '/hizmetlerimiz' },
-    { num: '03', title: 'REFERANSLAR', path: '/referanslar' },
-    { num: '04', title: 'BLOG', path: '/blog' },
-    { num: '05', title: 'EKİBİMİZ', path: '/ekibimiz' },
+    { num: '01', title: isEN ? 'ABOUT US' : 'HAKKIMIZDA', path: '/hakkimizda' },
+    { num: '02', title: isEN ? 'SERVICES' : 'HİZMETLERİMİZ', path: '/hizmetlerimiz' },
+    { num: '03', title: isEN ? 'PORTFOLIO' : 'REFERANSLAR', path: '/referanslar' },
+    { num: '04', title: isEN ? 'BLOG' : 'BLOG', path: '/blog' },
+    { num: '05', title: isEN ? 'OUR TEAM' : 'EKİBİMİZ', path: '/ekibimiz' },
   ];
 
   return (
@@ -129,11 +148,24 @@ export default function Navbar() {
 
       {/* Desktop Menu */}
       <div style={navStyles.desktopMenu} className="desktop-menu">
-        <Link style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} to="/hakkimizda">Hakkımızda</Link>
-        <Link style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} to="/hizmetlerimiz">Hizmetler</Link>
-        <Link style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} to="/referanslar">Referanslar</Link>
-        <Link style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} to="/blog">Blog</Link>
-        <Link style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} to="/ekibimiz">Ekibimiz</Link>
+        <Link style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} to="/hakkimizda">{t('nav.about')}</Link>
+        <Link style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} to="/hizmetlerimiz">{t('nav.services')}</Link>
+        <Link style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} to="/referanslar">{t('nav.portfolio')}</Link>
+        <Link style={navStyles.link} onMouseOver={(e) => e.currentTarget.style.color = 'var(--color-gold)'} onMouseOut={(e) => e.currentTarget.style.color = 'inherit'} to="/blog">{t('nav.blog')}</Link>
+        
+        {/* Language Switcher */}
+        <button
+          onClick={toggleLanguage}
+          style={navStyles.langBtn}
+          onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255, 236, 175, 0.2)'}
+          onMouseOut={(e) => e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)'}
+          title={isEN ? 'Switch to Turkish' : 'Switch to English'}
+        >
+          <Globe size={14} />
+          {isEN ? '🇬🇧 EN | TR' : '🇹🇷 TR | EN'}
+        </button>
+
+        {/* Primary CTA */}
         <Link 
           style={navStyles.ctaButton} 
           to="/iletisim"
@@ -148,34 +180,55 @@ export default function Navbar() {
             e.currentTarget.style.transform = 'translateY(0)';
           }}
         >
-          Bize Ulaşın
+          {t('hero.ctaPrimary')}
         </Link>
       </div>
 
-      {/* Mobile Menu Toggle Button */}
-      <button 
-        style={{
-          display: 'none',
-          background: 'rgba(255, 255, 255, 0.05)',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          borderRadius: '50%',
-          width: '46px',
-          height: '46px',
-          color: 'var(--color-text)',
-          cursor: 'pointer',
-          zIndex: 1000,
-          alignItems: 'center',
-          justifyContent: 'center',
-          transition: 'all 0.3s ease'
-        }}
-        className="mobile-menu-btn"
-        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        aria-label="Menüyü Aç/Kapat"
-      >
-        {mobileMenuOpen ? <X size={24} color="var(--color-gold)" /> : <Menu size={24} />}
-      </button>
+      {/* Mobile Right Action Group */}
+      <div style={{ display: 'none', gap: '0.5rem', alignItems: 'center' }} className="mobile-actions-group">
+        <button
+          onClick={toggleLanguage}
+          style={{
+            background: 'rgba(255, 236, 175, 0.1)',
+            border: '1px solid var(--color-gold)',
+            color: 'var(--color-gold)',
+            padding: '0.4rem 0.8rem',
+            borderRadius: '20px',
+            fontSize: '0.75rem',
+            fontWeight: '800',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.3rem'
+          }}
+        >
+          {isEN ? '🇬🇧 EN' : '🇹🇷 TR'}
+        </button>
 
-      {/* Lüks Tam Ekran Mobil Menü (Luxury Mobile Experience) */}
+        {/* Mobile Menu Toggle Button */}
+        <button 
+          style={{
+            background: 'rgba(255, 255, 255, 0.05)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            borderRadius: '50%',
+            width: '42px',
+            height: '42px',
+            color: 'var(--color-text)',
+            cursor: 'pointer',
+            zIndex: 1000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'all 0.3s ease'
+          }}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Menüyü Aç/Kapat"
+        >
+          {mobileMenuOpen ? <X size={22} color="var(--color-gold)" /> : <Menu size={22} />}
+        </button>
+      </div>
+
+      {/* Lüks Tam Ekran Mobil Menü */}
       <div 
         style={{
           position: 'fixed',
@@ -198,23 +251,55 @@ export default function Navbar() {
           boxSizing: 'border-box'
         }}
       >
-        {/* Top Status: Canlı İstanbul Saati */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.6rem',
-          padding: '0.6rem 1rem',
-          background: 'rgba(255, 255, 255, 0.03)',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
-          borderRadius: '50px',
-          width: 'fit-content',
-          alignSelf: 'center'
-        }}>
-          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10B981', boxShadow: '0 0 10px #10B981' }} />
-          <Clock size={14} color="var(--color-gold)" />
-          <span style={{ fontSize: '0.75rem', color: 'var(--color-text)', letterSpacing: '1px', fontWeight: '600' }}>
-            İSTANBUL {currentTime} GMT+3 | AKTİF
-          </span>
+        {/* Top Status & Mobile Language Picker */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'center' }}>
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.6rem',
+            padding: '0.6rem 1rem',
+            background: 'rgba(255, 255, 255, 0.03)',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            borderRadius: '50px',
+            width: 'fit-content'
+          }}>
+            <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#10B981', boxShadow: '0 0 10px #10B981' }} />
+            <Clock size={14} color="var(--color-gold)" />
+            <span style={{ fontSize: '0.75rem', color: 'var(--color-text)', letterSpacing: '1px', fontWeight: '600' }}>
+              ISTANBUL {currentTime} GMT+3
+            </span>
+          </div>
+
+          <div style={{ display: 'flex', gap: '0.5rem' }}>
+            <button
+              onClick={() => setLanguage('TR')}
+              style={{
+                padding: '0.4rem 1rem',
+                borderRadius: '20px',
+                border: language === 'TR' ? '1px solid var(--color-gold)' : '1px solid rgba(255,255,255,0.1)',
+                background: language === 'TR' ? 'rgba(255, 236, 175, 0.2)' : 'transparent',
+                color: '#fff',
+                fontWeight: '700',
+                fontSize: '0.8rem'
+              }}
+            >
+              🇹🇷 Türkçe
+            </button>
+            <button
+              onClick={() => setLanguage('EN')}
+              style={{
+                padding: '0.4rem 1rem',
+                borderRadius: '20px',
+                border: language === 'EN' ? '1px solid var(--color-gold)' : '1px solid rgba(255,255,255,0.1)',
+                background: language === 'EN' ? 'rgba(255, 236, 175, 0.2)' : 'transparent',
+                color: '#fff',
+                fontWeight: '700',
+                fontSize: '0.8rem'
+              }}
+            >
+              🇬🇧 English
+            </button>
+          </div>
         </div>
 
         {/* Center Nav Links with Numbers */}
@@ -250,71 +335,47 @@ export default function Navbar() {
             to="/iletisim"
             onClick={() => setMobileMenuOpen(false)}
             style={{
-              marginTop: '0.5rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.8rem',
+              padding: '1.1rem',
+              background: 'var(--color-accent)',
+              color: '#fff',
+              borderRadius: '12px',
+              textDecoration: 'none',
+              fontWeight: '700',
+              letterSpacing: '1px',
+              fontSize: '1rem',
+              marginTop: '1rem',
+              boxShadow: '0 10px 25px rgba(154, 22, 31, 0.4)'
+            }}
+          >
+            {t('hero.ctaPrimary')} <ArrowUpRight size={20} />
+          </Link>
+        </div>
+
+        {/* Mobile Contact Quick Action Footer */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '1rem' }}>
+          <a 
+            href={`https://wa.me/905060693525?text=${encodeURIComponent(t('whatsapp.message'))}`}
+            target="_blank" 
+            rel="noreferrer"
+            style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               gap: '0.6rem',
-              padding: '1rem 2rem',
-              background: 'var(--color-accent)',
-              color: '#fff',
-              borderRadius: '50px',
-              fontWeight: '700',
-              fontSize: '1.1rem',
+              color: '#25D366',
               textDecoration: 'none',
-              letterSpacing: '1px',
-              boxShadow: '0 10px 25px rgba(154, 22, 31, 0.4)'
+              fontWeight: '700',
+              fontSize: '0.9rem'
             }}
           >
-            PROJENİZİ BAŞLATIN <ArrowUpRight size={18} />
-          </Link>
-        </div>
-
-        {/* Bottom Contact & Social Shortcuts */}
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '1rem',
-          paddingTop: '1rem',
-          borderTop: '1px solid rgba(255, 255, 255, 0.08)'
-        }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <a href="https://wa.me/905060693525" target="_blank" rel="noreferrer" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', textDecoration: 'none' }}>
-              <Phone size={14} color="var(--color-gold)" /> +90 506 069 35 25
-            </a>
-            <a href="mailto:suerta.info@gmail.com" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'rgba(255,255,255,0.7)', fontSize: '0.85rem', textDecoration: 'none' }}>
-              <Mail size={14} color="var(--color-gold)" /> suerta.info@gmail.com
-            </a>
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '0.8rem', marginTop: '0.4rem' }}>
-            <a href="https://instagram.com/suerta.co" target="_blank" rel="noreferrer" style={{ padding: '0.5rem 1.2rem', background: 'rgba(255,255,255,0.05)', borderRadius: '50px', color: 'var(--color-gold)', display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.8rem', fontWeight: '600', textDecoration: 'none' }} aria-label="Instagram">
-              @suerta.co <ArrowUpRight size={14} />
-            </a>
-          </div>
+            <MessageCircle size={18} /> {t('nav.quickWhatsApp')}
+          </a>
         </div>
       </div>
-
-      <style>
-        {`
-          .navbar-logo-link {
-            transform: scale(1);
-            transform-origin: left center;
-            transition: transform 0.3s ease;
-          }
-          @media (max-width: 992px) {
-            .mobile-menu-btn {
-              display: flex !important;
-            }
-          }
-          @media (max-width: 768px) {
-            nav {
-              height: 70px !important;
-              padding: 0 1.2rem !important;
-            }
-          }
-        `}
-      </style>
     </nav>
   );
 }
