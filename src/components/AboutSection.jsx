@@ -2,10 +2,12 @@ import React from 'react';
 import { Award, ShieldCheck, Users, Zap } from 'lucide-react';
 import useScrollReveal from '../hooks/useScrollReveal';
 import { CounterItem } from './StatsSection';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function AboutSection() {
   const [ref1, isVisible1] = useScrollReveal();
   const [ref2, isVisible2] = useScrollReveal(0.2);
+  const { isEN } = useLanguage();
 
   const styles = {
     section: {
@@ -47,19 +49,6 @@ export default function AboutSection() {
       color: 'rgba(255, 255, 255, 0.7)',
       fontFamily: 'var(--font-main)',
       fontWeight: '300'
-    },
-    teamHeader: {
-      textAlign: 'center',
-      marginBottom: '4rem'
-    },
-    teamTitle: {
-      fontSize: '3rem',
-      fontFamily: 'var(--font-heading)',
-      marginBottom: '1rem'
-    },
-    teamSubtitle: {
-      color: 'var(--color-secondary)',
-      fontSize: '1.1rem'
     }
   };
 
@@ -70,11 +59,28 @@ export default function AboutSection() {
         {/* Vizyon ve Hakkımızda */}
         <div ref={ref1} style={styles.visionSection}>
           <h2 style={styles.visionTitle}>
-            Sıradanlığa Karşı <br />
-            <span style={styles.visionHighlight}>Estetik Bir İsyan</span>
+            {isEN ? (
+              <>
+                An Aesthetic Rebellion <br />
+                <span style={styles.visionHighlight}>Against Mediocrity</span>
+              </>
+            ) : (
+              <>
+                Sıradanlığa Karşı <br />
+                <span style={styles.visionHighlight}>Estetik Bir İsyan</span>
+              </>
+            )}
           </h2>
           <p style={styles.visionText}>
-            Dijital dünya, birbirinin kopyası sıkıcı şablonlar ve ruhsuz tasarımlarla dolu. Biz <strong>suerta co.</strong> olarak bu gürültünün içinde piyasadaki o büyük estetik açığı kapatmak için varız. Sadece kod yazmıyoruz; markanızın karakterini yansıtan, kullanıcıyı içine çeken dijital sanat eserleri inşa ediyoruz. Amacımız ziyaretçilerinizi etkilemek değil, onlarda kalıcı bir iz bırakmak.
+            {isEN ? (
+              <>
+                The digital landscape is filled with copy-paste templates and soulless layouts. At <strong>suerta co.</strong>, we exist to bridge this aesthetic gap. We don't just write code; we build digital artworks that reflect your brand's unique identity. Our goal is not just to attract visitors, but to leave an indelible mark on them.
+              </>
+            ) : (
+              <>
+                Dijital dünya, birbirinin kopyası sıkıcı şablonlar ve ruhsuz tasarımlarla dolu. Biz <strong>suerta co.</strong> olarak bu gürültünün içinde piyasadaki o büyük estetik açığı kapatmak için varız. Sadece kod yazmıyoruz; markanızın karakterini yansıtan, kullanıcıyı içine çeken dijital sanat eserleri inşa ediyoruz. Amacımız ziyaretçilerinizi etkilemek değil, onlarda kalıcı bir iz bırakmak.
+              </>
+            )}
           </p>
         </div>
 
@@ -95,7 +101,7 @@ export default function AboutSection() {
               marginBottom: '0.6rem',
               textTransform: 'uppercase'
             }}>
-              Rakamlarla Rüştümüz
+              {isEN ? 'PROVEN METRICS & IMPACT' : 'Rakamlarla Rüştümüz'}
             </h3>
             <p style={{
               color: 'var(--color-gold)',
@@ -105,7 +111,7 @@ export default function AboutSection() {
               fontWeight: '600',
               margin: 0
             }}>
-              Şablon Yok. Kopyalama Yok. Sadece Saf Yaratıcılık.
+              {isEN ? 'No Templates. No Copies. Pure Craftsmanship.' : 'Şablon Yok. Kopyalama Yok. Sadece Saf Yaratıcılık.'}
             </p>
           </div>
 
@@ -117,32 +123,32 @@ export default function AboutSection() {
             <CounterItem
               end={100}
               suffix="%"
-              title="Bespoke Tasarım"
-              desc="Hazır şablon veya kopyalama olmadan %100 markanıza özel arayüz mimarisi."
+              title={isEN ? 'Bespoke Architecture' : 'Bespoke Tasarım'}
+              desc={isEN ? '100% custom-tailored interface architecture with zero generic templates.' : 'Hazır şablon veya kopyalama olmadan %100 markanıza özel arayüz mimarisi.'}
               icon={Award}
               delay={0}
             />
             <CounterItem
               end={50}
               suffix="+"
-              title="Başarılı Proje"
-              desc="Web, e-ticaret ve operasyonel sistemlerde teslim edilen elit işler."
+              title={isEN ? 'Delivered Projects' : 'Başarılı Proje'}
+              desc={isEN ? 'Elite web, e-commerce, and custom software systems delivered globally.' : 'Web, e-ticaret ve operasyonel sistemlerde teslim edilen elit işler.'}
               icon={ShieldCheck}
               delay={0.15}
             />
             <CounterItem
               end={15}
               suffix="+"
-              title="Yıllık Uzmanlık"
-              desc="Mühendislik ve sanatın kesişiminde kazanılan köklü sektör tecrübesi."
+              title={isEN ? 'Years Expertise' : 'Yıllık Uzmanlık'}
+              desc={isEN ? 'Deep-rooted experience at the intersection of engineering and digital art.' : 'Mühendislik ve sanatın kesişiminde kazanılan köklü sektör tecrübesi.'}
               icon={Users}
               delay={0.3}
             />
             <CounterItem
               end={48}
-              suffix=" Sa"
-              title="Hızlı Prototip"
-              desc="Fikir aşamasından ilk interaktif konsept sunumuna 48 saatte geçiş."
+              suffix={isEN ? ' Hours' : ' Sa'}
+              title={isEN ? 'Rapid Concepting' : 'Hızlı Prototip'}
+              desc={isEN ? 'Transitioning from idea to interactive prototype concept within 48 hours.' : 'Fikir aşamasından ilk interaktif konsept sunumuna 48 saatte geçiş.'}
               icon={Zap}
               delay={0.45}
             />

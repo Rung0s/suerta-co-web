@@ -168,17 +168,14 @@ export default function HeroSection() {
       transition: 'all 0.3s ease'
     },
     scrollIndicator: {
-      position: 'absolute',
-      // Mobilde "Bize Ulaşın" ile çakışmaması için daha aşağıya alındı
-      bottom: isMobile ? '0.5rem' : '1.5rem',
-      left: isMobile ? '45%' : '48%', // Mobilde %45 (aynı kalır), PC'de hafif sol (%48)
-      transform: 'translateX(-50%)',
+      marginTop: isMobile ? '2.5rem' : '3.5rem',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       gap: '0.2rem',
       cursor: 'pointer',
-      zIndex: 10
+      zIndex: 10,
+      alignSelf: 'center'
     },
     scrollText: {
       fontSize: '0.75rem',

@@ -2,8 +2,10 @@ import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import MagneticButton from './MagneticButton';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Footer() {
+  const { isEN } = useLanguage();
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -149,21 +151,21 @@ export default function Footer() {
         {/* Üst Kısım: Menüler */}
         <div style={styles.topRow} className="footer-top-row">
           <div style={styles.col} className="footer-col">
-            <div style={styles.colTitle} className="footer-col-title">Navigasyon</div>
-            <Link to="/hizmetlerimiz" style={styles.link} className="footer-link">Uzmanlık Alanlarımız</Link>
-            <Link to="/hakkimizda" style={styles.link} className="footer-link">Vizyon</Link>
-            <Link to="/referanslar" style={styles.link} className="footer-link">Referanslar</Link>
+            <div style={styles.colTitle} className="footer-col-title">{isEN ? 'Navigation' : 'Navigasyon'}</div>
+            <Link to="/hizmetlerimiz" style={styles.link} className="footer-link">{isEN ? 'Services & Capabilities' : 'Uzmanlık Alanlarımız'}</Link>
+            <Link to="/hakkimizda" style={styles.link} className="footer-link">{isEN ? 'Vision & About' : 'Vizyon'}</Link>
+            <Link to="/referanslar" style={styles.link} className="footer-link">{isEN ? 'Portfolio' : 'Referanslar'}</Link>
           </div>
           
           <div style={styles.col} className="footer-col">
-            <div style={styles.colTitle} className="footer-col-title">Sosyal Ağlar</div>
+            <div style={styles.colTitle} className="footer-col-title">{isEN ? 'Social Networks' : 'Sosyal Ağlar'}</div>
             <a href="https://instagram.com/suerta.co" target="_blank" rel="noreferrer" style={styles.link} className="footer-link">Instagram <ArrowUpRight size={18} /></a>
           </div>
 
           <div style={styles.col} className="footer-col">
-            <div style={styles.colTitle} className="footer-col-title">İletişim</div>
+            <div style={styles.colTitle} className="footer-col-title">{isEN ? 'Direct Contact' : 'İletişim'}</div>
             <a href="mailto:suerta.info@gmail.com" style={styles.link} className="footer-link">suerta.info@gmail.com</a>
-            <span style={{...styles.link, cursor: 'default', opacity: 0.7}} className="footer-link">Eskişehir, Türkiye</span>
+            <span style={{...styles.link, cursor: 'default', opacity: 0.7}} className="footer-link">Eskişehir, Türkiye (Global)</span>
           </div>
         </div>
 
@@ -175,10 +177,10 @@ export default function Footer() {
         {/* Alt Bilgiler */}
         <div style={styles.bottomRow} className="footer-bottom-row">
           <div style={styles.copyright}>
-            &copy; {new Date().getFullYear()} suerta co. Dijital Lüks. Tüm hakları saklıdır.
+            &copy; {new Date().getFullYear()} suerta co. {isEN ? 'Bespoke Digital Luxury. All Rights Reserved.' : 'Dijital Lüks. Tüm hakları saklıdır.'}
           </div>
           <MagneticButton style={styles.backToTop} className="back-to-top" onClick={scrollToTop}>
-            Yukarı Dön
+            {isEN ? 'Back to Top ↑' : 'Yukarı Dön ↑'}
           </MagneticButton>
         </div>
 

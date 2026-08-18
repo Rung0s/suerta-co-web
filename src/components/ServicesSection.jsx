@@ -5,36 +5,61 @@ import { ArrowRight } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import useIsMobile from '../hooks/useIsMobile';
+import { useLanguage } from '../context/LanguageContext';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function ServicesSection() {
   const containerRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(-1); // Start closed (-1)
+  const [activeIndex, setActiveIndex] = useState(-1);
   const isMobile = useIsMobile(1024);
+  const { t, isEN } = useLanguage();
 
-  const services = [
-    {
-      title: 'WEB & UI/UX',
-      desc: 'Markanızın ilk intibası her şeydir. Ziyaretçilerinizi müşteriye dönüştüren, estetik açıdan kusursuz, hızlı ve mobil uyumlu kurumsal web siteleri tasarlıyoruz.',
-      features: ['Karanlık Mod & Premium Estetik', 'SEO Uyumlu Altyapı', 'Pürüzsüz Animasyonlar', 'Yüksek Dönüşüm Oranlı Tasarım']
-    },
-    {
-      title: 'E-TİCARET',
-      desc: 'Müşterilerinizi aracı platformlara yönlendirmeden doğrudan satış alabileceğiniz dijital sistemler geliştiriyoruz. Süreci yalnızca estetik değil, dönüşüm odaklı tasarlıyoruz.',
-      features: ['Shopify ve Özel Entegrasyonlar', 'Mobil Uyumlu Satış Akışları', 'Sipariş Yönetimi', 'Ödeme Sistemleri']
-    },
-    {
-      title: 'OPERASYONEL',
-      desc: 'İşletmenizin arka planında dönen karmaşık süreçleri dijitalleştiriyoruz. Restoranlar için QR menüler, oteller için rezervasyon sistemleri veya özel CRM çözümleri üretiyoruz.',
-      features: ['Sıfır Hata (Zero-Bug) Hedefi', 'Kullanıcı Dostu Paneller', 'Özel Fonksiyonel Çözümler']
-    },
-    {
-      title: 'YAPAY ZEKA',
-      desc: 'Tekrarlayan işleri manuel süreçlerden çıkarıyor, işletmenize özel yapay zekâ destekli sistemler kuruyoruz. Zaman kaybettiren süreçleri daha hızlı ve ölçülebilir hâle getiriyoruz.',
-      features: ['AI Chatbotlar', 'WhatsApp Otomasyonları', 'İçerik Sistemleri', 'İş Akışı Entegrasyonları']
-    }
-  ];
+  const services = isEN
+    ? [
+        {
+          title: 'WEB & UI/UX',
+          desc: 'First impressions are everything. We design high-speed, mobile-responsive, aesthetically flawless digital architecture that transforms visitors into loyal clients.',
+          features: ['Dark Mode & Premium Aesthetic', 'SEO-Optimized Codebase', 'Fluid Motion Animations', 'High Conversion UI/UX']
+        },
+        {
+          title: 'E-COMMERCE',
+          desc: 'Custom digital sales platforms built to drive revenue without relying on 3rd party commission traps. Designed not just for aesthetics, but for conversion.',
+          features: ['Shopify & Custom Integrations', 'Mobile-First Checkout Flow', 'Order & Inventory Hub', 'Global Payment Gateways']
+        },
+        {
+          title: 'OPERATIONAL',
+          desc: 'Digitalizing complex operational workflows. Tailored QR menus for hospitality, booking platforms for hotels, or bespoke CRM solutions.',
+          features: ['Zero-Bug Benchmark', 'User-Friendly Dashboards', 'Tailored Functional Systems']
+        },
+        {
+          title: 'AI & AUTOMATION',
+          desc: 'Eliminating repetitive manual labor with tailored AI agents, automated customer support workflows, and intelligent business pipelines.',
+          features: ['AI Chatbots & Agents', 'WhatsApp Automations', 'Content Pipelines', 'Workflow Integrations']
+        }
+      ]
+    : [
+        {
+          title: 'WEB & UI/UX',
+          desc: 'Markanızın ilk intibası her şeydir. Ziyaretçilerinizi müşteriye dönüştüren, estetik açıdan kusursuz, hızlı ve mobil uyumlu kurumsal web siteleri tasarlıyoruz.',
+          features: ['Karanlık Mod & Premium Estetik', 'SEO Uyumlu Altyapı', 'Pürüzsüz Animasyonlar', 'Yüksek Dönüşüm Oranlı Tasarım']
+        },
+        {
+          title: 'E-TİCARET',
+          desc: 'Müşterilerinizi aracı platformlara yönlendirmeden doğrudan satış alabileceğiniz dijital sistemler geliştiriyoruz. Süreci yalnızca estetik değil, dönüşüm odaklı tasarlıyoruz.',
+          features: ['Shopify ve Özel Entegrasyonlar', 'Mobil Uyumlu Satış Akışları', 'Sipariş Yönetimi', 'Ödeme Sistemleri']
+        },
+        {
+          title: 'OPERASYONEL',
+          desc: 'İşletmenizin arka planında dönen karmaşık süreçleri dijitalleştiriyoruz. Restoranlar için QR menüler, oteller için rezervasyon sistemleri veya özel CRM çözümleri üretiyoruz.',
+          features: ['Sıfır Hata (Zero-Bug) Hedefi', 'Kullanıcı Dostu Paneller', 'Özel Fonksiyonel Çözümler']
+        },
+        {
+          title: 'YAPAY ZEKA',
+          desc: 'Tekrarlayan işleri manuel süreçlerden çıkarıyor, işletmenize özel yapay zekâ destekli sistemler kuruyoruz. Zaman kaybettiren süreçleri daha hızlı ve ölçülebilir hâle getiriyoruz.',
+          features: ['AI Chatbotlar', 'WhatsApp Otomasyonları', 'İçerik Sistemleri', 'İş Akışı Entegrasyonları']
+        }
+      ];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -180,7 +205,7 @@ export default function ServicesSection() {
     <div style={styles.wrapper}>
       <section ref={containerRef} id="services" style={styles.section}>
         <div style={styles.header}>
-          <h2 style={styles.title}>Uzmanlık Alanlarımız</h2>
+          <h2 style={styles.title}>{isEN ? 'OUR CAPABILITIES' : 'Uzmanlık Alanlarımız'}</h2>
         </div>
 
         {isMobile ? (
@@ -248,7 +273,7 @@ export default function ServicesSection() {
                     textDecoration: 'none',
                     fontSize: '0.95rem'
                   }}>
-                    Daha Fazla Bilgi Al <ArrowRight size={16} />
+                    {isEN ? 'Learn More' : 'Daha Fazla Bilgi Al'} <ArrowRight size={16} />
                   </Link>
                 </div>
               </div>
@@ -315,7 +340,7 @@ export default function ServicesSection() {
                     onMouseEnter={(e) => e.currentTarget.style.color = 'var(--color-gold)'}
                     onMouseLeave={(e) => e.currentTarget.style.color = 'var(--color-accent)'}
                     >
-                      Daha Fazla Bilgi Al <ArrowRight size={20} />
+                      {isEN ? 'Learn More' : 'Daha Fazla Bilgi Al'} <ArrowRight size={20} />
                     </Link>
                   </motion.div>
                 )}
