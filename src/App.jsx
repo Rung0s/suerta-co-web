@@ -208,7 +208,6 @@ function App() {
     <LanguageProvider>
       <Router>
         <div className="app" style={{ position: 'relative' }}>
-          <LanguageWelcomeModal />
 
           {/* Lüks Sinematik Film Dokusu (Grain Overlay) */}
           <div className="noise-overlay" />

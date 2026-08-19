@@ -292,38 +292,6 @@ export default function HeroSection() {
             {t('hero.ctaPrimary')}
           </Link>
 
-          <a
-            href={`https://wa.me/905060693525?text=${encodeURIComponent(t('whatsapp.message'))}`}
-            target="_blank"
-            rel="noreferrer"
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '0.6rem',
-              padding: '1rem 2.2rem',
-              background: 'linear-gradient(135deg, #25D366 0%, #128C7E 100%)',
-              color: '#fff',
-              borderRadius: '50px',
-              fontWeight: '700',
-              fontSize: '0.95rem',
-              letterSpacing: '0.5px',
-              textDecoration: 'none',
-              boxShadow: '0 10px 25px rgba(37, 211, 102, 0.35)',
-              transition: 'all 0.3s ease'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-3px) scale(1.03)';
-              e.currentTarget.style.boxShadow = '0 15px 35px rgba(37, 211, 102, 0.5)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0) scale(1)';
-              e.currentTarget.style.boxShadow = '0 10px 25px rgba(37, 211, 102, 0.35)';
-            }}
-          >
-            <MessageCircle size={20} />
-            {t('hero.ctaWhatsApp')}
-          </a>
-
           <Link
             to="/referanslar"
             style={styles.ctaSecondary}
