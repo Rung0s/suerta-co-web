@@ -72,9 +72,8 @@ export default function HeroSection() {
     },
     content: {
       position: 'absolute',
-      // Mobilde dikeyde tam ortala (3D küre kaldırıldığı için başlık ortada dursun),
-      // masaüstünde eski konum + parallax korunur.
-      top: isMobile ? '50%' : '25%',
+      // Mobilde ve masaüstünde tam dikey ortalama (kesilmeyi/kırpılmayı önler)
+      top: '50%',
       left: '50%',
       width: '100%',
       textAlign: 'center',
@@ -82,7 +81,7 @@ export default function HeroSection() {
       zIndex: 2,
       transform: isMobile
         ? 'translate(-50%, -50%)'
-        : `translate(calc(-50% + ${mousePosition.x * -1}px), ${mousePosition.y * -1}px)`,
+        : `translate(calc(-50% + ${mousePosition.x * -1}px), calc(-50% + ${mousePosition.y * -1}px))`,
       transition: 'transform 0.1s ease-out',
       display: 'flex',
       flexDirection: 'column',
@@ -168,14 +167,16 @@ export default function HeroSection() {
       transition: 'all 0.3s ease'
     },
     scrollIndicator: {
-      marginTop: isMobile ? '2.5rem' : '3.5rem',
+      position: 'absolute',
+      bottom: isMobile ? '2rem' : '2.5rem',
+      left: '50%',
+      transform: 'translateX(-50%)',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       gap: '0.2rem',
       cursor: 'pointer',
-      zIndex: 10,
-      alignSelf: 'center'
+      zIndex: 10
     },
     scrollText: {
       fontSize: '0.75rem',
