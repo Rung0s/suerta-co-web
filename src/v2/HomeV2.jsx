@@ -4,6 +4,7 @@ import { referencesData } from '../data/references';
 import './surface.css';
 import './work.css';
 import './partners.css';
+import './manifesto.css';
 import './v2.css';
 
 /* Tek reveal primitifi. Sitede uc ayri reveal sistemi vardi (CSS + iki farkli
@@ -179,6 +180,127 @@ function glyphMask(letter) {
     `<text x='50' y='104' text-anchor='middle' font-family='Inter,sans-serif' ` +
     `font-size='128' font-weight='700' fill='%23000'>${letter}</text></svg>`;
   return `url("data:image/svg+xml,${svg.replace(/#/g, '%23')}")`;
+}
+
+/* Cumle karakter karakter aydinlaniyor. Kaydirma konumu bolumun kendi
+   yuksekligine gore 0-1 arasina indiriliyor; kac karakter yanacagini o oran
+   belirliyor. Boylece cumle okundugu hizda "yaziliyor".
+
+   Kaydirma dinleyicisi rAF'e sikistiriliyor: her scroll olayinda yuzlerce
+   sinif degistirmek karesiz birakir. */
+function ScriptedLine({ text }) {
+  const ref = useRef(null);
+  const [lit, setLit] = useState(0);
+  const chars = React.useMemo(() => Array.from(text), [text]);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return undefined;
+
+    /* Azaltilmis hareket tercihinde hic olcum yapmiyoruz; karakterleri
+       tam kontrasta getirmeyi CSS zaten ustleniyor. */
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+      return undefined;
+    }
+
+    let frame = 0;
+    const measure = () => {
+      frame = 0;
+      const rect = node.getBoundingClientRect();
+      /* Cumle ekranin alt ucundan girip ust ucune dogru ilerlerken doluyor.
+         Payda viewport + eleman yuksekligi, cunku ikisi de yola dahil. */
+      const travel = window.innerHeight + rect.height;
+      const done = (window.innerHeight - rect.top) / travel;
+      const eased = Math.min(1, Math.max(0, (done - 0.18) / 0.46));
+      setLit(Math.round(eased * chars.length));
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(measure);
+    };
+
+    /* Ilk olcum de rAF uzerinden: efekt govdesinde dogrudan setState
+       cagirmak zincirleme render tetikliyor. */
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [chars.length]);
+
+  return (
+    <h2 className="v2-script" ref={ref}>
+      {/* Gorsel olarak parcalanmis metin ekran okuyucuda harf harf okunur;
+          erisilebilir isim butun cumleyi tasiyor. */}
+      <span className="v2-sr-only">{text}</span>
+      <span aria-hidden="true">
+        {chars.map((char, i) =>
+          char === ' ' ? (
+            <span key={i} className="v2-script__space">
+              {' '}
+            </span>
+          ) : (
+            <span key={i} className={`v2-script__char${i < lit ? ' is-lit' : ''}`}>
+              {char}
+            </span>
+          )
+        )}
+      </span>
+    </h2>
+  );
+}
+
+/* Referansin kirmizi butonunun karsiligi. Marka "suerta" — sans; obje de
+   madeni para. Her cevirmede yarim tur ekleniyor, yani para hep ayni yonde
+   donuyor ve sonuc yuze gore belirleniyor: geri sarma hissi vermiyor. */
+const COIN_LINES = [
+  'Şans dedik ama işi şansa bırakmıyoruz.',
+  'Tura. Yine de planla çalışıyoruz.',
+  'Yazı. Sonuç yine aynı: ölçüp kuruyoruz.',
+];
+
+function LuckCoin() {
+  const [flips, setFlips] = useState(0);
+  const [spinning, setSpinning] = useState(false);
+
+  const flip = () => {
+    setFlips((n) => n + 1);
+    setSpinning(true);
+  };
+
+  const line = flips === 0 ? COIN_LINES[0] : COIN_LINES[1 + (flips % 2)];
+
+  return (
+    <div className={`v2-altar${spinning ? ' is-spinning' : ''}`}>
+      <div className="v2-halo v2-halo--altar" aria-hidden="true" />
+      <span className="v2-altar__glow" aria-hidden="true" />
+
+      <button
+        type="button"
+        className="v2-coin"
+        onClick={flip}
+        onTransitionEnd={() => setSpinning(false)}
+        style={{ transform: `rotateY(${flips * 1980}deg)` }}
+        aria-label="Parayı çevir"
+      >
+        <span className="v2-coin__face" aria-hidden="true">
+          <span className="v2-coin__mark">s.</span>
+        </span>
+        <span className="v2-coin__face v2-coin__face--back" aria-hidden="true">
+          <span className="v2-coin__mark v2-coin__mark--small">suerta</span>
+        </span>
+      </button>
+
+      <span className="v2-pedestal" aria-hidden="true" />
+      <p className="v2-altar__note">bu paraya dokunma</p>
+      <p className="v2-altar__result" aria-live="polite">
+        {line}
+      </p>
+    </div>
+  );
 }
 
 /* Oklar kendi konum durumunu tutmuyor; bir kart genisligi kadar kaydiriyor
@@ -696,16 +818,12 @@ export default function HomeV2() {
       </section>
 
       {/* Biz kimiz -------------------------------------------------------- */}
-      <section className="v2-section" id="hakkimizda">
+      <section className="v2-section v2-manifesto" id="hakkimizda">
         <div className="v2-shell">
-          <Reveal>
-            <Item as="h2" className="v2-display">
-              <TwoTone
-                lead="Biz suerta co.'yuz. Otel ve kiralama markalarına site kuruyoruz —"
-                tail="misafiri komisyon ödemeden getiren türünden."
-              />
-            </Item>
-          </Reveal>
+          <div className="v2-manifesto__grid">
+            <ScriptedLine text="Biz suerta co.'yuz. Otel, kiralama, eğitim ve e-ticaret markalarına ziyaretçiyi müşteriye çeviren siteler kuruyoruz." />
+            <LuckCoin />
+          </div>
         </div>
       </section>
 

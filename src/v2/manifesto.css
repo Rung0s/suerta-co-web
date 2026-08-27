@@ -1,0 +1,220 @@
+/* ==========================================================================
+   Manifesto — karakter karakter beliren cumle, yaninda dokunulabilir obje
+   --------------------------------------------------------------------------
+   Referansta bu bolumun basligi tek bir metin dugumu degil: 102 ayri eleman,
+   her biri bir karakter. Sayfa kaydikca soluk griden tam kontrasta geciyor,
+   yani cumle okundugu hizda "yaziliyor". Bolumu akilda birakan sey bu.
+
+   Saginda fiziksel bir obje duruyor ve "basma" diye yaziyor — basilinca da
+   bir sey oluyor. Bizde karsiligi markanin adi: suerta, sans. Cevrilen bir
+   madeni para.
+   ========================================================================== */
+
+.v2-manifesto {
+  position: relative;
+  overflow: hidden;
+}
+
+.v2-manifesto__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.52fr) minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 3.6rem);
+  align-items: center;
+}
+
+/* Yazilan cumle -----------------------------------------------------------
+   Karakterler `will-change` almiyor: yuzlerce eleman icin bu, kazandirdigi
+   akiciligin cok ustunde bellek demek. Sadece renk gectigi icin zaten ucuz. */
+
+.v2-script {
+  font-size: clamp(2rem, 4.8vw, 4.32rem);
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  font-weight: 540;
+  text-wrap: balance;
+}
+
+.v2-script__char {
+  color: rgba(17, 17, 16, 0.16);
+  transition: color 420ms var(--ease-out);
+}
+
+.v2-script__char.is-lit {
+  color: var(--ink);
+}
+
+/* Bosluklar kirilabilir kalmali; aksi halde cumle tek uzun kelime gibi
+   davranip tasar. */
+.v2-script__space {
+  display: inline;
+  white-space: pre-wrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-script__char {
+    color: var(--ink);
+    transition: none;
+  }
+}
+
+/* Sunak -------------------------------------------------------------------
+   Obje bir kaidenin uzerinde duruyor, altinda kendi izgarasi ve isigi var.
+   Bu uc katman olmadan obje sayfaya yapistirilmis gibi duruyor. */
+
+.v2-altar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 24rem;
+}
+
+.v2-altar__glow {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  width: 15rem;
+  height: 15rem;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    rgba(184, 137, 43, 0.55) 0%,
+    rgba(184, 137, 43, 0.22) 42%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 420ms var(--ease-out);
+}
+
+.v2-altar.is-spinning .v2-altar__glow {
+  opacity: 1;
+}
+
+/* Para --------------------------------------------------------------------
+   Iki yuzu olan tek bir 3B nesne. Dondurme Y ekseninde; arka yuz
+   `backface-visibility` ile degil, kendi 180 derece donmus katmani ile
+   yapiliyor, cunku ikisinin de kendi icerigi var. */
+
+.v2-coin {
+  position: relative;
+  width: clamp(10rem, 18vw, 17rem);
+  aspect-ratio: 1;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 1200ms cubic-bezier(0.32, 0.9, 0.28, 1);
+  z-index: 1;
+}
+
+.v2-coin:focus-visible {
+  outline: 2px solid var(--flare);
+  outline-offset: 8px;
+  border-radius: 50%;
+}
+
+.v2-coin__face {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Kenardan merkeze dogru acilan gradyan, dovulmus metal izlenimi verir;
+     duz bir altin dolgu plastik gibi duruyor. */
+  background:
+    radial-gradient(64% 64% at 34% 28%, rgba(255, 250, 235, 0.92) 0%, transparent 58%),
+    conic-gradient(
+      from 210deg,
+      #7d5a1c 0deg,
+      #d8b25a 62deg,
+      #f3e0a8 118deg,
+      #c79a36 186deg,
+      #8a6420 252deg,
+      #e2c069 320deg,
+      #7d5a1c 360deg
+    );
+  box-shadow:
+    inset 0 0 0 6px rgba(255, 246, 214, 0.28),
+    inset 0 0 0 7px rgba(96, 68, 18, 0.42),
+    0 18px 34px rgba(17, 17, 16, 0.28);
+}
+
+.v2-coin__face--back {
+  transform: rotateY(180deg);
+}
+
+.v2-coin__mark {
+  font-size: clamp(2.25rem, 3.4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #4a3410;
+  text-shadow: 0 1px 0 rgba(255, 247, 219, 0.5);
+  user-select: none;
+}
+
+.v2-coin__mark--small {
+  font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Kaide ------------------------------------------------------------------- */
+
+.v2-pedestal {
+  position: relative;
+  width: clamp(12rem, 21vw, 20rem);
+  height: 2rem;
+  margin-top: 1.25rem;
+  border-radius: 50%;
+  background: radial-gradient(
+    50% 100% at 50% 0%,
+    rgba(17, 17, 16, 0.26) 0%,
+    rgba(17, 17, 16, 0.08) 46%,
+    transparent 76%
+  );
+  transition: transform 420ms var(--ease-out), opacity 420ms var(--ease-out);
+}
+
+.v2-altar.is-spinning .v2-pedestal {
+  transform: scaleX(0.88);
+  opacity: 0.7;
+}
+
+/* Yonlendirme -------------------------------------------------------------
+   Referans "bu butona basma" diyor; tersini soylemek merak uyandiriyor.
+   Ayni jest, kendi kelimemizle. */
+
+.v2-altar__note {
+  margin-top: var(--space-4);
+  font-family: var(--font-note);
+  font-size: 1.375rem;
+  color: var(--flare);
+  transform: rotate(-2.5deg);
+}
+
+.v2-altar__result {
+  min-height: 1.5rem;
+  margin-top: var(--space-2);
+  font-size: var(--text-small);
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Duyarli ----------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .v2-manifesto__grid {
+    grid-template-columns: 1fr;
+  }
+  .v2-altar {
+    min-height: 18rem;
+    order: -1;
+  }
+}
