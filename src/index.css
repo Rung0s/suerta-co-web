@@ -384,6 +384,17 @@ a {
 .scroll-indicator {
   transition: opacity 0.3s ease;
 }
+/* Gosterge left:50% + translateX(-50%) ile ortalaniyor. Calisan bir CSS
+   animasyonu inline transform'u ezdigi icin .animate-slide-up ortalamayi
+   siliyor ve oge kendi genisliginin yarisi kadar saga kayiyordu. Bu yuzden
+   ortalamayi koruyan ayri bir keyframe kullaniyoruz. */
+.scroll-indicator.animate-slide-up {
+  animation-name: slideUpFadeCentered;
+}
+@keyframes slideUpFadeCentered {
+  0% { opacity: 0; transform: translateX(-50%) translateY(40px); }
+  100% { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
 .scroll-indicator:hover {
   opacity: 0.8;
 }
