@@ -115,7 +115,7 @@
   font-family: var(--font-note);
 }
 
-.v2-root .v2-stat__value,
+.v2-root .v2-kpi__value,
 .v2-root .v2-availability__num {
   font-family: var(--font-numeric);
 }
@@ -543,24 +543,8 @@
   margin-bottom: var(--space-12);
 }
 
-/* Is kartlari -------------------------------------------------------------- */
-
-.v2-work {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--space-4);
-  align-items: stretch;
-}
-
-/* Reveal sarmalayicisi grid ogesi oldugu icin kart yuksekligini o belirler;
-   aciklama iki satira dustugunde kartlar farkli boyda kaliyordu. */
-.v2-work > * {
-  display: flex;
-}
-
-.v2-work > * > .v2-card {
-  flex: 1;
-}
+/* Is izgarasi ve tuglalari work.css'te. Buradaki .v2-card yalnizca baska
+   bolumlerin kullandigi genel kart yuzeyi. */
 
 .v2-card {
   display: flex;
@@ -629,52 +613,8 @@
   line-height: 1.45;
 }
 
-.v2-verified {
-  color: var(--accent);
-  flex-shrink: 0;
-}
-
-/* Sayilar ------------------------------------------------------------------ */
-
-.v2-stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--space-4);
-}
-
-.v2-stat {
-  padding: var(--space-8) var(--space-6);
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-card);
-  text-align: center;
-}
-
-.v2-stat__value {
-  font-family: var(--font-numeric);
-  font-size: clamp(2.75rem, 6vw, 4.5rem);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.02em;
-  display: block;
-}
-
-/* Doto bir nokta-matris ailesi: rakamlari net, ama % gibi isaretleri okunmuyor.
-   Birimi govde fontunda birakiyoruz. */
-.v2-stat__unit {
-  font-family: var(--font);
-  font-size: 0.42em;
-  font-weight: 600;
-  vertical-align: 0.52em;
-  letter-spacing: normal;
-  margin-right: 0.06em;
-}
-
-.v2-stat__label {
-  margin-top: var(--space-3);
-  font-size: var(--text-small);
-  color: var(--muted);
-}
+/* Sayi karti (.v2-kpi) work.css'te; is izgarasinin bir tuglasi oldugu icin
+   oraya ait. */
 
 /* Referans yorumlari (koyu) ------------------------------------------------ */
 
@@ -1042,12 +982,6 @@
 /* Duyarli ------------------------------------------------------------------ */
 
 @media (max-width: 960px) {
-  .v2-work {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .v2-stats {
-    grid-template-columns: 1fr;
-  }
   .v2-quotes {
     grid-template-columns: 1fr;
   }
@@ -1076,9 +1010,6 @@
 }
 
 @media (max-width: 620px) {
-  .v2-work {
-    grid-template-columns: 1fr;
-  }
   .v2-nav {
     gap: var(--space-4);
     padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);

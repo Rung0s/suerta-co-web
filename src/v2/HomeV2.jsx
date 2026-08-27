@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { referencesData } from '../data/references';
 import './surface.css';
+import './work.css';
 import './v2.css';
 
 /* Tek reveal primitifi. Sitede uc ayri reveal sistemi vardi (CSS + iki farkli
@@ -20,11 +21,12 @@ const revealItem = {
   },
 };
 
-function Reveal({ children, className, as = 'div' }) {
+function Reveal({ children, className, as = 'div', style }) {
   const Component = motion[as] || motion.div;
   return (
     <Component
       className={className}
+      style={style}
       variants={revealGroup}
       initial="hidden"
       whileInView="show"
@@ -35,10 +37,10 @@ function Reveal({ children, className, as = 'div' }) {
   );
 }
 
-function Item({ children, className, as = 'div' }) {
+function Item({ children, className, as = 'div', style }) {
   const Component = motion[as] || motion.div;
   return (
-    <Component className={className} variants={revealItem}>
+    <Component className={className} style={style} variants={revealItem}>
       {children}
     </Component>
   );
@@ -146,6 +148,98 @@ function Rocket() {
   );
 }
 
+function WorkTile({ project, wide, result }) {
+  return (
+    <a
+      className={`v2-tile${wide ? ' v2-tile--wide' : ''}`}
+      href={project.link}
+      target="_blank"
+      rel="noreferrer"
+    >
+      <div className="v2-tile__frame">
+        <img
+          src={project.image}
+          alt={`${project.name} projesinden ekran görüntüsü`}
+          loading="lazy"
+          decoding="async"
+        />
+        <span className="v2-tile__glass" />
+        <span className="v2-tile__label">Siteyi gör ↗</span>
+      </div>
+      <div className="v2-tile__foot">
+        <span className="v2-tile__name">
+          {project.name}
+          <VerifiedMark />
+        </span>
+        <span className="v2-tile__desc">{project.desc}</span>
+        {result && <span className="v2-tile__result">{result}</span>}
+      </div>
+    </a>
+  );
+}
+
+function EmptyTile() {
+  return (
+    <div className="v2-tile v2-tile--empty">
+      <p className="v2-tile__empty-text">Bu slot bir sonraki iş için ayrıldı.</p>
+    </div>
+  );
+}
+
+function Laurel({ side }) {
+  return (
+    <svg
+      className={`v2-laurel${side === 'right' ? ' v2-laurel--right' : ''}`}
+      width="26"
+      height="46"
+      viewBox="0 0 26 46"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M22.4 2.6c-6.9 2-12 6.4-14.8 12.4C4.7 21.1 4.4 28 6.7 35.6l1.1 3.7 1.8-.6-1-3.6c-2.1-7-1.9-13.2.6-18.6C11.6 11.1 16.1 7.2 22.4 5.3V2.6z" />
+      <path d="M18.4 8.6c-2.7.2-4.9 1.3-6.4 3.2 2 1.2 4.2 1.3 6.4.4V8.6zM14.9 15.6c-2.5.6-4.4 2-5.5 4.2 2.2.8 4.3.5 6.2-.9l-.7-3.3zM12.9 23.9c-2.3 1-3.9 2.7-4.6 5.1 2.3.4 4.3-.3 5.8-2l-1.2-3.1zM13.1 32.4c-2 1.4-3.2 3.3-3.4 5.8 2.3-.1 4.1-1.2 5.2-3.2l-1.8-2.6z" />
+    </svg>
+  );
+}
+
+/* Metin yazilir gibi belirir, ok cizilir gibi. Yolun gercek uzunlugunu
+   olcup dasharray'e veriyoruz; sabit bir sayi verilirse farkli ekranlarda
+   cizgi ya erken bitiyor ya da yarim kaliyor. */
+function Annotation({ text }) {
+  const ref = useRef(null);
+  const [shown, setShown] = useState(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return undefined;
+
+    const path = node.querySelector('path');
+    if (path) node.style.setProperty('--len', path.getTotalLength().toFixed(1));
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShown(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.6 }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <span ref={ref} className={`v2-anno${shown ? ' is-in' : ''}`} aria-hidden="true">
+      <span className="v2-anno__text">{text}</span>
+      <svg className="v2-anno__arrow" width="46" height="34" viewBox="0 0 46 34" fill="none">
+        <path d="M2 3c8.5 1.2 15.6 5.2 21.3 12 3.2 3.8 6.4 8.2 9.6 13.2" />
+        <path d="M26.4 28.8l7 1 1.4-7" />
+      </svg>
+    </span>
+  );
+}
+
 function VerifiedMark() {
   return (
     <svg
@@ -161,13 +255,45 @@ function VerifiedMark() {
   );
 }
 
-/* Rakamlar gercek: %40 Emsa Otel yorumundan, 4 references.js'ten, 3 ekip
-   buyuklugu. Portfoy buyudukce burasi guncellenmeli. */
-const stats = [
+/* Referansta gecen sayilar: %40 Emsa Otel yorumundan, proje sayisi
+   references.js'ten turuyor, ekip buyuklugu sabit. */
+const kpis = [
   { unit: '%', value: '40', label: 'Emsa Otel’de doğrudan rezervasyon artışı' },
-  { value: '4', label: 'Teslim edilen proje' },
-  { value: '3', label: 'Kişilik ekip, tek masa' },
+  { value: String(referencesData.length), label: 'Teslim edilen proje' },
+  { value: '3', label: 'Kişilik ekip, tek masa', laurel: true },
 ];
+
+/* One cikan is: sonucu en net olcülen proje. */
+const FEATURED_ID = 1;
+
+/* Yerlesimi proje sayisi belirliyor.
+   Alti projede referansin birebir duzeni cikiyor: ust sirada dort dar tugla,
+   alt sirada bir dar + bir genis + sayi karti. Daha az projede ust sira
+   genisleyip bosluk birakmadan kapaniyor — "yakinda" kutusu ancak tam bir
+   slot acikta kalirsa devreye giriyor, dolgu olsun diye degil. */
+function buildWorkLayout(projects) {
+  const featured = projects.find((p) => p.id === FEATURED_ID) || projects[0];
+  const rest = projects.filter((p) => p !== featured);
+  const dense = rest.length >= 4;
+
+  const top = dense ? rest.slice(0, 4) : rest;
+  const small = dense ? rest[4] || null : undefined;
+
+  return {
+    featured,
+    top,
+    /* 12 kolonda ust sira tam kapanir. Ara genislikte izgara 6 kolona
+       dusuyor ve orada da bolunme tam olmali: uc tugla varsa satira ucu
+       birden, dort varsa ikiser ikiser girer. Sabit bir deger verilseydi
+       biri ya da digeri yanina delik birakirdi. */
+    topSpan: top.length ? 12 / top.length : 12,
+    topSpanMd: top.length === 3 ? 2 : 3,
+    small,
+    wideSpan: dense ? 6 : 8,
+    kpiSpan: dense ? 3 : 4,
+    smallSpan: 3,
+  };
+}
 
 /* Ne yaptigimiz — nise gore uc hat. Etiketler somut teslimat, sifat degil. */
 const services = [
@@ -238,6 +364,8 @@ const quotes = [
 ];
 
 export default function HomeV2() {
+  const work = buildWorkLayout(referencesData);
+
   return (
     <div className="v2-root">
       <nav className="v2-nav" aria-label="Ana menü">
@@ -302,54 +430,54 @@ export default function HomeV2() {
               <h2 className="v2-title">
                 <TwoTone lead="Seçili" tail="işler." />
               </h2>
-              <span className="v2-note">rezervasyon motorunu da biz kuruyoruz</span>
+              <Annotation text="rezervasyon motorunu da biz kuruyoruz" />
             </Item>
           </Reveal>
 
-          <Reveal className="v2-work">
-            {referencesData.map((project) => (
-              <Item key={project.id}>
-                <a
-                  className="v2-card"
-                  href={project.link}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <div className="v2-card__media">
-                    <img
-                      src={project.image}
-                      alt={`${project.name} projesinden ekran görüntüsü`}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                  <div className="v2-card__foot">
-                    <span className="v2-card__name">
-                      {project.name}
-                      <VerifiedMark />
-                    </span>
-                    <span className="v2-card__desc">{project.desc}</span>
-                  </div>
-                </a>
+          <Reveal className="v2-work" style={{ '--top-span-md': work.topSpanMd }}>
+            {work.top.map((project) => (
+              <Item key={project.id} style={{ gridColumn: `span ${work.topSpan}` }}>
+                <WorkTile project={project} />
               </Item>
             ))}
-          </Reveal>
-        </div>
-      </section>
 
-      {/* Sayilar ---------------------------------------------------------- */}
-      <section className="v2-section">
-        <div className="v2-shell">
-          <Reveal className="v2-stats">
-            {stats.map((stat) => (
-              <Item key={stat.label} className="v2-stat">
-                <span className="v2-stat__value">
-                  {stat.unit && <span className="v2-stat__unit">{stat.unit}</span>}
-                  {stat.value}
-                </span>
-                <span className="v2-stat__label">{stat.label}</span>
+            {work.small !== undefined && (
+              <Item style={{ gridColumn: `span ${work.smallSpan}` }}>
+                {work.small ? <WorkTile project={work.small} /> : <EmptyTile />}
               </Item>
-            ))}
+            )}
+
+            <Item
+              className="v2-work__wide"
+              style={{ gridColumn: `span ${work.wideSpan}` }}
+            >
+              <WorkTile
+                project={work.featured}
+                wide
+                result="Doğrudan rezervasyon %40 arttı"
+              />
+            </Item>
+
+            <Item
+              className="v2-work__kpi"
+              style={{ gridColumn: `span ${work.kpiSpan}` }}
+            >
+              <div className="v2-kpi">
+                {kpis.map((kpi) => (
+                  <div className="v2-kpi__row" key={kpi.label}>
+                    <span className="v2-kpi__value">
+                      {kpi.laurel && <Laurel />}
+                      <span>
+                        {kpi.unit && <span className="v2-kpi__unit">{kpi.unit}</span>}
+                        {kpi.value}
+                      </span>
+                      {kpi.laurel && <Laurel side="right" />}
+                    </span>
+                    <span className="v2-kpi__label">{kpi.label}</span>
+                  </div>
+                ))}
+              </div>
+            </Item>
           </Reveal>
         </div>
       </section>
