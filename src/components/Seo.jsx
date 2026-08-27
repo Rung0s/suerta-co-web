@@ -8,18 +8,28 @@ import { useEffect } from 'react';
  */
 export const SITE_URL = 'https://suerta.co';
 export const SITE_NAME = 'suerta co.';
-export const DEFAULT_TITLE = 'Eskişehir İnternet Sitesi Ajansı | Suerta Co. Web Tasarım & E-Ticaret';
-export const DEFAULT_DESC = 'Suerta Co. — Eskişehir profesyonel web tasarım ve internet sitesi ajansı. Özel web yazılımı, e-ticaret altyapıları ve yapay zeka otomasyon çözümleri sunuyoruz.';
-export const DEFAULT_IMAGE = `${SITE_URL}/og-image.svg`;
+export const DEFAULT_TITLE = 'suerta co. — Otel, Airbnb & Emlak Siteleri Stüdyosu';
+export const DEFAULT_DESC = 'suerta co. (suerta.co) — otel, günlük kiralık ve emlak markaları için rezervasyon ve ilan siteleri kuran butik dijital stüdyo. Komisyonsuz direkt rezervasyon, çok dilli listing, hızlı görsel altyapı.';
+export const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
 
-// Global kurumsal kimlik ve yapay zeka (GEO) uyumlu işletme şeması
+// Global kurumsal kimlik ve yapay zeka (GEO) uyumlu işletme şeması.
+// Not: ProfessionalService bir LocalBusiness alt tipidir ve markayı yerel
+// işletme olarak konumlandırıyordu; sade Organization'a geçildi. Adres
+// kalıyor — Organization adres taşıyabilir, bu yerel pakete sokmaz.
 export const organizationSchema = {
   '@context': 'https://schema.org',
-  '@type': ['ProfessionalService', 'WebSiteAgency'],
+  '@type': 'Organization',
+  '@id': `${SITE_URL}/#organization`,
   name: SITE_NAME,
-  alternateName: ['Suerta Co.', 'Suerta Co. Dijital Web Ajansı', 'Suerta Web Tasarım'],
+  legalName: SITE_NAME,
+  // Marka sorgularının (suerta.co / suerta co / suertaco) tek bir varlığa
+  // çözülebilmesi için tüm yazım varyantları burada listeleniyor.
+  alternateName: ['suerta co', 'Suerta Co.', 'suerta.co', 'suertaco', 'Suerta'],
   url: SITE_URL,
-  logo: `${SITE_URL}/favicon-v2.svg`,
+  logo: {
+    '@type': 'ImageObject',
+    url: `${SITE_URL}/favicon-v2.svg`,
+  },
   image: DEFAULT_IMAGE,
   slogan: 'Markanızın Şansı',
   email: 'suerta.info@gmail.com',
@@ -30,16 +40,48 @@ export const organizationSchema = {
     addressLocality: 'Eskişehir',
     addressCountry: 'TR',
   },
-  areaServed: ['Eskişehir', 'Türkiye', 'Global'],
+  areaServed: [
+    { '@type': 'Country', name: 'Türkiye' },
+    { '@type': 'Place', name: 'Worldwide' },
+  ],
   knowsAbout: [
-    'Web Tasarım',
-    'İnternet Sitesi Yapımı',
-    'E-Ticaret Sistemleri',
-    'Yapay Zeka Otomasyonu',
-    'Eskişehir Ajans Hizmetleri',
-    'Özel Yazılım Geliştirme'
+    'Otel Web Sitesi',
+    'Otel Rezervasyon Sistemi',
+    'Direct Booking Engine',
+    'Airbnb ve Kısa Dönem Kiralama Sitesi',
+    'Vacation Rental Website',
+    'Emlak İlan Sitesi',
+    'Real Estate Listing Platform',
+    'Channel Manager Entegrasyonu',
+    'Çok Dilli İlan Yönetimi',
+    'Web Performans Optimizasyonu',
   ],
   sameAs: ['https://instagram.com/suerta.co'],
+};
+
+/** Hizmetler sayfası için Service + OfferCatalog şeması */
+export const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Otel, Airbnb ve emlak markaları için rezervasyon ve ilan sitesi geliştirme',
+  provider: { '@id': `${SITE_URL}/#organization` },
+  areaServed: [
+    { '@type': 'Country', name: 'Türkiye' },
+    { '@type': 'Place', name: 'Worldwide' },
+  ],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Hizmetler',
+    itemListElement: [
+      'Otel web sitesi ve komisyonsuz direkt rezervasyon',
+      'Airbnb / günlük kiralık listing sitesi',
+      'Emlak ilan platformu ve portföy paneli',
+      'Rezervasyon motoru, channel manager ve ödeme entegrasyonları',
+    ].map((name) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name },
+    })),
+  },
 };
 
 /** Head içindeki bir <meta>'yı bul/oluştur ve içeriğini güncelle */
@@ -89,8 +131,10 @@ export default function Seo({
   jsonLd,
   includeOrganization = true,
 }) {
+  // Marka her başlıkta geçmeli. Kontrol büyük/küçük harfe duyarsız: eskisi
+  // "Suerta" içeren başlıkları kaçırıyor ve markayı iki kez ekliyordu.
   const fullTitle = title
-    ? (title.includes('suerta') ? title : `${title} — suerta co.`)
+    ? (title.toLowerCase().includes('suerta') ? title : `${title} — ${SITE_NAME}`)
     : DEFAULT_TITLE;
   const canonical = `${SITE_URL}${path === '/' ? '/' : path.replace(/\/$/, '')}`;
   const imageAbs = image?.startsWith('http') ? image : `${SITE_URL}${image}`;
@@ -120,7 +164,10 @@ export default function Seo({
     if (includeOrganization) schemas.push(organizationSchema);
     if (jsonLd) schemas.push(...(Array.isArray(jsonLd) ? jsonLd : [jsonLd]));
     setJsonLd(schemas);
-  }, [fullTitle, description, canonical, imageAbs, type, includeOrganization, jsonLd]);
+    // jsonLd her çağrı yerinde yeni bir nesne olarak kuruluyor. Referansına
+    // bağlanırsak efekt her render'da script'leri silip yeniden yaratıyor.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fullTitle, description, canonical, imageAbs, type, includeOrganization, JSON.stringify(jsonLd)]);
 
   return null;
 }

@@ -1,36 +1,42 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const faqs = [
+// Bu dizi hem görünür SSS bölümünü hem de ana sayfanın FAQPage şemasını besler.
+export const faqs = [
   {
     id: 1,
-    question: "PROJE SÜREÇLERİ NASIL İŞLİYOR?",
-    answer: "Öncelikle markanızın vizyonunu ve dijital hedeflerini dinlediğimiz bir keşif toplantısı yapıyoruz. Ardından strateji, tasarım (UX/UI) ve geliştirme fazlarını şeffaf bir şekilde yöneterek projenizi yayına alıyoruz."
+    question: "BOOKING VE AIRBNB KOMİSYONUNDAN KURTULMAK İÇİN KENDİ SİTEM YETERLİ Mİ?",
+    answer: "Tek başına bir tanıtım sitesi yetmez; misafirin rezervasyonu siteniz üzerinden tamamlayabilmesi gerekir. Bunun için müsaitlik takvimi, fiyatlandırma, ödeme altyapısı ve onay e-postalarını içeren bir rezervasyon motoru kuruyoruz. OTA kanallarını kapatmak yerine, doğrudan gelen rezervasyonun payını artırmayı hedefliyoruz; her doğrudan rezervasyon komisyon ödenmeyen rezervasyondur."
   },
   {
     id: 2,
-    question: "E-TİCARET ALTYAPISI OLARAK NE KULLANIYORSUNUZ?",
-    answer: "İhtiyaçlarınıza göre Shopify, WooCommerce veya tamamen size özel (custom) çözümler geliştiriyoruz. Entegrasyonlar ve komisyonsuz satış altyapıları konusunda uzmanız."
+    question: "MEVCUT CHANNEL MANAGER VEYA PMS SİSTEMİMLE ENTEGRE OLUR MU?",
+    answer: "Evet. Kullandığınız channel manager, PMS veya takvim sistemiyle iki yönlü senkronizasyon kuruyoruz; böylece bir kanaldan gelen rezervasyon diğerlerinde otomatik olarak müsaitlikten düşer ve çifte rezervasyon riski ortadan kalkar. Sisteminiz API sunmuyorsa iCal senkronizasyonu ile çözüyoruz."
   },
   {
     id: 3,
-    question: "SADECE TASARIM MI YAPIYORSUNUZ?",
-    answer: "Hayır, suerta co. tam kapsamlı bir dijital ajanstır. Konsept tasarımdan başlayarak, yazılım geliştirme, yapay zeka entegrasyonları ve performans optimizasyonlarına kadar uçtan uca hizmet veriyoruz."
+    question: "İLAN SAYISI ARTINCA SİTE YAVAŞLAR MI?",
+    answer: "İlan ve oda sayfaları görsel ağırlıklı olduğu için performans en kritik başlık. Görselleri AVIF ve WebP formatlarında, boyuta göre türetilmiş sürümlerle sunuyor; galerileri tembel yükleme (lazy loading) ile kuruyoruz. Harita, filtre ve takvim gibi ağır bileşenler yalnızca gerektiğinde yükleniyor. Hedefimiz kırk fotoğraflı bir oda sayfasında bile Core Web Vitals eşiklerinin altında kalmak."
   },
   {
     id: 4,
-    question: "NE KADAR SÜREDE TESLİM EDİYORSUNUZ?",
-    answer: "Projenin kapsamına göre değişmekle birlikte, standart bir kurumsal web sitesi veya butik e-ticaret platformu ortalama 4 ila 8 hafta içerisinde kusursuz bir şekilde yayına hazır hale gelir."
+    question: "SİTE KAÇ DİLDE VE PARA BİRİMİNDE ÇALIŞIR?",
+    answer: "Yabancı misafir alan tesislerde çok dilli yapı zorunlu. İlan başlıkları, açıklamaları, oda özellikleri ve iptal koşulları dil bazında ayrı yönetilir; fiyatlar seçilen para biriminde gösterilir. Her dil için ayrı URL ve hreflang etiketleri kuruyoruz, böylece sayfalar ilgili ülkelerin aramalarında da görünür."
   },
   {
     id: 5,
-    question: "BAŞKA İLLERE PROJE ÜRETİYOR MUSUNUZ?",
-    answer: "Evet, Samsun, İstanbul ve Eskişehir başta olmak üzere Türkiye'nin her şehrine ve globale proje üretiyoruz. Kusursuz online iletişim ve proje yönetim araçlarımız sayesinde mesafe fark etmeksizin süreci şeffafça yürütüyoruz."
+    question: "NE KADAR SÜREDE TESLİM EDİYORSUNUZ?",
+    answer: "Kapsama göre değişir. Rezervasyon formu ve oda sayfalarını içeren bir otel sitesi ortalama 4-6 hafta; filtreleme, harita araması ve yönetim paneli içeren bir ilan platformu 8-12 hafta sürer. Süreci fazlara bölüyoruz ve her fazın sonunda çalışan bir sürüm görüyorsunuz."
   },
   {
     id: 6,
-    question: "SİTEMİ KENDİM GÜNCELLEYEBİLİR MİYİM?",
-    answer: "Kesinlikle. Geliştirdiğimiz tüm projelerde, kod bilginiz olmadan da metin, görsel ve ürün değişikliklerini kolayca yapabileceğiniz kullanıcı dostu, güvenli yönetim panelleri (CMS) sunuyor ve teslimatta eğitimini veriyoruz."
+    question: "İLANLARI VE FİYATLARI KENDİM GÜNCELLEYEBİLİR MİYİM?",
+    answer: "Evet. Kod bilgisi gerektirmeyen bir yönetim paneli teslim ediyoruz: ilan ekleme, fotoğraf yükleme, sezonluk fiyat ve müsaitlik güncelleme, iptal koşulu düzenleme hepsi panelden yapılır. Teslimatta ekibinize eğitim veriyor ve kayıt altına alıyoruz."
+  },
+  {
+    id: 7,
+    question: "OTEL, KİRALAMA VE EMLAK DIŞINDA PROJE ALIYOR MUSUNUZ?",
+    answer: "Alıyoruz, ancak uzmanlığımız rezervasyon ve ilan siteleri. Türkiye ve yurt dışındaki müşterilerle tamamen uzaktan çalışıyoruz; süreç çevrimiçi proje yönetimiyle şeffaf ilerlediği için konum fark etmiyor."
   }
 ];
 

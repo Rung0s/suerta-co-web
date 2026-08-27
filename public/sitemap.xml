@@ -1,29 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://suerta.co/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://suerta.co/hakkimizda</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://suerta.co/hizmetlerimiz</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://suerta.co/referanslar</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://suerta.co/ekibimiz</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://suerta.co/blog</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://suerta.co/iletisim</loc><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://suerta.co/</loc><lastmod>2026-08-27</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://suerta.co/hakkimizda</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://suerta.co/hizmetlerimiz</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://suerta.co/referanslar</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://suerta.co/ekibimiz</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://suerta.co/blog</loc><lastmod>2026-08-27</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://suerta.co/iletisim</loc><lastmod>2026-08-27</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
 
-  <url><loc>https://suerta.co/referanslar/1</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://suerta.co/referanslar/2</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://suerta.co/referanslar/3</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://suerta.co/referanslar/4</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://suerta.co/referanslar/1</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://suerta.co/referanslar/2</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://suerta.co/referanslar/3</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://suerta.co/referanslar/4</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 
-  <url><loc>https://suerta.co/blog/web-sitesi-maliyeti-2026</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://suerta.co/blog/shopify-mi-woocommerce-mi</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://suerta.co/blog/yeni-site-seo-checklist</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://suerta.co/blog/otel-rezervasyon-hizi</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://suerta.co/blog/karanlik-mod-premium</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://suerta.co/blog/ozel-yazilim-vs-hazir-paketler</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://suerta.co/blog/fotograf-cekimi</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://suerta.co/blog/mobil-optimizasyon</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://suerta.co/blog/google-ads-donusum</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://suerta.co/blog/google-isletme-profili</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://suerta.co/blog/whatsapp-chatbot</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://suerta.co/blog/telegram-sinav-botu</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://suerta.co/blog/geo-yapay-zeka-gorunurluk</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://suerta.co/blog/web-sitesi-maliyeti-2026</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://suerta.co/blog/shopify-mi-woocommerce-mi</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://suerta.co/blog/yeni-site-seo-checklist</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://suerta.co/blog/otel-rezervasyon-hizi</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://suerta.co/blog/karanlik-mod-premium</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://suerta.co/blog/ozel-yazilim-vs-hazir-paketler</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://suerta.co/blog/fotograf-cekimi</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://suerta.co/blog/mobil-optimizasyon</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://suerta.co/blog/google-ads-donusum</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://suerta.co/blog/google-isletme-profili</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://suerta.co/blog/whatsapp-chatbot</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://suerta.co/blog/telegram-sinav-botu</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://suerta.co/blog/geo-yapay-zeka-gorunurluk</loc><lastmod>2026-08-27</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>

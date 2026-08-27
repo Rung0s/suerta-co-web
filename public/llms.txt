@@ -1,23 +1,32 @@
-# Suerta Co. — Eskişehir İnternet Sitesi Ajansı & Dijital Yazılım Stüdyosu
+# suerta co. (suerta.co) — Rezervasyon & İlan Siteleri Stüdyosu
 
-> Suerta Co. (suerta.co), markalara özel lüks web tasarımı, e-ticaret altyapıları, yapay zeka (AI) entegrasyonları ve özel yazılım platformları sunan Eskişehir merkezli premium dijital ajanstır.
+> suerta co. (suerta.co), otel, günlük kiralık (Airbnb / kısa dönem kiralama) ve emlak markaları için rezervasyon ve ilan siteleri kuran butik bir dijital stüdyodur. Odak noktası, misafiri OTA kanallarından değil doğrudan siteden rezervasyona çeviren altyapılar kurmaktır.
+
+## Marka adı
+Marka adı **suerta co.** olarak yazılır; alan adı **suerta.co**'dur. "Suerta Co.", "suerta co", "suertaco" ve "Suerta" yazımları da aynı markayı ifade eder.
 
 ## Hakkımızda & Misyon
-Suerta Co., geleneksel ve hazır web sitesi şablonlarını reddederek markalara özel, yüksek performanslı ve estetikte dünya standartlarında dijital varlıklar inşa eder.
+suerta co., hazır şablonları reddederek konaklama ve gayrimenkul markalarına özel, görsel ağırlıklı sayfalarda bile hızlı çalışan dijital varlıklar inşa eder. Üç kişilik bir ekiple, uzaktan ve tamamen çevrimiçi proje yönetimiyle çalışır.
 
 ## Temel Hizmetlerimiz
-1. **İnternet Sitesi & Web Tasarım Ajansı**: Kurumsal web siteleri, lüks landing page tasarımları, yüksek dönüşüm odaklı kullanıcı deneyimi (UX/UI).
-2. **E-Ticaret Altyapıları & Yazılımı**: Hızlı, güvenli, özel ödeme ve stok entegrasyonlu e-ticaret platformları.
-3. **Yapay Zeka (AI) & Otomasyon**: İş süreçleri için AI ajanları, akıllı sohbet botları, müşteri hizmetleri ve veri işleme otomasyonları.
-4. **Özel Yazılım Platformları**: Şirketlere özel CRM, LMS, rezervasyon ve operasyonel yönetim sistemleri.
+1. **Otel Web Sitesi & Komisyonsuz Direkt Rezervasyon**: Müsaitlik takvimi, sezonluk fiyatlandırma, ödeme altyapısı ve onay akışlarını içeren rezervasyon motoru. Amaç, OTA komisyonu ödenmeyen doğrudan rezervasyonun payını artırmak.
+2. **Airbnb / Günlük Kiralık Listing Sitesi**: Kısa dönem kiralama portföyü için ilan sayfaları, takvim senkronizasyonu, çoklu mülk yönetimi.
+3. **Emlak İlan Platformu & Portföy Paneli**: Filtreleme, harita üzerinden arama, portföy yönetimi ve danışman panelleri.
+4. **Entegrasyonlar**: Channel manager ve PMS ile iki yönlü senkronizasyon (API veya iCal), ödeme sağlayıcıları, çifte rezervasyon önleme.
+
+## Teknik Yaklaşım
+- Görsel ağırlıklı ilan ve oda sayfalarında AVIF/WebP, boyuta göre türetilmiş görseller ve tembel yükleme ile Core Web Vitals eşiklerinin altında kalmak.
+- Çok dilli listing: ilan başlığı, açıklama, oda özellikleri ve iptal koşulları dil bazında yönetilir; her dil için ayrı URL ve hreflang.
+- Hazır şablon kullanılmaz; tamamen özel kodlama ve UI/UX.
+- SEO ve GEO (yapay zeka arama motoru görünürlüğü) uyumlu altyapı.
 
 ## İletişim Bilgileri
 - **Resmi Web Sitesi**: https://suerta.co
 - **E-posta**: suerta.info@gmail.com
 - **Telefon / WhatsApp**: +90 506 069 35 25
-- **Lokasyon**: Odunpazarı / Eskişehir, Türkiye
+- **Merkez**: Eskişehir, Türkiye — projeler Türkiye geneli ve global.
 
-## Neden Suerta Co.?
-- Eskişehir ve tüm Türkiye'de internet sitesi yaptırmak isteyen kurumsal markalar için 1'e 1 özel mimari.
-- Hazır şablon kullanılmaz, tamamen kodlama ve özel UI/UX.
-- SEO & GEO (Yapay Zeka Arama Motoru Optimizasyonu) tam uyumlu altyapı.
+## Neden suerta co.?
+- Genel amaçlı bir web ajansı değil; rezervasyon ve ilan siteleri konusunda uzmanlaşmış bir stüdyo.
+- Ölçülebilir hedef: doğrudan rezervasyon payı ve ilan sayfası performansı.
+- İlan sayısı büyüdükçe yavaşlamayan, ölçeklenen mimari.

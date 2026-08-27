@@ -17,7 +17,7 @@ import ReferencesPage from './components/ReferencesPage';
 import ContactSection from './components/ContactSection';
 import TestimonialsSection from './components/TestimonialsSection';
 import StatsSection from './components/StatsSection';
-import FAQSection from './components/FAQSection';
+import FAQSection, { faqs } from './components/FAQSection';
 import BlogSection from './components/BlogSection';
 import BlogPage from './components/BlogPage';
 import BlogDetail from './components/BlogDetail';
@@ -31,7 +31,7 @@ import NotFound from './components/NotFound';
 import LiquidGlassBlob from './components/LiquidGlassBlob';
 import SignatureScene from './components/SignatureScene';
 import TeamSection from './components/TeamSection';
-import Seo, { SITE_URL, breadcrumbSchema } from './components/Seo';
+import Seo, { SITE_URL, breadcrumbSchema, faqSchema, serviceSchema } from './components/Seo';
 import useIsMobile from './hooks/useIsMobile';
 import { LanguageProvider } from './context/LanguageContext';
 
@@ -40,9 +40,14 @@ const websiteSchema = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
   name: 'suerta co.',
+  alternateName: 'suerta.co',
   url: SITE_URL,
   inLanguage: 'tr-TR',
+  publisher: { '@id': `${SITE_URL}/#organization` },
 };
+
+// Ana sayfada SSS bölümü görünür durumda; şemasını da yayınlıyoruz.
+const homeSchemas = [websiteSchema, faqSchema(faqs)].filter(Boolean);
 
 // Lenis smooth-scroll örneğini, sayfa geçişlerinde scroll'u sıfırlayabilmek
 // için modül seviyesinde paylaşıyoruz.
@@ -109,7 +114,7 @@ function AnimatedRoutes() {
     <Routes>
         <Route path="/" element={
           <PageTransition>
-            <Seo path="/" jsonLd={websiteSchema} />
+            <Seo path="/" jsonLd={homeSchemas} />
             <HeroSection />
             <SignatureScene />
             <ServicesSection />
@@ -122,7 +127,7 @@ function AnimatedRoutes() {
         } />
         <Route path="/hakkimizda" element={<PageTransition>
           <Seo path="/hakkimizda" title="Hakkımızda & Vizyon"
-            description="suerta co. — dijital lüks anlayışıyla markalara web tasarım, e-ticaret, operasyonel yazılım ve yapay zeka çözümleri üreten Eskişehir merkezli dijital ajans. Vizyonumuz ve çalışma prensiplerimiz."
+            description="suerta co. (suerta.co), otel, günlük kiralık ve emlak markaları için rezervasyon ve ilan siteleri kuran butik bir stüdyo. Çalışma prensiplerimiz, teknoloji tercihlerimiz ve nasıl çalıştığımız."
             jsonLd={breadcrumbSchema([{ name: 'Ana Sayfa', path: '/' }, { name: 'Hakkımızda', path: '/hakkimizda' }])} />
           <AboutSection /></PageTransition>} />
         <Route path="/ekibimiz" element={<PageTransition>
@@ -131,19 +136,22 @@ function AnimatedRoutes() {
             jsonLd={breadcrumbSchema([{ name: 'Ana Sayfa', path: '/' }, { name: 'Ekibimiz', path: '/ekibimiz' }])} />
           <TeamSection /></PageTransition>} />
         <Route path="/hizmetlerimiz" element={<PageTransition>
-          <Seo path="/hizmetlerimiz" title="Hizmetlerimiz & Çözümler"
-            description="Web tasarım & arayüz, e-ticaret & dönüşüm, operasyonel sistemler (QR menü, rezervasyon, CRM) ve yapay zeka otomasyonları. suerta co. ile markanıza özel dijital çözümler."
-            jsonLd={breadcrumbSchema([{ name: 'Ana Sayfa', path: '/' }, { name: 'Hizmetlerimiz', path: '/hizmetlerimiz' }])} />
+          <Seo path="/hizmetlerimiz" title="Rezervasyon & İlan Sistemleri"
+            description="Otel rezervasyon motoru, Airbnb ve günlük kiralık listing sitesi, emlak ilan platformu, channel manager ve ödeme entegrasyonları. Kapsam, süre ve yatırım aralıklarıyla."
+            jsonLd={[
+              breadcrumbSchema([{ name: 'Ana Sayfa', path: '/' }, { name: 'Hizmetlerimiz', path: '/hizmetlerimiz' }]),
+              serviceSchema,
+            ]} />
           <ServicesSection /></PageTransition>} />
         <Route path="/referanslar" element={<PageTransition>
           <Seo path="/referanslar" title="Referanslar & Projeler"
-            description="Emsa Otel, Rönesans Edu, Pawsec ve Argüman Fabrikası — suerta co.'nun hayata geçirdiği web tasarım, e-ticaret ve özel yazılım projeleri."
+            description="Emsa Otel'de komisyonsuz rezervasyon, Rönesans Edu'da özel platform, Pawsec'te e-ticaret — suerta co.'nun teslim ettiği rezervasyon, ilan ve platform projeleri."
             jsonLd={breadcrumbSchema([{ name: 'Ana Sayfa', path: '/' }, { name: 'Referanslar', path: '/referanslar' }])} />
           <ReferencesPage /></PageTransition>} />
         <Route path="/referanslar/:id" element={<PageTransition><ProjectDetail /></PageTransition>} />
         <Route path="/blog" element={<PageTransition>
           <Seo path="/blog" title="Blog & İçerikler"
-            description="Web sitesi maliyeti, e-ticaret platformları, SEO, yapay zeka görünürlüğü ve dijital pazarlama üzerine suerta co. rehber içerikleri."
+            description="Direkt rezervasyon, OTA komisyonu, ilan sayfası performansı, çok dilli listing ve görsel optimizasyonu üzerine suerta co. rehber içerikleri."
             jsonLd={breadcrumbSchema([{ name: 'Ana Sayfa', path: '/' }, { name: 'Blog', path: '/blog' }])} />
           <BlogPage /></PageTransition>} />
         <Route path="/blog/:id" element={<PageTransition><BlogDetail /></PageTransition>} />

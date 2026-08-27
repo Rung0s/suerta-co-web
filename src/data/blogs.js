@@ -310,7 +310,7 @@ suerta co. olarak reklam yönetimine her zaman ölçüm kurulumuyla başlarız; 
     desc: "Müşteriler sizi önce Google Haritalar'da arıyor. İşletme profilini kurmanın, optimize etmenin ve yorumlarla öne çıkmanın adımları.",
     date: "15 Temmuz 2026",
     content: `
-"Yakınımdaki otel", "Eskişehir web tasarım", "en yakın veteriner"... İnsanlar bir yerel hizmet ararken çoğunlukla siteye değil, önce Google Haritalar'daki işletme kartlarına bakar. Bu kartların kaynağı, ücretsiz olan Google İşletme Profili'dir (eski adıyla Google My Business). Profili olmayan bir işletme, aramanın en değerli bölümünde — haritada ve "yerel paket" denen üçlü listede — hiç görünmez.
+"Yakınımdaki otel", "deniz manzaralı günlük kiralık daire", "en yakın butik otel"... İnsanlar bir yerel hizmet ararken çoğunlukla siteye değil, önce Google Haritalar'daki işletme kartlarına bakar. Bu kartların kaynağı, ücretsiz olan Google İşletme Profili'dir (eski adıyla Google My Business). Profili olmayan bir işletme, aramanın en değerli bölümünde — haritada ve "yerel paket" denen üçlü listede — hiç görünmez.
 
 İlk adım profili oluşturmak ve sahipliğini doğrulamaktır; Google genellikle bir kod ile adresinizi teyit eder. Ardından temel bilgiler eksiksiz ve tutarlı girilir: işletme adı, adres, telefon, çalışma saatleri ve kategori. Buradaki en önemli kural tutarlılıktır — işletme adınız, adresiniz ve telefonunuz sitenizde, sosyal medyanızda ve profilde birebir aynı yazılmalıdır. Google bu bilgileri karşılaştırır; tutarsızlık güveni ve sıralamayı düşürür.
 
@@ -409,7 +409,7 @@ suerta co. olarak işletmenize özel izleme ve bildirim botları geliştiriyoruz
     desc: "İnsanlar artık Google yerine yapay zekâya soruyor. Generative Engine Optimization (GEO) ile markanızın yapay zekâ yanıtlarında görünmesi.",
     date: "10 Temmuz 2026",
     content: `
-Arama alışkanlığı değişiyor. Giderek daha çok insan "Eskişehir'de iyi bir web ajansı öner" ya da "şu iş için hangi yazılımı kullanmalıyım" gibi soruları Google'a değil, doğrudan ChatGPT, Gemini veya Perplexity gibi yapay zekâ araçlarına soruyor. Bu araçlar on mavi link listelemez; tek bir yanıt verir ve o yanıtta birkaç markayı önerir. GEO (Generative Engine Optimization), markanızın işte bu yapay zekâ yanıtlarında yer almasını sağlama çalışmasıdır — SEO'nun yeni nesil kardeşi.
+Arama alışkanlığı değişiyor. Giderek daha çok insan "Kapadokya'da havuzlu butik otel öner" ya da "otelim için hangi rezervasyon sistemini kullanmalıyım" gibi soruları Google'a değil, doğrudan ChatGPT, Gemini veya Perplexity gibi yapay zekâ araçlarına soruyor. Bu araçlar on mavi link listelemez; tek bir yanıt verir ve o yanıtta birkaç markayı önerir. GEO (Generative Engine Optimization), markanızın işte bu yapay zekâ yanıtlarında yer almasını sağlama çalışmasıdır — SEO'nun yeni nesil kardeşi.
 
 Klasik SEO Google'da sıralanmayı hedefler; GEO ise yapay zekânın sizi "kaynak olarak" seçmesini ve önermesini hedefler. Yapay zekâ modelleri yanıtlarını internetteki içeriklerden derler; net, yapılandırılmış, otoriter ve konuyu gerçekten açıklayan içerikleri tercih eder. Yani GEO'nun temeli sihir değil, iyi içeriktir: bir konuyu baştan sona, sorulara doğrudan yanıt verecek biçimde açıklayan sayfalar, yapay zekânın en çok güvendiği ve alıntıladığı kaynaklardır.
 
