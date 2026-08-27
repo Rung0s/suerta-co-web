@@ -5,6 +5,7 @@ import './surface.css';
 import './work.css';
 import './partners.css';
 import './manifesto.css';
+import './closing.css';
 import './v2.css';
 
 /* Tek reveal primitifi. Sitede uc ayri reveal sistemi vardi (CSS + iki farkli
@@ -828,18 +829,26 @@ export default function HomeV2() {
       </section>
 
       {/* Kapanis ---------------------------------------------------------- */}
-      <section className="v2-section v2-cta" id="iletisim">
+      <section className="v2-section v2-close" id="iletisim">
+        <div className="v2-halo" aria-hidden="true" />
         <div className="v2-shell">
-          <Reveal className="v2-cta__inner">
+          <Reveal className="v2-close__inner">
             <Item>
               <Rocket />
             </Item>
             <Item as="h2" className="v2-display">
               Ne inşa ettiğinizi anlatın
             </Item>
-            <Item className="v2-availability">
-              Bu ay <span className="v2-availability__num">2</span> proje kontenjanı
+
+            {/* Kontenjan iddiasi cumle olarak reklam gibi duruyor; bilet
+                olarak verilince belge gibi. */}
+            <Item>
+              <span className="v2-ticket">
+                <span className="v2-ticket__num">2</span>
+                <span className="v2-ticket__label">yer · bu ay</span>
+              </span>
             </Item>
+
             <Item>
               <a
                 className="v2-btn v2-btn--primary"
@@ -850,52 +859,52 @@ export default function HomeV2() {
                 15 dakikalık görüşme ayarla
               </a>
             </Item>
+
+            <Item className="v2-status">
+              <span className="v2-status__dot" aria-hidden="true" />
+              Bu hafta yanıt süresi: birkaç saat
+            </Item>
           </Reveal>
         </div>
       </section>
 
-      {/* Alt bilgi -------------------------------------------------------- */}
-      <footer className="v2-footer">
-        <div className="v2-shell">
-          <div className="v2-footer__top">
-            <div className="v2-footer__col">
-              <span className="v2-label">suerta co.</span>
-              <span className="v2-footer__link" style={{ cursor: 'default' }}>
-                Rezervasyon ve ilan siteleri stüdyosu
-              </span>
-            </div>
-            <div className="v2-footer__col">
-              <span className="v2-label">Menü</span>
-              <a className="v2-footer__link" href="#isler">
+      {/* Kapanis bandi ----------------------------------------------------
+          Referans sayfayi tam genislik bir gorselle kapatiyor ve telif
+          satirini onun uzerine serilen koyu gradyanda tasiyor. Gorsel
+          uretilene kadar ayni yeri SVG turbulansiyla kurulan ditherli bir
+          doku tutuyor. */}
+      <footer className="v2-band">
+        <div className="v2-band__dither" aria-hidden="true" />
+        <div className="v2-band__foot">
+          <div className="v2-shell">
+            <span className="v2-band__copy">
+              © {new Date().getFullYear()} suerta co. — suerta.co
+            </span>
+            <nav className="v2-band__links" aria-label="Alt bilgi">
+              <a className="v2-band__link" href="#isler">
                 İşler
               </a>
-              <a className="v2-footer__link" href="#hizmetler">
+              <a className="v2-band__link" href="#hizmetler">
                 Hizmetler
               </a>
-              <a className="v2-footer__link" href="#surec">
+              <a className="v2-band__link" href="#surec">
                 Süreç
               </a>
-              <a className="v2-footer__link" href="#sss">
+              <a className="v2-band__link" href="#sss">
                 SSS
               </a>
-            </div>
-            <div className="v2-footer__col">
-              <span className="v2-label">İletişim</span>
-              <a className="v2-footer__link" href="mailto:suerta.info@gmail.com">
+              <a className="v2-band__link" href="mailto:suerta.info@gmail.com">
                 suerta.info@gmail.com
               </a>
               <a
-                className="v2-footer__link"
+                className="v2-band__link"
                 href="https://instagram.com/suerta.co"
                 target="_blank"
                 rel="noreferrer"
               >
                 Instagram
               </a>
-            </div>
-          </div>
-          <div className="v2-footer__bottom">
-            © {new Date().getFullYear()} suerta co. — suerta.co
+            </nav>
           </div>
         </div>
       </footer>

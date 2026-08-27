@@ -116,7 +116,7 @@
 }
 
 .v2-root .v2-kpi__value,
-.v2-root .v2-availability__num {
+.v2-root .v2-ticket__num {
   font-family: var(--font-numeric);
 }
 
@@ -863,89 +863,7 @@
   display: inline-block;
 }
 
-/* Kapanis ------------------------------------------------------------------ */
-
-.v2-cta {
-  text-align: center;
-}
-
-.v2-cta__inner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-4);
-}
-
-/* Doto nokta-matris: rakamda karakter, cumlede okunmazlik. Sayi Doto'da
-   kalir, metin govde fontuna doner. */
-.v2-availability {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--text-micro);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  font-weight: 500;
-  color: var(--muted);
-}
-
-.v2-availability__num {
-  font-family: var(--font-numeric);
-  font-weight: 700;
-  font-size: 1.15em;
-  color: var(--ink);
-  letter-spacing: 0.04em;
-}
-
-.v2-availability::before {
-  content: '';
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
-}
-
-/* Alt bilgi ---------------------------------------------------------------- */
-
-.v2-footer {
-  background: var(--dark-bg);
-  color: var(--dark-ink);
-  padding-block: var(--section-y) var(--space-8);
-}
-
-.v2-footer__top {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-12);
-  justify-content: space-between;
-  padding-bottom: var(--space-12);
-  border-bottom: 1px solid var(--dark-line);
-}
-
-.v2-footer__col {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  min-width: 12rem;
-}
-
-.v2-footer__link {
-  color: var(--dark-muted);
-  text-decoration: none;
-  font-size: var(--text-small);
-  transition: color var(--dur-fast) var(--ease);
-  width: fit-content;
-}
-
-.v2-footer__link:hover {
-  color: var(--dark-ink);
-}
-
-.v2-footer__bottom {
-  padding-top: var(--space-6);
-  font-size: var(--text-micro);
-  color: var(--dark-muted);
-}
+/* Kapanis ve alt bant closing.css'te. */
 
 /* Duyarli ------------------------------------------------------------------ */
 
