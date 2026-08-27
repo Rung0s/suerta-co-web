@@ -255,24 +255,50 @@ function ScriptedLine({ text }) {
 }
 
 /* Referansin kirmizi butonunun karsiligi. Marka "suerta" — sans; obje de
-   madeni para. Her cevirmede yarim tur ekleniyor, yani para hep ayni yonde
-   donuyor ve sonuc yuze gore belirleniyor: geri sarma hissi vermiyor. */
-const COIN_LINES = [
-  'Şans dedik ama işi şansa bırakmıyoruz.',
-  'Tura. Yine de planla çalışıyoruz.',
-  'Yazı. Sonuç yine aynı: ölçüp kuruyoruz.',
-];
+   madeni para.
 
+   Uc perde: para durur ("dokunma"), cevrilir (yazi ya da tura, gercekten
+   rastgele), bir daha basilinca yerini kartvizit alir. Sira onemli — once
+   sansi gostermek, sonra elinden almak. Sadece kart gosterilseydi cumle
+   sadece bir slogan olurdu; parayi bir kez atmis olmak onu bir sonuca
+   ceviriyor. */
 function LuckCoin() {
-  const [flips, setFlips] = useState(0);
+  /* Yarim tur cinsinden. Cift toplam tura, tek toplam yazi verir; her
+     basista 9 ya da 10 yarim tur eklendigi icin sonuc gercekten rastgele
+     ama para hep ayni yonde donuyor, geri sarma hissi olmuyor. */
+  const [halfTurns, setHalfTurns] = useState(0);
+  const [stage, setStage] = useState(0);
   const [spinning, setSpinning] = useState(false);
 
-  const flip = () => {
-    setFlips((n) => n + 1);
-    setSpinning(true);
+  const press = () => {
+    if (stage === 0) {
+      setHalfTurns((n) => n + 9 + Math.round(Math.random()));
+      setStage(1);
+      setSpinning(true);
+      return;
+    }
+    setStage(2);
   };
 
-  const line = flips === 0 ? COIN_LINES[0] : COIN_LINES[1 + (flips % 2)];
+  const side = halfTurns % 2 === 0 ? 'Tura' : 'Yazı';
+
+  if (stage === 2) {
+    return (
+      <div className="v2-altar">
+        <div className="v2-halo v2-halo--altar" aria-hidden="true" />
+        <div className="v2-luckcard" role="group" aria-label="suerta co. kartviziti">
+          <p className="v2-luckcard__line">İşini şansa bırakma.</p>
+          <p className="v2-luckcard__brand">
+            suerta<span className="v2-luckcard__dot">.</span>
+          </p>
+          <p className="v2-luckcard__tag">markanızın şansı</p>
+          <a className="v2-btn v2-btn--primary v2-luckcard__cta" href="#iletisim">
+            Görüşme ayarla
+          </a>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`v2-altar${spinning ? ' is-spinning' : ''}`}>
@@ -282,10 +308,10 @@ function LuckCoin() {
       <button
         type="button"
         className="v2-coin"
-        onClick={flip}
+        onClick={press}
         onTransitionEnd={() => setSpinning(false)}
-        style={{ transform: `rotateY(${flips * 1980}deg)` }}
-        aria-label="Parayı çevir"
+        style={{ transform: `rotateY(${halfTurns * 180}deg)` }}
+        aria-label={stage === 0 ? 'Parayı çevir' : 'Bir daha bas'}
       >
         <span className="v2-coin__face" aria-hidden="true">
           <span className="v2-coin__mark">s.</span>
@@ -296,9 +322,37 @@ function LuckCoin() {
       </button>
 
       <span className="v2-pedestal" aria-hidden="true" />
-      <p className="v2-altar__note">bu paraya dokunma</p>
+
+      {/* Ok notu paraya baglar; yalniz metin, yaninda duran bir cumle olarak
+          okunuyordu. */}
+      <p className="v2-altar__note">
+        <svg
+          className="v2-altar__arrow"
+          width="42"
+          height="30"
+          viewBox="0 0 42 30"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M40 28C31 26 23.5 21 17 13.5 13.4 9.4 9.8 5.2 6 2"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+          />
+          <path
+            d="M2.5 9.5L5 1.5l8 1.6"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        {stage === 0 ? 'bu paraya dokunma' : 'bir daha bas'}
+      </p>
+
       <p className="v2-altar__result" aria-live="polite">
-        {line}
+        {stage === 1 ? `${side} geldi.` : ''}
       </p>
     </div>
   );
@@ -594,8 +648,8 @@ export default function HomeV2() {
               />
             </Item>
             <Item as="p" className="v2-lead">
-              Otel, günlük kiralık ve emlak markaları için. Komisyon ödemek yerine doğrudan
-              rezervasyon kazandıran siteler kuruyoruz.
+              Otel, kiralama, eğitim ve e-ticaret markaları için. Aracıya komisyon ödemek
+              yerine doğrudan satış ve rezervasyon kazandıran siteler kuruyoruz.
             </Item>
             <Item className="v2-hero__actions">
               <a className="v2-btn v2-btn--primary" href="#iletisim">
