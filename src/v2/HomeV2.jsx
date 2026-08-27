@@ -52,6 +52,65 @@ function TwoTone({ lead, tail }) {
   );
 }
 
+/* Hero'nun merkez objesi: komisyon odenmeden tamamlanan bir rezervasyon.
+   Tamamen dekoratif, bu yuzden erisilebilirlik agacindan gizli. */
+function BookingMock() {
+  const days = Array.from({ length: 35 }, (_, i) => {
+    if (i === 16 || i === 19) return 'edge';
+    if (i === 17 || i === 18) return 'on';
+    return 'off';
+  });
+
+  return (
+    <div className="v2-stage" aria-hidden="true">
+      <div className="v2-mock">
+        <div className="v2-mock__cal">
+          <div className="v2-mock__cal-head">Ağustos</div>
+          <div className="v2-mock__cal-grid">
+            {days.map((state, i) => (
+              <span
+                key={i}
+                className={`v2-mock__day${state === 'off' ? '' : ` v2-mock__day--${state}`}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        <span className="v2-mock__badge">komisyon %0</span>
+
+        <div className="v2-mock__panel">
+          <div className="v2-mock__row">
+            <span className="v2-mock__thumb" />
+            <span>
+              <span className="v2-mock__name">Deluxe Deniz Manzaralı Oda</span>
+              <br />
+              <span className="v2-mock__meta">2 misafir · kahvaltı dahil</span>
+            </span>
+          </div>
+
+          <div className="v2-mock__split">
+            <span className="v2-mock__field">
+              <span className="v2-mock__field-label">Giriş</span>
+              <span className="v2-mock__field-value">14 Ağu</span>
+            </span>
+            <span className="v2-mock__field">
+              <span className="v2-mock__field-label">Çıkış</span>
+              <span className="v2-mock__field-value">17 Ağu</span>
+            </span>
+          </div>
+
+          <div className="v2-mock__total">
+            <span className="v2-mock__meta">3 gece</span>
+            <span className="v2-mock__price">₺12.600</span>
+          </div>
+
+          <span className="v2-btn v2-btn--primary v2-mock__cta">Rezervasyonu tamamla</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function VerifiedMark() {
   return (
     <svg
@@ -132,6 +191,9 @@ export default function HomeV2() {
               <a className="v2-btn v2-btn--ghost" href="#isler">
                 İşleri gör
               </a>
+            </Item>
+            <Item>
+              <BookingMock />
             </Item>
           </Reveal>
         </div>
