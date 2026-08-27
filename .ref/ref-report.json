@@ -1,0 +1,1002 @@
+{
+  "pageHeight": 4742,
+  "bodyFont": "Inter, \"Inter Fallback\", -apple-system, \"SF Pro Display\", system-ui, sans-serif",
+  "bodyBg": "rgb(246, 245, 242)",
+  "bodyColor": "rgb(17, 17, 16)",
+  "sections": [
+    {
+      "tag": "main",
+      "cls": "",
+      "id": null,
+      "top": 0,
+      "height": 4742,
+      "bg": "rgba(0, 0, 0, 0)",
+      "padTop": 12,
+      "padBottom": 20,
+      "text": "Premium websites that turn visitors into customers. For founders, brands, and products who want the internet to take them seriously. Book a call See the work Selected work. Hydroflow Sterling Dojiat UpHealth Case study coming soon Edgetabs How we got a brand"
+    },
+    {
+      "tag": "section",
+      "cls": "Surface-module__5AZFpG__surface Surface-module__5AZFpG__stage Surface-module__5AZFpG__alt Surface-module__5AZFpG__flush ",
+      "id": null,
+      "top": 0,
+      "height": 1080,
+      "bg": "rgba(0, 0, 0, 0)",
+      "padTop": 104,
+      "padBottom": 0,
+      "text": "Premium websites that turn visitors into customers. For founders, brands, and products who want the internet to take them seriously. Book a call See the work"
+    },
+    {
+      "tag": "section",
+      "cls": "Surface-module__5AZFpG__surface SelectedWork-module__lhCBOG__section",
+      "id": "work",
+      "top": 1092,
+      "height": 1194,
+      "bg": "rgba(0, 0, 0, 0)",
+      "padTop": 112,
+      "padBottom": 112,
+      "text": "Selected work. Hydroflow Sterling Dojiat UpHealth Case study coming soon Edgetabs How we got a brand 2.8M views with 5 posts. 100+ projects delivered 670M views generated 21 awards received Breathr The viral app to help Gen Z quit vaping. we make launch video"
+    },
+    {
+      "tag": "section",
+      "cls": "Partners-module__Hzpy8G__band",
+      "id": "partners",
+      "top": 2266,
+      "height": 909,
+      "bg": "rgb(17, 17, 16)",
+      "padTop": 112,
+      "padBottom": 112,
+      "text": "Hear from our partners. Webild We went from a 40,000-person waitlist to 150,000 users in two months. A huge part of that growth traces back to Matvey and the team. Idan Zeidman CEO, Webild Kinimatic If you're looking for a trusted advisor, The Launch Company s"
+    },
+    {
+      "tag": "section",
+      "cls": "Surface-module__5AZFpG__surface Manifesto-module__ciNx7q__manifesto",
+      "id": "about",
+      "top": 3155,
+      "height": 684,
+      "bg": "rgba(0, 0, 0, 0)",
+      "padTop": 144,
+      "padBottom": 48,
+      "text": "Hi, we're The Launch Company. We build websites people trust, and we're annoyingly good at getting people to look at them. don't press this button."
+    },
+    {
+      "tag": "footer",
+      "cls": "Footer-module__EZoWya__footer",
+      "id": "book",
+      "top": 3840,
+      "height": 902,
+      "bg": "rgb(252, 251, 249)",
+      "padTop": 0,
+      "padBottom": 0,
+      "text": "Tell us what you're building 2 open spots left this month Book a 15-minute call © 2026 The Launch Company"
+    }
+  ],
+  "headings": [
+    {
+      "level": "H1",
+      "text": "Premium websites that turn visitors into customers.",
+      "size": 68
+    },
+    {
+      "level": "H2",
+      "text": "Selected work.",
+      "size": 44
+    },
+    {
+      "level": "H2",
+      "text": "Hear from our partners.",
+      "size": 44
+    },
+    {
+      "level": "H2",
+      "text": "Hi, we're The Launch Company. We build websites people trust, and we're annoyingly good at getting people to look at them.",
+      "size": 69.12
+    },
+    {
+      "level": "H2",
+      "text": "Tell us what you're building",
+      "size": 68
+    }
+  ],
+  "type": [
+    {
+      "spec": "div | Inter | 69.12 | 540 | 81.56 | -1.3824px | rgb(17, 17, 16) | none",
+      "sample": "H",
+      "count": 102
+    },
+    {
+      "spec": "span | Inter | 14 | 500 | 22.4 | normal | rgb(17, 17, 16) | none",
+      "sample": "Hydroflow",
+      "count": 12
+    },
+    {
+      "spec": "li | Inter | 16 | 400 | 25.6 | normal | rgb(17, 17, 16) | none",
+      "sample": "Work",
+      "count": 7
+    },
+    {
+      "spec": "span | Inter | 16 | 400 | 25.6 | normal | rgb(17, 17, 16) | none",
+      "sample": "Case study coming soon",
+      "count": 4
+    },
+    {
+      "spec": "span | Inter | 69.12 | 540 | 81.56 | -1.3824px | rgb(17, 17, 16) | none",
+      "sample": "Hi, we're The Launch Company.",
+      "count": 4
+    },
+    {
+      "spec": "a | Inter | 16 | 500 | 25.6 | normal | rgb(17, 17, 16) | none",
+      "sample": "Work",
+      "count": 3
+    },
+    {
+      "spec": "span | Doto | 62.15 | 900 | 62.15 | normal | rgb(17, 17, 16) | none",
+      "sample": "100+",
+      "count": 3
+    },
+    {
+      "spec": "span | Inter | 14 | 500 | 22.4 | normal | rgb(107, 106, 102) | none",
+      "sample": "projects delivered",
+      "count": 3
+    },
+    {
+      "spec": "a | Inter | 14 | 500 | 22.4 | normal | rgb(107, 106, 102) | none",
+      "sample": "Work",
+      "count": 2
+    },
+    {
+      "spec": "a | Inter | 15 | 500 | 24 | normal | rgb(255, 255, 255) | none",
+      "sample": "Book a call",
+      "count": 2
+    },
+    {
+      "spec": "a | Inter | 16 | 500 | 25.6 | normal | rgb(255, 255, 255) | none",
+      "sample": "Book a call",
+      "count": 2
+    },
+    {
+      "spec": "span | Inter | 13 | 500 | 20.8 | normal | rgb(107, 106, 102) | none",
+      "sample": "How we got a brand 2.8M views with 5 posts.",
+      "count": 2
+    },
+    {
+      "spec": "span | Inter | 16 | 700 | 25.6 | -0.16px | rgb(17, 17, 16) | none",
+      "sample": "Webild",
+      "count": 2
+    },
+    {
+      "spec": "blockquote | Inter | 27 | 500 | 36.18 | -0.27px | rgb(17, 17, 16) | none",
+      "sample": "We went from a 40,000-person waitlist to 150,000 users in two months. ",
+      "count": 2
+    },
+    {
+      "spec": "span | Inter | 15 | 600 | 24 | normal | rgb(17, 17, 16) | none",
+      "sample": "Idan Zeidman",
+      "count": 2
+    },
+    {
+      "spec": "span | Inter | 13 | 400 | 20.8 | normal | rgb(107, 100, 89) | none",
+      "sample": "CEO, Webild",
+      "count": 2
+    },
+    {
+      "spec": "a | Inter | 15 | 600 | 24 | -0.15px | rgb(17, 17, 16) | none",
+      "sample": "The Launch Company",
+      "count": 1
+    },
+    {
+      "spec": "h1 | Inter | 68 | 600 | 70.04 | -1.7px | rgb(17, 17, 16) | none",
+      "sample": "Premium websites that turn visitors into customers.",
+      "count": 1
+    },
+    {
+      "spec": "span | Inter | 68 | 600 | 70.04 | -1.7px | rgb(107, 106, 102) | none",
+      "sample": "Premium websites that turn",
+      "count": 1
+    },
+    {
+      "spec": "p | Inter | 17 | 400 | 27.2 | normal | rgb(17, 17, 16) | none",
+      "sample": "For founders, brands, and products who want the internet to take them ",
+      "count": 1
+    },
+    {
+      "spec": "h2 | Inter | 44 | 600 | 48.4 | -0.66px | rgb(17, 17, 16) | none",
+      "sample": "Selected work.",
+      "count": 1
+    },
+    {
+      "spec": "span | Inter | 44 | 600 | 48.4 | -0.66px | rgb(107, 106, 102) | none",
+      "sample": "work.",
+      "count": 1
+    },
+    {
+      "spec": "span | Inter | 13 | 500 | 13 | normal | rgb(246, 245, 242) | none",
+      "sample": "Case study coming soon",
+      "count": 1
+    },
+    {
+      "spec": "p | Caveat | 21 | 600 | 25.2 | normal | rgb(217, 58, 43) | none",
+      "sample": "we make launch videos too",
+      "count": 1
+    },
+    {
+      "spec": "h2 | Inter | 44 | 600 | 48.4 | -0.66px | rgb(246, 245, 242) | none",
+      "sample": "Hear from our partners.",
+      "count": 1
+    },
+    {
+      "spec": "span | Inter | 44 | 600 | 48.4 | -0.66px | rgba(246, 245, 242, 0.55) | none",
+      "sample": "Hear from",
+      "count": 1
+    },
+    {
+      "spec": "p | Inter | 27 | 500 | 36.18 | -0.27px | rgb(17, 17, 16) | none",
+      "sample": "This space is reserved for what we build with you.",
+      "count": 1
+    },
+    {
+      "spec": "h2 | Inter | 69.12 | 540 | 81.56 | -1.3824px | rgb(17, 17, 16) | none",
+      "sample": "Hi, we're The Launch Company.\nWe build websites people trust, and we'r",
+      "count": 1
+    },
+    {
+      "spec": "p | Caveat | 22 | 600 | 27.5 | normal | rgb(217, 58, 43) | none",
+      "sample": "don't press this button.",
+      "count": 1
+    },
+    {
+      "spec": "h2 | Inter | 68 | 600 | 70.04 | -1.7px | rgb(17, 17, 16) | none",
+      "sample": "Tell us what you're building",
+      "count": 1
+    },
+    {
+      "spec": "p | Doto | 12.5 | 600 | 20 | 0.625px | rgb(17, 17, 16) | none",
+      "sample": "2 open spots left this month",
+      "count": 1
+    },
+    {
+      "spec": "span | Doto | 12.5 | 600 | 20 | 0.625px | rgb(17, 17, 16) | none",
+      "sample": "2 open spots left this month",
+      "count": 1
+    },
+    {
+      "spec": "p | Inter | 13 | 400 | 20.8 | normal | rgba(246, 245, 242, 0.64) | none",
+      "sample": "© 2026 The Launch Company",
+      "count": 1
+    }
+  ],
+  "colors": [
+    [
+      "rgb(17, 17, 16)",
+      661
+    ],
+    [
+      "rgb(0, 0, 0)",
+      98
+    ],
+    [
+      "rgb(246, 245, 242)",
+      22
+    ],
+    [
+      "rgb(107, 106, 102)",
+      18
+    ],
+    [
+      "rgb(255, 255, 255)",
+      8
+    ],
+    [
+      "rgb(236, 234, 228)",
+      6
+    ],
+    [
+      "rgb(217, 58, 43)",
+      4
+    ],
+    [
+      "rgb(107, 100, 89)",
+      4
+    ],
+    [
+      "rgba(17, 17, 16, 0.15)",
+      3
+    ],
+    [
+      "rgba(246, 245, 242, 0.55)",
+      2
+    ],
+    [
+      "rgba(246, 245, 242, 0.06)",
+      2
+    ],
+    [
+      "rgba(246, 245, 242, 0.22)",
+      2
+    ],
+    [
+      "rgba(246, 245, 242, 0.64)",
+      2
+    ],
+    [
+      "rgb(242, 240, 234)",
+      1
+    ],
+    [
+      "rgba(17, 17, 16, 0.05)",
+      1
+    ],
+    [
+      "rgba(246, 245, 242, 0.12)",
+      1
+    ],
+    [
+      "rgba(17, 17, 16, 0.55)",
+      1
+    ],
+    [
+      "rgba(246, 245, 242, 0.16)",
+      1
+    ],
+    [
+      "rgb(250, 250, 248)",
+      1
+    ],
+    [
+      "rgba(17, 17, 16, 0.12)",
+      1
+    ],
+    [
+      "rgb(252, 251, 249)",
+      1
+    ],
+    [
+      "rgb(215, 24, 33)",
+      1
+    ]
+  ],
+  "radii": [
+    [
+      "20px",
+      16
+    ],
+    [
+      "999px",
+      11
+    ],
+    [
+      "12px",
+      11
+    ],
+    [
+      "50%",
+      4
+    ],
+    [
+      "0px 0px 28px 28px",
+      1
+    ],
+    [
+      "40px 40px 20px 20px",
+      1
+    ],
+    [
+      "20px 20px 0px 0px",
+      1
+    ]
+  ],
+  "shadows": [
+    [
+      "rgba(17, 17, 16, 0.06) 0px 2px 4px 0px, rgba(17, 17, 16, 0.1) 0px 16px 40px 0px",
+      7
+    ],
+    [
+      "rgba(17, 17, 16, 0.04) 0px 1px 2px 0px, rgba(17, 17, 16, 0.06) 0px 8px 24px 0px",
+      4
+    ],
+    [
+      "rgba(255, 255, 255, 0.18) 0px 1px 0px 0px inset, rgba(17, 17, 16, 0.2) 0px 1px 2px 0px, rgba(17, 17, 16, 0.16) 0px 6px 16px 0px",
+      4
+    ],
+    [
+      "rgba(0, 0, 0, 0.4) 0px 16px 30px 0px",
+      3
+    ],
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(17, 17, 16, 0.04) 0px 2px 6px 0px, rgba(17, 17, 16, 0.1) 0px 6px 16px 0px",
+      1
+    ],
+    [
+      "rgba(250, 250, 248, 0.75) 6.6px 9.6px 6px -6px inset, rgba(255, 255, 255, 0.55) 0px 0px 0px 2px inset",
+      1
+    ],
+    [
+      "rgba(236, 234, 228, 0.7) -6.6px -9.6px 6px -6px inset",
+      1
+    ],
+    [
+      "rgba(250, 250, 248, 0.75) 2.75px 4px 2.5px -2.5px inset, rgba(255, 255, 255, 0.6) 0px 0px 0px 1.5px inset",
+      1
+    ],
+    [
+      "rgba(236, 234, 228, 0.7) -2.75px -4px 2.5px -2.5px inset",
+      1
+    ],
+    [
+      "color(srgb 0.843137 0.0941176 0.129412 / 0.55) 0px 0px 5px 0px",
+      1
+    ]
+  ],
+  "transitions": [
+    [
+      "all",
+      389
+    ],
+    [
+      "transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
+      7
+    ],
+    [
+      "transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.2s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.2s cubic-bezier(0.22, 1, 0.36, 1)",
+      5
+    ],
+    [
+      "transform 0.22s cubic-bezier(0.22, 1, 0.36, 1)",
+      3
+    ],
+    [
+      "opacity 0.32s",
+      3
+    ],
+    [
+      "opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)",
+      2
+    ],
+    [
+      "background 0.16s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.16s cubic-bezier(0.22, 1, 0.36, 1), transform 0.11s cubic-bezier(0.22, 1, 0.36, 1)",
+      2
+    ],
+    [
+      "opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1)",
+      2
+    ],
+    [
+      "transform 0.11s cubic-bezier(0.22, 1, 0.36, 1)",
+      1
+    ],
+    [
+      "opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.08s, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.08s",
+      1
+    ],
+    [
+      "opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.16s, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.16s",
+      1
+    ],
+    [
+      "opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.24s, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.24s",
+      1
+    ]
+  ],
+  "images": [
+    {
+      "src": "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fhero-rocket.0pzjvo7xy-bh0.webp&w=1920&q=75",
+      "alt": "A white Saturn V rocket standing full-height beside its red gantry tower on the launch platform, engines to nose",
+      "w": 1125,
+      "h": 1677,
+      "dispW": 1440,
+      "dispH": 771,
+      "fit": "contain",
+      "radius": "0px"
+    },
+    {
+      "src": "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcryptik.1_c98ruul-gyt.webp&w=384&q=75",
+      "alt": "Cryptik site playing on a vintage television set on an orange couch",
+      "w": 316,
+      "h": 424,
+      "dispW": 281,
+      "dispH": 351,
+      "fit": "cover",
+      "radius": "0px"
+    },
+    {
+      "src": "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fkinimatic.0gjn0_l8w0hak.webp&w=384&q=75",
+      "alt": "Retro computer displaying a website, set on a stack of gold bars",
+      "w": 316,
+      "h": 393,
+      "dispW": 281,
+      "dispH": 351,
+      "fit": "cover",
+      "radius": "0px"
+    },
+    {
+      "src": "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fslot3-pending.1odnb0jcq2oqq.webp&w=384&q=75",
+      "alt": "",
+      "w": 316,
+      "h": 393,
+      "dispW": 281,
+      "dispH": 351,
+      "fit": "cover",
+      "radius": "0px"
+    },
+    {
+      "src": "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fuphealth.1hn-f0_ls_kk7.webp&w=384&q=75",
+      "alt": "UpHealth site on a vintage television beside a rack of test tubes",
+      "w": 316,
+      "h": 424,
+      "dispW": 281,
+      "dispH": 351,
+      "fit": "cover",
+      "radius": "0px"
+    },
+    {
+      "src": "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fedgetabs-brand.3qsd47j_ixjbf.webp&w=640&q=75",
+      "alt": "Edgetabs identity board — palette, typography and mockups",
+      "w": 633,
+      "h": 424,
+      "dispW": 281,
+      "dispH": 374,
+      "fit": "cover",
+      "radius": "0px"
+    },
+    {
+      "src": "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flaurel-3d.13yoir-r3qifk.png&w=384&q=75",
+      "alt": "",
+      "w": 300,
+      "h": 130,
+      "dispW": 216,
+      "dispH": 94,
+      "fit": "fill",
+      "radius": "0px"
+    },
+    {
+      "src": "https://www.thelaunchcompany.cc/partners/webild-ascii.png",
+      "alt": "",
+      "w": 1014,
+      "h": 1100,
+      "dispW": 326,
+      "dispH": 504,
+      "fit": "cover",
+      "radius": "0px"
+    },
+    {
+      "src": "https://www.thelaunchcompany.cc/partners/kinimatic-ascii.png",
+      "alt": "",
+      "w": 884,
+      "h": 1100,
+      "dispW": 326,
+      "dispH": 504,
+      "fit": "cover",
+      "radius": "0px"
+    },
+    {
+      "src": "https://www.thelaunchcompany.cc/partners/cta-ascii.png",
+      "alt": "",
+      "w": 1046,
+      "h": 1400,
+      "dispW": 326,
+      "dispH": 504,
+      "fit": "cover",
+      "radius": "0px"
+    },
+    {
+      "src": "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fseat-ticket.36a-ce1wtf557.webp&w=256&q=75",
+      "alt": "",
+      "w": 194,
+      "h": 127,
+      "dispW": 215,
+      "dispH": 162,
+      "fit": "contain",
+      "radius": "0px"
+    },
+    {
+      "src": "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbutton-default.0nd2d08_p1jrt.png&w=384&q=75",
+      "alt": "",
+      "w": 344,
+      "h": 765,
+      "dispW": 238,
+      "dispH": 530,
+      "fit": "contain",
+      "radius": "0px"
+    },
+    {
+      "src": "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbutton-half.3a49-920-ka3d.png&w=384&q=75",
+      "alt": "",
+      "w": 344,
+      "h": 765,
+      "dispW": 238,
+      "dispH": 530,
+      "fit": "contain",
+      "radius": "0px"
+    },
+    {
+      "src": "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbutton-pressed.416pwipga67mo.png&w=384&q=75",
+      "alt": "",
+      "w": 344,
+      "h": 765,
+      "dispW": 238,
+      "dispH": 530,
+      "fit": "contain",
+      "radius": "0px"
+    },
+    {
+      "src": "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcommand-center.2brcjmv9kl36w.webp&w=1920&q=75",
+      "alt": "",
+      "w": 1440,
+      "h": 618,
+      "dispW": 1440,
+      "dispH": 618,
+      "fit": "cover",
+      "radius": "0px"
+    }
+  ],
+  "videos": [
+    {
+      "src": "https://www.thelaunchcompany.cc/work/edgetabs-reel.mp4",
+      "w": 1280,
+      "h": 720,
+      "autoplay": false,
+      "loop": true,
+      "muted": true,
+      "poster": "https://www.thelaunchcompany.cc/work/edgetabs-poster.webp"
+    }
+  ],
+  "animated": [
+    {
+      "tag": "header",
+      "cls": "Surface-module__5AZFpG__surface Nav-module__e1xquq__floating",
+      "anim": "Nav-module__e1xquq__navIn",
+      "dur": "0.52s",
+      "timing": "cubic-bezier(0.34, 1.26, 0.64, 1)",
+      "transform": "none",
+      "willChange": "auto"
+    },
+    {
+      "tag": "a",
+      "cls": "Surface-module__5AZFpG__controlDark Surface-module__5AZFpG__control Nav-module__",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "h1",
+      "cls": "Hero-module__Z8hQ_W__headline",
+      "anim": "Hero-module__Z8hQ_W__rise",
+      "dur": "0.6s",
+      "timing": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "p",
+      "cls": "Hero-module__Z8hQ_W__subhead",
+      "anim": "Hero-module__Z8hQ_W__rise",
+      "dur": "0.6s",
+      "timing": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "div",
+      "cls": "Hero-module__Z8hQ_W__ctas",
+      "anim": "Hero-module__Z8hQ_W__rise",
+      "dur": "0.6s",
+      "timing": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "a",
+      "cls": "Surface-module__5AZFpG__controlDark Surface-module__5AZFpG__control Hero-module_",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "a",
+      "cls": "Surface-module__5AZFpG__controlGhost Surface-module__5AZFpG__control Hero-module",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "div",
+      "cls": "Hero-module__Z8hQ_W__imageLayer",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "transform"
+    },
+    {
+      "tag": "div",
+      "cls": "Reveal-module__vCs_Ea__reveal SelectedWork-module__lhCBOG__slot SelectedWork-mod",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "div",
+      "cls": "Reveal-module__vCs_Ea__reveal SelectedWork-module__lhCBOG__slot SelectedWork-mod",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "div",
+      "cls": "Reveal-module__vCs_Ea__reveal SelectedWork-module__lhCBOG__slot SelectedWork-mod",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "div",
+      "cls": "Reveal-module__vCs_Ea__reveal SelectedWork-module__lhCBOG__slot SelectedWork-mod",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "div",
+      "cls": "Reveal-module__vCs_Ea__reveal SelectedWork-module__lhCBOG__slot SelectedWork-mod",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "span",
+      "cls": "SelectedWork-module__lhCBOG__glassWall",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "none",
+      "willChange": "opacity"
+    },
+    {
+      "tag": "span",
+      "cls": "SelectedWork-module__lhCBOG__glassLabel",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, 0, 6)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "div",
+      "cls": "Reveal-module__vCs_Ea__reveal SelectedWork-module__lhCBOG__slot SelectedWork-mod",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "div",
+      "cls": "Reveal-module__vCs_Ea__reveal SelectedWork-module__lhCBOG__slot SelectedWork-mod",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "p",
+      "cls": "SelectedWork-module__lhCBOG__annoText",
+      "anim": "SelectedWork-module__lhCBOG__annoWrite",
+      "dur": "0.56s",
+      "timing": "ease",
+      "transform": "matrix(0.99863, -0.052336, 0.052336, 0.99863, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "svg",
+      "cls": "[object SVGAnimatedString]",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, -1, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "path",
+      "cls": "[object SVGAnimatedString]",
+      "anim": "SelectedWork-module__lhCBOG__annoDraw",
+      "dur": "0.5472s",
+      "timing": "cubic-bezier(0.4, 0, 0.2, 1)",
+      "transform": "none",
+      "willChange": "auto"
+    },
+    {
+      "tag": "path",
+      "cls": "[object SVGAnimatedString]",
+      "anim": "SelectedWork-module__lhCBOG__annoDraw",
+      "dur": "0.1728s",
+      "timing": "ease-out",
+      "transform": "none",
+      "willChange": "auto"
+    },
+    {
+      "tag": "div",
+      "cls": "Partners-module__Hzpy8G__cardShell",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "div",
+      "cls": "Partners-module__Hzpy8G__cardShell",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "div",
+      "cls": "Partners-module__Hzpy8G__cardShell",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "a",
+      "cls": "Surface-module__5AZFpG__controlDark Surface-module__5AZFpG__control Partners-mod",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "span",
+      "cls": "SeatOpenTicket-module__cQIqIG__body",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(0.981627, -0.190809, 0.190809, 0.981627, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "span",
+      "cls": "Manifesto-module__ciNx7q__bloom",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(0.740741, 0, 0, 0.740741, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "div",
+      "cls": "Manifesto-module__ciNx7q__pedestal",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, 0, 21.2191)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "span",
+      "cls": "Manifesto-module__ciNx7q__domeGlow",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, -67.4766, -67.4766)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "a",
+      "cls": "Manifesto-module__ciNx7q__domeHit",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, -42.8438, -33.6641)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "p",
+      "cls": "Manifesto-module__ciNx7q__annotationText",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(0.997564, -0.0697565, 0.0697565, 0.997564, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "div",
+      "cls": "Reveal-module__vCs_Ea__reveal Footer-module__EZoWya__cta",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "auto"
+    },
+    {
+      "tag": "span",
+      "cls": "Footer-module__EZoWya__statusDot",
+      "anim": "Footer-module__EZoWya__statusPulse",
+      "dur": "2.6s",
+      "timing": "ease-in-out",
+      "transform": "none",
+      "willChange": "auto"
+    },
+    {
+      "tag": "a",
+      "cls": "Surface-module__5AZFpG__controlDark Surface-module__5AZFpG__control Footer-modul",
+      "anim": "none",
+      "dur": "0s",
+      "timing": "ease",
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "willChange": "auto"
+    }
+  ],
+  "fullText": "The Launch Company\nWork\nAbout\nBook a call\nPremium websites that turn visitors into customers.\n\nFor founders, brands, and products who want the internet to take them seriously.\n\nBook a call\nSee the work\nSelected work.\nHydroflow\nSterling\nDojiat\nUpHealth\nCase study coming soon\nEdgetabs\nHow we got a brand 2.8M views with 5 posts.\n100+\nprojects delivered\n670M\nviews generated\n21\nawards received\nBreathr\nThe viral app to help Gen Z quit vaping.\n\nwe make launch videos too\n\nHear from our partners.\nWebild\nWe went from a 40,000-person waitlist to 150,000 users in two months. A huge part of that growth traces back to Matvey and the team.\nIdan Zeidman\nCEO, Webild\nKinimatic\nIf you're looking for a trusted advisor, The Launch Company should be the go-to team. Their ability to deliver innovative solutions, connect with global brands, and maintain focus on measurable outcomes makes them exceptional.\nMike Coers\nFormer VP — Kinimatic\n\nThis space is reserved for what we build with you.\n\nBook a call\nHi, we're The Launch Company.\nWe build websites people trust, and we're annoyingly good at getting people to look at them.\n\ndon't press this button.\n\nTell us what you're building\n\n2 open spots left this month\n\nBook a 15-minute call\n\n© 2026 The Launch Company",
+  "network": {
+    "fonts": [
+      "https://www.thelaunchcompany.cc/_next/static/media/0e54dc4a88da75bb-s.p.0m394x4vlmwm6.woff2",
+      "https://www.thelaunchcompany.cc/_next/static/media/a24d9e981578d580-s.p.2dim39isyjvqg.woff2",
+      "https://www.thelaunchcompany.cc/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2"
+    ],
+    "media": [
+      "https://www.thelaunchcompany.cc/work/edgetabs-reel.mp4"
+    ],
+    "scripts": [
+      "https://www.thelaunchcompany.cc/_next/static/chunks/0-zy3zi879b6f.js",
+      "https://www.thelaunchcompany.cc/_next/static/chunks/05-c3ty_6dwfk.js",
+      "https://www.thelaunchcompany.cc/_next/static/chunks/15orcrkp-_9ct.js",
+      "https://www.thelaunchcompany.cc/_next/static/chunks/0oie-srt8oj81.js",
+      "https://www.thelaunchcompany.cc/_next/static/chunks/14mrh2-p_w84d.js",
+      "https://www.thelaunchcompany.cc/_next/static/chunks/turbopack-0aj1-u1kf9kw0.js",
+      "https://www.thelaunchcompany.cc/_next/static/chunks/0uxbfdtl1q6xq.js",
+      "https://www.thelaunchcompany.cc/_next/static/chunks/1mfjqidm5qp0a.js",
+      "https://www.thelaunchcompany.cc/_next/static/chunks/0iec5q4ack_04.js",
+      "https://www.thelaunchcompany.cc/_next/static/chunks/3xyt402c62511.js",
+      "https://www.thelaunchcompany.cc/_next/static/chunks/0i3o2h20kgeqm.js",
+      "https://www.thelaunchcompany.cc/_next/static/chunks/0omrvc0sn5agf.js",
+      "https://www.thelaunchcompany.cc/_next/static/chunks/1xfibbxr-ukpf.js",
+      "https://app.cal.com/embed/embed.js",
+      "https://www.thelaunchcompany.cc/_next/static/chunks/3orrfx3-5ebwo.js"
+    ],
+    "images": [
+      "https://www.thelaunchcompany.cc/work/edgetabs-poster.webp",
+      "https://www.thelaunchcompany.cc/partners/webild-ascii.png",
+      "https://www.thelaunchcompany.cc/partners/kinimatic-ascii.png",
+      "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fhero-rocket.0pzjvo7xy-bh0.webp&w=1920&q=75",
+      "https://www.thelaunchcompany.cc/partners/cta-ascii.png",
+      "https://www.thelaunchcompany.cc/cursors/retro-hand.png",
+      "https://www.thelaunchcompany.cc/hero-crowd.png",
+      "https://www.thelaunchcompany.cc/cursors/retro-arrow.png",
+      "https://www.thelaunchcompany.cc/manifesto/slot-wordmark.webp",
+      "https://www.thelaunchcompany.cc/partners/cta-card-mask.png",
+      "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flaurel-3d.13yoir-r3qifk.png&w=384&q=75",
+      "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbutton-pressed.416pwipga67mo.png&w=384&q=75",
+      "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbutton-half.3a49-920-ka3d.png&w=384&q=75",
+      "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fslot3-pending.1odnb0jcq2oqq.webp&w=384&q=75",
+      "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fseat-ticket.36a-ce1wtf557.webp&w=256&q=75",
+      "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fuphealth.1hn-f0_ls_kk7.webp&w=384&q=75",
+      "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fedgetabs-brand.3qsd47j_ixjbf.webp&w=640&q=75",
+      "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcryptik.1_c98ruul-gyt.webp&w=384&q=75",
+      "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fbutton-default.0nd2d08_p1jrt.png&w=384&q=75",
+      "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fkinimatic.0gjn0_l8w0hak.webp&w=384&q=75",
+      "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcommand-center.2brcjmv9kl36w.webp&w=1920&q=75"
+    ]
+  }
+}

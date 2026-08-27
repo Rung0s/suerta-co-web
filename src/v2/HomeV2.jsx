@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { referencesData } from '../data/references';
 import './surface.css';
 import './work.css';
+import './partners.css';
 import './v2.css';
 
 /* Tek reveal primitifi. Sitede uc ayri reveal sistemi vardi (CSS + iki farkli
@@ -145,6 +146,63 @@ function Rocket() {
         <path d="M36 71.5c2.4 3.2 3.5 6.7 3.5 10.3 0 3.4-1.6 6.4-3.5 9.2-1.9-2.8-3.5-5.8-3.5-9.2 0-3.6 1.1-7.1 3.5-10.3z" fill="var(--gold)" />
       </g>
     </svg>
+  );
+}
+
+/* Karakter yagmuru. Math.random kullanilmiyor: prerender ile tarayici farkli
+   sonuc uretirse React hydration'da uyusmazlik verir. Yerine indislerden
+   turetilen deterministik bir karisim var — gozle rastgele, calismalar
+   arasinda ayni. */
+/* Rampada bosluk ve nokta yok. Sekli tasiyan sey maske; karakterler yalnizca
+   dokuyu veriyor. Seyrek karakterler karisinca maskelenen harf delik desik
+   cikiyor ve okunmuyordu. */
+const ASCII_RAMP = '-=+*#%@$&';
+
+function asciiBlock(rows, cols, seed) {
+  let out = '';
+  for (let y = 0; y < rows; y += 1) {
+    for (let x = 0; x < cols; x += 1) {
+      const n = Math.sin((x + 1) * 12.9898 + (y + 1) * 78.233 + seed) * 43758.5453;
+      const f = n - Math.floor(n);
+      out += ASCII_RAMP[Math.floor(f * ASCII_RAMP.length)];
+    }
+    if (y < rows - 1) out += '\n';
+  }
+  return out;
+}
+
+/* Maske olarak markanin bas harfi. SVG data-URI, cunku tek bir harf icin
+   ikili dosya tasimak israf ve harf her olcekte net kalmali. */
+function glyphMask(letter) {
+  const svg =
+    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'>` +
+    `<text x='50' y='104' text-anchor='middle' font-family='Inter,sans-serif' ` +
+    `font-size='128' font-weight='700' fill='%23000'>${letter}</text></svg>`;
+  return `url("data:image/svg+xml,${svg.replace(/#/g, '%23')}")`;
+}
+
+/* Oklar kendi konum durumunu tutmuyor; bir kart genisligi kadar kaydiriyor
+   ve durmayi scroll-snap'e birakiyor. Durum tutulsaydi kullanici parmakla
+   kaydirdiginda sayac gercekle uyusmaz hale gelirdi. */
+function scrollCarousel(ref, direction) {
+  const node = ref.current;
+  if (!node) return;
+  const card = node.firstElementChild;
+  const step = card ? card.getBoundingClientRect().width + 16 : node.clientWidth * 0.8;
+  node.scrollBy({ left: step * direction, behavior: 'smooth' });
+}
+
+function PartnerPortrait({ letter, tint, seed }) {
+  return (
+    <div className="v2-pcard__portrait" style={{ '--tint': tint }}>
+      <div className="v2-ascii-mask" style={{ '--glyph': glyphMask(letter) }} aria-hidden="true">
+        {/* Blok paneli her yonden asiyor; maskenin altinda karakter bitmesin
+            diye. Tasan kisim zaten kirpiliyor. */}
+        <pre className="v2-ascii">{asciiBlock(46, 52, seed)}</pre>
+      </div>
+      <span className="v2-pcard__glow" aria-hidden="true" />
+      <span className="v2-pcard__foil" aria-hidden="true" />
+    </div>
   );
 }
 
@@ -350,12 +408,20 @@ const faqs = [
 
 const quotes = [
   {
+    brand: 'Emsa Otel',
+    letter: 'E',
+    tint: '#9a3b32',
+    seed: 11,
     text:
       'Otelimizin dijital dönüşümünde suerta co. ile çalışmak verdiğimiz en doğru karardı. Komisyonsuz rezervasyon sistemi sayesinde doğrudan satışlarımız %40 arttı.',
     name: 'Emsa Otel',
     role: 'Yönetim Kurulu',
   },
   {
+    brand: 'Rönesans Edu',
+    letter: 'R',
+    tint: '#5c9cd8',
+    seed: 29,
     text:
       'Eğitim platformumuzu dijitale taşırken hem öğrenci deneyimi hem de modern bir arayüz arıyorduk. Beklentimizin çok üstüne çıktılar.',
     name: 'Rönesans Edu',
@@ -365,6 +431,7 @@ const quotes = [
 
 export default function HomeV2() {
   const work = buildWorkLayout(referencesData);
+  const carousel = useRef(null);
 
   return (
     <div className="v2-root">
@@ -539,27 +606,67 @@ export default function HomeV2() {
       </section>
 
       {/* Referans yorumlari (koyu) ---------------------------------------- */}
-      <section className="v2-section v2-section--dark">
+      <section className="v2-section v2-section--dark v2-partners">
         <div className="v2-halo v2-halo--dark" aria-hidden="true" />
         <div className="v2-shell">
           <Reveal>
-            <Item className="v2-section__head">
+            <Item className="v2-partners__head">
               <h2 className="v2-title">
                 <TwoTone lead="Çalıştığımız" tail="markalar ne diyor." />
               </h2>
+              <div className="v2-carousel-nav">
+                <button
+                  type="button"
+                  className="v2-arrow"
+                  onClick={() => scrollCarousel(carousel, -1)}
+                  aria-label="Önceki referans"
+                >
+                  ←
+                </button>
+                <button
+                  type="button"
+                  className="v2-arrow"
+                  onClick={() => scrollCarousel(carousel, 1)}
+                  aria-label="Sonraki referans"
+                >
+                  →
+                </button>
+              </div>
             </Item>
           </Reveal>
+        </div>
 
-          <Reveal className="v2-quotes">
+        <div className="v2-shell">
+          <div className="v2-carousel" ref={carousel}>
             {quotes.map((quote) => (
-              <Item key={quote.name} className="v2-quote">
-                <blockquote className="v2-quote__text">“{quote.text}”</blockquote>
-                <figcaption className="v2-quote__by">
-                  <strong>{quote.name}</strong> — {quote.role}
-                </figcaption>
-              </Item>
+              <figure className="v2-pcard" key={quote.brand}>
+                <div className="v2-pcard__body">
+                  <span className="v2-pcard__brand">{quote.brand}</span>
+                  <blockquote className="v2-pcard__quote">“{quote.text}”</blockquote>
+                  {/* Marka adi zaten ustte; alt satirda tekrarlamak yerine
+                      konusanin kim oldugu duruyor. */}
+                  <figcaption className="v2-pcard__by">
+                    <strong>{quote.role}</strong>
+                  </figcaption>
+                </div>
+                <PartnerPortrait letter={quote.letter} tint={quote.tint} seed={quote.seed} />
+              </figure>
             ))}
-          </Reveal>
+
+            {/* Referans ucuncu slotu bos birakmiyor, teklife ceviriyor. */}
+            <div className="v2-pcard v2-pcard--open">
+              <div className="v2-pcard__body">
+                <span className="v2-pcard__brand">Ayrılmış</span>
+                <p className="v2-pcard__open-text">
+                  Bu alan sizinle kuracağımız iş için ayrıldı.
+                </p>
+                <a className="v2-btn v2-btn--primary" href="#iletisim">
+                  Görüşme ayarla
+                </a>
+              </div>
+              <PartnerPortrait letter="?" tint="#d0aa64" seed={47} />
+            </div>
+          </div>
         </div>
       </section>
 

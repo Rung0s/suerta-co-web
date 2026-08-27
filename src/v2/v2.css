@@ -618,39 +618,7 @@
 
 /* Referans yorumlari (koyu) ------------------------------------------------ */
 
-.v2-quotes {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-4);
-}
-
-.v2-quote {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-6);
-  padding: var(--space-8);
-  background: var(--dark-surface);
-  border: 1px solid var(--dark-line);
-  border-radius: var(--radius-card);
-}
-
-.v2-quote__text {
-  font-size: var(--text-lead);
-  line-height: 1.45;
-  letter-spacing: -0.01em;
-  text-wrap: pretty;
-}
-
-.v2-quote__by {
-  font-size: var(--text-small);
-  color: var(--dark-muted);
-  margin-top: auto;
-}
-
-.v2-quote__by strong {
-  color: var(--dark-ink);
-  font-weight: 600;
-}
+/* Bant ve karusel partners.css'te. */
 
 /* Hizmetler ---------------------------------------------------------------
    Referanstaki liste ritmi: satir basina bir teklif, aralarinda sac teli
@@ -982,9 +950,6 @@
 /* Duyarli ------------------------------------------------------------------ */
 
 @media (max-width: 960px) {
-  .v2-quotes {
-    grid-template-columns: 1fr;
-  }
   .v2-steps {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-8) var(--space-6);
@@ -1031,9 +996,6 @@
   }
   .v2-section__head {
     margin-bottom: var(--space-8);
-  }
-  .v2-quote {
-    padding: var(--space-6);
   }
   .v2-steps {
     grid-template-columns: 1fr;

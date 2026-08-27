@@ -1,0 +1,363 @@
+{
+  "heroSection": {
+    "sel": "[class*=\"Hero\"]",
+    "w": 1440,
+    "h": 1080,
+    "display": "block",
+    "gridTemplateColumns": "none",
+    "gridTemplateRows": "none",
+    "gridAutoRows": "auto",
+    "gap": "normal",
+    "padding": "104px 64px 0px",
+    "maxWidth": "none",
+    "bg": "rgba(0, 0, 0, 0)",
+    "radius": "0px 0px 28px 28px",
+    "overflow": "clip"
+  },
+  "heroLayer": {
+    "h": 771,
+    "style": "",
+    "maskImage": "none",
+    "position": "absolute"
+  },
+  "heroImg": {
+    "src": "https://www.thelaunchcompany.cc/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fhero-rocket.0pzjvo7xy-bh0.webp&w=1920&q=75",
+    "fit": "contain",
+    "w": 1440,
+    "h": 771
+  },
+  "grids": [
+    {
+      "cls": "SelectedWork-module__lhCBOG__grid",
+      "cols": "94.8281px 94.8281px 94.8281px 94.8281px 94.8281px 94.8281px 94.8281px 94.8281px 94.8281px 94.8281px 94.8281px 94.8281px",
+      "rows": "411.516px 458.062px",
+      "gap": "12px",
+      "w": 1270,
+      "children": 7
+    },
+    {
+      "cls": "SelectedWork-module__lhCBOG__glassLabel",
+      "cols": "280.5px",
+      "rows": "374.062px",
+      "gap": "normal",
+      "w": 281,
+      "children": 1
+    },
+    {
+      "cls": "SelectedWork-module__lhCBOG__glassChip",
+      "cols": "153.391px",
+      "rows": "13px",
+      "gap": "normal",
+      "w": 197,
+      "children": 5
+    },
+    {
+      "cls": "SelectedWork-module__lhCBOG__kpiValue",
+      "cols": "216.062px",
+      "rows": "93.9688px",
+      "gap": "normal",
+      "w": 216,
+      "children": 0
+    },
+    {
+      "cls": "Partners-module__Hzpy8G__arrow",
+      "cols": "none",
+      "rows": "none",
+      "gap": "normal",
+      "w": 0,
+      "children": 1
+    },
+    {
+      "cls": "Partners-module__Hzpy8G__arrow",
+      "cols": "none",
+      "rows": "none",
+      "gap": "normal",
+      "w": 0,
+      "children": 1
+    },
+    {
+      "cls": "Manifesto-module__ciNx7q__grid",
+      "cols": "732.484px 479.906px",
+      "rows": "491.422px",
+      "gap": "normal 57.6px",
+      "w": 1270,
+      "children": 2
+    }
+  ],
+  "slots": [
+    {
+      "cls": "Reveal-module__vCs_Ea__reveal SelectedWork-module__lhCBOG__slot SelectedWork-module__lhCBOG__slot_cryptik",
+      "w": 309,
+      "h": 412,
+      "col": "span 3",
+      "row": "auto",
+      "radius": "0px",
+      "bg": "rgba(0, 0, 0, 0)",
+      "text": "Hydroflow"
+    },
+    {
+      "cls": "Reveal-module__vCs_Ea__reveal SelectedWork-module__lhCBOG__slot SelectedWork-module__lhCBOG__slot_kinimatic",
+      "w": 309,
+      "h": 412,
+      "col": "span 3",
+      "row": "auto",
+      "radius": "0px",
+      "bg": "rgba(0, 0, 0, 0)",
+      "text": "Sterling"
+    },
+    {
+      "cls": "Reveal-module__vCs_Ea__reveal SelectedWork-module__lhCBOG__slot SelectedWork-module__lhCBOG__slot_new1",
+      "w": 309,
+      "h": 412,
+      "col": "span 3",
+      "row": "auto",
+      "radius": "0px",
+      "bg": "rgba(0, 0, 0, 0)",
+      "text": "Dojiat"
+    },
+    {
+      "cls": "Reveal-module__vCs_Ea__reveal SelectedWork-module__lhCBOG__slot SelectedWork-module__lhCBOG__slot_new2",
+      "w": 309,
+      "h": 412,
+      "col": "span 3",
+      "row": "auto",
+      "radius": "0px",
+      "bg": "rgba(0, 0, 0, 0)",
+      "text": "UpHealth"
+    },
+    {
+      "cls": "Reveal-module__vCs_Ea__reveal SelectedWork-module__lhCBOG__slot SelectedWork-module__lhCBOG__slot_brand_kit",
+      "w": 309,
+      "h": 458,
+      "col": "1 / 4",
+      "row": "2",
+      "radius": "0px",
+      "bg": "rgba(0, 0, 0, 0)",
+      "text": "Case study coming soon Edgetabs How we got a brand 2.8M view"
+    },
+    {
+      "cls": "Reveal-module__vCs_Ea__reveal SelectedWork-module__lhCBOG__slot SelectedWork-module__lhCBOG__slot_wins",
+      "w": 309,
+      "h": 458,
+      "col": "10 / 13",
+      "row": "2",
+      "radius": "0px",
+      "bg": "rgba(0, 0, 0, 0)",
+      "text": "100+ projects delivered 670M views generated 21 awards recei"
+    },
+    {
+      "cls": "Reveal-module__vCs_Ea__reveal SelectedWork-module__lhCBOG__slot SelectedWork-module__lhCBOG__slot_edgetabs",
+      "w": 629,
+      "h": 458,
+      "col": "4 / 10",
+      "row": "2",
+      "radius": "0px",
+      "bg": "rgba(0, 0, 0, 0)",
+      "text": "Breathr The viral app to help Gen Z quit vaping."
+    },
+    {
+      "cls": "Manifesto-module__ciNx7q__slot",
+      "w": 73,
+      "h": 73,
+      "col": "auto",
+      "row": "auto",
+      "radius": "0px",
+      "bg": "rgba(0, 0, 0, 0)",
+      "text": ""
+    }
+  ],
+  "layers": [
+    {
+      "cls": "Surface-module__5AZFpG__surface Surface-module__5AZFpG__stage Surface-module__5A",
+      "bg": "linear-gradient(rgb(250, 250, 248) 0%, rgb(247, 246, 243) 100%), linear-gradient(rgba(255, 255, 255, 0.95) 0%, rgb(236, 234, 228) 45%, rgb(222, 219, 211) 100%)",
+      "size": "auto, auto",
+      "mask": "none",
+      "w": 1440,
+      "h": 1080
+    },
+    {
+      "cls": "Hero-module__Z8hQ_W__gridHalo",
+      "bg": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='168' height='168'%3E%3Crect x='77' y='84' width='14' height='1' fill='rgba(17,17,16,0.16)'/%3E%3Crect x='84' y='77' width='1' h",
+      "size": "168px 168px, 56px 56px, 56px 56px",
+      "mask": "radial-gradient(54% 28% at 50% 74%, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 38%, rgba(0, 0, 0, 0) 78%), url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' ",
+      "w": 1440,
+      "h": 1079
+    },
+    {
+      "cls": "Hero-module__Z8hQ_W__castLight",
+      "bg": "radial-gradient(34% 30% at 52% 70%, rgba(124, 55, 58, 0.12) 0%, rgba(124, 55, 58, 0.06) 45%, rgba(0, 0, 0, 0) 78%)",
+      "size": "auto",
+      "mask": "none",
+      "w": 1440,
+      "h": 1079
+    },
+    {
+      "cls": "Hero-module__Z8hQ_W__crowdArt",
+      "bg": "url(\"https://www.thelaunchcompany.cc/hero-crowd.png\")",
+      "size": "cover",
+      "mask": "none",
+      "w": 1440,
+      "h": 306
+    },
+    {
+      "cls": "Surface-module__5AZFpG__surface SelectedWork-module__lhCBOG__section",
+      "bg": "linear-gradient(rgb(255, 255, 255) 0%, rgb(252, 251, 249) 100%), linear-gradient(rgba(255, 255, 255, 0.95) 0%, rgb(236, 234, 228) 45%, rgb(222, 219, 211) 100%)",
+      "size": "auto, auto",
+      "mask": "none",
+      "w": 1440,
+      "h": 1194
+    },
+    {
+      "cls": "Surface-module__5AZFpG__surface Surface-module__5AZFpG__tile Surface-module__5AZ",
+      "bg": "linear-gradient(rgb(255, 255, 255) 0%, rgb(252, 251, 249) 100%), linear-gradient(rgba(255, 255, 255, 0.95) 0%, rgb(236, 234, 228) 45%, rgb(222, 219, 211) 100%)",
+      "size": "auto, auto",
+      "mask": "none",
+      "w": 309,
+      "h": 412
+    },
+    {
+      "cls": "Surface-module__5AZFpG__surface Surface-module__5AZFpG__tile Surface-module__5AZ",
+      "bg": "linear-gradient(rgb(255, 255, 255) 0%, rgb(252, 251, 249) 100%), linear-gradient(rgba(255, 255, 255, 0.95) 0%, rgb(236, 234, 228) 45%, rgb(222, 219, 211) 100%)",
+      "size": "auto, auto",
+      "mask": "none",
+      "w": 309,
+      "h": 412
+    },
+    {
+      "cls": "Surface-module__5AZFpG__surface Surface-module__5AZFpG__tile Surface-module__5AZ",
+      "bg": "linear-gradient(rgb(255, 255, 255) 0%, rgb(252, 251, 249) 100%), linear-gradient(rgba(255, 255, 255, 0.95) 0%, rgb(236, 234, 228) 45%, rgb(222, 219, 211) 100%)",
+      "size": "auto, auto",
+      "mask": "none",
+      "w": 309,
+      "h": 412
+    },
+    {
+      "cls": "Surface-module__5AZFpG__surface Surface-module__5AZFpG__tile Surface-module__5AZ",
+      "bg": "linear-gradient(rgb(255, 255, 255) 0%, rgb(252, 251, 249) 100%), linear-gradient(rgba(255, 255, 255, 0.95) 0%, rgb(236, 234, 228) 45%, rgb(222, 219, 211) 100%)",
+      "size": "auto, auto",
+      "mask": "none",
+      "w": 309,
+      "h": 412
+    },
+    {
+      "cls": "Surface-module__5AZFpG__surface Surface-module__5AZFpG__tile Surface-module__5AZ",
+      "bg": "linear-gradient(rgb(255, 255, 255) 0%, rgb(252, 251, 249) 100%), linear-gradient(rgba(255, 255, 255, 0.95) 0%, rgb(236, 234, 228) 45%, rgb(222, 219, 211) 100%)",
+      "size": "auto, auto",
+      "mask": "none",
+      "w": 309,
+      "h": 458
+    },
+    {
+      "cls": "Surface-module__5AZFpG__surface Surface-module__5AZFpG__tile Surface-module__5AZ",
+      "bg": "linear-gradient(rgb(255, 255, 255) 0%, rgb(252, 251, 249) 100%), linear-gradient(rgba(255, 255, 255, 0.95) 0%, rgb(236, 234, 228) 45%, rgb(222, 219, 211) 100%)",
+      "size": "auto, auto",
+      "mask": "none",
+      "w": 309,
+      "h": 458
+    },
+    {
+      "cls": "Surface-module__5AZFpG__surface Surface-module__5AZFpG__tile Surface-module__5AZ",
+      "bg": "linear-gradient(rgb(255, 255, 255) 0%, rgb(252, 251, 249) 100%), linear-gradient(rgba(255, 255, 255, 0.95) 0%, rgb(236, 234, 228) 45%, rgb(222, 219, 211) 100%)",
+      "size": "auto, auto",
+      "mask": "none",
+      "w": 629,
+      "h": 458
+    },
+    {
+      "cls": "SelectedWork-module__lhCBOG__frame SelectedWork-module__lhCBOG__frameFilled",
+      "bg": "url(\"https://www.thelaunchcompany.cc/work/edgetabs-poster.webp\")",
+      "size": "cover",
+      "mask": "none",
+      "w": 603,
+      "h": 377
+    },
+    {
+      "cls": "Partners-module__Hzpy8G__grid",
+      "bg": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='168' height='168'%3E%3Crect x='77' y='84' width='14' height='1' fill='rgba(246,245,242,0.16)'/%3E%3Crect x='84' y='77' width='1",
+      "size": "168px 168px, 56px 56px, 56px 56px, 112px 112px, 112px 112px",
+      "mask": "radial-gradient(90% 66% at 50% 60%, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 40%, rgba(0, 0, 0, 0) 84%), url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' ",
+      "w": 1440,
+      "h": 909
+    },
+    {
+      "cls": "Partners-module__Hzpy8G__asciiTint",
+      "bg": "radial-gradient(185px, rgb(92, 156, 216) 0%, rgba(0, 0, 0, 0) 72%)",
+      "size": "auto",
+      "mask": "url(\"https://www.thelaunchcompany.cc/partners/webild-ascii.png\"), linear-gradient(rgb(0, 0, 0), rgb(0, 0, 0))",
+      "w": 326,
+      "h": 504
+    },
+    {
+      "cls": "Partners-module__Hzpy8G__foil",
+      "bg": "radial-gradient(200px 200px, rgba(214, 164, 96, 0.78) 0%, rgba(214, 164, 96, 0.2) 36%, rgba(0, 0, 0, 0) 64%), linear-gradient(120deg, rgba(0, 0, 0, 0) 38%, rgba(224, 182, 120, 0.22) 50%, rgba(0, 0, 0,",
+      "size": "auto, auto",
+      "mask": "none",
+      "w": 326,
+      "h": 504
+    },
+    {
+      "cls": "Partners-module__Hzpy8G__asciiTint",
+      "bg": "radial-gradient(150px, rgb(154, 59, 50) 0%, rgba(0, 0, 0, 0) 72%)",
+      "size": "auto",
+      "mask": "url(\"https://www.thelaunchcompany.cc/partners/kinimatic-ascii.png\"), linear-gradient(rgb(0, 0, 0), rgb(0, 0, 0))",
+      "w": 326,
+      "h": 504
+    },
+    {
+      "cls": "Partners-module__Hzpy8G__foil",
+      "bg": "radial-gradient(200px 200px, rgba(214, 164, 96, 0.78) 0%, rgba(214, 164, 96, 0.2) 36%, rgba(0, 0, 0, 0) 64%), linear-gradient(120deg, rgba(0, 0, 0, 0) 38%, rgba(224, 182, 120, 0.22) 50%, rgba(0, 0, 0,",
+      "size": "auto, auto",
+      "mask": "none",
+      "w": 326,
+      "h": 504
+    },
+    {
+      "cls": "Partners-module__Hzpy8G__asciiTint",
+      "bg": "radial-gradient(170px, rgb(208, 170, 100) 0%, rgba(0, 0, 0, 0) 72%)",
+      "size": "auto",
+      "mask": "url(\"https://www.thelaunchcompany.cc/partners/cta-ascii.png\"), url(\"https://www.thelaunchcompany.cc/partners/cta-card-mask.png\")",
+      "w": 326,
+      "h": 504
+    },
+    {
+      "cls": "Surface-module__5AZFpG__surface Manifesto-module__ciNx7q__manifesto",
+      "bg": "linear-gradient(rgb(255, 255, 255) 0%, rgb(252, 251, 249) 100%), linear-gradient(rgba(255, 255, 255, 0.95) 0%, rgb(236, 234, 228) 45%, rgb(222, 219, 211) 100%)",
+      "size": "auto, auto",
+      "mask": "none",
+      "w": 1440,
+      "h": 684
+    },
+    {
+      "cls": "Manifesto-module__ciNx7q__bloom",
+      "bg": "url(\"https://www.thelaunchcompany.cc/manifesto/slot-wordmark.webp\")",
+      "size": "cover",
+      "mask": "none",
+      "w": 73,
+      "h": 73
+    },
+    {
+      "cls": "Manifesto-module__ciNx7q__altarGrid",
+      "bg": "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='168' height='168'%3E%3Crect x='77' y='84' width='14' height='1' fill='rgba(17,17,16,0.16)'/%3E%3Crect x='84' y='77' width='1' h",
+      "size": "168px 168px, 56px 56px, 56px 56px, 112px 112px, 112px 112px",
+      "mask": "radial-gradient(78% 52% at 50% 46%, rgb(0, 0, 0) 0%, rgb(0, 0, 0) 34%, rgba(0, 0, 0, 0) 80%), url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' ",
+      "w": 480,
+      "h": 491
+    },
+    {
+      "cls": "Manifesto-module__ciNx7q__domeGlow",
+      "bg": "radial-gradient(circle, rgba(224, 96, 62, 0.85) 0%, rgba(224, 96, 62, 0.35) 42%, rgba(224, 96, 62, 0) 70%)",
+      "size": "auto",
+      "mask": "none",
+      "w": 135,
+      "h": 135
+    },
+    {
+      "cls": "Footer-module__EZoWya__utility",
+      "bg": "linear-gradient(rgba(8, 9, 9, 0) 0%, rgba(8, 9, 9, 0.9) 40%, rgba(8, 9, 9, 0.9) 100%)",
+      "size": "auto",
+      "mask": "none",
+      "w": 1440,
+      "h": 68
+    }
+  ]
+}

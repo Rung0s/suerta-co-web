@@ -1,0 +1,282 @@
+/* ==========================================================================
+   Partner bandi — koyu zemin, ASCII portre, altin varak
+   --------------------------------------------------------------------------
+   Referansta bu bolum sabit bir izgara degil, oklarla gezilen bir karusel:
+   iki musteri yorumu ve ucuncu slotta "burasi sizin icin ayrildi" karti.
+   Ucuncu kart bosluk degil, teklifin kendisi.
+
+   Portre tarafi referansta ASCII'ye cevrilmis bir fotograf PNG'si ve maske
+   olarak kullaniliyor; altinda renkli bir radyal, ustunde altin varak
+   parlamasi var. Bizde fotograf yok, o yuzden ayni mekanigi harfin
+   kendisiyle kuruyoruz: karakter yagmuru, markanin bas harfiyle maskelenmis.
+   Sahte portre uretmektense markanin harfini kullanmak hem durust hem
+   olceklenebilir.
+   ========================================================================== */
+
+.v2-partners {
+  position: relative;
+}
+
+.v2-partners__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-12);
+}
+
+/* Karusel -----------------------------------------------------------------
+   Yerli scroll-snap: JS'siz calisir, klavye ve dokunmatik bedava gelir.
+   Oklar yalnizca scrollBy cagiriyor, kendi konum durumunu tutmuyor. */
+
+.v2-carousel {
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  /* Kart golgeleri kirpilmasin diye tasma payi; negatif margin ile
+     geri aliniyor ki kabuk hizasi bozulmasin. */
+  padding: var(--space-2) var(--gutter);
+  margin-inline: calc(var(--gutter) * -1);
+}
+
+.v2-carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.v2-carousel > * {
+  scroll-snap-align: start;
+  flex: 0 0 min(46rem, 88%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-carousel {
+    scroll-behavior: auto;
+  }
+}
+
+/* Kart -------------------------------------------------------------------- */
+
+.v2-pcard {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 326px;
+  min-height: 26rem;
+  background: var(--dark-surface);
+  border: 1px solid var(--dark-line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-dark);
+  overflow: hidden;
+}
+
+.v2-pcard__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-8);
+}
+
+.v2-pcard__brand {
+  font-size: var(--text-small);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--dark-ink);
+}
+
+.v2-pcard__quote {
+  font-size: var(--text-lead);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  text-wrap: pretty;
+  color: var(--dark-ink);
+}
+
+.v2-pcard__by {
+  margin-top: auto;
+  font-size: var(--text-small);
+  color: var(--dark-muted);
+}
+
+.v2-pcard__by strong {
+  display: block;
+  color: var(--dark-ink);
+  font-weight: 600;
+}
+
+.v2-pcard__role {
+  font-size: var(--text-micro);
+  color: rgba(246, 245, 242, 0.42);
+}
+
+/* Portre paneli -----------------------------------------------------------
+   Uc katman ust uste: karakter yagmuru (maskelenmis), marka renginde bir
+   radyal ve altin varak. Varak sabit degil; kart uzerine gelindiginde
+   yuzeyi tariyor, cunku duran bir parlama boyanmis gibi durur. */
+
+.v2-pcard__portrait {
+  position: relative;
+  overflow: hidden;
+  background: rgba(246, 245, 242, 0.03);
+  border-left: 1px solid var(--dark-line);
+}
+
+/* Maske sabit olculu sarmalayicida, metin onun icinde serbest.
+   Ikisi ayni elemanda oldugunda kapsayici metni kendi genisligine
+   sikistiriyor ve harfin kenarlarinda karakter kalmiyordu. */
+.v2-ascii-mask {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  -webkit-mask-image: var(--glyph);
+  mask-image: var(--glyph);
+  -webkit-mask-size: auto 62%;
+  mask-size: auto 62%;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.v2-ascii {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  /* Doto degil: nokta-matris bir aile, ramp karakterlerinin yogunluk
+     farkini yok ediyor ve harf lapa gibi cikiyor. Duz monospace gerek. */
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.06em;
+  white-space: pre;
+  color: var(--tint, #9a3b32);
+  user-select: none;
+}
+
+/* Parlama harfin ARKASINDA duruyor. Onune alindiginda karakterleri yikayip
+   sekli okunmaz hale getiriyordu; arkada birakilinca harfi zeminden ayiran
+   bir hale gibi calisiyor. */
+.v2-pcard__glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(44% 38% at 50% 48%, var(--tint, #9a3b32) 0%, transparent 74%);
+  opacity: 0.18;
+}
+
+.v2-pcard__foil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    120deg,
+    transparent 38%,
+    rgba(224, 182, 120, 0.24) 50%,
+    transparent 62%
+  );
+  background-size: 260% 100%;
+  background-position: 120% 0;
+  transition: background-position 900ms var(--ease-out);
+}
+
+.v2-pcard:hover .v2-pcard__foil {
+  background-position: -20% 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-pcard__foil {
+    transition: none;
+  }
+}
+
+/* Ayrilmis slot -----------------------------------------------------------
+   Referans ucuncu karti bos birakmiyor, teklife ceviriyor. */
+
+.v2-pcard--open .v2-pcard__body {
+  justify-content: center;
+  gap: var(--space-6);
+}
+
+/* Sutun yerlesiminde buton varsayilan olarak kartin tamamina yayiliyordu;
+   eylem kendi genisliginde kalmali. */
+.v2-pcard--open .v2-btn {
+  align-self: flex-start;
+}
+
+.v2-pcard__open-text {
+  font-size: var(--text-lead);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--dark-ink);
+  max-width: 22ch;
+}
+
+/* Oklar ------------------------------------------------------------------- */
+
+.v2-carousel-nav {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.v2-arrow {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--dark-line);
+  background: rgba(246, 245, 242, 0.06);
+  color: var(--dark-ink);
+  cursor: pointer;
+  transition: background var(--dur-hover) var(--ease-out), transform var(--dur-hover) var(--ease-out);
+}
+
+.v2-arrow:hover {
+  background: rgba(246, 245, 242, 0.14);
+}
+
+.v2-arrow:active {
+  transform: scale(0.94);
+  transition-duration: var(--dur-press);
+}
+
+.v2-arrow:focus-visible {
+  outline: 2px solid var(--flare);
+  outline-offset: 2px;
+}
+
+/* Duyarli ------------------------------------------------------------------
+   Dar ekranda portre paneli kartin genisliginin yarisini yerdi; alta
+   aliniyor ve kisaliyor. */
+
+@media (max-width: 860px) {
+  .v2-pcard {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  .v2-pcard__portrait {
+    order: -1;
+    height: 11rem;
+    border-left: none;
+    border-bottom: 1px solid var(--dark-line);
+  }
+  .v2-carousel > * {
+    flex-basis: 86%;
+  }
+}
+
+@media (max-width: 620px) {
+  .v2-pcard__body {
+    padding: var(--space-6);
+  }
+  .v2-carousel > * {
+    flex-basis: 92%;
+  }
+}
