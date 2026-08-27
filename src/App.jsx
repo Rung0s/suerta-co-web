@@ -28,6 +28,7 @@ import Preloader from './components/Preloader';
 import CustomCursor from './components/CustomCursor';
 import PageTransition from './components/PageTransition';
 import NotFound from './components/NotFound';
+import HomeV2 from './v2/HomeV2';
 import LiquidGlassBlob from './components/LiquidGlassBlob';
 import SignatureScene from './components/SignatureScene';
 import TeamSection from './components/TeamSection';
@@ -223,6 +224,26 @@ function App() {
   return (
     <LanguageProvider>
       <Router>
+        <Routes>
+          {/* Yeniden tasarim prototipi. Kendi kabugunu tasir, bu yuzden
+              Navbar/Footer/3D sahne/imlec katmanlarini tamamen atlar.
+              Menude yok, sitemap'te yok, robots'ta kapali. */}
+          <Route path="/v2" element={<HomeV2 />} />
+          <Route path="*" element={<SiteShell
+            isPrerender={isPrerender}
+            isMobile={isMobile}
+            isLoading={isLoading}
+            setIsLoading={setIsLoading}
+            showCanvas={showCanvas}
+          />} />
+        </Routes>
+      </Router>
+    </LanguageProvider>
+  );
+}
+
+function SiteShell({ isPrerender, isMobile, isLoading, setIsLoading, showCanvas }) {
+  return (
         <div className="app" style={{ position: 'relative' }}>
 
           {/* Lüks Sinematik Film Dokusu (Grain Overlay) */}
@@ -272,8 +293,6 @@ function App() {
             )}
           </div>
         </div>
-      </Router>
-    </LanguageProvider>
   );
 }
 

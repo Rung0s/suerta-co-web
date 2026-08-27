@@ -1,0 +1,652 @@
+/* ==========================================================================
+   v2 prototip tasarim sistemi
+   Tum kurallar .v2-root altina kapsanmistir; mevcut siteye sizmaz.
+   ========================================================================== */
+
+.v2-root {
+  /* Renk ------------------------------------------------------------------ */
+  --bg: #f6f5f2;
+  --surface: #ffffff;
+  --surface-sunken: #f2f0ea;
+  --ink: #111110;
+  --muted: #6b6a66;
+  --line: rgba(17, 17, 16, 0.09);
+  --accent: #9a161f;
+  --gold: #b8892b;
+
+  /* Koyu bolumler --------------------------------------------------------- */
+  --dark-bg: #111110;
+  --dark-ink: #f6f5f2;
+  --dark-muted: rgba(246, 245, 242, 0.58);
+  --dark-line: rgba(246, 245, 242, 0.14);
+  --dark-surface: rgba(246, 245, 242, 0.05);
+
+  /* Tipografi — bes boyut, daha fazlasi degil ------------------------------ */
+  --text-display: clamp(2.5rem, 5.4vw, 4.25rem);
+  --text-title: clamp(1.9rem, 3.4vw, 2.75rem);
+  --text-lead: clamp(1.0625rem, 1.4vw, 1.1875rem);
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+  --text-micro: 0.8125rem;
+
+  --leading-display: 1.04;
+  --leading-title: 1.1;
+  --leading-body: 1.6;
+
+  --tracking-display: -0.028em;
+  --tracking-title: -0.018em;
+  --tracking-label: 0.08em;
+
+  /* Bosluk ---------------------------------------------------------------- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-26: 6.5rem;
+
+  --gutter: clamp(1.25rem, 4.4vw, 4rem);
+  --section-y: clamp(4.5rem, 8vw, 6.5rem);
+  --max-width: 1280px;
+
+  /* Geometri -------------------------------------------------------------- */
+  --radius-inner: 12px;
+  --radius-card: 20px;
+  --radius-pill: 999px;
+
+  --shadow-card: 0 1px 2px rgba(17, 17, 16, 0.04), 0 8px 24px rgba(17, 17, 16, 0.05);
+  --shadow-nav: 0 1px 2px rgba(17, 17, 16, 0.05), 0 12px 32px rgba(17, 17, 16, 0.08);
+
+  /* Hareket — tek egri ---------------------------------------------------- */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 180ms;
+  --dur-base: 450ms;
+
+  --font: 'Inter', -apple-system, 'Segoe UI', system-ui, sans-serif;
+  --font-note: 'Caveat', cursive;
+  --font-numeric: 'Doto', ui-monospace, monospace;
+
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.v2-root *,
+.v2-root *::before,
+.v2-root *::after {
+  box-sizing: border-box;
+}
+
+/* index.css h1-h6'yi global olarak serif (--font-heading) yapiyor ve eleman
+   secicisi koklekteki font-family'yi eziyor. v2 icinde tipografi tek ailedir. */
+.v2-root h1,
+.v2-root h2,
+.v2-root h3,
+.v2-root h4,
+.v2-root p,
+.v2-root a,
+.v2-root span,
+.v2-root button,
+.v2-root blockquote,
+.v2-root figcaption {
+  font-family: var(--font);
+}
+
+.v2-root h1,
+.v2-root h2,
+.v2-root h3,
+.v2-root p,
+.v2-root figure,
+.v2-root blockquote {
+  margin: 0;
+}
+
+.v2-root .v2-note {
+  font-family: var(--font-note);
+}
+
+.v2-root .v2-stat__value,
+.v2-root .v2-availability {
+  font-family: var(--font-numeric);
+}
+
+/* Yerlesim ---------------------------------------------------------------- */
+
+.v2-shell {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.v2-section {
+  padding-block: var(--section-y);
+}
+
+/* Ayni zeminde art arda gelen iki bolumun dolgusu ust uste binip devasa bir
+   bosluk birakiyordu; ikincisinin ust dolgusunu kaldiriyoruz. */
+.v2-section + .v2-section:not(.v2-section--dark) {
+  padding-top: 0;
+}
+
+.v2-section--dark + .v2-section:not(.v2-section--dark),
+.v2-section:not(.v2-section--dark) + .v2-section--dark {
+  padding-top: var(--section-y);
+}
+
+.v2-section--dark {
+  background: var(--dark-bg);
+  color: var(--dark-ink);
+}
+
+.v2-section--dark .v2-muted {
+  color: var(--dark-muted);
+}
+
+/* Tipografi primitifleri --------------------------------------------------- */
+
+.v2-display {
+  font-size: var(--text-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.v2-title {
+  font-size: var(--text-title);
+  line-height: var(--leading-title);
+  letter-spacing: var(--tracking-title);
+  font-weight: 600;
+}
+
+.v2-lead {
+  font-size: var(--text-lead);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 46ch;
+}
+
+.v2-muted {
+  color: var(--muted);
+}
+
+.v2-label {
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+/* Iki tonlu baslik: cumlenin ilk yarisi soluk, vurgu tam kontrast.
+   Referans sistemin imza hamlesi. */
+.v2-tone-lead {
+  color: var(--muted);
+}
+
+.v2-section--dark .v2-tone-lead {
+  color: var(--dark-muted);
+}
+
+/* Butonlar ----------------------------------------------------------------- */
+
+.v2-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.8125rem 1.375rem;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-small);
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+
+.v2-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.v2-btn--primary {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.v2-btn--primary:hover {
+  background: var(--accent);
+  transform: translateY(-1px);
+}
+
+.v2-btn--ghost {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.v2-btn--ghost:hover {
+  border-color: rgba(17, 17, 16, 0.24);
+  transform: translateY(-1px);
+}
+
+.v2-section--dark .v2-btn--primary {
+  background: var(--dark-ink);
+  color: var(--dark-bg);
+}
+
+/* Menu -------------------------------------------------------------------- */
+
+.v2-nav {
+  position: fixed;
+  top: var(--space-3);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-6);
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-nav);
+  max-width: calc(100vw - var(--space-6));
+}
+
+.v2-nav__brand {
+  font-weight: 600;
+  font-size: var(--text-small);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.v2-nav__links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.v2-nav__link {
+  font-size: var(--text-small);
+  color: var(--muted);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.v2-nav__link:hover {
+  color: var(--ink);
+}
+
+/* Hero -------------------------------------------------------------------- */
+
+.v2-hero {
+  padding-top: clamp(7rem, 12vw, 9.5rem);
+  padding-bottom: clamp(3.5rem, 6vw, 5rem);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.v2-hero__grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: linear-gradient(to right, rgba(17, 17, 16, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17, 17, 16, 0.035) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 70% 55% at 50% 35%, #000 30%, transparent 100%);
+  pointer-events: none;
+}
+
+.v2-hero__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.v2-hero .v2-display {
+  max-width: 17ch;
+}
+
+.v2-hero .v2-lead {
+  max-width: 42ch;
+}
+
+.v2-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+  margin-top: var(--space-2);
+}
+
+/* Bolum basligi ------------------------------------------------------------ */
+
+.v2-section__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-12);
+}
+
+/* Is kartlari -------------------------------------------------------------- */
+
+.v2-work {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
+  align-items: stretch;
+}
+
+/* Reveal sarmalayicisi grid ogesi oldugu icin kart yuksekligini o belirler;
+   aciklama iki satira dustugunde kartlar farkli boyda kaliyordu. */
+.v2-work > * {
+  display: flex;
+}
+
+.v2-work > * > .v2-card {
+  flex: 1;
+}
+
+.v2-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+
+.v2-card:hover,
+.v2-card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 2px 4px rgba(17, 17, 16, 0.05), 0 16px 40px rgba(17, 17, 16, 0.1);
+}
+
+.v2-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Kartlardaki gorseller site ekran goruntusu; 4/3 onlari asiri kirpiyordu. */
+.v2-card__media {
+  aspect-ratio: 16 / 11;
+  border-radius: var(--radius-inner);
+  overflow: hidden;
+  background: var(--surface-sunken);
+}
+
+.v2-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 600ms var(--ease);
+}
+
+.v2-card:hover .v2-card__media img {
+  transform: scale(1.03);
+}
+
+.v2-card__foot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: 0 var(--space-1) var(--space-2);
+}
+
+.v2-card__name {
+  font-size: var(--text-small);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.v2-card__desc {
+  font-size: var(--text-small);
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.v2-verified {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* Sayilar ------------------------------------------------------------------ */
+
+.v2-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.v2-stat {
+  padding: var(--space-8) var(--space-6);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  text-align: center;
+}
+
+.v2-stat__value {
+  font-family: var(--font-numeric);
+  font-size: clamp(2.75rem, 6vw, 4.5rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  display: block;
+}
+
+/* Doto bir nokta-matris ailesi: rakamlari net, ama % gibi isaretleri okunmuyor.
+   Birimi govde fontunda birakiyoruz. */
+.v2-stat__unit {
+  font-family: var(--font);
+  font-size: 0.42em;
+  font-weight: 600;
+  vertical-align: 0.52em;
+  letter-spacing: normal;
+  margin-right: 0.06em;
+}
+
+.v2-stat__label {
+  margin-top: var(--space-3);
+  font-size: var(--text-small);
+  color: var(--muted);
+}
+
+/* Referans yorumlari (koyu) ------------------------------------------------ */
+
+.v2-quotes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.v2-quote {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-8);
+  background: var(--dark-surface);
+  border: 1px solid var(--dark-line);
+  border-radius: var(--radius-card);
+}
+
+.v2-quote__text {
+  font-size: var(--text-lead);
+  line-height: 1.45;
+  letter-spacing: -0.01em;
+  text-wrap: pretty;
+}
+
+.v2-quote__by {
+  font-size: var(--text-small);
+  color: var(--dark-muted);
+  margin-top: auto;
+}
+
+.v2-quote__by strong {
+  color: var(--dark-ink);
+  font-weight: 600;
+}
+
+/* El yazisi not ------------------------------------------------------------ */
+
+.v2-note {
+  font-family: var(--font-note);
+  font-size: 1.375rem;
+  color: var(--accent);
+  transform: rotate(-3deg);
+  display: inline-block;
+}
+
+/* Kapanis ------------------------------------------------------------------ */
+
+.v2-cta {
+  text-align: center;
+}
+
+.v2-cta__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.v2-availability {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-numeric);
+  font-size: var(--text-micro);
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.v2-availability::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* Alt bilgi ---------------------------------------------------------------- */
+
+.v2-footer {
+  background: var(--dark-bg);
+  color: var(--dark-ink);
+  padding-block: var(--section-y) var(--space-8);
+}
+
+.v2-footer__top {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12);
+  justify-content: space-between;
+  padding-bottom: var(--space-12);
+  border-bottom: 1px solid var(--dark-line);
+}
+
+.v2-footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 12rem;
+}
+
+.v2-footer__link {
+  color: var(--dark-muted);
+  text-decoration: none;
+  font-size: var(--text-small);
+  transition: color var(--dur-fast) var(--ease);
+  width: fit-content;
+}
+
+.v2-footer__link:hover {
+  color: var(--dark-ink);
+}
+
+.v2-footer__bottom {
+  padding-top: var(--space-6);
+  font-size: var(--text-micro);
+  color: var(--dark-muted);
+}
+
+/* Duyarli ------------------------------------------------------------------ */
+
+@media (max-width: 960px) {
+  .v2-work {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .v2-stats {
+    grid-template-columns: 1fr;
+  }
+  .v2-quotes {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .v2-work {
+    grid-template-columns: 1fr;
+  }
+  .v2-nav {
+    gap: var(--space-4);
+    padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
+  }
+  .v2-nav__links {
+    gap: var(--space-4);
+  }
+  /* Dar ekranda menudeki buton iki satira kiriliyordu. */
+  .v2-nav .v2-btn {
+    padding: 0.625rem 0.9375rem;
+    white-space: nowrap;
+  }
+  .v2-nav__link,
+  .v2-nav__brand,
+  .v2-nav .v2-btn {
+    font-size: var(--text-micro);
+  }
+  .v2-section__head {
+    margin-bottom: var(--space-8);
+  }
+  .v2-quote {
+    padding: var(--space-6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-root *,
+  .v2-root *::before,
+  .v2-root *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
