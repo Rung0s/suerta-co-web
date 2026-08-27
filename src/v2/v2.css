@@ -113,7 +113,7 @@
 }
 
 .v2-root .v2-stat__value,
-.v2-root .v2-availability {
+.v2-root .v2-availability__num {
   font-family: var(--font-numeric);
 }
 
@@ -128,6 +128,11 @@
 
 .v2-section {
   padding-block: var(--section-y);
+}
+
+/* Menu sabit; capa atlayisi basligi menunun altinda birakmasin. */
+.v2-root [id] {
+  scroll-margin-top: clamp(5rem, 9vw, 6.5rem);
 }
 
 /* Ayni zeminde art arda gelen iki bolumun dolgusu ust uste binip devasa bir
@@ -687,6 +692,239 @@
   font-weight: 600;
 }
 
+/* Hizmetler ---------------------------------------------------------------
+   Referanstaki liste ritmi: satir basina bir teklif, aralarinda sac teli
+   cizgi, solda sira numarasi. Kart yok — liste kendi izgarasini kuruyor. */
+
+.v2-list {
+  border-top: 1px solid var(--line);
+}
+
+.v2-row {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: var(--space-6);
+  align-items: start;
+  padding-block: var(--space-8);
+  border-bottom: 1px solid var(--line);
+  transition: background var(--dur-base) var(--ease);
+}
+
+.v2-row:hover {
+  background: rgba(17, 17, 16, 0.015);
+}
+
+.v2-row__num {
+  font-family: var(--font-numeric);
+  font-size: var(--text-small);
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  padding-top: 0.35rem;
+}
+
+.v2-row__title {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  font-weight: 600;
+}
+
+.v2-row__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.v2-row__desc {
+  font-size: var(--text-body);
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.v2-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.v2-tag {
+  padding: 0.25rem 0.625rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-micro);
+  color: var(--muted);
+  background: var(--surface);
+  white-space: nowrap;
+}
+
+/* Surec --------------------------------------------------------------------
+   Dort adim, ustlerinde tek bir yatay cizgi ile baglaniyor: "bu bir hat,
+   dort ayri kutu degil". */
+
+.v2-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-6);
+  position: relative;
+  padding-top: var(--space-8);
+}
+
+.v2-steps::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--line);
+}
+
+.v2-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.v2-step::before {
+  content: '';
+  position: absolute;
+  top: calc(var(--space-8) * -1);
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translateY(-3px);
+}
+
+.v2-step__num {
+  font-family: var(--font-numeric);
+  font-size: var(--text-micro);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+.v2-step__title {
+  font-size: var(--text-lead);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.v2-step__desc {
+  font-size: var(--text-small);
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* SSS ---------------------------------------------------------------------
+   Yerli <details>: JS yok, klavye ve ekran okuyucu bedava gelir. */
+
+.v2-faq {
+  border-top: 1px solid var(--line);
+}
+
+.v2-faq__item {
+  border-bottom: 1px solid var(--line);
+}
+
+.v2-faq__q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding-block: var(--space-6);
+  cursor: pointer;
+  list-style: none;
+  font-size: var(--text-lead);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.v2-faq__q::-webkit-details-marker {
+  display: none;
+}
+
+.v2-faq__q:hover {
+  color: var(--accent);
+}
+
+.v2-faq__q:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.v2-faq__sign {
+  position: relative;
+  flex-shrink: 0;
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.v2-faq__sign::before,
+.v2-faq__sign::after {
+  content: '';
+  position: absolute;
+  inset: 50% 0 auto 0;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform var(--dur-base) var(--ease);
+}
+
+.v2-faq__sign::after {
+  transform: rotate(90deg);
+}
+
+.v2-faq__item[open] .v2-faq__sign::after {
+  transform: rotate(0deg);
+}
+
+.v2-faq__a {
+  padding-bottom: var(--space-6);
+  max-width: 62ch;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* Roket -------------------------------------------------------------------
+   Referansin imza objesi. Bizde kapanista duruyor: sayfanin sonu = kalkis.
+   Egim ve izi tokenlarla ciziliyor, bitmap yok. */
+
+.v2-rocket {
+  color: var(--ink);
+  width: clamp(4.5rem, 8vw, 7rem);
+  height: auto;
+  display: block;
+  animation: v2Hover 4.5s ease-in-out infinite;
+}
+
+.v2-rocket__flame {
+  color: var(--accent);
+  transform-origin: 50% 0%;
+  animation: v2Flame 700ms ease-in-out infinite alternate;
+}
+
+@keyframes v2Hover {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+@keyframes v2Flame {
+  from { transform: scaleY(0.82); opacity: 0.75; }
+  to { transform: scaleY(1.12); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-rocket,
+  .v2-rocket__flame {
+    animation: none;
+  }
+}
+
 /* El yazisi not ------------------------------------------------------------ */
 
 .v2-note {
@@ -710,14 +948,25 @@
   gap: var(--space-4);
 }
 
+/* Doto nokta-matris: rakamda karakter, cumlede okunmazlik. Sayi Doto'da
+   kalir, metin govde fontuna doner. */
 .v2-availability {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
-  font-family: var(--font-numeric);
   font-size: var(--text-micro);
-  letter-spacing: 0.04em;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  font-weight: 500;
   color: var(--muted);
+}
+
+.v2-availability__num {
+  font-family: var(--font-numeric);
+  font-weight: 700;
+  font-size: 1.15em;
+  color: var(--ink);
+  letter-spacing: 0.04em;
 }
 
 .v2-availability::before {
@@ -782,6 +1031,28 @@
   .v2-quotes {
     grid-template-columns: 1fr;
   }
+  .v2-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-8) var(--space-6);
+  }
+  /* Iki satira dusunce ustteki tek cizgi yalan soyler; nokta kalir, hat gider. */
+  .v2-steps::before {
+    display: none;
+  }
+  .v2-step {
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--line);
+  }
+  .v2-step::before {
+    top: 0;
+  }
+  .v2-row {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    gap: var(--space-4);
+  }
+  .v2-row__body {
+    grid-column: 2;
+  }
 }
 
 @media (max-width: 620px) {
@@ -792,8 +1063,10 @@
     gap: var(--space-4);
     padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);
   }
+  /* Dort baglanti dar ekranda pili tasiriyordu; menuyu marka + eyleme
+     indiriyoruz, bolumlere alt bilgiden ulasiliyor. */
   .v2-nav__links {
-    gap: var(--space-4);
+    display: none;
   }
   /* Dar ekranda menudeki buton iki satira kiriliyordu. */
   .v2-nav .v2-btn {
@@ -810,6 +1083,15 @@
   }
   .v2-quote {
     padding: var(--space-6);
+  }
+  .v2-steps {
+    grid-template-columns: 1fr;
+  }
+  .v2-row {
+    padding-block: var(--space-6);
+  }
+  .v2-faq__q {
+    font-size: var(--text-body);
   }
 }
 

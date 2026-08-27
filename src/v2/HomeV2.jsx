@@ -111,6 +111,40 @@ function BookingMock() {
   );
 }
 
+/* Referansin imza objesi. Bitmap yerine SVG: her olcekte net, tema degisince
+   renk tokenlarini takip eder. */
+function Rocket() {
+  return (
+    <svg
+      className="v2-rocket"
+      width="72"
+      height="96"
+      viewBox="0 0 72 96"
+      fill="none"
+      aria-hidden="true"
+    >
+      {/* govde */}
+      <path
+        d="M36 4c9.5 8.6 15 21.4 15 34.6 0 8.4-2.2 16.3-6 22.9H27c-3.8-6.6-6-14.5-6-22.9C21 25.4 26.5 12.6 36 4z"
+        fill="currentColor"
+      />
+      {/* pencere */}
+      <circle cx="36" cy="33" r="7" fill="var(--bg)" />
+      <circle cx="36" cy="33" r="3.4" fill="var(--gold)" />
+      {/* kanatlar */}
+      <path d="M21 40c-6 4.4-9.5 11.4-9.5 19.6L21 54V40z" fill="currentColor" opacity="0.55" />
+      <path d="M51 40c6 4.4 9.5 11.4 9.5 19.6L51 54V40z" fill="currentColor" opacity="0.55" />
+      {/* luleyi govdeye yapistiran agizlik — alev bosluktan degil, buradan cikar */}
+      <path d="M28.5 61.5h15l-2.5 5h-10l-2.5-5z" fill="currentColor" opacity="0.7" />
+      {/* alev */}
+      <g className="v2-rocket__flame">
+        <path d="M36 65c4.6 5.2 6.9 10.7 6.9 16.5 0 5.6-2.9 10.4-6.9 14.5-4-4.1-6.9-8.9-6.9-14.5C29.1 75.7 31.4 70.2 36 65z" fill="currentColor" />
+        <path d="M36 71.5c2.4 3.2 3.5 6.7 3.5 10.3 0 3.4-1.6 6.4-3.5 9.2-1.9-2.8-3.5-5.8-3.5-9.2 0-3.6 1.1-7.1 3.5-10.3z" fill="var(--gold)" />
+      </g>
+    </svg>
+  );
+}
+
 function VerifiedMark() {
   return (
     <svg
@@ -132,6 +166,59 @@ const stats = [
   { unit: '%', value: '40', label: 'Emsa Otel’de doğrudan rezervasyon artışı' },
   { value: '4', label: 'Teslim edilen proje' },
   { value: '3', label: 'Kişilik ekip, tek masa' },
+];
+
+/* Ne yaptigimiz — nise gore uc hat. Etiketler somut teslimat, sifat degil. */
+const services = [
+  {
+    title: 'Otel & rezervasyon siteleri',
+    desc:
+      'Misafir OTA üzerinden değil, doğrudan sizden rezervasyon yapar. Oda envanteri, sezonluk fiyat ve müsaitlik tek panelden yönetilir.',
+    tags: ['Komisyonsuz rezervasyon', 'Channel manager / PMS', 'Sezonluk fiyatlama', 'Online ödeme'],
+  },
+  {
+    title: 'Günlük kiralık & Airbnb',
+    desc:
+      'Airbnb ve Booking takvimleriyle senkron çalışan kendi siteniz. Aynı daireyi platforma komisyon ödemeden de doldurursunuz.',
+    tags: ['Takvim senkronu (iCal)', 'Çok dilli listing', 'Çoklu para birimi', 'Direkt talep formu'],
+  },
+  {
+    title: 'Emlak & ilan siteleri',
+    desc:
+      'Portföyünüzü kendiniz yönetirsiniz. Filtreli arama, harita, karşılaştırma ve danışman sayfalarıyla ilanı satışa çeviren yapı.',
+    tags: ['Portföy paneli', 'Filtreli arama', 'Harita görünümü', 'Danışman profilleri'],
+  },
+];
+
+/* Dort adim. Sureler gercek taahhut; degistirmeden once teslim gecmisine bak. */
+const steps = [
+  { num: '01', title: 'Keşif', desc: '15 dakikalık görüşme. Ne sattığınızı, kime sattığınızı ve neyin eksik olduğunu netleştiririz.' },
+  { num: '02', title: 'Kapsam', desc: 'Sabit fiyat, sabit kapsam ve teslim tarihi. Sürpriz kalem yok.' },
+  { num: '03', title: 'Kurulum', desc: 'Tasarım, geliştirme, rezervasyon motoru ve entegrasyonlar. Ara teslimlerle ilerler.' },
+  { num: '04', title: 'Devir', desc: 'Yayına alma, panel eğitimi ve 30 gün destek. Site sizde kalır, bize bağımlı değilsiniz.' },
+];
+
+const faqs = [
+  {
+    q: 'OTA komisyonunu gerçekten düşürebilir miyim?',
+    a: 'Tamamen bitirmez ama payı ciddi biçimde kaydırır. Booking veya Airbnb üzerinden gelen misafir komisyon götürür; kendi sitenizden gelen götürmez. Emsa Otel’de doğrudan rezervasyon oranı %40 arttı. Hedef platformları bırakmak değil, ikinci ve üçüncü kez gelen misafiri doğrudan kendinize almak.',
+  },
+  {
+    q: 'Mevcut channel manager veya PMS’imle çalışır mı?',
+    a: 'Evet. API veya iCal desteği olan sistemlerle takvim ve envanter senkronu kuruyoruz; müsaitlik iki yerde ayrı ayrı güncellenmez. Hangi sistemi kullandığınızı söyleyin, entegrasyonun mümkün olup olmadığını görüşmeden önce netleştirelim.',
+  },
+  {
+    q: 'Siteyi kendim güncelleyebilir miyim?',
+    a: 'Evet. Oda, ilan, fiyat, görsel ve içerik girişini yapabileceğiniz bir panel teslim ediyoruz. Devirde eğitim veriyoruz. Küçük değişiklik için bize dönmeniz gerekmiyor.',
+  },
+  {
+    q: 'Ne kadar sürede teslim ediyorsunuz?',
+    a: 'Kapsama bağlı. Tek mülk veya butik otel için 2–3 hafta; rezervasyon motoru ve entegrasyon gerektiren işler 4–6 hafta. Tarihi kapsam aşamasında yazılı veriyoruz.',
+  },
+  {
+    q: 'Çok dilli ve çok para birimli olur mu?',
+    a: 'Olur, bu nişte neredeyse zorunlu. Türkçe–İngilizce standart; talep halinde Almanca, Rusça ve Arapça ekliyoruz. Fiyatlar ziyaretçinin para biriminde gösterilebilir.',
+  },
 ];
 
 const quotes = [
@@ -160,8 +247,14 @@ export default function HomeV2() {
           <a className="v2-nav__link" href="#isler">
             İşler
           </a>
-          <a className="v2-nav__link" href="#hakkimizda">
-            Hakkımızda
+          <a className="v2-nav__link" href="#hizmetler">
+            Hizmetler
+          </a>
+          <a className="v2-nav__link" href="#surec">
+            Süreç
+          </a>
+          <a className="v2-nav__link" href="#sss">
+            SSS
           </a>
         </div>
         <a className="v2-btn v2-btn--primary" href="#iletisim">
@@ -259,6 +352,62 @@ export default function HomeV2() {
         </div>
       </section>
 
+      {/* Ne yapiyoruz ----------------------------------------------------- */}
+      <section className="v2-section" id="hizmetler">
+        <div className="v2-shell">
+          <Reveal>
+            <Item className="v2-section__head">
+              <h2 className="v2-title">
+                <TwoTone lead="Üç alanda" tail="çalışıyoruz." />
+              </h2>
+              <span className="v2-note">hepsinde aynı mesele: doğrudan rezervasyon</span>
+            </Item>
+          </Reveal>
+
+          <Reveal className="v2-list">
+            {services.map((service, i) => (
+              <Item key={service.title} className="v2-row">
+                <span className="v2-row__num">{String(i + 1).padStart(2, '0')}</span>
+                <h3 className="v2-row__title">{service.title}</h3>
+                <div className="v2-row__body">
+                  <p className="v2-row__desc">{service.desc}</p>
+                  <div className="v2-tags">
+                    {service.tags.map((tag) => (
+                      <span key={tag} className="v2-tag">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </Item>
+            ))}
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Surec ------------------------------------------------------------ */}
+      <section className="v2-section" id="surec">
+        <div className="v2-shell">
+          <Reveal>
+            <Item className="v2-section__head">
+              <h2 className="v2-title">
+                <TwoTone lead="İlk görüşmeden" tail="yayına kadar." />
+              </h2>
+            </Item>
+          </Reveal>
+
+          <Reveal className="v2-steps">
+            {steps.map((step) => (
+              <Item key={step.num} className="v2-step">
+                <span className="v2-step__num">{step.num}</span>
+                <span className="v2-step__title">{step.title}</span>
+                <span className="v2-step__desc">{step.desc}</span>
+              </Item>
+            ))}
+          </Reveal>
+        </div>
+      </section>
+
       {/* Referans yorumlari (koyu) ---------------------------------------- */}
       <section className="v2-section v2-section--dark">
         <div className="v2-shell">
@@ -283,6 +432,31 @@ export default function HomeV2() {
         </div>
       </section>
 
+      {/* SSS -------------------------------------------------------------- */}
+      <section className="v2-section" id="sss">
+        <div className="v2-shell">
+          <Reveal>
+            <Item className="v2-section__head">
+              <h2 className="v2-title">
+                <TwoTone lead="Görüşmeden önce" tail="merak edilenler." />
+              </h2>
+            </Item>
+          </Reveal>
+
+          <Reveal className="v2-faq">
+            {faqs.map((faq) => (
+              <Item key={faq.q} as="details" className="v2-faq__item">
+                <summary className="v2-faq__q">
+                  {faq.q}
+                  <span className="v2-faq__sign" aria-hidden="true" />
+                </summary>
+                <p className="v2-faq__a">{faq.a}</p>
+              </Item>
+            ))}
+          </Reveal>
+        </div>
+      </section>
+
       {/* Biz kimiz -------------------------------------------------------- */}
       <section className="v2-section" id="hakkimizda">
         <div className="v2-shell">
@@ -301,10 +475,15 @@ export default function HomeV2() {
       <section className="v2-section v2-cta" id="iletisim">
         <div className="v2-shell">
           <Reveal className="v2-cta__inner">
+            <Item>
+              <Rocket />
+            </Item>
             <Item as="h2" className="v2-display">
               Ne inşa ettiğinizi anlatın
             </Item>
-            <Item className="v2-availability">bu ay 2 proje kontenjanı</Item>
+            <Item className="v2-availability">
+              Bu ay <span className="v2-availability__num">2</span> proje kontenjanı
+            </Item>
             <Item>
               <a
                 className="v2-btn v2-btn--primary"
@@ -334,8 +513,14 @@ export default function HomeV2() {
               <a className="v2-footer__link" href="#isler">
                 İşler
               </a>
-              <a className="v2-footer__link" href="#hakkimizda">
-                Hakkımızda
+              <a className="v2-footer__link" href="#hizmetler">
+                Hizmetler
+              </a>
+              <a className="v2-footer__link" href="#surec">
+                Süreç
+              </a>
+              <a className="v2-footer__link" href="#sss">
+                SSS
               </a>
             </div>
             <div className="v2-footer__col">
