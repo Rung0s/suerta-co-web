@@ -50,27 +50,30 @@
   --space-26: 6.5rem;
 
   --gutter: clamp(1.25rem, 4.4vw, 4rem);
-  --section-y: clamp(4.5rem, 8vw, 6.5rem);
-  --max-width: 1280px;
+  /* Referans bolum dolgusu 112px; dar ekranda oransal kuculuyor. */
+  --section-y: clamp(4rem, 7.8vw, 7rem);
+  --max-width: 1270px;
 
   /* Geometri -------------------------------------------------------------- */
   --radius-inner: 12px;
   --radius-card: 20px;
   --radius-pill: 999px;
 
-  --shadow-card: 0 1px 2px rgba(17, 17, 16, 0.04), 0 8px 24px rgba(17, 17, 16, 0.05);
-  --shadow-nav: 0 1px 2px rgba(17, 17, 16, 0.05), 0 12px 32px rgba(17, 17, 16, 0.08);
+  /* Golge ve hareket olcegi surface.css'te tanimli; buradakiler ona bagli
+     takma adlar, boylece eski secicilerin hepsini gezmek gerekmiyor. */
+  --shadow-card: var(--shadow-tile);
+  --shadow-nav: var(--shadow-tile);
 
-  /* Hareket — tek egri ---------------------------------------------------- */
-  --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --dur-fast: 180ms;
+  --ease: var(--ease-out);
+  --dur-fast: var(--dur-hover);
   --dur-base: 450ms;
 
   --font: 'Inter', -apple-system, 'Segoe UI', system-ui, sans-serif;
   --font-note: 'Caveat', cursive;
   --font-numeric: 'Doto', ui-monospace, monospace;
 
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image: var(--paper-top), var(--paper-base);
   color: var(--ink);
   font-family: var(--font);
   font-size: var(--text-body);
@@ -149,6 +152,13 @@
 .v2-section--dark {
   background: var(--dark-bg);
   color: var(--dark-ink);
+  position: relative;
+  overflow: hidden;
+}
+
+.v2-section--dark > .v2-shell {
+  position: relative;
+  z-index: 1;
 }
 
 .v2-section--dark .v2-muted {
@@ -223,25 +233,43 @@
   outline-offset: 3px;
 }
 
+/* Referans butonu duz bir dikdortgen degil: ust kenarda ic beyaz cizgi,
+   altinda iki kademeli golge. Basilinca 1px cokuyor ve golge kisaliyor —
+   fiziksel bir tusa dokunmus gibi. */
 .v2-btn--primary {
   background: var(--ink);
   color: var(--bg);
+  box-shadow: var(--shadow-control);
 }
 
 .v2-btn--primary:hover {
-  background: var(--accent);
+  background: #1d1d1b;
   transform: translateY(-1px);
 }
 
+.v2-btn--primary:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 1px 2px rgba(17, 17, 16, 0.22);
+  transition-duration: var(--dur-press);
+}
+
 .v2-btn--ghost {
-  background: var(--surface);
+  background-color: var(--surface);
+  background-image: var(--paper-tile), var(--paper-base);
   color: var(--ink);
   border-color: var(--line);
+  box-shadow: var(--shadow-tile);
 }
 
 .v2-btn--ghost:hover {
   border-color: rgba(17, 17, 16, 0.24);
   transform: translateY(-1px);
+}
+
+.v2-btn--ghost:active {
+  transform: translateY(1px);
+  box-shadow: none;
+  transition-duration: var(--dur-press);
 }
 
 .v2-section--dark .v2-btn--primary {
@@ -305,16 +333,7 @@
   overflow: hidden;
 }
 
-.v2-hero__grid {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background-image: linear-gradient(to right, rgba(17, 17, 16, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(17, 17, 16, 0.035) 1px, transparent 1px);
-  background-size: 72px 72px;
-  mask-image: radial-gradient(ellipse 70% 55% at 50% 35%, #000 30%, transparent 100%);
-  pointer-events: none;
-}
+/* Izgara halesi ve dusen isik surface.css'te; hero yalnizca sahneyi kurar. */
 
 .v2-hero__inner {
   position: relative;
@@ -548,19 +567,20 @@
   flex-direction: column;
   gap: var(--space-3);
   padding: var(--space-3);
-  background: var(--surface);
+  background-color: var(--surface);
+  background-image: var(--paper-tile), var(--paper-base);
   border: 1px solid var(--line);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-tile);
   text-decoration: none;
   color: inherit;
-  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  transition: transform var(--dur-hover) var(--ease-out), box-shadow var(--dur-hover) var(--ease-out);
 }
 
 .v2-card:hover,
 .v2-card:focus-visible {
   transform: translateY(-3px);
-  box-shadow: 0 2px 4px rgba(17, 17, 16, 0.05), 0 16px 40px rgba(17, 17, 16, 0.1);
+  box-shadow: var(--shadow-raised);
 }
 
 .v2-card:focus-visible {

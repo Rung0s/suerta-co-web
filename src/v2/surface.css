@@ -1,0 +1,161 @@
+/* ==========================================================================
+   Yuzey sistemi — v2'nin tasiyici katmani
+   --------------------------------------------------------------------------
+   Referans sistemin (thelaunchcompany.cc) gucu tipografide degil, her
+   panelin ayni fiziksel malzemeden kesilmis gibi durmasinda. O malzeme dort
+   parcadan olusuyor: kagit gradyani, arti-isaretli izgara halesi, objenin
+   yere vurdugu isik ve tek bir golge olcegi. Hepsi burada; bolumler bunu
+   yeniden uretmez, sadece kullanir.
+
+   Olculer canli siteden sokuldu (.ref/ref-report.json, .ref/grid-halo.json),
+   tahmin degil.
+   ========================================================================== */
+
+.v2-root {
+  /* Golge olcegi — uc kademe, daha fazlasi degil ------------------------- */
+  --shadow-tile: 0 1px 2px rgba(17, 17, 16, 0.04), 0 8px 24px rgba(17, 17, 16, 0.06);
+  --shadow-raised: 0 2px 4px rgba(17, 17, 16, 0.06), 0 16px 40px rgba(17, 17, 16, 0.1);
+  --shadow-control: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 1px 2px rgba(17, 17, 16, 0.2),
+    0 6px 16px rgba(17, 17, 16, 0.16);
+  --shadow-dark: 0 16px 30px rgba(0, 0, 0, 0.4);
+
+  /* Hareket — iki egri. Standart olan yumusak durur; overshoot sadece
+     ekrana yeni giren seyler icin, cunku fazlasi ucuzlatir. */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-overshoot: cubic-bezier(0.34, 1.26, 0.64, 1);
+  --dur-press: 110ms;
+  --dur-hover: 200ms;
+  --dur-enter: 600ms;
+  --dur-nav: 520ms;
+
+  /* Kagit — iki katman. Ustteki neredeyse duz beyaz, alttaki kenarlara
+     dogru koyulasan gercek gradyan; ikisi ust uste binince yuzey duz bir
+     dolgu yerine isik alan bir malzemeye donuyor. */
+  --paper-top: linear-gradient(rgb(250, 250, 248) 0%, rgb(247, 246, 243) 100%);
+  --paper-tile: linear-gradient(rgb(255, 255, 255) 0%, rgb(252, 251, 249) 100%);
+  --paper-base: linear-gradient(
+    rgba(255, 255, 255, 0.95) 0%,
+    rgb(236, 234, 228) 45%,
+    rgb(222, 219, 211) 100%
+  );
+
+  /* Referans anotasyon ve parlamalarda daha sicak bir kirmizi kullaniyor.
+     Marka kirmizisini (--accent) degistirmiyoruz; yanina isik veren tonu
+     ayri token olarak koyuyoruz. */
+  --flare: #d93a2b;
+
+  /* Izgara --------------------------------------------------------------- */
+  --grid-cell: 56px;
+  --grid-cross: 168px;
+  --shell: 1270px;
+}
+
+/* Kagit yuzeyler ----------------------------------------------------------- */
+
+.v2-surface {
+  background-image: var(--paper-top), var(--paper-base);
+}
+
+.v2-surface--tile {
+  background-image: var(--paper-tile), var(--paper-base);
+}
+
+/* Izgara halesi -----------------------------------------------------------
+   Uc katman: 168px'te bir arti isareti (kesisim noktasini isaretler) ve iki
+   adet 56px kilcal cizgi. Arti isareti -84px kaydiriliyor ki tam kesisime
+   otursun.
+
+   Maske ikili ve `intersect` ile birlesiyor: radyal elips nerede
+   gorunecegini, fraktal gurultu ise ne kadar duzensiz gorunecegini
+   soyluyor. Gurultu olmadan izgara matbaa isi gibi duruyor; onunla
+   yuzeye basilmis gibi. */
+
+.v2-halo {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='168' height='168'%3E%3Crect x='77' y='84' width='14' height='1' fill='rgba(17,17,16,0.16)'/%3E%3Crect x='84' y='77' width='1' height='14' fill='rgba(17,17,16,0.16)'/%3E%3C/svg%3E"),
+    linear-gradient(rgba(17, 17, 16, 0.075) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 16, 0.075) 1px, transparent 1px);
+  background-size: var(--grid-cross) var(--grid-cross), var(--grid-cell) var(--grid-cell),
+    var(--grid-cell) var(--grid-cell);
+  background-position: calc(var(--grid-cross) / -2) calc(var(--grid-cross) / -2), 0 0, 0 0;
+
+  --halo-shape: radial-gradient(54% 28% at 50% 74%, #000 0%, #000 38%, transparent 78%);
+  --halo-noise: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.3 0 0 0 0.18'/%3E%3C/filter%3E%3Crect width='420' height='420' filter='url(%23n)'/%3E%3C/svg%3E");
+
+  -webkit-mask-image: var(--halo-shape), var(--halo-noise);
+  mask-image: var(--halo-shape), var(--halo-noise);
+  -webkit-mask-size: 100% 100%, 420px 420px;
+  mask-size: 100% 100%, 420px 420px;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+/* Koyu bantta ayni desen, ters polarite. */
+.v2-halo--dark {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='168' height='168'%3E%3Crect x='77' y='84' width='14' height='1' fill='rgba(246,245,242,0.16)'/%3E%3Crect x='84' y='77' width='1' height='14' fill='rgba(246,245,242,0.16)'/%3E%3C/svg%3E"),
+    linear-gradient(rgba(246, 245, 242, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(246, 245, 242, 0.07) 1px, transparent 1px);
+  --halo-shape: radial-gradient(90% 66% at 50% 60%, #000 0%, #000 40%, transparent 84%);
+}
+
+/* Bir objenin altina serilen kucuk izgara — sunaklik. */
+.v2-halo--altar {
+  --halo-shape: radial-gradient(78% 52% at 50% 46%, #000 0%, #000 34%, transparent 80%);
+}
+
+/* Dusen isik -------------------------------------------------------------
+   Sahnedeki obje yere isik vurmuyorsa uzerine yapistirilmis gibi durur.
+   Bu havuz onu zemine baglayan tek sey. */
+
+.v2-castlight {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    34% 30% at 52% 70%,
+    rgba(124, 55, 58, 0.12) 0%,
+    rgba(124, 55, 58, 0.06) 45%,
+    transparent 78%
+  );
+}
+
+/* On kolonluk izgara -----------------------------------------------------
+   Referansin is bolumu esit kolonlarda degil; 12 kolonluk bir izgarada
+   farkli genislikte tuglalar halinde diziliyor. Ritmi kuran sey bu. */
+
+.v2-grid12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 12px;
+}
+
+/* Kademeli giris ---------------------------------------------------------
+   Referans dort adimlik sabit gecikme kullaniyor (0/80/160/240ms). Kademe
+   buyudukce son oge geciktigi icin fark edilir hale gelir; dortte kesiliyor. */
+
+.v2-enter {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity var(--dur-enter) var(--ease-out), transform var(--dur-enter) var(--ease-out);
+}
+
+.v2-enter.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.v2-enter--d1 { transition-delay: 80ms; }
+.v2-enter--d2 { transition-delay: 160ms; }
+.v2-enter--d3 { transition-delay: 240ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-enter {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

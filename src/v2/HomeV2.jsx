@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { referencesData } from '../data/references';
+import './surface.css';
 import './v2.css';
 
 /* Tek reveal primitifi. Sitede uc ayri reveal sistemi vardi (CSS + iki farkli
@@ -264,7 +265,8 @@ export default function HomeV2() {
 
       {/* Hero ------------------------------------------------------------- */}
       <header className="v2-hero" id="top">
-        <div className="v2-hero__grid" aria-hidden="true" />
+        <div className="v2-halo" aria-hidden="true" />
+        <div className="v2-castlight" aria-hidden="true" />
         <div className="v2-shell">
           <Reveal className="v2-hero__inner">
             <Item as="h1" className="v2-display">
@@ -410,6 +412,7 @@ export default function HomeV2() {
 
       {/* Referans yorumlari (koyu) ---------------------------------------- */}
       <section className="v2-section v2-section--dark">
+        <div className="v2-halo v2-halo--dark" aria-hidden="true" />
         <div className="v2-shell">
           <Reveal>
             <Item className="v2-section__head">
