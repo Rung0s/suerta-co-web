@@ -1,0 +1,89 @@
+/* ==========================================================================
+   Imlec
+   --------------------------------------------------------------------------
+   Sisteme ait ok yerine kirmizi bir nokta. Fare olmayan cihazlarda ve
+   dokunmatik girislerde devreye girmiyor; parmakla kullanan biri icin
+   ekranda gezinen bir nokta anlamsizdir.
+
+   Nokta iki parcali: sert cekirdek fareyi bire bir takip ediyor, disindaki
+   halka biraz gecikmeli geliyor. Tek parca olsaydi hareket duz bir
+   surukleme gibi durur, agirligi olmazdi.
+   ========================================================================== */
+
+@media (hover: hover) and (pointer: fine) {
+  .v2-root,
+  .v2-root * {
+    cursor: none;
+  }
+
+  /* Metin alanlarinda sistem imleci geri geliyor: yazi yazarken nereye
+     tikladigini gormek noktanin verdigi her seyden onemli. */
+  .v2-root input,
+  .v2-root textarea {
+    cursor: text;
+  }
+
+  .v2-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    pointer-events: none;
+    width: 9px;
+    height: 9px;
+    margin: -4.5px 0 0 -4.5px;
+    border-radius: 50%;
+    background: var(--flare, #d93a2b);
+    will-change: transform;
+  }
+
+  .v2-cursor__ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9998;
+    pointer-events: none;
+    width: 34px;
+    height: 34px;
+    margin: -17px 0 0 -17px;
+    border-radius: 50%;
+    border: 1px solid var(--flare, #d93a2b);
+    opacity: 0.45;
+    will-change: transform;
+    transition: width 220ms var(--ease-out), height 220ms var(--ease-out),
+      margin 220ms var(--ease-out), opacity 220ms var(--ease-out),
+      background 220ms var(--ease-out);
+  }
+
+  /* Tiklanabilir bir seyin uzerinde halka buyuyup doluyor: nokta artik
+     yalnizca konum degil, "burada bir sey var" da soyluyor. */
+  .v2-cursor__ring.is-hot {
+    width: 52px;
+    height: 52px;
+    margin: -26px 0 0 -26px;
+    opacity: 0.9;
+    background: rgba(217, 58, 43, 0.12);
+  }
+
+  .v2-cursor.is-down {
+    transform-origin: center;
+  }
+
+  .v2-cursor__ring.is-down {
+    opacity: 1;
+  }
+}
+
+/* Dokunmatikte ve fare olmayan girislerde tamamen yok. */
+@media not all and (hover: hover) {
+  .v2-cursor,
+  .v2-cursor__ring {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-cursor__ring {
+    transition: none;
+  }
+}

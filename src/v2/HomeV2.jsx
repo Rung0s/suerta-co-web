@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { referencesData } from '../data/references';
+import PixelRocket from './PixelRocket';
 import './surface.css';
 import './work.css';
 import './partners.css';
 import './manifesto.css';
 import './closing.css';
 import './contact.css';
+import './cursor.css';
 import './v2.css';
 
 /* Tek reveal primitifi. Sitede uc ayri reveal sistemi vardi (CSS + iki farkli
@@ -59,9 +61,103 @@ function TwoTone({ lead, tail }) {
   );
 }
 
-/* Hero'nun merkez objesi: komisyon odenmeden tamamlanan bir rezervasyon.
-   Tamamen dekoratif, bu yuzden erisilebilirlik agacindan gizli. */
-function BookingMock() {
+/* Hero kartlari.
+   Onceden tek bir rezervasyon karti vardi ve yalnizca otel isini
+   anlatiyordu — alti alanda calisirken bir alani gostermek digerlerini
+   yokmus gibi yapiyor. Alti alanin her birinin kendi karti var ve sirayla
+   doniyorlar.
+
+   Her kart ayni iskeleti kullaniyor: bir baslik satiri, iki alan ve bir
+   toplam. Icerik degisiyor, yapi degismiyor; kartlar donerken sekil
+   sabit kaldigi icin goz her seferinde yeniden yer aramiyor. */
+const HERO_CARDS = [
+  {
+    area: 'Otel & rezervasyon',
+    badge: 'komisyon %0',
+    thumb: 'linear-gradient(135deg, #3f3a33 0%, #7d6c58 55%, #c3ac8a 100%)',
+    title: 'Deluxe Deniz Manzaralı Oda',
+    meta: '2 misafir · kahvaltı dahil',
+    fields: [
+      ['Giriş', '14 Ağu'],
+      ['Çıkış', '17 Ağu'],
+    ],
+    footLabel: '3 gece',
+    footValue: '₺12.600',
+    cta: 'Rezervasyonu tamamla',
+  },
+  {
+    area: 'Emlak & kiralama',
+    badge: 'takvim senkron',
+    thumb: 'linear-gradient(135deg, #2f4034 0%, #5c7a5f 55%, #a8c0a2 100%)',
+    title: 'Deniz Manzaralı 2+1 Daire',
+    meta: 'Bodrum · 4 misafir',
+    fields: [
+      ['Airbnb', 'Dolu'],
+      ['Kendi siten', 'Müsait'],
+    ],
+    footLabel: 'gecelik',
+    footValue: '₺4.200',
+    cta: 'Rezervasyon talebi',
+  },
+  {
+    area: 'İnternet siteleri',
+    badge: 'mobil öncelikli',
+    thumb: 'linear-gradient(135deg, #23303f 0%, #4a6885 55%, #9db6ce 100%)',
+    title: 'Kurumsal site yenilendi',
+    meta: '4 dil · tek panel',
+    fields: [
+      ['Mobil skor', '98'],
+      ['Yüklenme', '0,9 sn'],
+    ],
+    footLabel: 'hemen çıkma',
+    footValue: '−%34',
+    cta: 'Siteyi incele',
+  },
+  {
+    area: 'E-ticaret',
+    badge: 'tek akış',
+    thumb: 'linear-gradient(135deg, #3d2a34 0%, #7a5566 55%, #cfa9b8 100%)',
+    title: 'Sepet → ödeme tamamlandı',
+    meta: '3 ürün · kargo bedava',
+    fields: [
+      ['Sepet', '₺1.840'],
+      ['Kargo', '₺0'],
+    ],
+    footLabel: 'toplam',
+    footValue: '₺1.840',
+    cta: 'Ödemeyi tamamla',
+  },
+  {
+    area: 'Yapay zekâ otomasyonları',
+    badge: 'otomatik yanıt',
+    thumb: 'linear-gradient(135deg, #2b2b33 0%, #55566b 55%, #a9aac2 100%)',
+    title: 'Kontenjan açıldı',
+    meta: 'Telegram botu · anlık bildirim',
+    fields: [
+      ['Yanıt', '0,4 sn'],
+      ['Elle iş', 'Yok'],
+    ],
+    footLabel: 'bu ay yanıtlanan',
+    footValue: '1.240',
+    cta: 'Botu gör',
+  },
+  {
+    area: 'Görünürlük & büyüme',
+    badge: 'SEO + GEO',
+    thumb: 'linear-gradient(135deg, #3b3320 0%, #7d6b36 55%, #d5c179 100%)',
+    title: 'Aramada ilk sayfa',
+    meta: 'Organik + yapay zekâ yanıtları',
+    fields: [
+      ['Organik', '+%62'],
+      ['Tıklama', '+%41'],
+    ],
+    footLabel: 'reklam maliyeti',
+    footValue: '−%28',
+    cta: 'Raporu gör',
+  },
+];
+
+function HeroCard({ card }) {
   const days = Array.from({ length: 35 }, (_, i) => {
     if (i === 16 || i === 19) return 'edge';
     if (i === 17 || i === 18) return 'on';
@@ -69,50 +165,46 @@ function BookingMock() {
   });
 
   return (
-    <div className="v2-mock-wrap" aria-hidden="true">
-      <div className="v2-mock">
-        <div className="v2-mock__cal">
-          <div className="v2-mock__cal-head">Ağustos</div>
-          <div className="v2-mock__cal-grid">
-            {days.map((state, i) => (
-              <span
-                key={i}
-                className={`v2-mock__day${state === 'off' ? '' : ` v2-mock__day--${state}`}`}
-              />
-            ))}
-          </div>
+    <div className="v2-mock">
+      <div className="v2-mock__cal">
+        <div className="v2-mock__cal-head">{card.area}</div>
+        <div className="v2-mock__cal-grid">
+          {days.map((state, i) => (
+            <span
+              key={i}
+              className={`v2-mock__day${state === 'off' ? '' : ` v2-mock__day--${state}`}`}
+            />
+          ))}
+        </div>
+      </div>
+
+      <span className="v2-mock__badge">{card.badge}</span>
+
+      <div className="v2-mock__panel">
+        <div className="v2-mock__row">
+          <span className="v2-mock__thumb" style={{ background: card.thumb }} />
+          <span>
+            <span className="v2-mock__name">{card.title}</span>
+            <br />
+            <span className="v2-mock__meta">{card.meta}</span>
+          </span>
         </div>
 
-        <span className="v2-mock__badge">komisyon %0</span>
-
-        <div className="v2-mock__panel">
-          <div className="v2-mock__row">
-            <span className="v2-mock__thumb" />
-            <span>
-              <span className="v2-mock__name">Deluxe Deniz Manzaralı Oda</span>
-              <br />
-              <span className="v2-mock__meta">2 misafir · kahvaltı dahil</span>
+        <div className="v2-mock__split">
+          {card.fields.map(([label, value]) => (
+            <span className="v2-mock__field" key={label}>
+              <span className="v2-mock__field-label">{label}</span>
+              <span className="v2-mock__field-value">{value}</span>
             </span>
-          </div>
-
-          <div className="v2-mock__split">
-            <span className="v2-mock__field">
-              <span className="v2-mock__field-label">Giriş</span>
-              <span className="v2-mock__field-value">14 Ağu</span>
-            </span>
-            <span className="v2-mock__field">
-              <span className="v2-mock__field-label">Çıkış</span>
-              <span className="v2-mock__field-value">17 Ağu</span>
-            </span>
-          </div>
-
-          <div className="v2-mock__total">
-            <span className="v2-mock__meta">3 gece</span>
-            <span className="v2-mock__price">₺12.600</span>
-          </div>
-
-          <span className="v2-btn v2-btn--primary v2-mock__cta">Rezervasyonu tamamla</span>
+          ))}
         </div>
+
+        <div className="v2-mock__total">
+          <span className="v2-mock__meta">{card.footLabel}</span>
+          <span className="v2-mock__price">{card.footValue}</span>
+        </div>
+
+        <span className="v2-btn v2-btn--primary v2-mock__cta">{card.cta}</span>
       </div>
     </div>
   );
@@ -341,10 +433,10 @@ function LuckCoin() {
     return (
       <div className="v2-altar">
         <div className="v2-halo v2-halo--altar" aria-hidden="true" />
-        <div className="v2-luckcard" role="group" aria-label="suerta co. kartviziti">
+        <div className="v2-luckcard" role="group" aria-label="suerta.co kartviziti">
           <p className="v2-luckcard__line">İşini şansa bırakma.</p>
           <p className="v2-luckcard__brand">
-            suerta<span className="v2-luckcard__dot">.</span>
+            suerta<span className="v2-luckcard__dot">.co</span>
           </p>
           <p className="v2-luckcard__tag">markanızın şansı</p>
           <a className="v2-btn v2-btn--primary v2-luckcard__cta" href="#iletisim">
@@ -369,10 +461,10 @@ function LuckCoin() {
         aria-label={stage === 0 ? 'Parayı çevir' : 'Bir daha bas'}
       >
         <span className="v2-coin__face" aria-hidden="true">
-          <span className="v2-coin__mark">s.</span>
+          <span className="v2-coin__mark">s</span>
         </span>
         <span className="v2-coin__face v2-coin__face--back" aria-hidden="true">
-          <span className="v2-coin__mark v2-coin__mark--small">suerta</span>
+          <span className="v2-coin__mark v2-coin__mark--small">suerta.co</span>
         </span>
       </button>
 
@@ -413,82 +505,90 @@ function LuckCoin() {
   );
 }
 
-/* Bant sayfa kaydikca kendiliginde yatay iliyor: bolum ekrandan gecerken
-   kat ettigi yol, karuselin kaydirabilecegi mesafeye esleniyor. Boylece
-   yorumlar okumak icin durup ok aramayi gerektirmiyor.
+/* Bant kendi kendine saga iliyor. Onceki hali sayfa konumuna bagliydi ve
+   yanlis hissettiriyordu: kullanici asagi kaydirdiginda bant da kayiyordu,
+   yani sayfanin kendisi yerinden oynuyormus gibi oluyordu. Simdi sayfa tam
+   yerinde duruyor, hareket eden tek sey bant.
 
-   Kullanici bir kez mudahale ederse (ok, parmak, tekerlek, klavye) surus
-   biraz sonra devrediliyor: kendi baktigi yerden ekranin onu geri
-   cekmesi, otomatik hareketin sagladigi her seyden daha rahatsiz edici. */
-function useScrollLinkedCarousel(ref) {
-  const takenOver = useRef(false);
-  /* Devri baslatan islev efektin icinde kuruluyor (zamanlayici orada), ama
-     oklarin da cagirmasi gerekiyor; disari bir kutu uzerinden veriliyor. */
+   Surus rAF ile, sabit hizda ve tek yonde. Sona gelince basa donuyor;
+   kartlar iki kez basildigi icin donus gorunmuyor.
+
+   Herhangi bir mudahalede (tekerlek, parmak, klavye, ok) alti saniye
+   devrediliyor — birinin okudugu yerden bandi cekmek, hareketin
+   sagladigi her seyden kotudur. */
+function useDriftingCarousel(ref) {
   const takeOverRef = useRef(() => {});
 
   useEffect(() => {
     const node = ref.current;
     if (!node) return undefined;
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return undefined;
 
-    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
-      return undefined;
-    }
-
-    let frame = 0;
+    let raf = 0;
     let releaseTimer = 0;
+    let paused = false;
+    let last = 0;
+    /* Saniyede piksel. Okunacak metin tasiyan bir bant icin yavas olmali;
+       hizli olsaydi goz takip etmek zorunda kalirdi. */
+    const SPEED = 26;
 
-    const drive = () => {
-      frame = 0;
-      if (takenOver.current) return;
+    const step = (now) => {
+      raf = requestAnimationFrame(step);
+      const delta = last ? (now - last) / 1000 : 0;
+      last = now;
+      if (paused || delta <= 0) return;
 
-      const section = node.closest('section') || node;
-      const rect = section.getBoundingClientRect();
-      const travel = window.innerHeight + rect.height;
-      const done = (window.innerHeight - rect.top) / travel;
-      /* Bas ve son taraflari kirpiliyor: bant, bolum tam ortalanmadan
-         once hareket etmeye baslamasin ve cikarken de erken bitsin. */
-      const eased = Math.min(1, Math.max(0, (done - 0.2) / 0.52));
+      /* Yarisi: kartlar iki kez basildi, ilk kopyanin sonuna gelince
+         basa donuluyor ve kesinti gorunmuyor. */
+      const half = node.scrollWidth / 2;
+      if (half <= 0) return;
 
-      const max = node.scrollWidth - node.clientWidth;
-      if (max <= 0) return;
-      node.scrollLeft = eased * max;
+      let next = node.scrollLeft + SPEED * delta;
+      if (next >= half) next -= half;
+      node.scrollLeft = next;
     };
 
-    const onPageScroll = () => {
-      if (!frame) frame = requestAnimationFrame(drive);
-    };
-
-    /* Mudahale isareti. `scroll` olayini dinleyemeyiz — surusun kendisi de
-       onu tetikliyor. */
     const takeOver = () => {
-      takenOver.current = true;
-      node.classList.remove('is-auto');
+      paused = true;
       clearTimeout(releaseTimer);
       releaseTimer = setTimeout(() => {
-        takenOver.current = false;
-        node.classList.add('is-auto');
+        paused = false;
       }, 6000);
     };
 
-    takeOverRef.current = takeOver;
-    node.classList.add('is-auto');
-    onPageScroll();
+    const hold = () => {
+      paused = true;
+      clearTimeout(releaseTimer);
+    };
+    const release = () => {
+      clearTimeout(releaseTimer);
+      releaseTimer = setTimeout(() => {
+        paused = false;
+      }, 600);
+    };
 
-    window.addEventListener('scroll', onPageScroll, { passive: true });
-    window.addEventListener('resize', onPageScroll, { passive: true });
+    takeOverRef.current = takeOver;
+    raf = requestAnimationFrame(step);
+
     node.addEventListener('wheel', takeOver, { passive: true });
     node.addEventListener('touchstart', takeOver, { passive: true });
     node.addEventListener('keydown', takeOver);
+    /* Uzerine gelince duruyor: okumak icin gelinmis demektir. */
+    node.addEventListener('mouseenter', hold);
+    node.addEventListener('mouseleave', release);
+    node.addEventListener('focusin', hold);
+    node.addEventListener('focusout', release);
 
     return () => {
-      if (frame) cancelAnimationFrame(frame);
+      cancelAnimationFrame(raf);
       clearTimeout(releaseTimer);
-      window.removeEventListener('scroll', onPageScroll);
-      window.removeEventListener('resize', onPageScroll);
       node.removeEventListener('wheel', takeOver);
       node.removeEventListener('touchstart', takeOver);
       node.removeEventListener('keydown', takeOver);
-      node.classList.remove('is-auto');
+      node.removeEventListener('mouseenter', hold);
+      node.removeEventListener('mouseleave', release);
+      node.removeEventListener('focusin', hold);
+      node.removeEventListener('focusout', release);
     };
   }, [ref]);
 
@@ -534,7 +634,7 @@ function ContactSection() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const lines = [
-      'Merhaba suerta co.,',
+      'Merhaba suerta.co,',
       '',
       `Ad: ${data.get('ad') || '—'}`,
       `Marka: ${data.get('marka') || '—'}`,
@@ -774,13 +874,17 @@ function serviceLabels(project) {
 
 function WorkTile({ project, wide, result }) {
   const labels = serviceLabels(project);
+  /* Filmlerin gidilecek bir adresi yok; baglantisi olmayani <a> yapmak
+     tiklanabilirmis gibi gosterir ve klavye ile bos bir durak yaratir. */
+  const Shell = project.link ? 'a' : 'div';
+  const linkProps = project.link
+    ? { href: project.link, target: '_blank', rel: 'noreferrer' }
+    : {};
 
   return (
-    <a
-      className={`v2-tile${wide ? ' v2-tile--wide' : ''}`}
-      href={project.link}
-      target="_blank"
-      rel="noreferrer"
+    <Shell
+      className={`v2-tile${wide ? ' v2-tile--wide' : ''}${project.link ? '' : ' v2-tile--static'}`}
+      {...linkProps}
     >
       {/* Ekran bir televizyonun icinde: cerceve, kavisli cam, tarama
           cizgileri ve dugmeler. Referans bunu sahnelenmis fotografla
@@ -790,7 +894,7 @@ function WorkTile({ project, wide, result }) {
         <div className="v2-tv__screen">
           {project.video ? (
             <video
-              className="v2-tv__media"
+              className="v2-tv__media v2-tv__media--video"
               autoPlay
               loop
               muted
@@ -798,8 +902,7 @@ function WorkTile({ project, wide, result }) {
               preload="metadata"
               poster={project.poster}
             >
-              <source src={`${project.video}.webm`} type="video/webm" />
-              <source src={`${project.video}.mp4`} type="video/mp4" />
+              <source src={project.video} type="video/mp4" />
             </video>
           ) : (
             <img
@@ -822,12 +925,12 @@ function WorkTile({ project, wide, result }) {
                 <li key={label}>{label}</li>
               ))}
             </ul>
-            <span className="v2-tv__go">Siteyi gör ↗</span>
+            {project.link && <span className="v2-tv__go">Siteyi gör ↗</span>}
           </div>
         </div>
 
         <div className="v2-tv__chin">
-          <span className="v2-tv__brand">suerta co.</span>
+          <span className="v2-tv__brand">suerta.co</span>
           <span className="v2-tv__knobs" aria-hidden="true">
             <i />
             <i />
@@ -843,7 +946,7 @@ function WorkTile({ project, wide, result }) {
         <span className="v2-tile__desc">{project.desc}</span>
         {result && <span className="v2-tile__result">{result}</span>}
       </div>
-    </a>
+    </Shell>
   );
 }
 
@@ -852,6 +955,85 @@ function EmptyTile() {
     <div className="v2-tile v2-tile--empty">
       <p className="v2-tile__empty-text">Bu slot bir sonraki iş için ayrıldı.</p>
     </div>
+  );
+}
+
+/* Kirmizi nokta imlec.
+   Konum React durumundan degil, dogrudan DOM'a yaziliyor: her fare
+   hareketinde render tetiklemek bu sayfanin geri kalanini (karakter karakter
+   beliren cumle, kayan bant) da yeniden hesaplatirdi.
+
+   Halka noktayi gecikmeli takip ediyor. Ayni karede ikisi de tam konuma
+   giderse hareketin agirligi olmuyor; gecikme tek basina "bu bir nesne"
+   hissini veriyor. */
+function DotCursor() {
+  const dot = useRef(null);
+  const ring = useRef(null);
+
+  useEffect(() => {
+    if (!window.matchMedia?.('(hover: hover) and (pointer: fine)').matches) return undefined;
+
+    const dotNode = dot.current;
+    const ringNode = ring.current;
+    if (!dotNode || !ringNode) return undefined;
+
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+    let ringX = targetX;
+    let ringY = targetY;
+    let raf = 0;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const loop = () => {
+      raf = requestAnimationFrame(loop);
+      /* Basit yumusatma: hedefe kalan mesafenin bir kismi kadar yaklas.
+         Kare suresinden bagimsiz olmasa da bu olcekte fark edilmiyor. */
+      const ease = reduced ? 1 : 0.16;
+      ringX += (targetX - ringX) * ease;
+      ringY += (targetY - ringY) * ease;
+      ringNode.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+    };
+
+    const onMove = (event) => {
+      targetX = event.clientX;
+      targetY = event.clientY;
+      dotNode.style.transform = `translate3d(${targetX}px, ${targetY}px, 0)`;
+
+      /* Uzerinde durulan sey tiklanabilir mi? Her harekette soruluyor ama
+         `closest` ucuz; alternatifi her etkilesimli ogeye ayri dinleyici
+         takmak olurdu ve dinamik icerikte bozulurdu. */
+      const hot = event.target?.closest?.('a, button, [role="tab"], summary, input, textarea, label');
+      ringNode.classList.toggle('is-hot', Boolean(hot));
+    };
+
+    const onDown = () => {
+      dotNode.classList.add('is-down');
+      ringNode.classList.add('is-down');
+    };
+    const onUp = () => {
+      dotNode.classList.remove('is-down');
+      ringNode.classList.remove('is-down');
+    };
+
+    window.addEventListener('pointermove', onMove, { passive: true });
+    window.addEventListener('pointerdown', onDown, { passive: true });
+    window.addEventListener('pointerup', onUp, { passive: true });
+    raf = requestAnimationFrame(loop);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerdown', onDown);
+      window.removeEventListener('pointerup', onUp);
+    };
+  }, []);
+
+  return (
+    <>
+      <span className="v2-cursor__ring" ref={ring} aria-hidden="true" />
+      <span className="v2-cursor" ref={dot} aria-hidden="true" />
+    </>
   );
 }
 
@@ -910,41 +1092,94 @@ function Annotation({ text }) {
 }
 
 /* Hero sahnesi.
-   Buradaki mesele hicbir zaman "bir arayuz gostermek" degildi: satilan sey
-   dolan bir mulk. Gercek mulk goruntusunu buyuk bir televizyonun icinde
-   oynatmak, sahne dunyasini (vitrin/sahne) uretilmis gorsel beklemeden
-   kuruyor. Rezervasyon paneli kosede ustune biniyor — ekranda mulk,
-   onunde onun satilmasi. */
+   Arkada rampadaki roket, onunde alti alanin kartlari. Kart yigini sayfa
+   kaydikca yatayda kayiyor: sabit dursaydi altindaki roketle iliskisi
+   olmayan, uzerine yapistirilmis bir kutu gibi dururdu. Kayma sayfa
+   hareketine bagli, kendi kendine donen bir karusel degil — kullanici
+   durdugunda o da duruyor.
+
+   Kartlar ayrica belirli araliklarla degisiyor, cunku alti alanin hepsini
+   ayni anda gostermenin yolu yok ve tek alani gostermek digerlerini yokmus
+   gibi yapiyor. */
 function HeroStage() {
+  const stage = useRef(null);
+  const [active, setActive] = useState(0);
+  const [drift, setDrift] = useState(0);
+
+  /* Kart degisimi ------------------------------------------------------- */
+  useEffect(() => {
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const id = setInterval(() => {
+      setActive((n) => (n + 1) % HERO_CARDS.length);
+    }, 3800);
+    return () => clearInterval(id);
+  }, []);
+
+  /* Yatay kayma ---------------------------------------------------------
+     Sayfa konumu -1 ile 1 arasina indiriliyor; kart yigini o araliga gore
+     sola ve saga geziyor. rAF'e sikistiriliyor, yoksa her scroll olayinda
+     durum guncellemek kare dusuruyor. */
+  useEffect(() => {
+    const node = stage.current;
+    if (!node) return undefined;
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return undefined;
+
+    let frame = 0;
+    const measure = () => {
+      frame = 0;
+      const rect = node.getBoundingClientRect();
+      const center = rect.top + rect.height / 2;
+      const ratio = (center - window.innerHeight / 2) / window.innerHeight;
+      setDrift(Math.max(-1, Math.min(1, ratio)));
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(measure);
+    };
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
+
   return (
-    <div className="v2-stage">
-      <div className="v2-tv v2-tv--hero">
-        <div className="v2-tv__screen">
-          <video
-            className="v2-tv__media"
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="metadata"
-            poster="/video/reel-poster.jpg"
-            aria-label="Kiralık mülk tanıtım videosu"
+    <div className="v2-stage" ref={stage}>
+      <PixelRocket className="v2-stage__rocket" />
+
+      <div
+        className="v2-deck"
+        style={{ transform: `translateX(${drift * 14}%) rotate(${drift * -1.6}deg)` }}
+      >
+        {HERO_CARDS.map((card, i) => (
+          <div
+            key={card.area}
+            className={`v2-deck__slot${i === active ? ' is-active' : ''}`}
+            aria-hidden={i !== active}
           >
-            <source src="/video/reel.mp4" type="video/mp4" />
-          </video>
-          <span className="v2-tv__scan" aria-hidden="true" />
-          <span className="v2-tv__glare" aria-hidden="true" />
-        </div>
-        <div className="v2-tv__chin">
-          <span className="v2-tv__brand">suerta co.</span>
-          <span className="v2-tv__knobs" aria-hidden="true">
-            <i />
-            <i />
-          </span>
-        </div>
+            <HeroCard card={card} />
+          </div>
+        ))}
       </div>
 
-      <BookingMock />
+      {/* Hangi alanin gosterildigi yaziyla da duruyor; kart iceriginden
+          cikarmak okuyucudan is istiyor. */}
+      <div className="v2-deck__dots" role="tablist" aria-label="Çalışma alanları">
+        {HERO_CARDS.map((card, i) => (
+          <button
+            key={card.area}
+            type="button"
+            role="tab"
+            className={`v2-deck__dot${i === active ? ' is-active' : ''}`}
+            aria-selected={i === active}
+            aria-label={card.area}
+            onClick={() => setActive(i)}
+          />
+        ))}
+      </div>
     </div>
   );
 }
@@ -971,6 +1206,44 @@ const kpis = [
   { value: String(referencesData.length), label: 'Teslim edilen proje' },
   { value: '3', label: 'Kişilik ekip, tek masa', laurel: true },
 ];
+
+/* Video isleri.
+   Bunlar musteri sitesi degil, cektigimiz tanitim filmleri — hizmet
+   listesinde zaten fotograf ve icerik uretimi var. Site ekran goruntusuymus
+   gibi sunmak yaniltici olurdu; kendi girdileri olarak duruyorlar ve
+   `details` alani ayni kalibi kullandigi icin hover listesi de otomatik
+   dogru cikiyor. */
+const mediaWorks = [
+  {
+    id: 'film-kiralik',
+    name: 'Kiralık Daire Tanıtımı',
+    desc: 'Roma · Tanıtım Filmi & Görsel İçerik',
+    video: '/video/reel.mp4',
+    poster: '/video/reel-poster.jpg',
+    details: `
+*   **Mekân Çekimi:** Daire ve çevresi misafirin göreceği sırayla çekildi.
+*   **Kurgu ve Renk:** Listing sayfasında döngüde oynayacak şekilde kurgulandı.
+*   **Web İçin Optimizasyon:** Sayfayı yavaşlatmayacak boyuta indirildi.
+*   **Listing Entegrasyonu:** Rezervasyon sayfasına gömüldü.
+    `,
+  },
+  {
+    id: 'film-bungalov',
+    name: 'Bungalov Tesisi',
+    desc: 'Drone Çekimi & Tesis Tanıtımı',
+    video: '/video/showcase.mp4',
+    poster: '/video/showcase-poster.jpg',
+    details: `
+*   **Drone Çekimi:** Tesisin bütünü ve konumu havadan gösterildi.
+*   **Ünite Çekimleri:** Her bungalov tipi ayrı ayrı kaydedildi.
+*   **Kurgu:** Ana sayfada sessiz döngü için hazırlandı.
+*   **Web İçin Optimizasyon:** Mobilde de akıcı oynayacak şekilde sıkıştırıldı.
+    `,
+  },
+];
+
+/* Izgaraya once musteri projeleri, sonra filmler giriyor. */
+const allWorks = [...referencesData, ...mediaWorks];
 
 /* One cikan is: sonucu en net olcülen proje. */
 const FEATURED_ID = 1;
@@ -1093,7 +1366,7 @@ const quotes = [
     tint: '#9a3b32',
     seed: 11,
     text:
-      'Otelimizin dijital dönüşümünde suerta co. ile çalışmak verdiğimiz en doğru karardı. Komisyonsuz rezervasyon sistemi sayesinde doğrudan satışlarımız %40 arttı.',
+      'Otelimizin dijital dönüşümünde suerta.co ile çalışmak verdiğimiz en doğru karardı. Komisyonsuz rezervasyon sistemi sayesinde doğrudan satışlarımız %40 arttı.',
     role: 'Yönetim Kurulu',
   },
   {
@@ -1126,15 +1399,17 @@ const quotes = [
 ];
 
 export default function HomeV2() {
-  const work = buildWorkLayout(referencesData);
+  const work = buildWorkLayout(allWorks);
   const carousel = useRef(null);
-  const carouselTakeOver = useScrollLinkedCarousel(carousel);
+  const carouselTakeOver = useDriftingCarousel(carousel);
 
   return (
     <div className="v2-root">
+      <DotCursor />
+
       <nav className="v2-nav" aria-label="Ana menü">
         <a className="v2-nav__brand" href="#top">
-          suerta co.
+          suerta<span className="v2-nav__brand-dot">.co</span>
         </a>
         <div className="v2-nav__links">
           <a className="v2-nav__link" href="#isler">
@@ -1161,6 +1436,11 @@ export default function HomeV2() {
         <div className="v2-castlight" aria-hidden="true" />
         <div className="v2-shell">
           <Reveal className="v2-hero__inner">
+            {/* Marka adi hero'da yaziyla geciyor: arama motoru da ziyaretci
+                de sayfanin ilk ekraninda kimin konustugunu gormeli. */}
+            <Item className="v2-hero__brand">
+              suerta<span className="v2-hero__brand-dot">.co</span>
+            </Item>
             <Item as="h1" className="v2-display">
               <TwoTone
                 lead="Ziyaretçiyi müşteriye çeviren"
@@ -1194,7 +1474,6 @@ export default function HomeV2() {
               <h2 className="v2-title">
                 <TwoTone lead="Seçili" tail="işler." />
               </h2>
-              <Annotation text="rezervasyon motorunu da biz kuruyoruz" />
             </Item>
           </Reveal>
 
@@ -1257,7 +1536,7 @@ export default function HomeV2() {
                   tail="çalışıyoruz."
                 />
               </h2>
-              <span className="v2-note">hepsinde aynı mesele: aracıyı aradan çıkarmak</span>
+              <Annotation text="hepsinde aynı mesele: aracıyı aradan çıkarmak" />
             </Item>
           </Reveal>
 
@@ -1337,36 +1616,51 @@ export default function HomeV2() {
         </div>
 
         <div className="v2-shell">
+          {/* Kartlar iki kez basiliyor: bant sona gelince basa donuyor ve
+              kopya sayesinde donus gorunmuyor. Ikinci tur erisilebilirlik
+              agacindan gizli, yoksa okuyucu her yorumu iki kez okuyor. */}
           <div className="v2-carousel" ref={carousel}>
-            {quotes.map((quote) => (
-              <figure className="v2-pcard" key={quote.brand}>
-                <div className="v2-pcard__body">
-                  <span className="v2-pcard__brand">{quote.brand}</span>
-                  <blockquote className="v2-pcard__quote">“{quote.text}”</blockquote>
-                  {/* Marka adi zaten ustte; alt satirda tekrarlamak yerine
-                      konusanin kim oldugu duruyor. */}
-                  <figcaption className="v2-pcard__by">
-                    <strong>{quote.role}</strong>
-                    <span className="v2-pcard__role">{quote.brand}</span>
-                  </figcaption>
-                </div>
-                <PartnerPortrait letter={quote.letter} tint={quote.tint} seed={quote.seed} />
-              </figure>
-            ))}
+            {[0, 1].map((pass) => (
+              <React.Fragment key={pass}>
+                {quotes.map((quote) => (
+                  <figure
+                    className="v2-pcard"
+                    key={`${pass}-${quote.brand}`}
+                    aria-hidden={pass === 1 ? 'true' : undefined}
+                  >
+                    <div className="v2-pcard__body">
+                      <span className="v2-pcard__brand">{quote.brand}</span>
+                      <blockquote className="v2-pcard__quote">“{quote.text}”</blockquote>
+                      {/* Marka adi zaten ustte; alt satirda tekrarlamak
+                          yerine konusanin kim oldugu duruyor. */}
+                      <figcaption className="v2-pcard__by">
+                        <strong>{quote.role}</strong>
+                        <span className="v2-pcard__role">{quote.brand}</span>
+                      </figcaption>
+                    </div>
+                    <PartnerPortrait letter={quote.letter} tint={quote.tint} seed={quote.seed} />
+                  </figure>
+                ))}
 
-            {/* Referans ucuncu slotu bos birakmiyor, teklife ceviriyor. */}
-            <div className="v2-pcard v2-pcard--open">
-              <div className="v2-pcard__body">
-                <span className="v2-pcard__brand">Ayrılmış</span>
-                <p className="v2-pcard__open-text">
-                  Bu alan sizinle kuracağımız iş için ayrıldı.
-                </p>
-                <a className="v2-btn v2-btn--primary" href="#iletisim">
-                  Görüşme ayarla
-                </a>
-              </div>
-              <PartnerPortrait letter="?" tint="#d0aa64" seed={47} />
-            </div>
+                {/* Referans son slotu bos birakmiyor, teklife ceviriyor. */}
+                <div
+                  className="v2-pcard v2-pcard--open"
+                  key={`${pass}-open`}
+                  aria-hidden={pass === 1 ? 'true' : undefined}
+                >
+                  <div className="v2-pcard__body">
+                    <span className="v2-pcard__brand">Ayrılmış</span>
+                    <p className="v2-pcard__open-text">
+                      Bu alan sizinle kuracağımız iş için ayrıldı.
+                    </p>
+                    <a className="v2-btn v2-btn--primary" href="#iletisim" tabIndex={pass === 1 ? -1 : undefined}>
+                      Görüşme ayarla
+                    </a>
+                  </div>
+                  <PartnerPortrait letter="?" tint="#d0aa64" seed={47} />
+                </div>
+              </React.Fragment>
+            ))}
           </div>
         </div>
       </section>
@@ -1400,7 +1694,7 @@ export default function HomeV2() {
       <section className="v2-section v2-manifesto" id="hakkimizda">
         <div className="v2-shell">
           <div className="v2-manifesto__grid">
-            <ScriptedLine text="Biz suerta co.'yuz. Otel, kiralama, eğitim ve e-ticaret markalarına ziyaretçiyi müşteriye çeviren siteler kuruyoruz." />
+            <ScriptedLine text="Biz suerta.co'yuz. Otel, kiralama, eğitim ve e-ticaret markalarına ziyaretçiyi müşteriye çeviren siteler kuruyoruz." />
             <LuckCoin />
           </div>
         </div>
@@ -1430,34 +1724,77 @@ export default function HomeV2() {
         <div className="v2-band__dither" aria-hidden="true" />
         <div className="v2-band__foot">
           <div className="v2-shell">
-            <span className="v2-band__copy">
-              © {new Date().getFullYear()} suerta co. — suerta.co
-            </span>
-            <nav className="v2-band__links" aria-label="Alt bilgi">
-              <a className="v2-band__link" href="#isler">
-                İşler
-              </a>
-              <a className="v2-band__link" href="#hizmetler">
-                Hizmetler
-              </a>
-              <a className="v2-band__link" href="#surec">
-                Süreç
-              </a>
-              <a className="v2-band__link" href="#sss">
-                SSS
-              </a>
-              <a className="v2-band__link" href="mailto:suerta.info@gmail.com">
-                suerta.info@gmail.com
-              </a>
-              <a
-                className="v2-band__link"
-                href="https://instagram.com/suerta.co"
-                target="_blank"
-                rel="noreferrer"
+            {/* Ana sitedeki alt bilgi duzeni: uc kolon, dev logotype, en altta
+                telif ve yukari don. Onceki hali tek satirlik bir baglanti
+                seridiydi ve sayfanin sonu gibi degil, kesilmis gibi
+                duruyordu. */}
+            <div className="v2-fcols">
+              <div className="v2-fcol">
+                <span className="v2-fcol__title">Menü</span>
+                <a className="v2-fcol__link" href="#isler">
+                  İşler
+                </a>
+                <a className="v2-fcol__link" href="#hizmetler">
+                  Hizmetler
+                </a>
+                <a className="v2-fcol__link" href="#surec">
+                  Süreç
+                </a>
+                <a className="v2-fcol__link" href="#sss">
+                  SSS
+                </a>
+              </div>
+
+              <div className="v2-fcol">
+                <span className="v2-fcol__title">Sosyal</span>
+                <a
+                  className="v2-fcol__link"
+                  href="https://instagram.com/suerta.co"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Instagram ↗
+                </a>
+                <a
+                  className="v2-fcol__link"
+                  href="https://wa.me/905060693525"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  WhatsApp ↗
+                </a>
+              </div>
+
+              <div className="v2-fcol">
+                <span className="v2-fcol__title">İletişim</span>
+                <a className="v2-fcol__link" href="mailto:suerta.info@gmail.com">
+                  suerta.info@gmail.com
+                </a>
+                <span className="v2-fcol__link v2-fcol__link--plain">
+                  Eskişehir, Türkiye (Global)
+                </span>
+              </div>
+            </div>
+
+            {/* Logotype, baslik degil: sayfada ikinci bir h1 yaratmasin diye
+                div ve role="img". */}
+            <div className="v2-wordmark" role="img" aria-label="suerta.co">
+              suerta<span className="v2-wordmark__dot">.co</span>
+            </div>
+
+            <div className="v2-band__bottom">
+              <span className="v2-band__copy">
+                © {new Date().getFullYear()} suerta.co — otel, kiralama, eğitim ve
+                e-ticaret markaları için siteler. Tüm hakları saklıdır.
+              </span>
+              <button
+                type="button"
+                className="v2-totop"
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               >
-                Instagram
-              </a>
-            </nav>
+                Yukarı dön ↑
+              </button>
+            </div>
           </div>
         </div>
       </footer>

@@ -326,7 +326,9 @@
 /* Hero -------------------------------------------------------------------- */
 
 .v2-hero {
-  padding-top: clamp(7rem, 12vw, 9.5rem);
+  /* Menu sabit ve yuzuyor; marka satiri onun altindan baslamali, yoksa
+     pilin arkasinda kaliyor. */
+  padding-top: clamp(8.5rem, 13vw, 11rem);
   padding-bottom: clamp(3.5rem, 6vw, 5rem);
   text-align: center;
   position: relative;
@@ -366,52 +368,130 @@
    odenmeden tamamlanan rezervasyon. Gorsel yerine tokenlarla kuruldu, bu
    yuzden olcege ve temaya gore bozulmuyor. */
 
-/* Sahne: televizyon zeminde, rezervasyon paneli onunde.
-   Panel mutlak konumda ve televizyonun sag alt kosesine biniyor; yan yana
-   dizilselerdi ikisi iki ayri sey olurdu. Ust uste binmesi "ekrandaki mulk
-   satiliyor" cumlesini tek bakista kuruyor. */
+/* Hero sahnesi: arkada rampadaki piksel roket, onunde alan kartlari. */
 
 .v2-stage {
   position: relative;
   width: min(58rem, 100%);
-  margin: clamp(2.5rem, 5vw, 4rem) auto 0;
-  perspective: 1600px;
+  margin: clamp(2rem, 4vw, 3.5rem) auto 0;
+  min-height: clamp(26rem, 46vw, 36rem);
+  display: flex;
+  align-items: flex-end;
+  /* Kartlar sagda, roket solda. */
+  justify-content: flex-end;
+  padding-bottom: var(--space-8);
 }
 
-.v2-tv--hero {
-  border-radius: 22px;
-  padding: 14px 14px 0;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    inset 0 -1px 0 rgba(96, 88, 68, 0.3),
-    0 2px 4px rgba(17, 17, 16, 0.06),
-    0 30px 70px rgba(17, 17, 16, 0.16);
-  transform: rotateX(4deg);
-  transform-origin: 50% 100%;
-}
-
-.v2-tv--hero .v2-tv__screen {
-  aspect-ratio: 16 / 9;
-  border-radius: 18px / 26px;
-}
-
-.v2-tv--hero .v2-tv__chin {
-  padding: 9px 6px 11px;
-}
-
-.v2-mock-wrap {
+.v2-stage__rocket {
   position: absolute;
-  right: -1rem;
-  bottom: -2rem;
-  /* Panel televizyonun kosesine binmeli, yanindan sarkmamali: fazla genis
-     olunca ekrandaki mulku kapatiyor ve iki ayri kart gibi duruyor. */
-  width: min(19rem, 44%);
+  /* Roket ortada degil solda: kartlar sagda duruyor ve ikisi ust uste
+     binmeden ayni sahneyi paylasiyor. Tam ortada olsaydi kartlar govdeyi
+     kapatirdi ve roket yalnizca kenarlarindan gorunurdu. */
+  left: 4%;
+  bottom: 0;
+  height: 100%;
+  width: auto;
+  /* Alt kenar sayfaya karisiyor; keskin bitse kesilmis bir cikartma gibi
+     duruyor. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 99%);
+  mask-image: linear-gradient(to bottom, #000 78%, transparent 99%);
+  pointer-events: none;
+}
+
+/* Kart yigini ------------------------------------------------------------
+   Alti kart ust uste duruyor; yalnizca etkin olan gorunur. Yan yana
+   dizilseler yatayda tasarlardi, birbirinin yerini alarak degisince de
+   sahnenin agirlik merkezi sabit kaliyor. */
+
+.v2-deck {
+  position: relative;
   z-index: 2;
+  width: min(21rem, 62%);
+  margin-right: clamp(0rem, 4vw, 3rem);
+  transition: transform 200ms linear;
+}
+
+.v2-deck__slot {
+  opacity: 0;
+  transform: translateY(10px) scale(0.98);
+  transition: opacity 520ms var(--ease-out), transform 520ms var(--ease-out);
+  pointer-events: none;
+}
+
+/* Ilk kart akista yer tutuyor; digerleri onun uzerine biniyor. Hepsi
+   mutlak olsaydi kapsayicinin yuksekligi sifir olurdu. */
+.v2-deck__slot + .v2-deck__slot {
+  position: absolute;
+  inset: 0;
+}
+
+.v2-deck__slot.is-active {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.v2-deck__dots {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  gap: 6px;
+}
+
+.v2-deck__dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(17, 17, 16, 0.18);
+  cursor: pointer;
+  transition: background var(--dur-hover) var(--ease-out), transform var(--dur-hover) var(--ease-out);
+}
+
+.v2-deck__dot:hover {
+  background: rgba(17, 17, 16, 0.38);
+}
+
+.v2-deck__dot.is-active {
+  background: var(--accent);
+  transform: scale(1.25);
+}
+
+.v2-deck__dot:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .v2-mock {
   position: relative;
   width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-deck,
+  .v2-deck__slot {
+    transition: none;
+  }
+}
+
+/* Marka yazimi ------------------------------------------------------------
+   Her yerde "suerta.co". Uzanti soluk degil vurgulu: adin parcasi, ekli bir
+   alan adi degil. */
+
+.v2-hero__brand {
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+
+.v2-hero__brand-dot,
+.v2-nav__brand-dot {
+  color: var(--accent);
 }
 
 .v2-mock__panel {

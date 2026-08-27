@@ -132,14 +132,15 @@
    turbulansiyla kuruyoruz. Gorsel geldiginde --band-image tanimlanir ve
    dokunun ustune biner; hicbir secici degismez. */
 
+/* Bant artik yalnizca bir gorsel serit degil, alt bilginin tamamini
+   tasiyor: yuksekligi icerikten geliyor, video da arkasinda tam kapliyor.
+   Sabit yukseklikte kolonlar tasiyordu. */
 .v2-band {
   position: relative;
-  height: clamp(15rem, 26vw, 22rem);
   background-color: var(--dark-bg);
-  background-image: var(--band-image, none);
-  background-size: cover;
-  background-position: center;
   overflow: hidden;
+  /* Ustte gorsel icin nefes payi; alt bilgi bunun uzerine biniyor. */
+  padding-top: clamp(9rem, 20vw, 16rem);
 }
 
 .v2-band__video {
@@ -186,40 +187,120 @@
 
 /* Telif satirini tasiyan koyu gradyan — referansin `utility` katmani. */
 .v2-band__foot {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: var(--space-8) 0 var(--space-4);
-  background: linear-gradient(rgba(8, 9, 9, 0) 0%, rgba(8, 9, 9, 0.9) 40%, rgba(8, 9, 9, 0.9) 100%);
+  position: relative;
+  padding: var(--space-16) 0 var(--space-8);
+  background: linear-gradient(rgba(8, 9, 9, 0) 0%, rgba(8, 9, 9, 0.94) 22%, rgba(8, 9, 9, 0.97) 100%);
 }
 
 .v2-band__foot .v2-shell {
   display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+/* Kolonlar ---------------------------------------------------------------- */
+
+.v2-fcols {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12);
+  justify-content: space-between;
+}
+
+.v2-fcol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 11rem;
+}
+
+.v2-fcol__title {
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  font-weight: 500;
+  color: rgba(246, 245, 242, 0.45);
+  margin-bottom: var(--space-1);
+}
+
+.v2-fcol__link {
+  font-size: var(--text-small);
+  color: rgba(246, 245, 242, 0.82);
+  text-decoration: none;
+  width: fit-content;
+  transition: color var(--dur-hover) var(--ease-out), transform var(--dur-hover) var(--ease-out);
+}
+
+.v2-fcol__link:hover {
+  color: var(--gold);
+  transform: translateX(4px);
+}
+
+.v2-fcol__link--plain {
+  color: rgba(246, 245, 242, 0.5);
+  cursor: default;
+}
+
+.v2-fcol__link--plain:hover {
+  color: rgba(246, 245, 242, 0.5);
+  transform: none;
+}
+
+/* Dev logotype ------------------------------------------------------------
+   Ana sitedeki hamle: sayfanin sonunda adin kendisi, bir kez ve buyuk.
+   Kirpilmasin diye tek satirda ve viewport'a gore olceklenerek duruyor. */
+
+.v2-wordmark {
+  font-size: clamp(3rem, 15.5vw, 15rem);
+  font-weight: 700;
+  line-height: 0.82;
+  letter-spacing: -0.055em;
+  color: var(--dark-ink);
+  white-space: nowrap;
+  text-align: center;
+  user-select: none;
+}
+
+.v2-wordmark__dot {
+  color: var(--flare);
+}
+
+/* Alt satir ---------------------------------------------------------------- */
+
+.v2-band__bottom {
+  display: flex;
   flex-wrap: wrap;
   gap: var(--space-4);
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-6);
+  border-top: 1px solid rgba(246, 245, 242, 0.12);
 }
 
 .v2-band__copy {
   font-size: var(--text-micro);
-  color: rgba(246, 245, 242, 0.6);
+  color: rgba(246, 245, 242, 0.55);
+  max-width: 62ch;
 }
 
-.v2-band__links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-6);
-}
-
-.v2-band__link {
-  font-size: var(--text-micro);
-  color: rgba(246, 245, 242, 0.6);
-  text-decoration: none;
-  transition: color var(--dur-hover) var(--ease-out);
-}
-
-.v2-band__link:hover {
+.v2-totop {
+  padding: 0.6875rem 1.25rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(246, 245, 242, 0.24);
+  background: transparent;
   color: var(--dark-ink);
+  font-size: var(--text-micro);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background var(--dur-hover) var(--ease-out), color var(--dur-hover) var(--ease-out);
+}
+
+.v2-totop:hover {
+  background: var(--dark-ink);
+  color: var(--dark-bg);
+}
+
+.v2-totop:focus-visible {
+  outline: 2px solid var(--flare);
+  outline-offset: 3px;
 }

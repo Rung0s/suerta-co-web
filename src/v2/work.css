@@ -85,18 +85,15 @@
      sismis gibi durur, tam yuvarlak kose plastik hissi verir. */
   border-radius: 14px / 20px;
   background: #0d0d0c;
-  aspect-ratio: 281 / 320;
+  /* Icerik yatay: ekran goruntuleri de videolar da 16:9. Dikey bir cerceveye
+     sokmak goruntunun yarisini kirpiyordu ve hicbir sey kazandirmiyordu —
+     referansin dikey kutulari dikey cekilmis fotograflar icindi. */
+  aspect-ratio: 16 / 9;
   box-shadow:
     inset 0 0 0 2px rgba(64, 58, 44, 0.55),
     inset 0 0 26px rgba(0, 0, 0, 0.65);
 }
 
-.v2-tile--wide .v2-tv__screen {
-  aspect-ratio: 603 / 340;
-}
-
-/* Elimizdeki gorseller yatay ekran goruntusu; ortalaninca site basligi
-   disarida kaliyor. Ust kenardan hizalamak, isi tanitan kismi koruyor. */
 .v2-tv__media {
   width: 100%;
   height: 100%;
@@ -104,6 +101,12 @@
   object-position: top center;
   display: block;
   transition: transform 600ms var(--ease-out), filter 320ms var(--ease-out);
+}
+
+/* Video girdileri gercek cekim; ekran goruntusu gibi ust kenardan degil,
+   ortadan hizalanmali. */
+.v2-tv__media--video {
+  object-position: center;
 }
 
 .v2-tile:hover .v2-tv__media {

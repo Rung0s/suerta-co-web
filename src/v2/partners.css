@@ -34,7 +34,10 @@
   display: flex;
   gap: var(--space-4);
   overflow-x: auto;
-  scroll-snap-type: x proximity;
+  /* Snap yok: bant her karede birer piksel iliyor, snap onu geri cekip
+     hareketi titretiyordu. `scroll-behavior` de asla `smooth` degil —
+     programatik `scrollLeft` her atamayi animasyona cevirip surukleme
+     yaratiyor. Oklar yumusakligi kendi `scrollBy` cagrisinda istiyor. */
   scrollbar-width: none;
   /* Kart golgeleri kirpilmasin diye tasma payi; negatif margin ile
      geri aliniyor ki kabuk hizasi bozulmasin. */
@@ -46,17 +49,7 @@
   display: none;
 }
 
-/* Sayfa kaydikca surulurken snap devrede kalirsa her karede bandi geri
-   cekiyor ve hareket titriyor; surus boyunca kapali. `scroll-behavior` de
-   asla `smooth` degil — programatik `scrollLeft` her deger atamasini
-   animasyona ceviriyor ve bant gecikmeli surukleniyor. Oklar yumusakligi
-   kendi `scrollBy` cagrisinda istiyor. */
-.v2-carousel.is-auto {
-  scroll-snap-type: none;
-}
-
 .v2-carousel > * {
-  scroll-snap-align: start;
   flex: 0 0 min(46rem, 88%);
 }
 
