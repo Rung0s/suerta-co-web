@@ -23,6 +23,7 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-4);
+  margin-bottom: var(--space-16);
 }
 
 /* Bilet -------------------------------------------------------------------
@@ -141,6 +142,18 @@
   overflow: hidden;
 }
 
+.v2-band__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Doku artik yedek degil, videonun ustunde bir katman: goruntuyu kirletip
+   sitedeki diger ditherli yuzeylerle ayni dile sokuyor ve uzerine gelen
+   telif satirini okunur tutuyor. */
 .v2-band__dither {
   position: absolute;
   inset: 0;
@@ -150,7 +163,25 @@
   /* Doku ustten asagi aciliyor: bant zeminden dogan bir ufuk gibi okunuyor. */
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 42%, #000 100%);
   mask-image: linear-gradient(to bottom, transparent 0%, #000 42%, #000 100%);
-  opacity: 0.5;
+  opacity: 0.34;
+  mix-blend-mode: overlay;
+}
+
+/* Video ustune serilen koyu tabaka: kapanis bandi bir tanitim filmi degil,
+   sayfayi kapatan bir zemin. Goruntu tam parlaklikta kalirsa yanindaki
+   metinle yarisiyor. */
+.v2-band::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* Ortasi acik, alti koyu: goruntu gorunsun ama telif satirinin arkasi
+     her karede ayni kontrasti versin. */
+  background: linear-gradient(rgba(9, 10, 10, 0.5) 0%, rgba(9, 10, 10, 0.26) 44%, rgba(9, 10, 10, 0.8) 100%);
+}
+
+.v2-band__foot {
+  z-index: 1;
 }
 
 /* Telif satirini tasiyan koyu gradyan — referansin `utility` katmani. */

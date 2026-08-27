@@ -366,18 +366,52 @@
    odenmeden tamamlanan rezervasyon. Gorsel yerine tokenlarla kuruldu, bu
    yuzden olcege ve temaya gore bozulmuyor. */
 
+/* Sahne: televizyon zeminde, rezervasyon paneli onunde.
+   Panel mutlak konumda ve televizyonun sag alt kosesine biniyor; yan yana
+   dizilselerdi ikisi iki ayri sey olurdu. Ust uste binmesi "ekrandaki mulk
+   satiliyor" cumlesini tek bakista kuruyor. */
+
 .v2-stage {
-  margin-top: clamp(2.5rem, 5vw, 4rem);
-  display: flex;
-  justify-content: center;
-  perspective: 1400px;
+  position: relative;
+  width: min(58rem, 100%);
+  margin: clamp(2.5rem, 5vw, 4rem) auto 0;
+  perspective: 1600px;
+}
+
+.v2-tv--hero {
+  border-radius: 22px;
+  padding: 14px 14px 0;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1px 0 rgba(96, 88, 68, 0.3),
+    0 2px 4px rgba(17, 17, 16, 0.06),
+    0 30px 70px rgba(17, 17, 16, 0.16);
+  transform: rotateX(4deg);
+  transform-origin: 50% 100%;
+}
+
+.v2-tv--hero .v2-tv__screen {
+  aspect-ratio: 16 / 9;
+  border-radius: 18px / 26px;
+}
+
+.v2-tv--hero .v2-tv__chin {
+  padding: 9px 6px 11px;
+}
+
+.v2-mock-wrap {
+  position: absolute;
+  right: -1rem;
+  bottom: -2rem;
+  /* Panel televizyonun kosesine binmeli, yanindan sarkmamali: fazla genis
+     olunca ekrandaki mulku kapatiyor ve iki ayri kart gibi duruyor. */
+  width: min(19rem, 44%);
+  z-index: 2;
 }
 
 .v2-mock {
   position: relative;
-  width: min(30rem, 100%);
-  transform: rotateX(7deg);
-  transform-origin: 50% 100%;
+  width: 100%;
 }
 
 .v2-mock__panel {
@@ -822,32 +856,41 @@
    Referansin imza objesi. Bizde kapanista duruyor: sayfanin sonu = kalkis.
    Egim ve izi tokenlarla ciziliyor, bitmap yok. */
 
+/* Firlatma sahnesi ---------------------------------------------------------
+   Kule sabit duruyor, yalnizca roket ve itki hareket ediyor. Ikisi birden
+   suzulurse sahne butun halinde salinan bir cikartmaya donuyor; kulenin
+   yerinde kalmasi roketin kalkis hazirliginda oldugunu soyluyor. */
+
 .v2-rocket {
   color: var(--ink);
-  width: clamp(4.5rem, 8vw, 7rem);
+  width: clamp(9rem, 15vw, 13rem);
   height: auto;
   display: block;
-  animation: v2Hover 4.5s ease-in-out infinite;
+  overflow: visible;
+}
+
+.v2-rocket__body {
+  animation: v2Hover 5s ease-in-out infinite;
 }
 
 .v2-rocket__flame {
-  color: var(--accent);
   transform-origin: 50% 0%;
-  animation: v2Flame 700ms ease-in-out infinite alternate;
+  animation: v2Hover 5s ease-in-out infinite,
+    v2Flame 620ms ease-in-out infinite alternate;
 }
 
 @keyframes v2Hover {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-9px); }
+  50% { transform: translateY(-7px); }
 }
 
 @keyframes v2Flame {
-  from { transform: scaleY(0.82); opacity: 0.75; }
-  to { transform: scaleY(1.12); opacity: 1; }
+  from { transform: scaleY(0.78); opacity: 0.7; }
+  to { transform: scaleY(1.15); opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .v2-rocket,
+  .v2-rocket__body,
   .v2-rocket__flame {
     animation: none;
   }

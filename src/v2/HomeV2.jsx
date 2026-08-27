@@ -6,6 +6,7 @@ import './work.css';
 import './partners.css';
 import './manifesto.css';
 import './closing.css';
+import './contact.css';
 import './v2.css';
 
 /* Tek reveal primitifi. Sitede uc ayri reveal sistemi vardi (CSS + iki farkli
@@ -68,7 +69,7 @@ function BookingMock() {
   });
 
   return (
-    <div className="v2-stage" aria-hidden="true">
+    <div className="v2-mock-wrap" aria-hidden="true">
       <div className="v2-mock">
         <div className="v2-mock__cal">
           <div className="v2-mock__cal-head">Ağustos</div>
@@ -117,36 +118,90 @@ function BookingMock() {
   );
 }
 
-/* Referansin imza objesi. Bitmap yerine SVG: her olcekte net, tema degisince
-   renk tokenlarini takip eder. */
-function Rocket() {
+/* Firlatma sahnesi.
+   Onceki hali tek parca bir roket silueti idi ve cikartma gibi duruyordu:
+   ne oturdugu bir zemin ne de olcegini veren baska bir nesne vardi.
+   Referansin hamlesi roketin kendisi degil, yanindaki kule — kule olmadan
+   sey kucuk mu buyuk mu belli olmuyor.
+
+   Bitmap degil SVG: her olcekte net kaliyor ve renkleri tokenlardan
+   aliyor. Govde tek dolgu degil, kademeli: panel cizgileri ve kademe
+   halkalari uzaklik hissini veren tek sey. */
+function LaunchScene() {
   return (
     <svg
       className="v2-rocket"
-      width="72"
-      height="96"
-      viewBox="0 0 72 96"
+      width="188"
+      height="200"
+      viewBox="0 0 188 200"
       fill="none"
-      aria-hidden="true"
+      role="img"
+      aria-label="Fırlatma rampasındaki roket"
     >
-      {/* govde */}
-      <path
-        d="M36 4c9.5 8.6 15 21.4 15 34.6 0 8.4-2.2 16.3-6 22.9H27c-3.8-6.6-6-14.5-6-22.9C21 25.4 26.5 12.6 36 4z"
-        fill="currentColor"
-      />
-      {/* pencere */}
-      <circle cx="36" cy="33" r="7" fill="var(--bg)" />
-      <circle cx="36" cy="33" r="3.4" fill="var(--gold)" />
-      {/* kanatlar */}
-      <path d="M21 40c-6 4.4-9.5 11.4-9.5 19.6L21 54V40z" fill="currentColor" opacity="0.55" />
-      <path d="M51 40c6 4.4 9.5 11.4 9.5 19.6L51 54V40z" fill="currentColor" opacity="0.55" />
-      {/* luleyi govdeye yapistiran agizlik — alev bosluktan degil, buradan cikar */}
-      <path d="M28.5 61.5h15l-2.5 5h-10l-2.5-5z" fill="currentColor" opacity="0.7" />
-      {/* alev */}
-      <g className="v2-rocket__flame">
-        <path d="M36 65c4.6 5.2 6.9 10.7 6.9 16.5 0 5.6-2.9 10.4-6.9 14.5-4-4.1-6.9-8.9-6.9-14.5C29.1 75.7 31.4 70.2 36 65z" fill="currentColor" />
-        <path d="M36 71.5c2.4 3.2 3.5 6.7 3.5 10.3 0 3.4-1.6 6.4-3.5 9.2-1.9-2.8-3.5-5.8-3.5-9.2 0-3.6 1.1-7.1 3.5-10.3z" fill="var(--gold)" />
+      {/* --- servis kulesi ------------------------------------------------ */}
+      <g className="v2-rocket__tower">
+        <rect x="126" y="34" width="4" height="140" fill="var(--accent)" />
+        <rect x="158" y="34" width="4" height="140" fill="var(--accent)" />
+        {/* capraz baglantilar: kule bir cizgi degil, bir kafes */}
+        {Array.from({ length: 7 }, (_, i) => (
+          <g key={i}>
+            <path
+              d={`M130 ${40 + i * 20}L158 ${58 + i * 20}`}
+              stroke="var(--accent)"
+              strokeWidth="2"
+              opacity="0.6"
+            />
+            <path
+              d={`M158 ${40 + i * 20}L130 ${58 + i * 20}`}
+              stroke="var(--accent)"
+              strokeWidth="2"
+              opacity="0.6"
+            />
+            <rect x="126" y={38 + i * 20} width="36" height="2.5" fill="var(--accent)" />
+          </g>
+        ))}
+        {/* rokete uzanan servis kollari */}
+        <rect x="104" y="70" width="24" height="4" fill="var(--accent)" opacity="0.85" />
+        <rect x="104" y="118" width="24" height="4" fill="var(--accent)" opacity="0.85" />
+        <rect x="120" y="26" width="48" height="4" fill="var(--accent)" />
       </g>
+
+      {/* --- roket -------------------------------------------------------- */}
+      <g className="v2-rocket__body">
+        {/* burun konisi */}
+        <path d="M84 4c7.4 8.2 11.6 17.6 12.6 28H71.4C72.4 21.6 76.6 12.2 84 4z" fill="currentColor" />
+        {/* ucuncu kademe */}
+        <rect x="71" y="32" width="26" height="34" fill="var(--bg)" stroke="currentColor" strokeWidth="2.5" />
+        {/* kademe halkasi */}
+        <rect x="69" y="64" width="30" height="5" fill="currentColor" />
+        {/* ikinci kademe */}
+        <rect x="69" y="69" width="30" height="46" fill="var(--bg)" stroke="currentColor" strokeWidth="2.5" />
+        <rect x="69" y="86" width="30" height="3" fill="currentColor" opacity="0.35" />
+        {/* kademe halkasi */}
+        <rect x="66" y="113" width="36" height="5" fill="currentColor" />
+        {/* birinci kademe */}
+        <rect x="66" y="118" width="36" height="52" fill="var(--bg)" stroke="currentColor" strokeWidth="2.5" />
+        <rect x="66" y="140" width="36" height="3" fill="currentColor" opacity="0.35" />
+        {/* govde isareti */}
+        <circle cx="84" cy="47" r="4.5" fill="var(--accent)" />
+
+        {/* kanatlar */}
+        <path d="M66 150l-13 24h13v-24z" fill="currentColor" />
+        <path d="M102 150l13 24h-13v-24z" fill="currentColor" />
+
+        {/* motor agizliklari */}
+        <path d="M70 170h9l3 8h-15l3-8z" fill="currentColor" opacity="0.75" />
+        <path d="M89 170h9l3 8h-15l3-8z" fill="currentColor" opacity="0.75" />
+      </g>
+
+      {/* --- itki ---------------------------------------------------------- */}
+      <g className="v2-rocket__flame">
+        <path d="M84 176c7 8.6 10.5 17 10.5 25.2H73.5C73.5 193 77 184.6 84 176z" fill="var(--flare)" />
+        <path d="M84 182c3.6 5.6 5.4 11.2 5.4 16.8H78.6c0-5.6 1.8-11.2 5.4-16.8z" fill="var(--gold)" />
+      </g>
+
+      {/* --- rampa --------------------------------------------------------- */}
+      <rect x="30" y="176" width="140" height="6" rx="3" fill="currentColor" opacity="0.2" />
     </svg>
   );
 }
@@ -358,12 +413,337 @@ function LuckCoin() {
   );
 }
 
+/* Bant sayfa kaydikca kendiliginde yatay iliyor: bolum ekrandan gecerken
+   kat ettigi yol, karuselin kaydirabilecegi mesafeye esleniyor. Boylece
+   yorumlar okumak icin durup ok aramayi gerektirmiyor.
+
+   Kullanici bir kez mudahale ederse (ok, parmak, tekerlek, klavye) surus
+   biraz sonra devrediliyor: kendi baktigi yerden ekranin onu geri
+   cekmesi, otomatik hareketin sagladigi her seyden daha rahatsiz edici. */
+function useScrollLinkedCarousel(ref) {
+  const takenOver = useRef(false);
+  /* Devri baslatan islev efektin icinde kuruluyor (zamanlayici orada), ama
+     oklarin da cagirmasi gerekiyor; disari bir kutu uzerinden veriliyor. */
+  const takeOverRef = useRef(() => {});
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return undefined;
+
+    if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+      return undefined;
+    }
+
+    let frame = 0;
+    let releaseTimer = 0;
+
+    const drive = () => {
+      frame = 0;
+      if (takenOver.current) return;
+
+      const section = node.closest('section') || node;
+      const rect = section.getBoundingClientRect();
+      const travel = window.innerHeight + rect.height;
+      const done = (window.innerHeight - rect.top) / travel;
+      /* Bas ve son taraflari kirpiliyor: bant, bolum tam ortalanmadan
+         once hareket etmeye baslamasin ve cikarken de erken bitsin. */
+      const eased = Math.min(1, Math.max(0, (done - 0.2) / 0.52));
+
+      const max = node.scrollWidth - node.clientWidth;
+      if (max <= 0) return;
+      node.scrollLeft = eased * max;
+    };
+
+    const onPageScroll = () => {
+      if (!frame) frame = requestAnimationFrame(drive);
+    };
+
+    /* Mudahale isareti. `scroll` olayini dinleyemeyiz — surusun kendisi de
+       onu tetikliyor. */
+    const takeOver = () => {
+      takenOver.current = true;
+      node.classList.remove('is-auto');
+      clearTimeout(releaseTimer);
+      releaseTimer = setTimeout(() => {
+        takenOver.current = false;
+        node.classList.add('is-auto');
+      }, 6000);
+    };
+
+    takeOverRef.current = takeOver;
+    node.classList.add('is-auto');
+    onPageScroll();
+
+    window.addEventListener('scroll', onPageScroll, { passive: true });
+    window.addEventListener('resize', onPageScroll, { passive: true });
+    node.addEventListener('wheel', takeOver, { passive: true });
+    node.addEventListener('touchstart', takeOver, { passive: true });
+    node.addEventListener('keydown', takeOver);
+
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      clearTimeout(releaseTimer);
+      window.removeEventListener('scroll', onPageScroll);
+      window.removeEventListener('resize', onPageScroll);
+      node.removeEventListener('wheel', takeOver);
+      node.removeEventListener('touchstart', takeOver);
+      node.removeEventListener('keydown', takeOver);
+      node.classList.remove('is-auto');
+    };
+  }, [ref]);
+
+  return takeOverRef;
+}
+
+/* Iletisim.
+   Arkada sunucu yok, o yuzden form "gonderiliyor" numarasi yapmiyor:
+   alanlari duzenli bir mesaja cevirip WhatsApp'ta aciyor. Sahte bir
+   basari ekrani gostermektense mesajin nereye gittigini gormek daha
+   durust ve pratikte daha hizli donuyor. */
+const PROJECT_TYPES = [
+  'Otel & rezervasyon',
+  'Emlak & kiralama',
+  'İnternet sitesi',
+  'E-ticaret',
+  'Yapay zekâ otomasyonu',
+  'Görünürlük & büyüme',
+  'Henüz emin değilim',
+];
+
+const WHATSAPP = '905060693525';
+
+function ArrowGlyph() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path
+        d="M4 12L12 4M12 4H5.5M12 4v6.5"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ContactSection() {
+  const [type, setType] = useState(PROJECT_TYPES[0]);
+  const [sent, setSent] = useState(false);
+
+  const submit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const lines = [
+      'Merhaba suerta co.,',
+      '',
+      `Ad: ${data.get('ad') || '—'}`,
+      `Marka: ${data.get('marka') || '—'}`,
+      `İletişim: ${data.get('iletisim') || '—'}`,
+      `Proje tipi: ${type}`,
+      '',
+      data.get('mesaj') || '',
+    ];
+    window.open(
+      `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join('\n'))}`,
+      '_blank',
+      'noopener'
+    );
+    setSent(true);
+  };
+
+  return (
+    <section className="v2-section v2-close v2-contact" id="iletisim">
+      <div className="v2-halo" aria-hidden="true" />
+      <div className="v2-shell">
+        {/* Kapanis ve iletisim ayri iki bolumdu ve ikisi de ayni basligi
+            tasiyip ayni seyi istiyordu. Tek perde halinde birlestiler:
+            once sahne ve kontenjan, hemen ardindan doldurulacak alan. */}
+        <Reveal className="v2-close__inner">
+          <Item>
+            <LaunchScene />
+          </Item>
+          <Item as="h2" className="v2-display">
+            Ne inşa ettiğinizi anlatın
+          </Item>
+          <Item>
+            <span className="v2-ticket">
+              <span className="v2-ticket__num">2</span>
+              <span className="v2-ticket__label">yer · bu ay</span>
+            </span>
+          </Item>
+          <Item className="v2-status">
+            <span className="v2-status__dot" aria-hidden="true" />
+            Bu hafta yanıt süresi: birkaç saat
+          </Item>
+        </Reveal>
+
+        <Reveal className="v2-contact__grid">
+          <Item>
+            {sent ? (
+              <div className="v2-form">
+                <div className="v2-form__sent">
+                  <p className="v2-form__sent-title">WhatsApp’ta açıldı.</p>
+                  <p className="v2-form__note">
+                    Pencere açılmadıysa engellenmiş olabilir; aşağıdaki kanallardan
+                    doğrudan yazabilirsiniz.
+                  </p>
+                  <button
+                    type="button"
+                    className="v2-btn v2-btn--ghost"
+                    onClick={() => setSent(false)}
+                  >
+                    Formu tekrar aç
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <form className="v2-form" onSubmit={submit}>
+                <div className="v2-form__row">
+                  <label className="v2-field">
+                    <span className="v2-field__label">Ad</span>
+                    <input name="ad" type="text" placeholder="Adınız" required />
+                  </label>
+                  <label className="v2-field">
+                    <span className="v2-field__label">Marka</span>
+                    <input name="marka" type="text" placeholder="İşletme veya marka adı" />
+                  </label>
+                </div>
+
+                <label className="v2-field">
+                  <span className="v2-field__label">Telefon veya e-posta</span>
+                  <input
+                    name="iletisim"
+                    type="text"
+                    placeholder="Size nereden dönelim?"
+                    required
+                  />
+                </label>
+
+                <fieldset className="v2-field" style={{ border: 0, padding: 0, margin: 0 }}>
+                  <legend className="v2-field__label">Proje tipi</legend>
+                  <div className="v2-choices">
+                    {PROJECT_TYPES.map((option) => (
+                      <label className="v2-choice" key={option}>
+                        <input
+                          type="radio"
+                          name="tip"
+                          value={option}
+                          checked={type === option}
+                          onChange={() => setType(option)}
+                        />
+                        <span>{option}</span>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+
+                <label className="v2-field">
+                  <span className="v2-field__label">Mesaj</span>
+                  <textarea
+                    name="mesaj"
+                    placeholder="Ne yapmak istediğinizi birkaç cümleyle anlatın."
+                  />
+                </label>
+
+                <div className="v2-form__foot">
+                  <p className="v2-form__note">
+                    Form WhatsApp’ta açılır; hiçbir bilgi burada saklanmaz.
+                  </p>
+                  <button type="submit" className="v2-btn v2-btn--primary">
+                    Gönder
+                  </button>
+                </div>
+              </form>
+            )}
+          </Item>
+
+          <Item className="v2-channels">
+            <a
+              className="v2-channel"
+              href={`https://wa.me/${WHATSAPP}`}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="v2-channel__icon">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm0 2a8 8 0 110 16 8 8 0 01-4.2-1.2l-.4-.2-2.5.7.7-2.4-.3-.4A8 8 0 0112 4zm-3.3 4c-.2 0-.5 0-.7.4-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6c.2.2 1.8 2.9 4.5 3.9 2.2.9 2.7.7 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.2.2-1.3l-.6-.3-1.8-.9c-.3-.1-.5-.2-.7.1l-.7.9c-.1.2-.3.2-.5.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.1-.3 0-.4.1-.5l.5-.5.3-.5v-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4z" />
+                </svg>
+              </span>
+              <span className="v2-channel__body">
+                <span className="v2-channel__name">WhatsApp</span>
+                <span className="v2-channel__meta">En hızlı yol — genelde birkaç saat</span>
+              </span>
+              <span className="v2-channel__go">
+                <ArrowGlyph />
+              </span>
+            </a>
+
+            <a className="v2-channel" href="mailto:suerta.info@gmail.com">
+              <span className="v2-channel__icon">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="2.5" y="5" width="19" height="14" rx="2.5" stroke="currentColor" strokeWidth="1.7" />
+                  <path d="M3.5 7l8.5 6 8.5-6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+                </svg>
+              </span>
+              <span className="v2-channel__body">
+                <span className="v2-channel__name">E-posta</span>
+                <span className="v2-channel__meta">suerta.info@gmail.com</span>
+              </span>
+              <span className="v2-channel__go">
+                <ArrowGlyph />
+              </span>
+            </a>
+
+            <a
+              className="v2-channel"
+              href="https://instagram.com/suerta.co"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="v2-channel__icon">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.7" />
+                  <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.7" />
+                  <circle cx="17.4" cy="6.6" r="1.15" fill="currentColor" />
+                </svg>
+              </span>
+              <span className="v2-channel__body">
+                <span className="v2-channel__name">Instagram</span>
+                <span className="v2-channel__meta">@suerta.co — işleri buradan da görebilirsiniz</span>
+              </span>
+              <span className="v2-channel__go">
+                <ArrowGlyph />
+              </span>
+            </a>
+
+            <div className="v2-reply">
+              <span className="v2-reply__head">
+                <span className="v2-status__dot" aria-hidden="true" />
+                Yanıt süresi
+              </span>
+              <p className="v2-reply__text">
+                Hafta içi mesajlara aynı gün, hafta sonu ertesi iş günü dönüyoruz. Üç
+                kişilik bir ekibiz; size yazan da işi yapan kişi oluyor.
+              </p>
+            </div>
+          </Item>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 /* Oklar kendi konum durumunu tutmuyor; bir kart genisligi kadar kaydiriyor
-   ve durmayi scroll-snap'e birakiyor. Durum tutulsaydi kullanici parmakla
+   ve durmayi tarayiciya birakiyor. Durum tutulsaydi kullanici parmakla
    kaydirdiginda sayac gercekle uyusmaz hale gelirdi. */
-function scrollCarousel(ref, direction) {
+function scrollCarousel(ref, direction, takeOverRef) {
   const node = ref.current;
   if (!node) return;
+  /* Ok da bir mudahale: surus devrediliyor ve ayni zamanlayiciyla geri
+     aliniyor, yoksa ilk tiktan sonra bant bir daha hic kendiliginden
+     ilerlemezdi. */
+  takeOverRef?.current?.();
+
   const card = node.firstElementChild;
   const step = card ? card.getBoundingClientRect().width + 16 : node.clientWidth * 0.8;
   node.scrollBy({ left: step * direction, behavior: 'smooth' });
@@ -383,7 +763,18 @@ function PartnerPortrait({ letter, tint, seed }) {
   );
 }
 
+/* Her projede ne yaptigimiz zaten references.js'teki `details` metninde
+   kalin basliklar halinde duruyor ("*   **Shopify Entegrasyonu:** ...").
+   Ayri bir liste tutmak yerine oradan cikariyoruz: tek kaynak kaliyor ve
+   proje guncellenince kart kendiliginden dogru sayiyor. */
+function serviceLabels(project) {
+  if (!project.details) return [];
+  return [...project.details.matchAll(/\*\s+\*\*([^:*]+):/g)].map((m) => m[1].trim());
+}
+
 function WorkTile({ project, wide, result }) {
+  const labels = serviceLabels(project);
+
   return (
     <a
       className={`v2-tile${wide ? ' v2-tile--wide' : ''}`}
@@ -391,16 +782,59 @@ function WorkTile({ project, wide, result }) {
       target="_blank"
       rel="noreferrer"
     >
-      <div className="v2-tile__frame">
-        <img
-          src={project.image}
-          alt={`${project.name} projesinden ekran görüntüsü`}
-          loading="lazy"
-          decoding="async"
-        />
-        <span className="v2-tile__glass" />
-        <span className="v2-tile__label">Siteyi gör ↗</span>
+      {/* Ekran bir televizyonun icinde: cerceve, kavisli cam, tarama
+          cizgileri ve dugmeler. Referans bunu sahnelenmis fotografla
+          yapiyor; bizde nesne cizilerek kuruluyor, ama okunusu ayni —
+          site bir yerde, bir seyin icinde duruyor. */}
+      <div className="v2-tv">
+        <div className="v2-tv__screen">
+          {project.video ? (
+            <video
+              className="v2-tv__media"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              poster={project.poster}
+            >
+              <source src={`${project.video}.webm`} type="video/webm" />
+              <source src={`${project.video}.mp4`} type="video/mp4" />
+            </video>
+          ) : (
+            <img
+              className="v2-tv__media"
+              src={project.image}
+              alt={`${project.name} projesinden ekran görüntüsü`}
+              loading="lazy"
+              decoding="async"
+            />
+          )}
+
+          <span className="v2-tv__scan" aria-hidden="true" />
+          <span className="v2-tv__glare" aria-hidden="true" />
+
+          {/* Uzerine gelince ekrani o projede yaptigimiz isler kapliyor. */}
+          <div className="v2-tv__overlay">
+            <span className="v2-tv__overlay-label">Neler yaptık</span>
+            <ul className="v2-tv__list">
+              {labels.map((label) => (
+                <li key={label}>{label}</li>
+              ))}
+            </ul>
+            <span className="v2-tv__go">Siteyi gör ↗</span>
+          </div>
+        </div>
+
+        <div className="v2-tv__chin">
+          <span className="v2-tv__brand">suerta co.</span>
+          <span className="v2-tv__knobs" aria-hidden="true">
+            <i />
+            <i />
+          </span>
+        </div>
       </div>
+
       <div className="v2-tile__foot">
         <span className="v2-tile__name">
           {project.name}
@@ -475,6 +909,46 @@ function Annotation({ text }) {
   );
 }
 
+/* Hero sahnesi.
+   Buradaki mesele hicbir zaman "bir arayuz gostermek" degildi: satilan sey
+   dolan bir mulk. Gercek mulk goruntusunu buyuk bir televizyonun icinde
+   oynatmak, sahne dunyasini (vitrin/sahne) uretilmis gorsel beklemeden
+   kuruyor. Rezervasyon paneli kosede ustune biniyor — ekranda mulk,
+   onunde onun satilmasi. */
+function HeroStage() {
+  return (
+    <div className="v2-stage">
+      <div className="v2-tv v2-tv--hero">
+        <div className="v2-tv__screen">
+          <video
+            className="v2-tv__media"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            poster="/video/reel-poster.jpg"
+            aria-label="Kiralık mülk tanıtım videosu"
+          >
+            <source src="/video/reel.mp4" type="video/mp4" />
+          </video>
+          <span className="v2-tv__scan" aria-hidden="true" />
+          <span className="v2-tv__glare" aria-hidden="true" />
+        </div>
+        <div className="v2-tv__chin">
+          <span className="v2-tv__brand">suerta co.</span>
+          <span className="v2-tv__knobs" aria-hidden="true">
+            <i />
+            <i />
+          </span>
+        </div>
+      </div>
+
+      <BookingMock />
+    </div>
+  );
+}
+
 function VerifiedMark() {
   return (
     <svg
@@ -530,27 +1004,53 @@ function buildWorkLayout(projects) {
   };
 }
 
-/* Ne yaptigimiz — nise gore uc hat. Etiketler somut teslimat, sifat degil. */
+/* Ne yaptigimiz. Etiketler somut teslimat, sifat degil.
+
+   Emlak, gunluk kiralik ve Airbnb ayri hatlar degil: musteri acisindan
+   ucu de "mulkumu doldurmak" isi. Ayri ayri yazmak uc farkli hizmet
+   satiyormus gibi gosteriyordu; tek baslikta toplandi. */
 const services = [
   {
-    title: 'Otel & rezervasyon siteleri',
+    title: 'Otel & rezervasyon sistemleri',
     desc:
       'Misafir OTA üzerinden değil, doğrudan sizden rezervasyon yapar. Oda envanteri, sezonluk fiyat ve müsaitlik tek panelden yönetilir.',
     tags: ['Komisyonsuz rezervasyon', 'Channel manager / PMS', 'Sezonluk fiyatlama', 'Online ödeme'],
   },
   {
-    title: 'Günlük kiralık & Airbnb',
+    title: 'Emlak & kiralama',
     desc:
-      'Airbnb ve Booking takvimleriyle senkron çalışan kendi siteniz. Aynı daireyi platforma komisyon ödemeden de doldurursunuz.',
-    tags: ['Takvim senkronu (iCal)', 'Çok dilli listing', 'Çoklu para birimi', 'Direkt talep formu'],
+      'Portföy, günlük kiralık ve Airbnb tek yerde. Airbnb ve Booking takvimleriyle senkron çalışır; aynı daireyi komisyon ödemeden kendi sitenizden de doldurursunuz.',
+    tags: ['Portföy paneli', 'Takvim senkronu (iCal)', 'Filtreli arama', 'Harita görünümü'],
   },
   {
-    title: 'Emlak & ilan siteleri',
+    title: 'İnternet siteleri',
     desc:
-      'Portföyünüzü kendiniz yönetirsiniz. Filtreli arama, harita, karşılaştırma ve danışman sayfalarıyla ilanı satışa çeviren yapı.',
-    tags: ['Portföy paneli', 'Filtreli arama', 'Harita görünümü', 'Danışman profilleri'],
+      'Kurumsal site, portfolyo ve tanıtım siteleri. Hızlı, mobil öncelikli, çok dilli; içeriği kendiniz yönetirsiniz.',
+    tags: ['Kurumsal & portfolyo', 'Mobil öncelikli', 'Çok dilli', 'İçerik paneli'],
+  },
+  {
+    title: 'E-ticaret',
+    desc:
+      'Shopify ya da özel altyapı. Sepetten ödemeye tek akış, ürün ve stok yönetimi sizde kalır.',
+    tags: ['Shopify kurulumu', 'Checkout akışı', 'Ürün & stok yönetimi', 'Güvenli ödeme'],
+  },
+  {
+    title: 'Yapay zekâ otomasyonları',
+    desc:
+      'Tekrar eden işi yazılıma devrediyoruz: soruları yanıtlayan chatbotlar, fırsat yakalayan takip botları, form ve talep akışlarının otomasyonu.',
+    tags: ['WhatsApp chatbot', 'Telegram takip botu', 'Talep otomasyonu', 'Panel entegrasyonu'],
+  },
+  {
+    title: 'Görünürlük & büyüme',
+    desc:
+      'Site kurulup bırakılmıyor. Arama motorlarında ve yapay zekâ yanıtlarında bulunur olmanız için SEO, GEO ve reklam tarafını da yürütüyoruz.',
+    tags: ['SEO', 'GEO (yapay zekâ arama)', 'Google & Meta Ads', 'İşletme profili'],
   },
 ];
+
+/* Baslik sayiyi elle tasiyordu ve hizmet eklenince yalan soyluyordu; artik
+   diziden turuyor. */
+const NUMBER_WORDS = ['sıfır', 'tek', 'iki', 'üç', 'dört', 'beş', 'altı', 'yedi', 'sekiz'];
 
 /* Dort adim. Sureler gercek taahhut; degistirmeden once teslim gecmisine bak. */
 const steps = [
@@ -583,6 +1083,9 @@ const faqs = [
   },
 ];
 
+/* Dort gercek proje, dordu de references.js'te. Her yorum o projede fiilen
+   yapilan ise dayaniyor — genel ovgu cumlesi yazmak yerine teslim edilen
+   seyi soyletmek hem daha inandirici hem de dogru. */
 const quotes = [
   {
     brand: 'Emsa Otel',
@@ -591,7 +1094,6 @@ const quotes = [
     seed: 11,
     text:
       'Otelimizin dijital dönüşümünde suerta co. ile çalışmak verdiğimiz en doğru karardı. Komisyonsuz rezervasyon sistemi sayesinde doğrudan satışlarımız %40 arttı.',
-    name: 'Emsa Otel',
     role: 'Yönetim Kurulu',
   },
   {
@@ -600,15 +1102,33 @@ const quotes = [
     tint: '#5c9cd8',
     seed: 29,
     text:
-      'Eğitim platformumuzu dijitale taşırken hem öğrenci deneyimi hem de modern bir arayüz arıyorduk. Beklentimizin çok üstüne çıktılar.',
-    name: 'Rönesans Edu',
+      'Sınav kontenjanı takibi elle imkânsızdı. Kurdukları Telegram botu kontenjan açıldığı an haber veriyor; öğrencilerimiz artık fırsat kaçırmıyor.',
     role: 'Kurucu Ortak',
+  },
+  {
+    brand: 'Pawsec Shop',
+    letter: 'P',
+    tint: '#4f8f6a',
+    seed: 53,
+    text:
+      'Sıfırdan e-ticaret kurduk. Sepetten ödemeye kadar tek akışta ilerliyor ve ürünlerimi kendim güncelliyorum — her değişiklik için kimseye dönmem gerekmiyor.',
+    role: 'Marka Sahibi',
+  },
+  {
+    brand: 'Argüman Fabrikası',
+    letter: 'A',
+    tint: '#c08a2e',
+    seed: 71,
+    text:
+      'Binden fazla münazara konusunu aranabilir bir arşive çevirdiler. Reklam ve SEO tarafını da yürüttükleri için içerik gerçekten karşılığını buldu.',
+    role: 'Kurucu',
   },
 ];
 
 export default function HomeV2() {
   const work = buildWorkLayout(referencesData);
   const carousel = useRef(null);
+  const carouselTakeOver = useScrollLinkedCarousel(carousel);
 
   return (
     <div className="v2-root">
@@ -659,8 +1179,8 @@ export default function HomeV2() {
                 İşleri gör
               </a>
             </Item>
-            <Item>
-              <BookingMock />
+            <Item style={{ width: '100%' }}>
+              <HeroStage />
             </Item>
           </Reveal>
         </div>
@@ -732,9 +1252,12 @@ export default function HomeV2() {
           <Reveal>
             <Item className="v2-section__head">
               <h2 className="v2-title">
-                <TwoTone lead="Üç alanda" tail="çalışıyoruz." />
+                <TwoTone
+                  lead={`${NUMBER_WORDS[services.length] ?? services.length} alanda`}
+                  tail="çalışıyoruz."
+                />
               </h2>
-              <span className="v2-note">hepsinde aynı mesele: doğrudan rezervasyon</span>
+              <span className="v2-note">hepsinde aynı mesele: aracıyı aradan çıkarmak</span>
             </Item>
           </Reveal>
 
@@ -795,7 +1318,7 @@ export default function HomeV2() {
                 <button
                   type="button"
                   className="v2-arrow"
-                  onClick={() => scrollCarousel(carousel, -1)}
+                  onClick={() => scrollCarousel(carousel, -1, carouselTakeOver)}
                   aria-label="Önceki referans"
                 >
                   ←
@@ -803,7 +1326,7 @@ export default function HomeV2() {
                 <button
                   type="button"
                   className="v2-arrow"
-                  onClick={() => scrollCarousel(carousel, 1)}
+                  onClick={() => scrollCarousel(carousel, 1, carouselTakeOver)}
                   aria-label="Sonraki referans"
                 >
                   →
@@ -824,6 +1347,7 @@ export default function HomeV2() {
                       konusanin kim oldugu duruyor. */}
                   <figcaption className="v2-pcard__by">
                     <strong>{quote.role}</strong>
+                    <span className="v2-pcard__role">{quote.brand}</span>
                   </figcaption>
                 </div>
                 <PartnerPortrait letter={quote.letter} tint={quote.tint} seed={quote.seed} />
@@ -882,45 +1406,8 @@ export default function HomeV2() {
         </div>
       </section>
 
-      {/* Kapanis ---------------------------------------------------------- */}
-      <section className="v2-section v2-close" id="iletisim">
-        <div className="v2-halo" aria-hidden="true" />
-        <div className="v2-shell">
-          <Reveal className="v2-close__inner">
-            <Item>
-              <Rocket />
-            </Item>
-            <Item as="h2" className="v2-display">
-              Ne inşa ettiğinizi anlatın
-            </Item>
-
-            {/* Kontenjan iddiasi cumle olarak reklam gibi duruyor; bilet
-                olarak verilince belge gibi. */}
-            <Item>
-              <span className="v2-ticket">
-                <span className="v2-ticket__num">2</span>
-                <span className="v2-ticket__label">yer · bu ay</span>
-              </span>
-            </Item>
-
-            <Item>
-              <a
-                className="v2-btn v2-btn--primary"
-                href="https://wa.me/905060693525"
-                target="_blank"
-                rel="noreferrer"
-              >
-                15 dakikalık görüşme ayarla
-              </a>
-            </Item>
-
-            <Item className="v2-status">
-              <span className="v2-status__dot" aria-hidden="true" />
-              Bu hafta yanıt süresi: birkaç saat
-            </Item>
-          </Reveal>
-        </div>
-      </section>
+      {/* Kapanis + iletisim ------------------------------------------------ */}
+      <ContactSection />
 
       {/* Kapanis bandi ----------------------------------------------------
           Referans sayfayi tam genislik bir gorselle kapatiyor ve telif
@@ -928,6 +1415,18 @@ export default function HomeV2() {
           uretilene kadar ayni yeri SVG turbulansiyla kurulan ditherli bir
           doku tutuyor. */}
       <footer className="v2-band">
+        <video
+          className="v2-band__video"
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          poster="/video/showcase-poster.jpg"
+          aria-label="Bungalov tesisi drone çekimi"
+        >
+          <source src="/video/showcase.mp4" type="video/mp4" />
+        </video>
         <div className="v2-band__dither" aria-hidden="true" />
         <div className="v2-band__foot">
           <div className="v2-shell">
