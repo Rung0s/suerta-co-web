@@ -1,28 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { Zap, ChevronDown, MessageCircle } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import StaggeredText from './StaggeredText';
 import useIsMobile from '../hooks/useIsMobile';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function HeroSection() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const sectionRef = useRef(null);
   const isMobile = useIsMobile(768);
   const { t, isEN } = useLanguage();
 
   useEffect(() => {
-    // Mobil cihazlarda (dokunmatik ekranlarda) tıklamaların yazıyı kaydırmasını engellemek için parallax'ı devre dışı bırak
+    // Mobilde parallax yok: dokunmatikte imleç yok ve kaydırmayı bozuyor.
     if (isMobile) return;
 
+    const node = sectionRef.current;
+    if (!node) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // Parallax'ı React state yerine CSS değişkeniyle sürüyoruz. State kullanınca
+    // her mousemove olayı tüm hero'yu yeniden render ediyordu.
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+    let frame = 0;
+
     const handleMouseMove = (e) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 20 - 10,
-        y: (e.clientY / window.innerHeight) * 20 - 10
-      });
+      targetX = (e.clientX / window.innerWidth) * 20 - 10;
+      targetY = (e.clientY / window.innerHeight) * 20 - 10;
     };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+
+    const tick = () => {
+      currentX += (targetX - currentX) * 0.08;
+      currentY += (targetY - currentY) * 0.08;
+      node.style.setProperty('--hero-parallax-x', `${currentX}px`);
+      node.style.setProperty('--hero-parallax-y', `${currentY}px`);
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      cancelAnimationFrame(frame);
+    };
   }, [isMobile]);
+
+  const headline = isEN
+    ? 'Websites that turn visitors into customers.'
+    : 'Ziyaretçiyi müşteriye çeviren premium web siteleri.';
 
   const styles = {
     section: {
@@ -31,48 +58,25 @@ export default function HeroSection() {
       flexDirection: 'column',
       justifyContent: 'flex-start',
       alignItems: 'center',
-      paddingTop: isMobile ? '3vh' : '20vh', // Mobilde "çooook daha yukarı" olması için 12vh'den 3vh'ye düşürüldü
+      paddingTop: isMobile ? '3vh' : '20vh',
       paddingLeft: '2rem',
       paddingRight: '2rem',
       position: 'relative',
       overflow: 'hidden',
       perspective: '1000px'
     },
-    blob1: {
-      position: 'absolute',
-      width: '800px',
-      height: '800px',
-      background: 'radial-gradient(circle, rgba(154, 22, 31, 0.3) 0%, rgba(26, 26, 29, 0) 70%)',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)',
-      zIndex: -2,
-      animation: 'blobSpin 20s linear infinite',
-      pointerEvents: 'none'
-    },
-    blob2: {
-      position: 'absolute',
-      width: '600px',
-      height: '600px',
-      background: 'radial-gradient(circle, rgba(255, 236, 175, 0.1) 0%, rgba(26, 26, 29, 0) 60%)',
-      top: '40%',
-      left: '60%',
-      transform: 'translate(-50%, -50%)',
-      zIndex: -2,
-      animation: 'blobSpin 15s linear infinite reverse',
-      pointerEvents: 'none'
-    },
     gridOverlay: {
       position: 'absolute',
       inset: 0,
       backgroundSize: '50px 50px',
-      backgroundImage: 'linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px)',
+      backgroundImage:
+        'linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px)',
       zIndex: -1,
-      backgroundPosition: `${mousePosition.x * 2}px ${mousePosition.y * 2}px`
+      backgroundPosition:
+        'calc(var(--hero-parallax-x, 0px) * 2) calc(var(--hero-parallax-y, 0px) * 2)'
     },
     content: {
       position: 'absolute',
-      // Mobilde ve masaüstünde tam dikey ortalama (kesilmeyi/kırpılmayı önler)
       top: '50%',
       left: '50%',
       width: '100%',
@@ -81,51 +85,36 @@ export default function HeroSection() {
       zIndex: 2,
       transform: isMobile
         ? 'translate(-50%, -50%)'
-        : `translate(calc(-50% + ${mousePosition.x * -1}px), calc(-50% + ${mousePosition.y * -1}px))`,
-      transition: 'transform 0.1s ease-out',
+        : 'translate(calc(-50% - var(--hero-parallax-x, 0px)), calc(-50% - var(--hero-parallax-y, 0px)))',
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center',
+      alignItems: 'center'
     },
-    logoWrapper: {
-      width: '160px',
-      marginBottom: '2rem',
-      filter: 'drop-shadow(0 0 30px rgba(154, 22, 31, 0.5))'
-    },
-    badge: {
-      display: 'inline-flex',
-      alignItems: 'center',
-      gap: '0.75rem',
-      padding: '0.6rem 1.5rem',
-      background: 'linear-gradient(90deg, rgba(255,236,175,0.1), rgba(154,22,31,0.1))',
-      border: '1px solid rgba(255, 236, 175, 0.3)',
-      borderRadius: '50px',
-      fontSize: '0.9rem',
-      fontWeight: '700',
-      marginBottom: '2rem',
-      color: 'var(--color-gold)',
-      boxShadow: '0 0 20px rgba(255,236,175,0.1)',
+    eyebrow: {
+      fontSize: '0.75rem',
+      letterSpacing: '3px',
       textTransform: 'uppercase',
-      letterSpacing: '1px'
+      color: 'var(--color-gold)',
+      fontWeight: '600',
+      marginBottom: '1.75rem'
     },
     title: {
-      fontSize: 'clamp(3rem, 12vw, 9rem)',
-      lineHeight: '1',
+      fontSize: 'clamp(2.5rem, 7vw, 5.5rem)',
+      lineHeight: '1.02',
       marginBottom: '1.5rem',
-      letterSpacing: '-2px',
+      letterSpacing: '-0.03em',
       fontFamily: 'var(--font-hero)',
       fontWeight: '900',
-      textTransform: 'uppercase'
+      maxWidth: '15ch'
     },
     subtitle: {
-      fontSize: 'clamp(1rem, 2.5vw, 1.5rem)',
+      fontSize: 'clamp(1rem, 2.5vw, 1.35rem)',
       color: 'var(--color-secondary)',
-      marginBottom: '1.75rem',
-      maxWidth: '700px',
+      maxWidth: '620px',
       margin: '0 auto 3rem auto',
       fontWeight: '400',
       padding: '0 0.9rem',
-      textShadow: '0 2px 10px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.6)' // Okunabilirliği artırdık
+      textShadow: '0 2px 10px rgba(0,0,0,0.8), 0 4px 20px rgba(0,0,0,0.6)'
     },
     ctaRow: {
       display: 'flex',
@@ -148,7 +137,7 @@ export default function HeroSection() {
       textTransform: 'uppercase',
       textDecoration: 'none',
       boxShadow: '0 10px 30px rgba(154, 22, 31, 0.3)',
-      transition: 'all 0.3s ease'
+      transition: 'transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
     },
     ctaSecondary: {
       display: 'inline-flex',
@@ -164,7 +153,7 @@ export default function HeroSection() {
       letterSpacing: '1px',
       textTransform: 'uppercase',
       textDecoration: 'none',
-      transition: 'all 0.3s ease'
+      transition: 'background 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s cubic-bezier(0.16, 1, 0.3, 1)'
     },
     scrollIndicator: {
       position: 'absolute',
@@ -176,7 +165,10 @@ export default function HeroSection() {
       alignItems: 'center',
       gap: '0.2rem',
       cursor: 'pointer',
-      zIndex: 10
+      zIndex: 10,
+      background: 'none',
+      border: 'none',
+      padding: 0
     },
     scrollText: {
       fontSize: '0.75rem',
@@ -184,100 +176,51 @@ export default function HeroSection() {
       textTransform: 'uppercase',
       color: 'var(--color-secondary)',
       fontWeight: '600'
-    },
-    floatingCard1: {
-      position: 'absolute',
-      top: '20%',
-      left: '15%',
-      width: '250px',
-      padding: '1.5rem',
-      borderRadius: '16px',
-      animation: 'float 6s ease-in-out infinite',
-      transformStyle: 'preserve-3d',
-      zIndex: 0
-    },
-    floatingCard2: {
-      position: 'absolute',
-      bottom: '25%',
-      right: '10%',
-      width: '280px',
-      padding: '1.5rem',
-      borderRadius: '16px',
-      animation: 'floatReverse 8s ease-in-out infinite',
-      transformStyle: 'preserve-3d',
-      zIndex: 0
     }
   };
 
   return (
-    <section id="home" style={styles.section} className="hero-section-container">
+    <section id="home" ref={sectionRef} style={styles.section} className="hero-section-container">
       <div style={styles.gridOverlay} className="hero-grid-overlay" />
 
-      {/* Mobil: 3D küre yerine hafif bir arka plan videosu (küreden çok daha performanslı) */}
+      {/* Mobilde 3D küre kapalı; yerine hafif bir atmosfer katmanı */}
       {isMobile && (
-        <div style={{ position: 'absolute', inset: 0, zIndex: 0, overflow: 'hidden', pointerEvents: 'none' }}>
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
-            style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.55 }}
-          >
-            <source src="/hero-mobile.webm" type="video/webm" />
-            <source src="/hero-mobile.mp4" type="video/mp4" />
-          </video>
-          {/* Metnin okunması için karartma katmanı */}
-          <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 50% 45%, rgba(10,10,12,0.35) 0%, rgba(10,10,12,0.75) 70%, #0a0a0c 100%)' }} />
-        </div>
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            zIndex: 0,
+            pointerEvents: 'none',
+            background:
+              'radial-gradient(circle at 50% 38%, rgba(154,22,31,0.22) 0%, rgba(10,10,12,0.85) 58%, #0a0a0c 100%)'
+          }}
+        />
       )}
 
-      {/* 3D Floating Elements */}
-      <div style={styles.floatingCard1} className="glass-card luxury-card floating-card-1 animate-slide-right delay-300">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-          <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'var(--color-accent)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Zap size={20} color="#fff" />
-          </div>
-          <div>
-            <div style={{ fontSize: '0.8rem', color: 'var(--color-secondary)' }}>Delivery Speed</div>
-            <div style={{ fontSize: '1.2rem', fontWeight: '800', color: 'var(--color-text)' }}>48 Hours</div>
-          </div>
-        </div>
-        <div style={{ height: '4px', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', overflow: 'hidden' }}>
-          <div style={{ width: '100%', height: '100%', background: 'var(--color-gold)', boxShadow: '0 0 10px var(--color-gold)' }}></div>
-        </div>
-      </div>
-
-      <div style={styles.floatingCard2} className="glass-card luxury-card floating-card-2 animate-slide-up delay-500">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-          <span style={{ fontSize: '0.9rem', color: 'var(--color-secondary)' }}>Vibe Check</span>
-          <span style={{ color: 'var(--color-gold)', fontWeight: '800' }}>100%</span>
-        </div>
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
-          {[1, 2, 3, 4, 5].map(i => (
-            <div key={i} style={{ height: '30px', flex: 1, background: `rgba(255, 236, 175, ${0.2 * i})`, borderRadius: '4px' }}></div>
-          ))}
-        </div>
-      </div>
-
       <div style={styles.content} className="hero-content">
+        <p style={styles.eyebrow} className="animate-slide-up delay-100">
+          suerta co. · suerta.co
+        </p>
+
         <h1 style={styles.title} className="animate-slide-up delay-200">
-          <StaggeredText text="SUERTA CO." delay={0.2} />
+          <StaggeredText text={headline} delay={0.2} />
         </h1>
 
-        <p style={styles.subtitle} className="animate-slide-up delay-200">
+        <p style={styles.subtitle} className="animate-slide-up delay-300">
           {isEN ? (
             <>
-              Rejecting generic digital presence. Transform your brand with Suerta Co. into an <strong style={{ color: '#fff' }}>unforgettable, high-conversion experience</strong>.
+              For <strong style={{ color: '#fff' }}>hotels, short-term rentals and real estate brands</strong>. Booking
+              and listing sites that earn direct reservations instead of paying commission.
             </>
           ) : (
             <>
-              Sıradan dijital varlıkları reddediyoruz. suerta co. ile markanızı, kullanıcıları içine çeken ve <strong style={{ color: '#fff' }}>iz bırakan bir deneyime</strong> dönüştürün.
+              <strong style={{ color: '#fff' }}>Otel, kiralama ve emlak markaları</strong> için. Komisyon ödemek yerine
+              doğrudan rezervasyon kazandıran rezervasyon ve ilan siteleri.
             </>
           )}
         </p>
 
-        <div style={styles.ctaRow} className="animate-slide-up delay-300 hero-cta-row">
+        <div style={styles.ctaRow} className="animate-slide-up delay-500 hero-cta-row">
           <Link
             to="/iletisim"
             style={styles.ctaPrimary}
@@ -310,20 +253,21 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Premium Scroll Down Indicator */}
-      <div
+      <button
+        type="button"
         style={styles.scrollIndicator}
         className="scroll-indicator animate-slide-up delay-500"
+        aria-label={isEN ? 'Scroll to next section' : 'Sonraki bölüme kaydır'}
         onClick={() => {
           const nextSection = document.getElementById('signature');
           if (nextSection) nextSection.scrollIntoView({ behavior: 'smooth' });
         }}
       >
         <span style={styles.scrollText}>{t('hero.scroll')}</span>
-        <div className="scroll-arrow-anim">
+        <span className="scroll-arrow-anim">
           <ChevronDown size={24} color="var(--color-gold)" />
-        </div>
-      </div>
+        </span>
+      </button>
     </section>
   );
 }

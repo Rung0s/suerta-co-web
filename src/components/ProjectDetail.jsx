@@ -4,7 +4,7 @@ import { ArrowLeft, ArrowRight, ExternalLink, Plus, Minus } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { referencesData } from '../data/references';
 import { serviceBlogMap } from '../data/blogs';
-import Seo, { SITE_URL, DEFAULT_IMAGE, breadcrumbSchema, faqSchema } from './Seo';
+import Seo, { SITE_URL, breadcrumbSchema, faqSchema } from './Seo';
 
 // Bir hizmet başlığını (ör. "Fotoğraf Çekimi:") blog haritasındaki anahtarla
 // eşleştirmek için normalize et: sondaki iki noktayı at, kırp, Türkçe küçült.

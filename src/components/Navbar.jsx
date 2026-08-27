@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Clock, ArrowUpRight, Phone, Mail, Globe, MessageCircle } from 'lucide-react';
+import { Menu, X, Clock, ArrowUpRight, Globe, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import SuertaLogo from './SuertaLogo';
@@ -33,7 +33,7 @@ export default function Navbar() {
           minute: '2-digit' 
         });
         setCurrentTime(timeStr);
-      } catch (e) {
+      } catch {
         setCurrentTime(new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
       }
     };

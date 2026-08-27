@@ -13,7 +13,7 @@ export default function ServicesSection() {
   const containerRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(-1);
   const isMobile = useIsMobile(1024);
-  const { t, isEN } = useLanguage();
+  const { isEN } = useLanguage();
 
   const services = isEN
     ? [

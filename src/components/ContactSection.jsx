@@ -4,7 +4,7 @@ import useScrollReveal from '../hooks/useScrollReveal';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function ContactSection() {
-  const { t, isEN } = useLanguage();
+  const { isEN } = useLanguage();
   const [ref1, isVisible1] = useScrollReveal();
   const [ref2, isVisible2] = useScrollReveal(0.2);
   const [submitStatus, setSubmitStatus] = useState('idle');
@@ -15,16 +15,13 @@ export default function ContactSection() {
   // Wizard Adım Yönetimi (1, 2, 3)
   const [step, setStep] = useState(1);
 
-  // Wizard Seçim State'i
-  const [selectedServices, setSelectedServices] = useState([
-    isEN ? 'Web Design & UI/UX' : 'Web Tasarım & Kurumsal Kimlik'
-  ]);
-  const [selectedTimeline, setSelectedTimeline] = useState(
-    isEN ? 'Standard (1-2 Months)' : 'Standart (1-2 Ay)'
-  );
-  const [selectedBudget, setSelectedBudget] = useState(
-    isEN ? '$5,000 - $10,000 USD' : '10.000 - 20.000 TL'
-  );
+  // Wizard seçimlerini dile bağlı metinlerle değil, id/indeks ile tutuyoruz.
+  // Metinle tutulunca dil değiştirildiğinde tüm seçimler sessizce kayboluyordu.
+  const [selectedServiceIds, setSelectedServiceIds] = useState(['web']);
+  const [selectedTimelineIndex, setSelectedTimelineIndex] = useState(1);
+  const [selectedBudgetIndex, setSelectedBudgetIndex] = useState(1);
+  // Bir kez üretilir. Render sırasında üretilince her tuş vuruşunda değişiyordu.
+  const [referenceNumber] = useState(() => Math.floor(1000 + Math.random() * 9000));
   const [wizardName, setWizardName] = useState('');
   const [wizardContact, setWizardContact] = useState('');
   const [wizardNote, setWizardNote] = useState('');
@@ -65,14 +62,19 @@ export default function ContactSection() {
     ? ['$3,000 - $5,000 USD', '$5,000 - $10,000 USD', '$10,000 - $25,000 USD', '$25,000+ USD']
     : ['5.000 - 10.000 TL', '10.000 - 20.000 TL', '20.000 - 50.000 TL', '50.000+ TL'];
 
-  const toggleService = (title) => {
-    if (selectedServices.includes(title)) {
-      if (selectedServices.length > 1) {
-        setSelectedServices(selectedServices.filter(s => s !== title));
-      }
-    } else {
-      setSelectedServices([...selectedServices, title]);
-    }
+  // Gönderim ve özet için seçimleri o anki dildeki metne çeviriyoruz.
+  const selectedServices = serviceOptions
+    .filter((option) => selectedServiceIds.includes(option.id))
+    .map((option) => option.title);
+  const selectedTimeline = timelineOptions[selectedTimelineIndex];
+  const selectedBudget = budgetOptions[selectedBudgetIndex];
+
+  const toggleService = (id) => {
+    setSelectedServiceIds((previous) => {
+      if (!previous.includes(id)) return [...previous, id];
+      // En az bir hizmet seçili kalmalı
+      return previous.length > 1 ? previous.filter((item) => item !== id) : previous;
+    });
   };
 
   // WhatsApp'a Anında Formatted Gönderim
@@ -453,12 +455,21 @@ Proje analizi ve stratejik ön görüşme talep ediyorum.`;
                   <div style={{ display: 'grid', gap: '1rem' }}>
                     {serviceOptions.map((item) => {
                       const Icon = item.icon;
-                      const isSelected = selectedServices.includes(item.title);
+                      const isSelected = selectedServiceIds.includes(item.id);
                       return (
                         <div
                           key={item.id}
+                          role="checkbox"
+                          tabIndex={0}
+                          aria-checked={isSelected}
                           className={`wizard-card ${isSelected ? 'active' : ''}`}
-                          onClick={() => toggleService(item.title)}
+                          onClick={() => toggleService(item.id)}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault();
+                              toggleService(item.id);
+                            }
+                          }}
                         >
                           <div style={{
                             width: '42px',
@@ -521,14 +532,15 @@ Proje analizi ve stratejik ön görüşme talep ediyorum.`;
                       01. HEDEFLENEN TESLİMAT SÜRESİ
                     </label>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem' }}>
-                      {timelineOptions.map((t) => (
+                      {timelineOptions.map((option, index) => (
                         <button
-                          key={t}
+                          key={option}
                           type="button"
-                          className={`tag-btn ${selectedTimeline === t ? 'active' : ''}`}
-                          onClick={() => setSelectedTimeline(t)}
+                          aria-pressed={selectedTimelineIndex === index}
+                          className={`tag-btn ${selectedTimelineIndex === index ? 'active' : ''}`}
+                          onClick={() => setSelectedTimelineIndex(index)}
                         >
-                          {t}
+                          {option}
                         </button>
                       ))}
                     </div>
@@ -539,14 +551,15 @@ Proje analizi ve stratejik ön görüşme talep ediyorum.`;
                       02. YATIRIM VE BÜTÇE ARALIĞI
                     </label>
                     <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.8rem' }}>
-                      {budgetOptions.map((b) => (
+                      {budgetOptions.map((option, index) => (
                         <button
-                          key={b}
+                          key={option}
                           type="button"
-                          className={`tag-btn ${selectedBudget === b ? 'active' : ''}`}
-                          onClick={() => setSelectedBudget(b)}
+                          aria-pressed={selectedBudgetIndex === index}
+                          className={`tag-btn ${selectedBudgetIndex === index ? 'active' : ''}`}
+                          onClick={() => setSelectedBudgetIndex(index)}
                         >
-                          {b}
+                          {option}
                         </button>
                       ))}
                     </div>
@@ -590,7 +603,7 @@ Proje analizi ve stratejik ön görüşme talep ediyorum.`;
                         — PROJE SPESİFİKASYON ÖZETİ
                       </span>
                       <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.3)', letterSpacing: '1px' }}>
-                        REF #SC-{Math.floor(1000 + Math.random() * 9000)}
+                        REF #SC-{referenceNumber}
                       </span>
                     </div>
                     

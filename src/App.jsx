@@ -3,6 +3,10 @@ import { BrowserRouter as Router, Routes, Route, useLocation, useNavigationType 
 import { AnimatePresence } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import Lenis from '@studio-freight/lenis';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 import Navbar from './components/Navbar';
 import HeroSection from './components/HeroSection';
@@ -30,7 +34,6 @@ import TeamSection from './components/TeamSection';
 import Seo, { SITE_URL, breadcrumbSchema } from './components/Seo';
 import useIsMobile from './hooks/useIsMobile';
 import { LanguageProvider } from './context/LanguageContext';
-import LanguageWelcomeModal from './components/LanguageWelcomeModal';
 
 // Ana sayfa için WebSite şeması (arama motorları / AI için site kimliği)
 const websiteSchema = {
@@ -192,17 +195,22 @@ function App() {
 
     lenisInstance = lenis;
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
+    // Lenis ve ScrollTrigger'ı tek saate bağla. Bu köprü olmadan pin/scrub
+    // kullanan bölümler yumuşatılmış scroll pozisyonundan kayıyor.
+    const onLenisScroll = () => ScrollTrigger.update();
+    lenis.on('scroll', onLenisScroll);
+
+    const tick = (time) => lenis.raf(time * 1000);
+    gsap.ticker.add(tick);
+    gsap.ticker.lagSmoothing(0);
 
     return () => {
+      lenis.off('scroll', onLenisScroll);
+      gsap.ticker.remove(tick);
       lenis.destroy();
       lenisInstance = null;
     };
-  }, []);
+  }, [isPrerender]);
 
   return (
     <LanguageProvider>

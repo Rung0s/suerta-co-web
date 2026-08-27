@@ -1,12 +1,35 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { translations } from '../utils/translations';
 
 const LanguageContext = createContext();
 
+// localStorage Safari gizli modda / depolama engelliyken exception fırlatır.
+// Bu sarmalayıcılar olmadan uygulama boş sayfayla açılıyor.
+const safeGet = (key) => {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+};
+
+const safeSet = (key, value) => {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    /* depolama yoksa sessizce geç */
+  }
+};
+
 export function LanguageProvider({ children }) {
   const [language, setLanguageState] = useState(() => {
-    const saved = localStorage.getItem('suerta_lang');
-    if (saved && (saved === 'TR' || saved === 'EN')) return saved;
+    // Prerender (puppeteer) en-US locale ile koşuyor. Dil tespitini yapmadan
+    // TR'ye sabitlemezsek üretilen statik HTML'in tamamı İngilizce oluyor,
+    // meta ve JSON-LD ise tr-TR diyor.
+    if (typeof navigator !== 'undefined' && navigator.webdriver === true) return 'TR';
+
+    const saved = safeGet('suerta_lang');
+    if (saved === 'TR' || saved === 'EN') return saved;
     // Otomatik dil tespiti: Tarayıcı dili Türkçe değilse varsayılan olarak EN yap!
     if (typeof navigator !== 'undefined' && navigator.language) {
       return navigator.language.toLowerCase().startsWith('tr') ? 'TR' : 'EN';
@@ -14,28 +37,17 @@ export function LanguageProvider({ children }) {
     return 'TR';
   });
 
-  const [showLanguageWelcome, setShowLanguageWelcome] = useState(() => {
-    // Kullanıcı daha önce seçim yapmadıysa hoş geldin dil seçim modalını göster
-    return !localStorage.getItem('suerta_lang_selected');
-  });
-
   const setLanguage = (lang) => {
     if (lang === 'TR' || lang === 'EN') {
       setLanguageState(lang);
-      localStorage.setItem('suerta_lang', lang);
-      localStorage.setItem('suerta_lang_selected', 'true');
+      safeSet('suerta_lang', lang);
+      safeSet('suerta_lang_selected', 'true');
     }
   };
 
   const toggleLanguage = () => {
     const nextLang = language === 'TR' ? 'EN' : 'TR';
     setLanguage(nextLang);
-  };
-
-  const dismissWelcomeModal = (chosenLang) => {
-    if (chosenLang) setLanguage(chosenLang);
-    setShowLanguageWelcome(false);
-    localStorage.setItem('suerta_lang_selected', 'true');
   };
 
   // Nested objeler için 'nav.about' tarzı çeviri anahtarı getirme yardımcısı
@@ -63,9 +75,7 @@ export function LanguageProvider({ children }) {
       setLanguage,
       toggleLanguage,
       t,
-      isEN: language === 'EN',
-      showLanguageWelcome,
-      dismissWelcomeModal
+      isEN: language === 'EN'
     }}>
       {children}
     </LanguageContext.Provider>

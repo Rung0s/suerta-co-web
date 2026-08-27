@@ -171,13 +171,17 @@ export default function Footer() {
 
         {/* Devasa Tipografi */}
         <div style={styles.giantTextContainer} className="footer-giant-text">
-          <h1 style={styles.giantText}>SUERTA<span style={{marginLeft: '1.5vw'}}>CO</span><span style={{color: 'var(--color-accent)'}}>.</span></h1>
+          {/* Logotype, başlık değil: her sayfada ikinci bir h1 yaratmasın diye div. */}
+          <div style={styles.giantText} aria-label="suerta co." role="img">SUERTA<span style={{marginLeft: '1.5vw'}}>CO</span><span style={{color: 'var(--color-accent)'}}>.</span></div>
         </div>
 
         {/* Alt Bilgiler */}
         <div style={styles.bottomRow} className="footer-bottom-row">
           <div style={styles.copyright}>
-            &copy; {new Date().getFullYear()} suerta co. {isEN ? 'Bespoke Digital Luxury. All Rights Reserved.' : 'Dijital Lüks. Tüm hakları saklıdır.'}
+            &copy; {new Date().getFullYear()} suerta co. — suerta.co.{' '}
+            {isEN
+              ? 'Booking and listing websites for hotels, rentals and real estate. All rights reserved.'
+              : 'Otel, kiralama ve emlak markaları için rezervasyon ve ilan siteleri. Tüm hakları saklıdır.'}
           </div>
           <MagneticButton style={styles.backToTop} className="back-to-top" onClick={scrollToTop}>
             {isEN ? 'Back to Top ↑' : 'Yukarı Dön ↑'}
