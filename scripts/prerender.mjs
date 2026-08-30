@@ -7,6 +7,7 @@ import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { extname, join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { allRoutes } from './routes.mjs';
 
 // Ortama göre tarayıcı: Vercel/serverless'te @sparticuz/chromium (sistem
 // kütüphanesi gerektirmeyen Chromium), yerelde puppeteer'ın kendi Chromium'u.
@@ -30,15 +31,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const DIST = join(__dirname, '..', 'dist');
 const PORT = 4599;
 
-const ROUTES = [
-  '/', '/hakkimizda', '/ekibimiz', '/hizmetlerimiz', '/referanslar', '/blog', '/iletisim',
-  '/referanslar/1', '/referanslar/2', '/referanslar/3', '/referanslar/4',
-  '/blog/web-sitesi-maliyeti-2026', '/blog/shopify-mi-woocommerce-mi', '/blog/yeni-site-seo-checklist',
-  '/blog/otel-rezervasyon-hizi', '/blog/karanlik-mod-premium', '/blog/ozel-yazilim-vs-hazir-paketler',
-  '/blog/fotograf-cekimi', '/blog/mobil-optimizasyon', '/blog/google-ads-donusum',
-  '/blog/google-isletme-profili', '/blog/whatsapp-chatbot', '/blog/telegram-sinav-botu',
-  '/blog/geo-yapay-zeka-gorunurluk',
-];
+// Adresler rota tablosundan geliyor (bkz. scripts/routes.mjs): iki dilin
+// butun sayfalari, proje ve yazi detaylari dahil. Elle yazilmis liste, yeni
+// bir yazi eklendiginde eksik kaliyordu.
+const ROUTES = allRoutes().map((route) => route.path);
 
 const MIME = {
   '.html': 'text/html; charset=utf-8', '.js': 'application/javascript', '.mjs': 'application/javascript',

@@ -4,7 +4,7 @@ export const referencesData = [
     name: "Emsa Otel",
     category: "Web Tasarım",
     desc: "Otel Web Sitesi & Dijital Pazarlama",
-    image: "/emsa.png",
+    image: "/emsa.webp",
     link: "https://emsaotel.com",
     details: `
 ### Neler Yaptık?
@@ -38,7 +38,7 @@ Emsa Otel'in dijital görünürlüğünü ve online performansını uçtan uca e
     name: "Rönesans Edu",
     category: "Özel Yazılım",
     desc: "Eğitim, Sınav Takip & Otomasyon",
-    image: "/rönesans.png",
+    image: "/ronesans.webp",
     link: "https://ronesansedu.com",
     instagram: "https://www.instagram.com/yurtdisironesans",
     details: `
@@ -73,7 +73,7 @@ Rönesans Edu'nun eğitim ve öğrenci süreçlerini dijitalleştirdiğimiz kaps
     name: "Pawsec Shop",
     category: "E-Ticaret",
     desc: "Evcil Hayvan Ürünleri E-Ticaret Sitesi",
-    image: "/pawsec.png",
+    image: "/pawsec.webp",
     link: "https://pawsec.shop",
     directLink: true,
     details: `
@@ -105,7 +105,7 @@ Pawsec için sıfırdan bir e-ticaret altyapısı kurduk.
     name: "Argüman Fabrikası",
     category: "Web Tasarım",
     desc: "Kurumsal Portfolyo & Dijital Pazarlama",
-    image: "/arguman.png",
+    image: "/arguman.webp",
     link: "https://argumanfabrikasi.com",
     details: `
 ### Neler Yaptık?

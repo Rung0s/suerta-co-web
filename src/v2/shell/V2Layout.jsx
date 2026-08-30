@@ -33,7 +33,10 @@ export default function V2Layout({ children, footer = true }) {
     <div className="v2-root">
       <DotCursor />
       <V2Nav />
-      {children}
+      {/* Sayfanin kendi icerigi <main> icinde: ekran okuyucular "icerige
+          atla" derken buraya geliyor, statik prerender de sayfanin
+          hazir oldugunu bu ogeden anliyor. */}
+      <main>{children}</main>
       {footer && <V2Footer />}
     </div>
   );

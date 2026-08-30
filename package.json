@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/prerender.mjs",
+    "build": "vite build && node scripts/prerender.mjs && node scripts/sitemap.mjs",
     "build:spa": "vite build",
     "prerender": "node scripts/prerender.mjs",
+    "sitemap": "node scripts/sitemap.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -36,6 +37,7 @@
     "playwright": "^1.62.1",
     "puppeteer": "^25.4.0",
     "puppeteer-core": "^25.4.0",
+    "sharp": "^0.35.4",
     "vite": "^8.0.12"
   }
 }

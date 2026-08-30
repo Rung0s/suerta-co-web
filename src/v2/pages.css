@@ -342,3 +342,12 @@
     display: none;
   }
 }
+
+/* Tembel film: poster ile film ayni yeri kapliyor, birinden digerine
+   gecerken yerlesim oynamasin. */
+.v2-lazyvideo__media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

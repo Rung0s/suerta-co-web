@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HeroLaunch from './hero/HeroLaunch';
+import LazyVideo from './media/LazyVideo';
 import { referencesData } from '../data/references';
 import { Reveal, Item, TwoTone } from './primitives';
 import V2Layout from './shell/V2Layout';
@@ -424,17 +425,12 @@ function WorkTile({ project, wide, result, film, copy }) {
           koymak "bu bir ekran goruntusu" diyor ve goruntuyu kucultuyor. */}
       {film ? (
         <div className="v2-film">
-          <video
+          <LazyVideo
             className="v2-film__media"
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="metadata"
+            src={project.video}
             poster={project.poster}
-          >
-            <source src={project.video} type="video/mp4" />
-          </video>
+            alt={project.name}
+          />
 
           <div className="v2-tv__overlay">
             <span className="v2-tv__overlay-label">{copy.didLabel}</span>
@@ -449,17 +445,12 @@ function WorkTile({ project, wide, result, film, copy }) {
       <div className="v2-tv">
         <div className="v2-tv__screen">
           {project.video ? (
-            <video
+            <LazyVideo
               className="v2-tv__media v2-tv__media--video"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="metadata"
+              src={project.video}
               poster={project.poster}
-            >
-              <source src={project.video} type="video/mp4" />
-            </video>
+              alt={project.name}
+            />
           ) : (
             <img
               className="v2-tv__media"

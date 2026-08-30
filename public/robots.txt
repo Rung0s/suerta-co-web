@@ -1,8 +1,5 @@
 User-agent: *
 Allow: /
-# Yeniden tasarim prototipi — degerlendirme asamasinda, indekslenmemeli
-Disallow: /v2
-
 # Yapay zeka / arama tarayıcılarına açık
 User-agent: GPTBot
 Allow: /
