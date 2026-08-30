@@ -140,42 +140,30 @@
   background-color: var(--dark-bg);
   overflow: hidden;
   /* Ustte gorsel icin nefes payi; alt bilgi bunun uzerine biniyor. */
-  /* Sahne genisligin ~%35i kadar yer kapliyor; kolonlar onun altindan
-     basliyor. */
-  padding-top: clamp(13rem, 36vw, 34rem);
+  padding-top: clamp(4rem, 8vw, 7rem);
 }
 
 /* Kapanis sahnesi: bandin ust yarisini kapliyor, alt bilgi uzerine
    biniyor. Video degil svg oldugu icin olcekten bagimsiz net kaliyor. */
+/* Sahne sayfanin en altinda: alt bilgi ve telif satirindan sonra geliyor,
+   sayfa onun uzerinde kapaniyor. Once bandin ustundeydi ve kolonlari
+   eziyordu. */
 .v2-band__scene {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
+  position: relative;
   width: 100%;
   height: auto;
   display: block;
+  margin-top: var(--space-12);
   /* Baski siyah-beyaz ve kagit zeminli; bant koyu. Ters cevirip screen ile
      bindirince kagit zemin kayboluyor ve figurler acik kaliyor. */
-  /* contrast: ters cevrilen kagit zemin tam siyaha insin, yoksa screen
-     ile bandin uzerinde soluk bir dikdortgen kaliyor. */
-  filter: invert(1) contrast(1.22) brightness(0.94);
-  mix-blend-mode: screen;
-  opacity: 0.92;
-}
-
-/* Sahnenin uzerine serilen tabaka: sahne gorunsun ama telif satirinin
-   arkasi her ekranda ayni kontrasti versin. */
-.v2-band::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(rgba(9, 10, 10, 0.35) 0%, rgba(9, 10, 10, 0.1) 38%, rgba(9, 10, 10, 0.86) 100%);
-}
-
-.v2-band__foot {
-  z-index: 1;
+  /* Zemin saydam; invert yalnizca murekkebi cevirip koyu bantta acik
+     figurler birakiyor. */
+  filter: invert(1);
+  opacity: 0.94;
+  /* Ust kenar maskeyle aciliyor: ters cevrilen kagit bantla tam ayni ton
+     olmadigi icin duz bir sinir birakiyordu. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 16%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 16%);
 }
 
 /* Telif satirini tasiyan koyu gradyan — referansin `utility` katmani. */

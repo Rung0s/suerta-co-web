@@ -15,20 +15,6 @@ export default function V2Footer() {
 
   return (
     <footer className="v2-band">
-      {/* Sayfayi kapatan sahne: firlatma anini kutlayan kontrol odasi.
-          Halftone baski; koyu bantta ters cevriliyor (bkz. closing.css).
-          Once bir drone videosu vardi — guzel bir cekimdi ama sayfanin
-          diliyle konusmuyordu ve 3,5 MB indiriliyordu. */}
-      <img
-        className="v2-band__scene"
-        src="/img/control.webp"
-        alt=""
-        aria-hidden="true"
-        width="2400"
-        height="837"
-        decoding="async"
-        loading="lazy"
-      />
       <div className="v2-band__foot">
         <div className="v2-shell">
           <div className="v2-fcols">
@@ -82,8 +68,9 @@ export default function V2Footer() {
 
           <div className="v2-band__bottom">
             <span className="v2-band__copy">
-              © {new Date().getFullYear()} suerta.co — otel, kiralama, eğitim ve
-              e-ticaret markaları için siteler. Tüm hakları saklıdır.
+              © {new Date().getFullYear()} suerta.co — dijital ajans. İnternet siteleri,
+              e-ticaret, rezervasyon sistemleri ve yapay zekâ otomasyonları. Tüm
+              hakları saklıdır.
             </span>
             <button
               type="button"
@@ -95,6 +82,22 @@ export default function V2Footer() {
           </div>
         </div>
       </div>
+
+      {/* Sayfanin en alti: firlatma anini kutlayan kontrol odasi. Telif
+          satirindan sonra geliyor, sayfa onun uzerinde kapaniyor.
+          Halftone baski; koyu bantta ters cevriliyor (bkz. closing.css).
+          Once bir drone videosu vardi — guzel bir cekimdi ama sayfanin
+          diliyle konusmuyordu ve 3,5 MB indiriliyordu. */}
+      <img
+        className="v2-band__scene"
+        src="/img/control.webp"
+        alt=""
+        aria-hidden="true"
+        width="2400"
+        height="837"
+        decoding="async"
+        loading="lazy"
+      />
     </footer>
   );
 }

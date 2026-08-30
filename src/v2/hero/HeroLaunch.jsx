@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import PixelRocket from '../PixelRocket';
 import { HERO_CARDS } from './card-list';
 
 /* ==========================================================================
@@ -143,10 +142,15 @@ export default function HeroLaunch() {
         siteleri.
       </h1>
       {/* Iki satir. Uzun paragraf hero'da okunmuyor: ziyaretci once basligi,
-          sonra dugmeyi ariyor. Ayrinti hizmet sayfasinda duruyor. */}
+          sonra dugmeyi ariyor. Ayrinti hizmet sayfasinda duruyor.
+
+          Kapsam tek bir nise daralmiyor: rezervasyon isi yaptigimiz alanlardan
+          yalnizca biri. Ajans internet sitesinden e-ticarete, otomasyondan
+          gorunurluge kadar isin tamamini kuruyor. */}
       <p className="v2-lead">
-        Otel, kiralama, eğitim ve e-ticaret markaları için. Komisyonu aracıya
-        bırakmayan, rezervasyonu ve satışı doğrudan size getiren siteler.
+        Dijital ajans. İnternet siteleri, e-ticaret, rezervasyon sistemleri, yapay
+        zekâ otomasyonları ve görünürlük — markanızın internetteki işini uçtan uca
+        kuruyoruz.
       </p>
       <div className="v2-hero__actions">
         <a className="v2-btn v2-btn--primary" href="#iletisim">
@@ -201,16 +205,12 @@ export default function HeroLaunch() {
         <div className="v2-halo" aria-hidden="true" />
         <div className="v2-castlight" aria-hidden="true" />
 
-        <div className="v2-shell v2-launch__inner">
-          {copy}
-          {deck}
-        </div>
-
+        {/* Sahne: kalabalik ve roket. Yazidan sonra geliyor, boylece
+            sabitleme kapaliyken (dar ekran) once yazi ve kartlar, sonra
+            sahne okunuyor. */}
         <div className="v2-launch__scene">
           {/* Kalabalik sahnenin zemini: roketin olcegini veren ve bakisin
-              nereye dondugunu soyleyen sey. Halftone bir baski olarak
-              uretildi; ayni sahneyi kodla cizmeyi denedik ve tutmadi —
-              siluetler insan degil sehir siluetine benziyordu. */}
+              nereye dondugunu soyleyen sey. */}
           <img
             className="v2-launch__crowd"
             src="/img/crowd.webp"
@@ -221,30 +221,43 @@ export default function HeroLaunch() {
             decoding="async"
           />
 
-          {/* Kule ve rampa yerinde kaliyor; havalanan yalnizca roket. */}
-          <PixelRocket className="v2-launch__rocket v2-launch__rocket--pad" only="pad" />
+          {/* Roket iki baski: rampadaki hali ve havalanmis hali. Sahne
+              ilerledikce biri sonuyor, digeri yukari cikarak beliriyor.
+              Onceki hali kodla cizilmis bir piksel roketti ve sayfadaki
+              halftone baskilarin yaninda oyuncak gibi duruyordu. */}
+          <img
+            className="v2-launch__pad"
+            src="/img/rocket-pad.webp"
+            alt=""
+            aria-hidden="true"
+            width="900"
+            height="1739"
+            decoding="async"
+            style={pinned ? { opacity: 1 - Math.min(1, lift * 2.4) } : undefined}
+          />
 
-          <PixelRocket
-            className="v2-launch__rocket"
-            only="rocket"
-            /* Roket rampadan kalkiyor: yukari cikarken hafifce kuculuyor,
-               uzaklasan bir sey gibi. */
+          <img
+            className="v2-launch__fly"
+            src="/img/rocket-fly.webp"
+            alt=""
+            aria-hidden="true"
+            width="900"
+            height="1592"
+            decoding="async"
             style={
               pinned
                 ? {
-                    transform: `translateY(${lift * -118}%) scale(${1 - lift * 0.18})`,
-                    opacity: 1 - span(progress, 0.86, 1) * 0.85,
+                    opacity: Math.min(1, lift * 2.6),
+                    transform: `translateY(${(1 - lift) * 24}%) scale(${0.92 + lift * 0.08})`,
                   }
-                : undefined
+                : { opacity: 0 }
             }
           />
-          {pinned && lift > 0.02 && (
-            <span
-              className="v2-launch__plume"
-              aria-hidden="true"
-              style={{ opacity: Math.min(1, lift * 3), transform: `scaleY(${0.6 + lift * 2.4})` }}
-            />
-          )}
+        </div>
+
+        <div className="v2-shell v2-launch__inner">
+          {copy}
+          {deck}
         </div>
 
         <div className="v2-launch__dots" role="tablist" aria-label="Çalışma alanları">

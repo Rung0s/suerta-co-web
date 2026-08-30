@@ -20,13 +20,9 @@
   height: calc(100vh + var(--cards, 6) * 68vh);
 }
 
-/* Zemin acikca veriliyor: sahne sticky oldugu icin kendi yigin baglamini
-   kuruyor ve kalabaligin multiply harmanlamasi ancak bu baglamin icindeki
-   bir zemine karisabiliyor. */
 .v2-launch__stage {
   position: relative;
   overflow: hidden;
-  background: var(--bg);
   padding-top: clamp(7rem, 11vw, 9.5rem);
 }
 
@@ -113,46 +109,28 @@
 }
 
 /* Roket -------------------------------------------------------------------
-   Kalabaligin arkasinda ve solda duruyor: kartlar sagda, ikisi ayni sahneyi
-   ust uste binmeden paylasiyor. */
+   Iki baski ayni yerde duruyor: rampadaki roket ve havalanan roket. Ikisi
+   de solda, kartlarin girdigi alanin disinda. Kagit zeminleri multiply ile
+   sayfaya karisiyor. */
 
-.v2-launch__rocket {
+.v2-launch__pad,
+.v2-launch__fly {
   position: absolute;
-  left: 4%;
-  bottom: clamp(2.5rem, 6vh, 4.5rem);
-  height: clamp(20rem, 58vh, 34rem);
+  left: 3%;
+  bottom: 0;
   width: auto;
+  height: clamp(24rem, 72vh, 44rem);
   z-index: 1;
-  transform-origin: 50% 100%;
   pointer-events: none;
+  transform-origin: 50% 100%;
+  will-change: transform, opacity;
 }
 
-/* Maske yalnizca kule ve rampada: alt kenar sayfaya karisiyor. Havalanan
-   rokete uygulaninca motor kismi silik kaliyordu. */
-.v2-launch__rocket--pad {
-  -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
-}
-
-/* Roket kalkarken arkasinda kalan sutun: alev degil, alevin rampada
-   biraktigi duman. Piksel roketin kendi alevi zaten var. */
-.v2-launch__plume {
-  position: absolute;
-  left: calc(4% + clamp(3rem, 7vw, 5rem));
-  bottom: clamp(2rem, 5vh, 4rem);
-  width: clamp(2.5rem, 5vw, 4rem);
-  height: clamp(6rem, 16vh, 12rem);
-  z-index: 0;
-  transform-origin: 50% 100%;
-  pointer-events: none;
-  background: linear-gradient(
-    to top,
-    rgba(217, 58, 43, 0.28) 0%,
-    rgba(184, 137, 43, 0.16) 34%,
-    rgba(17, 17, 16, 0.06) 68%,
-    transparent 100%
-  );
-  filter: blur(6px);
+.v2-launch__fly {
+  /* Ucan baskinin duman sutunu asagi dogru uzuyor; sahnede biraz daha
+     yukaridan basliyor. */
+  bottom: 6vh;
+  height: clamp(26rem, 78vh, 48rem);
 }
 
 /* Kart treni --------------------------------------------------------------
@@ -172,8 +150,8 @@
 .v2-launch__slot {
   position: absolute;
   left: 62%;
-  /* Kalabalik alt %20yi kapliyor; kart ortasi ondan yukarida durmali. */
-  top: 50%;
+  /* Kalabalik alt bandi kapliyor; kart ortasi ondan yukarida durmali. */
+  top: 46%;
   width: min(23rem, 78vw);
   transform: translate(-50%, -50%);
   transition: opacity 220ms linear;
@@ -761,8 +739,21 @@
    roket + kalabalik, sonra kartlar yatay kaydirilan bir serit.
    ========================================================================== */
 
+/* Sabitleme kapaliyken sira: once yazi ve kartlar, sonra sahne. DOM'da
+   sahne once geliyor (sabitliyken arkada durmasi gerekiyor), bu yuzden
+   sirayi flex order belirliyor. */
 .v2-launch:not(.is-pinned) .v2-launch__stage {
   padding-bottom: var(--space-12);
+  display: flex;
+  flex-direction: column;
+}
+
+.v2-launch:not(.is-pinned) .v2-launch__inner {
+  order: 1;
+}
+
+.v2-launch:not(.is-pinned) .v2-launch__scene {
+  order: 2;
 }
 
 .v2-launch:not(.is-pinned) .v2-launch__inner {
@@ -772,10 +763,14 @@
 }
 
 /* Sabitleme kapaliyken de roket rampada duruyor; yalnizca sahne kucuk. */
-.v2-launch:not(.is-pinned) .v2-launch__rocket {
+.v2-launch:not(.is-pinned) .v2-launch__pad {
   height: 100%;
   bottom: 2.5rem;
   left: 8%;
+}
+
+.v2-launch:not(.is-pinned) .v2-launch__fly {
+  display: none;
 }
 
 .v2-launch:not(.is-pinned) .v2-launch__deck {
@@ -803,8 +798,7 @@
 }
 
 .v2-launch:not(.is-pinned) .v2-launch__dots,
-.v2-launch:not(.is-pinned) .v2-launch__hint,
-.v2-launch:not(.is-pinned) .v2-launch__plume {
+.v2-launch:not(.is-pinned) .v2-launch__hint {
   display: none;
 }
 

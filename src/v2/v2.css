@@ -636,42 +636,24 @@
    Referansin imza objesi. Bizde kapanista duruyor: sayfanin sonu = kalkis.
    Egim ve izi tokenlarla ciziliyor, bitmap yok. */
 
-/* Firlatma sahnesi ---------------------------------------------------------
-   Kule sabit duruyor, yalnizca roket ve itki hareket ediyor. Ikisi birden
-   suzulurse sahne butun halinde salinan bir cikartmaya donuyor; kulenin
-   yerinde kalmasi roketin kalkis hazirliginda oldugunu soyluyor. */
+/* Kapanisin roketi -------------------------------------------------------
+   Hero'daki havalanan baskinin aynisi; kagit zemini saydam. Hafif bir suzulme onu duran bir resim olmaktan cikariyor. */
 
 .v2-rocket {
-  color: var(--ink);
-  width: clamp(9rem, 15vw, 13rem);
+  width: clamp(9rem, 16vw, 15rem);
   height: auto;
   display: block;
-  overflow: visible;
-}
-
-.v2-rocket__body {
-  animation: v2Hover 5s ease-in-out infinite;
-}
-
-.v2-rocket__flame {
-  transform-origin: 50% 0%;
-  animation: v2Hover 5s ease-in-out infinite,
-    v2Flame 620ms ease-in-out infinite alternate;
+  margin: 0 auto;
+  animation: v2Hover 6s ease-in-out infinite;
 }
 
 @keyframes v2Hover {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
-}
-
-@keyframes v2Flame {
-  from { transform: scaleY(0.78); opacity: 0.7; }
-  to { transform: scaleY(1.15); opacity: 1; }
+  50% { transform: translateY(-9px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .v2-rocket__body,
-  .v2-rocket__flame {
+  .v2-rocket {
     animation: none;
   }
 }

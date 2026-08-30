@@ -16,92 +16,23 @@ import { STEPS as steps, FAQS as faqs } from './data/process';
    Bitmap degil SVG: her olcekte net kaliyor ve renkleri tokenlardan
    aliyor. Govde tek dolgu degil, kademeli: panel cizgileri ve kademe
    halkalari uzaklik hissini veren tek sey. */
+/* Kapanisin roketi: hero'daki havalanan baskinin aynisi. Once kodla
+   cizilmis bir SVG vardi ve sayfadaki halftone baskilarin yanina
+   oturmuyordu. */
 function LaunchScene() {
   return (
-    <svg
+    <img
       className="v2-rocket"
-      width="188"
-      height="200"
-      viewBox="0 0 188 200"
-      fill="none"
-      role="img"
-      aria-label="Fırlatma rampasındaki roket"
-    >
-      {/* --- servis kulesi ------------------------------------------------ */}
-      <g className="v2-rocket__tower">
-        <rect x="126" y="34" width="4" height="140" fill="var(--accent)" />
-        <rect x="158" y="34" width="4" height="140" fill="var(--accent)" />
-        {/* capraz baglantilar: kule bir cizgi degil, bir kafes */}
-        {Array.from({ length: 7 }, (_, i) => (
-          <g key={i}>
-            <path
-              d={`M130 ${40 + i * 20}L158 ${58 + i * 20}`}
-              stroke="var(--accent)"
-              strokeWidth="2"
-              opacity="0.6"
-            />
-            <path
-              d={`M158 ${40 + i * 20}L130 ${58 + i * 20}`}
-              stroke="var(--accent)"
-              strokeWidth="2"
-              opacity="0.6"
-            />
-            <rect x="126" y={38 + i * 20} width="36" height="2.5" fill="var(--accent)" />
-          </g>
-        ))}
-        {/* rokete uzanan servis kollari */}
-        <rect x="104" y="70" width="24" height="4" fill="var(--accent)" opacity="0.85" />
-        <rect x="104" y="118" width="24" height="4" fill="var(--accent)" opacity="0.85" />
-        <rect x="120" y="26" width="48" height="4" fill="var(--accent)" />
-      </g>
-
-      {/* --- roket -------------------------------------------------------- */}
-      <g className="v2-rocket__body">
-        {/* burun konisi */}
-        <path d="M84 4c7.4 8.2 11.6 17.6 12.6 28H71.4C72.4 21.6 76.6 12.2 84 4z" fill="currentColor" />
-        {/* ucuncu kademe */}
-        <rect x="71" y="32" width="26" height="34" fill="var(--bg)" stroke="currentColor" strokeWidth="2.5" />
-        {/* kademe halkasi */}
-        <rect x="69" y="64" width="30" height="5" fill="currentColor" />
-        {/* ikinci kademe */}
-        <rect x="69" y="69" width="30" height="46" fill="var(--bg)" stroke="currentColor" strokeWidth="2.5" />
-        <rect x="69" y="86" width="30" height="3" fill="currentColor" opacity="0.35" />
-        {/* kademe halkasi */}
-        <rect x="66" y="113" width="36" height="5" fill="currentColor" />
-        {/* birinci kademe */}
-        <rect x="66" y="118" width="36" height="52" fill="var(--bg)" stroke="currentColor" strokeWidth="2.5" />
-        <rect x="66" y="140" width="36" height="3" fill="currentColor" opacity="0.35" />
-        {/* govde isareti */}
-        <circle cx="84" cy="47" r="4.5" fill="var(--accent)" />
-
-        {/* kanatlar */}
-        <path d="M66 150l-13 24h13v-24z" fill="currentColor" />
-        <path d="M102 150l13 24h-13v-24z" fill="currentColor" />
-
-        {/* motor agizliklari */}
-        <path d="M70 170h9l3 8h-15l3-8z" fill="currentColor" opacity="0.75" />
-        <path d="M89 170h9l3 8h-15l3-8z" fill="currentColor" opacity="0.75" />
-      </g>
-
-      {/* --- itki ---------------------------------------------------------- */}
-      <g className="v2-rocket__flame">
-        <path d="M84 176c7 8.6 10.5 17 10.5 25.2H73.5C73.5 193 77 184.6 84 176z" fill="var(--flare)" />
-        <path d="M84 182c3.6 5.6 5.4 11.2 5.4 16.8H78.6c0-5.6 1.8-11.2 5.4-16.8z" fill="var(--gold)" />
-      </g>
-
-      {/* --- rampa --------------------------------------------------------- */}
-      <rect x="30" y="176" width="140" height="6" rx="3" fill="currentColor" opacity="0.2" />
-    </svg>
+      src="/img/rocket-fly.webp"
+      width="900"
+      height="1592"
+      decoding="async"
+      loading="lazy"
+      alt="Havalanan roket"
+    />
   );
 }
 
-/* Karakter yagmuru. Math.random kullanilmiyor: prerender ile tarayici farkli
-   sonuc uretirse React hydration'da uyusmazlik verir. Yerine indislerden
-   turetilen deterministik bir karisim var — gozle rastgele, calismalar
-   arasinda ayni. */
-/* Rampada bosluk ve nokta yok. Sekli tasiyan sey maske; karakterler yalnizca
-   dokuyu veriyor. Seyrek karakterler karisinca maskelenen harf delik desik
-   cikiyor ve okunmuyordu. */
 const ASCII_RAMP = '-=+*#%@$&';
 
 function asciiBlock(rows, cols, seed) {
