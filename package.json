@@ -9,6 +9,8 @@
     "build:spa": "vite build",
     "prerender": "node scripts/prerender.mjs",
     "sitemap": "node scripts/sitemap.mjs",
+    "og": "node scripts/og.mjs",
+    "images": "node scripts/images.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

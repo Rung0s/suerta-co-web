@@ -69,15 +69,19 @@ function setJsonLd(schemas) {
   });
 }
 
-export default function Seo({ title, description, image = '/og-image.png', type = 'website', jsonLd }) {
+export default function Seo({ title, description, image, type = 'website', jsonLd }) {
   const { pathname } = useLocation();
   const { lang } = useLang();
+
+  /* Paylasim gorseli dile bagli: karttaki cumle sayfanin dilinde olmali,
+     yoksa Ingilizce bir baglantinin altinda Turkce bir kart cikiyor. */
+  const card = image ?? (lang === 'en' ? '/og-image-en.png' : '/og-image.png');
 
   const fullTitle = title?.toLowerCase().includes('suerta')
     ? title
     : `${title} — ${SITE_NAME}`;
   const canonical = `${SITE_URL}${pathname === '/' ? '/' : pathname.replace(/\/$/, '')}`;
-  const imageAbs = image.startsWith('http') ? image : `${SITE_URL}${image}`;
+  const imageAbs = card.startsWith('http') ? card : `${SITE_URL}${card}`;
   const jsonLdKey = JSON.stringify(jsonLd ?? null);
 
   useEffect(() => {
