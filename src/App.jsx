@@ -29,6 +29,7 @@ import CustomCursor from './components/CustomCursor';
 import PageTransition from './components/PageTransition';
 import NotFound from './components/NotFound';
 import HomeV2 from './v2/HomeV2';
+import ServicesV2 from './v2/ServicesV2';
 import LiquidGlassBlob from './components/LiquidGlassBlob';
 import SignatureScene from './components/SignatureScene';
 import TeamSection from './components/TeamSection';
@@ -229,6 +230,7 @@ function App() {
               Navbar/Footer/3D sahne/imlec katmanlarini tamamen atlar.
               Menude yok, sitemap'te yok, robots'ta kapali. */}
           <Route path="/v2" element={<HomeV2 />} />
+          <Route path="/v2/hizmetlerimiz" element={<ServicesV2 />} />
           <Route path="*" element={<SiteShell
             isPrerender={isPrerender}
             isMobile={isMobile}

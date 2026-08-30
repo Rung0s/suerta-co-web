@@ -12,7 +12,10 @@ const page = await browser.newPage({
   isMobile: width < 700,
   hasTouch: width < 700,
 });
-await page.goto('http://localhost:5173/v2', { waitUntil: 'networkidle', timeout: 60000 });
+// Hangi rotanin goruntusu alinacagi V2_PATH ile veriliyor; /v2 altinda
+// artik birden fazla sayfa var.
+const path = process.env.V2_PATH || '/v2';
+await page.goto('http://localhost:5173' + path, { waitUntil: 'networkidle', timeout: 60000 });
 await page.waitForTimeout(1200);
 
 // scroll tetikli reveal'lari acmak icin bastan sona gez

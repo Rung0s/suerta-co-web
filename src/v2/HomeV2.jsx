@@ -1,65 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { referencesData } from '../data/references';
 import PixelRocket from './PixelRocket';
-import './surface.css';
-import './work.css';
-import './partners.css';
-import './manifesto.css';
-import './closing.css';
-import './contact.css';
-import './cursor.css';
-import './v2.css';
-
-/* Tek reveal primitifi. Sitede uc ayri reveal sistemi vardi (CSS + iki farkli
-   framer kullanimi, uc farkli sure); hepsi bunun yerine gecer. */
-const revealGroup = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.06, delayChildren: 0.04 } },
-};
-
-const revealItem = {
-  hidden: { opacity: 0, y: 24 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
-  },
-};
-
-function Reveal({ children, className, as = 'div', style }) {
-  const Component = motion[as] || motion.div;
-  return (
-    <Component
-      className={className}
-      style={style}
-      variants={revealGroup}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.25 }}
-    >
-      {children}
-    </Component>
-  );
-}
-
-function Item({ children, className, as = 'div', style }) {
-  const Component = motion[as] || motion.div;
-  return (
-    <Component className={className} style={style} variants={revealItem}>
-      {children}
-    </Component>
-  );
-}
-
-/* Cumlenin ilk yarisi soluk, vurgu tam kontrast. Referans sistemin imzasi. */
-function TwoTone({ lead, tail }) {
-  return (
-    <>
-      <span className="v2-tone-lead">{lead}</span> {tail}
-    </>
-  );
-}
+import { Reveal, Item, TwoTone } from './primitives';
+import V2Layout from './shell/V2Layout';
+import { SERVICES as services } from './data/services';
+import { STEPS as steps, FAQS as faqs } from './data/process';
 
 /* Hero kartlari.
    Onceden tek bir rezervasyon karti vardi ve yalnizca otel isini
@@ -966,77 +912,6 @@ function EmptyTile() {
    Halka noktayi gecikmeli takip ediyor. Ayni karede ikisi de tam konuma
    giderse hareketin agirligi olmuyor; gecikme tek basina "bu bir nesne"
    hissini veriyor. */
-function DotCursor() {
-  const dot = useRef(null);
-  const ring = useRef(null);
-
-  useEffect(() => {
-    if (!window.matchMedia?.('(hover: hover) and (pointer: fine)').matches) return undefined;
-
-    const dotNode = dot.current;
-    const ringNode = ring.current;
-    if (!dotNode || !ringNode) return undefined;
-
-    let targetX = window.innerWidth / 2;
-    let targetY = window.innerHeight / 2;
-    let ringX = targetX;
-    let ringY = targetY;
-    let raf = 0;
-
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    const loop = () => {
-      raf = requestAnimationFrame(loop);
-      /* Basit yumusatma: hedefe kalan mesafenin bir kismi kadar yaklas.
-         Kare suresinden bagimsiz olmasa da bu olcekte fark edilmiyor. */
-      const ease = reduced ? 1 : 0.16;
-      ringX += (targetX - ringX) * ease;
-      ringY += (targetY - ringY) * ease;
-      ringNode.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
-    };
-
-    const onMove = (event) => {
-      targetX = event.clientX;
-      targetY = event.clientY;
-      dotNode.style.transform = `translate3d(${targetX}px, ${targetY}px, 0)`;
-
-      /* Uzerinde durulan sey tiklanabilir mi? Her harekette soruluyor ama
-         `closest` ucuz; alternatifi her etkilesimli ogeye ayri dinleyici
-         takmak olurdu ve dinamik icerikte bozulurdu. */
-      const hot = event.target?.closest?.('a, button, [role="tab"], summary, input, textarea, label');
-      ringNode.classList.toggle('is-hot', Boolean(hot));
-    };
-
-    const onDown = () => {
-      dotNode.classList.add('is-down');
-      ringNode.classList.add('is-down');
-    };
-    const onUp = () => {
-      dotNode.classList.remove('is-down');
-      ringNode.classList.remove('is-down');
-    };
-
-    window.addEventListener('pointermove', onMove, { passive: true });
-    window.addEventListener('pointerdown', onDown, { passive: true });
-    window.addEventListener('pointerup', onUp, { passive: true });
-    raf = requestAnimationFrame(loop);
-
-    return () => {
-      cancelAnimationFrame(raf);
-      window.removeEventListener('pointermove', onMove);
-      window.removeEventListener('pointerdown', onDown);
-      window.removeEventListener('pointerup', onUp);
-    };
-  }, []);
-
-  return (
-    <>
-      <span className="v2-cursor__ring" ref={ring} aria-hidden="true" />
-      <span className="v2-cursor" ref={dot} aria-hidden="true" />
-    </>
-  );
-}
-
 function Laurel({ side }) {
   return (
     <svg
@@ -1282,79 +1157,9 @@ function buildWorkLayout(projects) {
    Emlak, gunluk kiralik ve Airbnb ayri hatlar degil: musteri acisindan
    ucu de "mulkumu doldurmak" isi. Ayri ayri yazmak uc farkli hizmet
    satiyormus gibi gosteriyordu; tek baslikta toplandi. */
-const services = [
-  {
-    title: 'Otel & rezervasyon sistemleri',
-    desc:
-      'Misafir OTA üzerinden değil, doğrudan sizden rezervasyon yapar. Oda envanteri, sezonluk fiyat ve müsaitlik tek panelden yönetilir.',
-    tags: ['Komisyonsuz rezervasyon', 'Channel manager / PMS', 'Sezonluk fiyatlama', 'Online ödeme'],
-  },
-  {
-    title: 'Emlak & kiralama',
-    desc:
-      'Portföy, günlük kiralık ve Airbnb tek yerde. Airbnb ve Booking takvimleriyle senkron çalışır; aynı daireyi komisyon ödemeden kendi sitenizden de doldurursunuz.',
-    tags: ['Portföy paneli', 'Takvim senkronu (iCal)', 'Filtreli arama', 'Harita görünümü'],
-  },
-  {
-    title: 'İnternet siteleri',
-    desc:
-      'Kurumsal site, portfolyo ve tanıtım siteleri. Hızlı, mobil öncelikli, çok dilli; içeriği kendiniz yönetirsiniz.',
-    tags: ['Kurumsal & portfolyo', 'Mobil öncelikli', 'Çok dilli', 'İçerik paneli'],
-  },
-  {
-    title: 'E-ticaret',
-    desc:
-      'Shopify ya da özel altyapı. Sepetten ödemeye tek akış, ürün ve stok yönetimi sizde kalır.',
-    tags: ['Shopify kurulumu', 'Checkout akışı', 'Ürün & stok yönetimi', 'Güvenli ödeme'],
-  },
-  {
-    title: 'Yapay zekâ otomasyonları',
-    desc:
-      'Tekrar eden işi yazılıma devrediyoruz: soruları yanıtlayan chatbotlar, fırsat yakalayan takip botları, form ve talep akışlarının otomasyonu.',
-    tags: ['WhatsApp chatbot', 'Telegram takip botu', 'Talep otomasyonu', 'Panel entegrasyonu'],
-  },
-  {
-    title: 'Görünürlük & büyüme',
-    desc:
-      'Site kurulup bırakılmıyor. Arama motorlarında ve yapay zekâ yanıtlarında bulunur olmanız için SEO, GEO ve reklam tarafını da yürütüyoruz.',
-    tags: ['SEO', 'GEO (yapay zekâ arama)', 'Google & Meta Ads', 'İşletme profili'],
-  },
-];
-
 /* Baslik sayiyi elle tasiyordu ve hizmet eklenince yalan soyluyordu; artik
    diziden turuyor. */
 const NUMBER_WORDS = ['sıfır', 'tek', 'iki', 'üç', 'dört', 'beş', 'altı', 'yedi', 'sekiz'];
-
-/* Dort adim. Sureler gercek taahhut; degistirmeden once teslim gecmisine bak. */
-const steps = [
-  { num: '01', title: 'Keşif', desc: '15 dakikalık görüşme. Ne sattığınızı, kime sattığınızı ve neyin eksik olduğunu netleştiririz.' },
-  { num: '02', title: 'Kapsam', desc: 'Sabit fiyat, sabit kapsam ve teslim tarihi. Sürpriz kalem yok.' },
-  { num: '03', title: 'Kurulum', desc: 'Tasarım, geliştirme, rezervasyon motoru ve entegrasyonlar. Ara teslimlerle ilerler.' },
-  { num: '04', title: 'Devir', desc: 'Yayına alma, panel eğitimi ve 30 gün destek. Site sizde kalır, bize bağımlı değilsiniz.' },
-];
-
-const faqs = [
-  {
-    q: 'OTA komisyonunu gerçekten düşürebilir miyim?',
-    a: 'Tamamen bitirmez ama payı ciddi biçimde kaydırır. Booking veya Airbnb üzerinden gelen misafir komisyon götürür; kendi sitenizden gelen götürmez. Emsa Otel’de doğrudan rezervasyon oranı %40 arttı. Hedef platformları bırakmak değil, ikinci ve üçüncü kez gelen misafiri doğrudan kendinize almak.',
-  },
-  {
-    q: 'Mevcut channel manager veya PMS’imle çalışır mı?',
-    a: 'Evet. API veya iCal desteği olan sistemlerle takvim ve envanter senkronu kuruyoruz; müsaitlik iki yerde ayrı ayrı güncellenmez. Hangi sistemi kullandığınızı söyleyin, entegrasyonun mümkün olup olmadığını görüşmeden önce netleştirelim.',
-  },
-  {
-    q: 'Siteyi kendim güncelleyebilir miyim?',
-    a: 'Evet. Oda, ilan, fiyat, görsel ve içerik girişini yapabileceğiniz bir panel teslim ediyoruz. Devirde eğitim veriyoruz. Küçük değişiklik için bize dönmeniz gerekmiyor.',
-  },
-  {
-    q: 'Ne kadar sürede teslim ediyorsunuz?',
-    a: 'Kapsama bağlı. Tek mülk veya butik otel için 2–3 hafta; rezervasyon motoru ve entegrasyon gerektiren işler 4–6 hafta. Tarihi kapsam aşamasında yazılı veriyoruz.',
-  },
-  {
-    q: 'Çok dilli ve çok para birimli olur mu?',
-    a: 'Olur, bu nişte neredeyse zorunlu. Türkçe–İngilizce standart; talep halinde Almanca, Rusça ve Arapça ekliyoruz. Fiyatlar ziyaretçinin para biriminde gösterilebilir.',
-  },
-];
 
 /* Dort gercek proje, dordu de references.js'te. Her yorum o projede fiilen
    yapilan ise dayaniyor — genel ovgu cumlesi yazmak yerine teslim edilen
@@ -1404,32 +1209,7 @@ export default function HomeV2() {
   const carouselTakeOver = useDriftingCarousel(carousel);
 
   return (
-    <div className="v2-root">
-      <DotCursor />
-
-      <nav className="v2-nav" aria-label="Ana menü">
-        <a className="v2-nav__brand" href="#top">
-          suerta<span className="v2-nav__brand-dot">.co</span>
-        </a>
-        <div className="v2-nav__links">
-          <a className="v2-nav__link" href="#isler">
-            İşler
-          </a>
-          <a className="v2-nav__link" href="#hizmetler">
-            Hizmetler
-          </a>
-          <a className="v2-nav__link" href="#surec">
-            Süreç
-          </a>
-          <a className="v2-nav__link" href="#sss">
-            SSS
-          </a>
-        </div>
-        <a className="v2-btn v2-btn--primary" href="#iletisim">
-          Görüşme ayarla
-        </a>
-      </nav>
-
+    <V2Layout>
       {/* Hero ------------------------------------------------------------- */}
       <header className="v2-hero" id="top">
         <div className="v2-halo" aria-hidden="true" />
@@ -1557,6 +1337,16 @@ export default function HomeV2() {
                 </div>
               </Item>
             ))}
+          </Reveal>
+
+          {/* Alanlarin ayrintisi kendi sayfasinda: burada alti satir, orada
+              kime uygun oldugu ve ne teslim edildigi. */}
+          <Reveal className="v2-list__more">
+            <Item>
+              <Link className="v2-btn v2-btn--ghost" to="/v2/hizmetlerimiz">
+                Hizmetlerin ayrıntısı
+              </Link>
+            </Item>
           </Reveal>
         </div>
       </section>
@@ -1703,101 +1493,6 @@ export default function HomeV2() {
       {/* Kapanis + iletisim ------------------------------------------------ */}
       <ContactSection />
 
-      {/* Kapanis bandi ----------------------------------------------------
-          Referans sayfayi tam genislik bir gorselle kapatiyor ve telif
-          satirini onun uzerine serilen koyu gradyanda tasiyor. Gorsel
-          uretilene kadar ayni yeri SVG turbulansiyla kurulan ditherli bir
-          doku tutuyor. */}
-      <footer className="v2-band">
-        <video
-          className="v2-band__video"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-          poster="/video/showcase-poster.jpg"
-          aria-label="Bungalov tesisi drone çekimi"
-        >
-          <source src="/video/showcase.mp4" type="video/mp4" />
-        </video>
-        <div className="v2-band__dither" aria-hidden="true" />
-        <div className="v2-band__foot">
-          <div className="v2-shell">
-            {/* Ana sitedeki alt bilgi duzeni: uc kolon, dev logotype, en altta
-                telif ve yukari don. Onceki hali tek satirlik bir baglanti
-                seridiydi ve sayfanin sonu gibi degil, kesilmis gibi
-                duruyordu. */}
-            <div className="v2-fcols">
-              <div className="v2-fcol">
-                <span className="v2-fcol__title">Menü</span>
-                <a className="v2-fcol__link" href="#isler">
-                  İşler
-                </a>
-                <a className="v2-fcol__link" href="#hizmetler">
-                  Hizmetler
-                </a>
-                <a className="v2-fcol__link" href="#surec">
-                  Süreç
-                </a>
-                <a className="v2-fcol__link" href="#sss">
-                  SSS
-                </a>
-              </div>
-
-              <div className="v2-fcol">
-                <span className="v2-fcol__title">Sosyal</span>
-                <a
-                  className="v2-fcol__link"
-                  href="https://instagram.com/suerta.co"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Instagram ↗
-                </a>
-                <a
-                  className="v2-fcol__link"
-                  href="https://wa.me/905060693525"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  WhatsApp ↗
-                </a>
-              </div>
-
-              <div className="v2-fcol">
-                <span className="v2-fcol__title">İletişim</span>
-                <a className="v2-fcol__link" href="mailto:suerta.info@gmail.com">
-                  suerta.info@gmail.com
-                </a>
-                <span className="v2-fcol__link v2-fcol__link--plain">
-                  Eskişehir, Türkiye (Global)
-                </span>
-              </div>
-            </div>
-
-            {/* Logotype, baslik degil: sayfada ikinci bir h1 yaratmasin diye
-                div ve role="img". */}
-            <div className="v2-wordmark" role="img" aria-label="suerta.co">
-              suerta<span className="v2-wordmark__dot">.co</span>
-            </div>
-
-            <div className="v2-band__bottom">
-              <span className="v2-band__copy">
-                © {new Date().getFullYear()} suerta.co — otel, kiralama, eğitim ve
-                e-ticaret markaları için siteler. Tüm hakları saklıdır.
-              </span>
-              <button
-                type="button"
-                className="v2-totop"
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              >
-                Yukarı dön ↑
-              </button>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+    </V2Layout>
   );
 }

@@ -1058,3 +1058,11 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Hizmet listesinin altindaki ayrinti baglantisi: liste kendi cizgisiyle
+   bitiyor, buton onun altinda ayri duruyor. */
+.v2-list__more {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: var(--space-8);
+}
