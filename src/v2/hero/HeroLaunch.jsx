@@ -47,6 +47,11 @@ export default function HeroLaunch() {
   const c = useCopy();
   const { lang } = useLang();
   const outer = useRef(null);
+  /* Alan adi kartin ustunde duruyor ve kartlarin boyu icerigine gore
+     degisiyor. Yuzde ile yerlestirilince kisa ekranlarda yazi kartin
+     ustune biniyordu: konumu kartin gercek yuksekliginden hesapliyoruz. */
+  const deckRef = useRef(null);
+  const [cardHeight, setCardHeight] = useState(320);
   const [progress, setProgress] = useState(0);
   /* Ilk cizim her yerde ayni olmali: prerender masaustu genisliginde
      calisiyor, mod ancak tarayicida olculuyor. */
@@ -117,6 +122,31 @@ export default function HeroLaunch() {
   const head = index + move * move * (3 - 2 * move);
   const active = Math.round(head);
 
+  /* Olculen kart sirada olan kart: kartlarin boyu icerigine gore
+     degisiyor (sohbet karti takvim kartindan uzun), ilk kartin boyuna
+     gore yerlestirilen yazi digerlerinin ustune biniyordu.
+
+     offsetHeight, getBoundingClientRect degil: kartlar olceklenerek
+     hareket ediyor ve olcek olcuye karisirdi. */
+  useEffect(() => {
+    /* Olculen sey slotun tamami: kartin altinda bir de "yaziyi oku"
+       satiri var ve slot dikeyde ortalandigi icin kartin ust kenari o
+       satirin yarisi kadar daha yukarida duruyor. Yalnizca kart
+       olculunce yazi kartin ustune bes piksel biniyordu. */
+    const node = deckRef.current?.children?.[active];
+    if (!node) return undefined;
+
+    const apply = () => {
+      if (node.offsetHeight > 0) setCardHeight(node.offsetHeight);
+    };
+    apply();
+
+    if (typeof ResizeObserver === 'undefined') return undefined;
+    const observer = new ResizeObserver(apply);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [active]);
+
   const copyOut = span(progress, 0.04, COPY_OUT);
   const lift = span(progress, 0.1, 1);
 
@@ -168,7 +198,11 @@ export default function HeroLaunch() {
   const deck = (
     /* Kartlar yazi cekilirken geliyor: ikisi ayni anda ortada durunca
        kartlar yazinin uzerine biniyordu. */
-    <div className="v2-launch__deck" style={pinned ? { opacity: span(progress, 0.18, 0.28) } : undefined}>
+    <div
+      className="v2-launch__deck"
+      ref={deckRef}
+      style={pinned ? { opacity: span(progress, 0.18, 0.28) } : undefined}
+    >
       {HERO_CARDS.map(({ key, Card, post }, i) => {
         const offset = i - head;
         const distance = Math.abs(offset);
@@ -222,7 +256,7 @@ export default function HeroLaunch() {
       className={`v2-launch${pinned ? ' is-pinned' : ''}`}
       id="top"
       ref={outer}
-      style={{ '--cards': CARD_COUNT }}
+      style={{ '--cards': CARD_COUNT, '--card-h': `${Math.round(cardHeight)}px` }}
     >
       <div className="v2-launch__stage">
         <div className="v2-halo" aria-hidden="true" />

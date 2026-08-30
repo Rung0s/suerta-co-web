@@ -137,7 +137,7 @@ export const en = {
     kpis: [
       { unit: '%', value: '40', label: 'Rise in direct bookings at Emsa Otel' },
       { value: '1,000+', label: 'Searchable archive entries at Argüman Fabrikası' },
-      { value: null, label: 'Projects delivered across different sectors', laurel: true },
+      { value: '20+', label: 'Projects delivered across different sectors', laurel: true },
     ],
     films: [
       {

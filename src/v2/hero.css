@@ -186,15 +186,23 @@
   border-radius: 1.25rem;
 }
 
+/* Satir kartin altinda, kalabaligin uzerine denk geliyor: koyu siluetin
+   uzerinde gri yazi okunmuyordu. Kendi acik zemini var, kart gibi. */
 .v2-launch__read {
   display: flex;
+  width: fit-content;
   align-items: center;
-  justify-content: center;
   gap: 0.5rem;
-  margin-top: 0.875rem;
+  margin: 0.875rem auto 0;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 1px 2px rgba(17, 17, 16, 0.06);
   font-size: 0.8125rem;
   letter-spacing: 0.01em;
-  color: var(--ink-soft, rgba(17, 17, 16, 0.62));
+  color: var(--muted);
 }
 
 .v2-launch__read-arrow {
@@ -223,16 +231,23 @@
    uzerinde okunabilsin diye kendi acik zemini var. */
 /* Etkin alanin adi ------------------------------------------------------- */
 
+/* Alan adi kartin tam ustunde duruyor: konumu kartin merkezinden geriye
+   dogru, kartin gercek yuksekliginin yarisi kadar cikilarak bulunuyor
+   (--card-h JSX'te olculuyor). Sabit bir yuzde verilince kisa ve genis
+   ekranlarda yazi kartin baslik satirinin uzerine biniyordu.
+
+   Olcu de ekran genisligine birakilmiyor: genis ekranda 44 piksele cikan
+   yazi, kartin ustunde bir baslik degil ikinci bir hero gibi duruyordu. */
 .v2-launch__area {
   position: absolute;
   left: 52%;
-  top: 16%;
-  transform: translateX(-50%);
+  top: 47%;
+  transform: translate(-50%, calc(-50% - var(--card-h, 320px) / 2 - 2rem));
   z-index: 3;
   white-space: nowrap;
-  font-size: var(--text-title);
+  font-size: clamp(1.125rem, 1.6vw, 1.5rem);
   line-height: 1.1;
-  letter-spacing: var(--tracking-title);
+  letter-spacing: -0.01em;
   font-weight: 600;
 }
 

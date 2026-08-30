@@ -585,8 +585,11 @@ function VerifiedMark() {
    Uc sayi, uc ayri musteri ve uc ayri is turu: rezervasyon, arsiv
    yazilimi ve teslim edilen proje sayisi. Onceden ucu de tek bir otel
    projesinin etrafinda donuyordu ve sayfa "otel yazilimi satan bir yer"
-   gibi okunuyordu. Proje sayisi elle yazilmiyor, referans listesinden
-   turuyor. */
+   gibi okunuyordu.
+
+   Proje sayisi elle veriliyor: sitede dort referans gosteriliyor ama
+   teslim edilen is sayisi daha fazla — sayiyi referans listesinden
+   turetmek gercegi oldugundan kucuk gosteriyordu. */
 function kpisFrom(copy) {
   return copy.kpis.map((kpi) => ({
     ...kpi,

@@ -138,7 +138,7 @@ export const tr = {
     kpis: [
       { unit: '%', value: '40', label: 'Emsa Otel’de doğrudan rezervasyon artışı' },
       { value: '1.000+', label: 'Argüman Fabrikası’nda aranabilir arşiv kaydı' },
-      { value: null, label: 'Farklı sektörde teslim edilen proje', laurel: true },
+      { value: '20+', label: 'Farklı sektörde teslim edilen proje', laurel: true },
     ],
     films: [
       {
