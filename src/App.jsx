@@ -1,301 +1,66 @@
-import { useState, useEffect, useRef } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, useNavigationType } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
-import { Canvas } from '@react-three/fiber';
-import Lenis from '@studio-freight/lenis';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { Suspense, lazy } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { LangProvider } from './v2/i18n';
+import { LANGS, PAGES } from './v2/i18n/paths';
 
-gsap.registerPlugin(ScrollTrigger);
+/* Uygulamanin tamami.
+   --------------------------------------------------------------------------
+   Iki dil, tek rota tablosu: adresler src/v2/i18n/paths.js'te duruyor ve
+   buradaki dongu her sayfayi her dil icin bir kez baglıyor. Adresi elle
+   yazmak, iki dilden birinde eksik kalan bir sayfa demek olur.
 
-import Navbar from './components/Navbar';
-import HeroSection from './components/HeroSection';
-import ServicesSection from './components/ServicesSection';
-import AboutSection from './components/AboutSection';
-import ReferencesSection from './components/ReferencesSection';
-import ReferencesPage from './components/ReferencesPage';
-import ContactSection from './components/ContactSection';
-import TestimonialsSection from './components/TestimonialsSection';
-import StatsSection from './components/StatsSection';
-import FAQSection, { faqs } from './components/FAQSection';
-import BlogSection from './components/BlogSection';
-import BlogPage from './components/BlogPage';
-import BlogDetail from './components/BlogDetail';
-import ProjectDetail from './components/ProjectDetail';
-import Footer from './components/Footer';
-import WhatsAppButton from './components/WhatsAppButton';
-import Preloader from './components/Preloader';
-import CustomCursor from './components/CustomCursor';
-import PageTransition from './components/PageTransition';
-import NotFound from './components/NotFound';
-import HomeV2 from './v2/HomeV2';
-import ServicesV2 from './v2/ServicesV2';
-import LiquidGlassBlob from './components/LiquidGlassBlob';
-import SignatureScene from './components/SignatureScene';
-import TeamSection from './components/TeamSection';
-import Seo, { SITE_URL, breadcrumbSchema, faqSchema, serviceSchema } from './components/Seo';
-import useIsMobile from './hooks/useIsMobile';
-import { LanguageProvider } from './context/LanguageContext';
+   Sayfalar tembel yukleniyor. Onceki hali her sayfayi tek bir pakete
+   koyuyordu: bir yaziyi okumaya gelen ziyaretci anasayfanin sahne
+   kodunu da indiriyordu. Ayirinca her sayfa yalnizca kendi parcasini
+   getiriyor.
 
-// Ana sayfa için WebSite şeması (arama motorları / AI için site kimliği)
-const websiteSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  name: 'suerta co.',
-  alternateName: 'suerta.co',
-  url: SITE_URL,
-  inLanguage: 'tr-TR',
-  publisher: { '@id': `${SITE_URL}/#organization` },
+   Onceki tasarim (Navbar, 3D sahne, preloader) artik rotalarda degil;
+   dosyalari git gecmisinde duruyor. */
+
+const HomeV2 = lazy(() => import('./v2/HomeV2'));
+const ServicesV2 = lazy(() => import('./v2/ServicesV2'));
+const WorkPage = lazy(() => import('./v2/pages/WorkPage'));
+const WorkDetailPage = lazy(() => import('./v2/pages/WorkDetailPage'));
+const BlogPage = lazy(() => import('./v2/pages/BlogPage'));
+const BlogDetailPage = lazy(() => import('./v2/pages/BlogDetailPage'));
+const AboutPage = lazy(() => import('./v2/pages/AboutPage'));
+const ContactPage = lazy(() => import('./v2/pages/ContactPage'));
+const NotFoundPage = lazy(() => import('./v2/pages/NotFoundPage'));
+
+const PAGE_COMPONENTS = {
+  home: HomeV2,
+  services: ServicesV2,
+  work: WorkPage,
+  workItem: WorkDetailPage,
+  blog: BlogPage,
+  blogItem: BlogDetailPage,
+  about: AboutPage,
+  contact: ContactPage,
 };
 
-// Ana sayfada SSS bölümü görünür durumda; şemasını da yayınlıyoruz.
-const homeSchemas = [websiteSchema, faqSchema(faqs)].filter(Boolean);
-
-// Lenis smooth-scroll örneğini, sayfa geçişlerinde scroll'u sıfırlayabilmek
-// için modül seviyesinde paylaşıyoruz.
-let lenisInstance = null;
-
-function AnimatedRoutes() {
-  const location = useLocation();
-  const navigationType = useNavigationType();
-  const scrollPositions = useRef({});
-  const currentKeyRef = useRef(location.key);
-
-  // Tarayıcının kendi scroll geri yükleme davranışını kapat; biz yöneteceğiz
-  useEffect(() => {
-    if ('scrollRestoration' in window.history) {
-      window.history.scrollRestoration = 'manual';
-    }
-  }, []);
-
-  // Kullanıcı kaydırdıkça mevcut sayfanın scroll konumunu sürekli kaydet
-  useEffect(() => {
-    const handleScroll = () => {
-      scrollPositions.current[currentKeyRef.current] = window.scrollY;
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Geri/ileri (POP) navigasyonunda kaldığı yere dön; yeni bir sayfaya
-  // geçişte (PUSH) en tepeden başla
-  useEffect(() => {
-    currentKeyRef.current = location.key;
-    const saved = scrollPositions.current[location.key];
-
-    // Lenis aktifken salt window.scrollTo yetmez: Lenis kendi hedef scroll
-    // değerini bir sonraki karede geri yazar. Kısa bir sayfaya geçildiğinde
-    // eski (büyük) değer alt sınıra kırpılır ve sayfa footer'da açılır.
-    // Bu yüzden Lenis'i de birlikte sıfırlıyoruz.
-    const scrollTo = (top) => {
-      if (lenisInstance) {
-        try { lenisInstance.resize(); } catch { /* yoksay */ }
-        try { lenisInstance.scrollTo(top, { immediate: true, force: true }); } catch { /* yoksay */ }
-      }
-      window.scrollTo({ top, left: 0, behavior: 'instant' });
-    };
-
-    const target = (navigationType === 'POP' && saved) ? saved : 0;
-
-    // Ağır bileşenler (3D, görseller) yüklenirken sayfa yüksekliği anlık
-    // olarak yetersiz olabilir; hedefe ulaşana kadar birkaç kez dene.
-    const timers = [];
-    let attempts = 0;
-    const apply = () => {
-      scrollTo(target);
-      attempts += 1;
-      if (Math.abs(window.scrollY - target) > 2 && attempts < 12) {
-        timers.push(setTimeout(apply, 60));
-      }
-    };
-    apply();
-    return () => timers.forEach(clearTimeout);
-  }, [location.pathname, location.key, navigationType]);
-
+export default function App() {
   return (
-    <Routes>
-        <Route path="/" element={
-          <PageTransition>
-            <Seo path="/" jsonLd={homeSchemas} />
-            <HeroSection />
-            <SignatureScene />
-            <ServicesSection />
-            <StatsSection />
-            <ReferencesSection />
-            <TestimonialsSection />
-            <BlogSection limit={3} />
-            <FAQSection />
-          </PageTransition>
-        } />
-        <Route path="/hakkimizda" element={<PageTransition>
-          <Seo path="/hakkimizda" title="Hakkımızda & Vizyon"
-            description="suerta co. (suerta.co), otel, günlük kiralık ve emlak markaları için rezervasyon ve ilan siteleri kuran butik bir stüdyo. Çalışma prensiplerimiz, teknoloji tercihlerimiz ve nasıl çalıştığımız."
-            jsonLd={breadcrumbSchema([{ name: 'Ana Sayfa', path: '/' }, { name: 'Hakkımızda', path: '/hakkimizda' }])} />
-          <AboutSection /></PageTransition>} />
-        <Route path="/ekibimiz" element={<PageTransition>
-          <Seo path="/ekibimiz" title="Uzman Ekibimiz"
-            description="suerta co.'nun tasarım, yazılım ve dijital pazarlama uzmanlarından oluşan ekibiyle tanışın. Markanızın dijital dönüşümünü birlikte yürütüyoruz."
-            jsonLd={breadcrumbSchema([{ name: 'Ana Sayfa', path: '/' }, { name: 'Ekibimiz', path: '/ekibimiz' }])} />
-          <TeamSection /></PageTransition>} />
-        <Route path="/hizmetlerimiz" element={<PageTransition>
-          <Seo path="/hizmetlerimiz" title="Rezervasyon & İlan Sistemleri"
-            description="Otel rezervasyon motoru, Airbnb ve günlük kiralık listing sitesi, emlak ilan platformu, channel manager ve ödeme entegrasyonları. Kapsam, süre ve yatırım aralıklarıyla."
-            jsonLd={[
-              breadcrumbSchema([{ name: 'Ana Sayfa', path: '/' }, { name: 'Hizmetlerimiz', path: '/hizmetlerimiz' }]),
-              serviceSchema,
-            ]} />
-          <ServicesSection /></PageTransition>} />
-        <Route path="/referanslar" element={<PageTransition>
-          <Seo path="/referanslar" title="Referanslar & Projeler"
-            description="Emsa Otel'de komisyonsuz rezervasyon, Rönesans Edu'da özel platform, Pawsec'te e-ticaret — suerta co.'nun teslim ettiği rezervasyon, ilan ve platform projeleri."
-            jsonLd={breadcrumbSchema([{ name: 'Ana Sayfa', path: '/' }, { name: 'Referanslar', path: '/referanslar' }])} />
-          <ReferencesPage /></PageTransition>} />
-        <Route path="/referanslar/:id" element={<PageTransition><ProjectDetail /></PageTransition>} />
-        <Route path="/blog" element={<PageTransition>
-          <Seo path="/blog" title="Blog & İçerikler"
-            description="Direkt rezervasyon, OTA komisyonu, ilan sayfası performansı, çok dilli listing ve görsel optimizasyonu üzerine suerta co. rehber içerikleri."
-            jsonLd={breadcrumbSchema([{ name: 'Ana Sayfa', path: '/' }, { name: 'Blog', path: '/blog' }])} />
-          <BlogPage /></PageTransition>} />
-        <Route path="/blog/:id" element={<PageTransition><BlogDetail /></PageTransition>} />
-        <Route path="/iletisim" element={<PageTransition>
-          <Seo path="/iletisim" title="İletişim & Bize Ulaşın"
-            description="Projenizi başlatmak için suerta co. ile iletişime geçin. Teknik proje yapılandırıcı, e-posta (suerta.info@gmail.com) veya WhatsApp üzerinden hızlı dönüş."
-            jsonLd={breadcrumbSchema([{ name: 'Ana Sayfa', path: '/' }, { name: 'İletişim', path: '/iletisim' }])} />
-          <ContactSection /></PageTransition>} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-  );
-}
-
-function App() {
-  // Prerender (puppeteer) sırasında navigator.webdriver true olur. Bu modda
-  // ağır 3D sahneyi, preloader'ı ve Lenis'i atlıyoruz: build çok daha hızlı olur
-  // ve gerçek kullanıcı yine tam deneyimi alır (React istemcide sıfırdan render eder).
-  const isPrerender = typeof navigator !== 'undefined' && navigator.webdriver === true;
-  const [isLoading, setIsLoading] = useState(!isPrerender);
-  const [showCanvas, setShowCanvas] = useState(true);
-  const isMobile = useIsMobile(768);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Sadece sayfanın en üstünde (Hero Section'da) Canvas'ı göster,
-      // aşağı kaydırınca gizleyerek GPU'yu rahatlat.
-      const shouldShow = window.scrollY <= window.innerHeight * 1.5;
-      setShowCanvas(prev => (prev === shouldShow ? prev : shouldShow));
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    // Prerender modunda Lenis'i başlatma (gereksiz rAF yükü olmasın)
-    if (isPrerender) return;
-    // Lenis Smooth Scrolling
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: 'vertical',
-      gestureDirection: 'vertical',
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-      infinite: false,
-    });
-
-    lenisInstance = lenis;
-
-    // Lenis ve ScrollTrigger'ı tek saate bağla. Bu köprü olmadan pin/scrub
-    // kullanan bölümler yumuşatılmış scroll pozisyonundan kayıyor.
-    const onLenisScroll = () => ScrollTrigger.update();
-    lenis.on('scroll', onLenisScroll);
-
-    const tick = (time) => lenis.raf(time * 1000);
-    gsap.ticker.add(tick);
-    gsap.ticker.lagSmoothing(0);
-
-    return () => {
-      lenis.off('scroll', onLenisScroll);
-      gsap.ticker.remove(tick);
-      lenis.destroy();
-      lenisInstance = null;
-    };
-  }, [isPrerender]);
-
-  return (
-    <LanguageProvider>
-      <Router>
-        <Routes>
-          {/* Yeniden tasarim prototipi. Kendi kabugunu tasir, bu yuzden
-              Navbar/Footer/3D sahne/imlec katmanlarini tamamen atlar.
-              Menude yok, sitemap'te yok, robots'ta kapali. */}
-          <Route path="/v2" element={<HomeV2 />} />
-          <Route path="/v2/hizmetlerimiz" element={<ServicesV2 />} />
-          <Route path="*" element={<SiteShell
-            isPrerender={isPrerender}
-            isMobile={isMobile}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
-            showCanvas={showCanvas}
-          />} />
-        </Routes>
-      </Router>
-    </LanguageProvider>
-  );
-}
-
-function SiteShell({ isPrerender, isMobile, isLoading, setIsLoading, showCanvas }) {
-  return (
-        <div className="app" style={{ position: 'relative' }}>
-
-          {/* Lüks Sinematik Film Dokusu (Grain Overlay) */}
-          <div className="noise-overlay" />
-          
-          {/* Atmosferik Arka Plan Işık Huzmeleri (Mesh Glows) */}
-          <div className="ambient-glow ambient-glow-gold" />
-          <div className="ambient-glow ambient-glow-crimson" />
-
-          {/* 3D Arka Plan Sahnesi - Performans için scroll ile duraklatılır */}
-          <div
-            className="bg-3d-canvas-container"
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100vh',
-              zIndex: 0,
-              pointerEvents: 'none',
-              opacity: showCanvas ? 1 : 0,
-              visibility: showCanvas ? 'visible' : 'hidden',
-              transition: 'opacity 1s ease, visibility 1s ease'
-            }}
-          >
-            {!isPrerender && !isMobile && (
-              <Canvas camera={{ position: [0, 0, 5], fov: 45 }} frameloop={showCanvas ? 'always' : 'never'}>
-                <LiquidGlassBlob />
-              </Canvas>
+    <Router>
+      {/* Dil adresten okunuyor, bu yuzden saglayici router'in icinde. */}
+      <LangProvider>
+        {/* Yukleme sirasinda bos bir yuzey: donen bir carka bakmak, bir
+            an bekleyip sayfayi gormekten kotudur. */}
+        <Suspense fallback={<div className="v2-boot" aria-hidden="true" />}>
+          <Routes>
+            {Object.entries(PAGE_COMPONENTS).flatMap(([page, Component]) =>
+              LANGS.map((lang) => (
+                <Route
+                  key={`${page}-${lang}`}
+                  path={PAGES[page][lang]}
+                  element={<Component />}
+                />
+              ))
             )}
-          </div>
 
-          <div style={{ position: 'relative', zIndex: 1 }}>
-            <AnimatePresence mode="wait">
-              {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
-            </AnimatePresence>
-            {!isMobile && <CustomCursor />}
-            {!isLoading && (
-              <>
-                <Navbar />
-                <main style={{ flex: 1 }}>
-                  <AnimatedRoutes />
-                </main>
-                <Footer />
-                <WhatsAppButton />
-              </>
-            )}
-          </div>
-        </div>
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Suspense>
+      </LangProvider>
+    </Router>
   );
 }
-
-export default App;

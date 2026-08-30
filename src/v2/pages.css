@@ -1,0 +1,344 @@
+/* ==========================================================================
+   Ic sayfalar
+   --------------------------------------------------------------------------
+   Isler, is detayi, blog, yazi, hakkimizda ve 404. Anasayfanin sahne
+   kurgusu burada yok: bu sayfalar okumak icin. Ortak olan yuzey, tipografi
+   ve aralik sistemi; buradaki kurallar yalnizca o sistemin sayfa
+   duzenlerine uygulanmis hali.
+   ========================================================================== */
+
+/* Okuma genisligi. Uzun metin tam genislikte satirlar halinde akarsa goz
+   satir basini kaybediyor; olcu karakter sayisina bagli, piksele degil. */
+.v2-shell--narrow {
+  max-width: 46rem;
+}
+
+/* Geri baglantisi -------------------------------------------------------- */
+
+.v2-back {
+  display: inline-block;
+  font-size: var(--text-small);
+  color: var(--muted);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.v2-back:hover {
+  color: var(--ink);
+}
+
+/* Ceviri notu: sayfanin dili ile metnin dili ayrildiginda okunuyor. */
+.v2-note {
+  display: inline-block;
+  padding: 0.5rem 0.75rem;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-micro);
+  color: var(--muted);
+}
+
+/* Kart izgarasi (isler) --------------------------------------------------- */
+
+.v2-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+
+.v2-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--surface);
+  background-image: var(--paper-tile), var(--paper-base);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-tile);
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.v2-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
+}
+
+.v2-card__shot {
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+}
+
+.v2-card__shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.v2-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: var(--space-6);
+}
+
+.v2-card__label {
+  font-size: var(--text-micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.v2-card__title {
+  font-size: var(--text-title);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.v2-card__desc {
+  font-size: var(--text-small);
+  color: var(--muted);
+}
+
+.v2-card__result {
+  margin-top: 0.5rem;
+  align-self: flex-start;
+  padding: 0.35rem 0.6rem;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+  color: var(--bg);
+  font-size: var(--text-micro);
+}
+
+/* Is detayi --------------------------------------------------------------- */
+
+.v2-detail__shot {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-tile);
+}
+
+/* Yazi listesi ------------------------------------------------------------ */
+
+.v2-filters {
+  display: flex;
+  margin-bottom: var(--space-8);
+}
+
+.v2-filters > * {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.v2-filter {
+  padding: 0.45rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  font-size: var(--text-micro);
+  color: var(--muted);
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+
+.v2-filter:hover {
+  color: var(--ink);
+}
+
+.v2-filter.is-on {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+}
+
+.v2-posts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+
+.v2-post {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100%;
+  padding: var(--space-6);
+  background-color: var(--surface);
+  background-image: var(--paper-tile), var(--paper-base);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  color: inherit;
+  text-decoration: none;
+  transition: transform var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+
+.v2-post:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card);
+}
+
+.v2-post__meta {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  font-size: var(--text-micro);
+  color: var(--muted);
+}
+
+.v2-post__title {
+  font-size: var(--text-title);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.v2-post__desc {
+  font-size: var(--text-small);
+  color: var(--muted);
+}
+
+.v2-post__go {
+  margin-top: auto;
+  padding-top: var(--space-4);
+  font-size: var(--text-micro);
+  color: var(--muted);
+}
+
+.v2-post:hover .v2-post__go {
+  color: var(--ink);
+}
+
+.v2-post__head {
+  text-wrap: balance;
+}
+
+.v2-post__byline {
+  display: flex;
+  gap: 0.5rem;
+  font-size: var(--text-micro);
+  color: var(--muted);
+}
+
+/* Uzun metin -------------------------------------------------------------- */
+
+.v2-prose {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+}
+
+.v2-prose__head {
+  margin-top: var(--space-4);
+  font-size: var(--text-title);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.v2-prose__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding-left: 1.1rem;
+  list-style: disc;
+}
+
+/* Hakkimizda -------------------------------------------------------------- */
+
+.v2-values,
+.v2-team {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+}
+
+.v2-value,
+.v2-person {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: var(--space-6);
+  background-color: var(--surface);
+  background-image: var(--paper-tile), var(--paper-base);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+}
+
+.v2-value__title,
+.v2-person__name {
+  font-size: var(--text-title);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.v2-value__desc,
+.v2-person__desc {
+  font-size: var(--text-small);
+  color: var(--muted);
+}
+
+.v2-person__mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-bottom: var(--space-3);
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--font-numeric);
+  font-size: 1.25rem;
+}
+
+.v2-person__role {
+  font-size: var(--text-micro);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Menudeki dil baglantisi ------------------------------------------------- */
+
+.v2-nav__lang {
+  font-size: var(--text-small);
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--dur-fast) var(--ease);
+}
+
+.v2-nav__lang:hover {
+  color: var(--ink);
+}
+
+/* Sayfa yuklenirken duran yuzey: bos ama sayfanin zemini renginde, boylece
+   gecis bir parlama olarak gorunmuyor. */
+.v2-boot {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+/* Dar ekran --------------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  .v2-cards,
+  .v2-posts,
+  .v2-values,
+  .v2-team {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 620px) {
+  /* Dil baglantisi pilde yer kaplıyor; dar ekranda acilir menude duruyor. */
+  .v2-nav__lang {
+    display: none;
+  }
+}

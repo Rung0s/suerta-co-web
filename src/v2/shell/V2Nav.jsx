@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { V2_HOME, V2_NAV_LINKS, V2_SOCIAL, resolveLink } from './nav-links';
+import { V2_SOCIAL, resolveLink } from './nav-links';
+import { useCopy, useLang } from '../i18n';
+import { LANGS, pathFor, swapLangPath } from '../i18n/paths';
 
 /* Yuzen menu pili. Anasayfada baglantilar ayni sayfadaki bolumlere,
-   diger /v2 sayfalarinda gercek rotalara gidiyor.
+   diger sayfalarda gercek rotalara gidiyor.
 
    Dar ekranda baglantilar pile sigmiyor. Onceden orada yalnizca gizleniyor
-   ve yerine hicbir sey konmuyordu: telefondan gelen ziyaretci Isler,
-   Hizmetler, Surec ve SSS'e hicbir yoldan ulasamiyordu. Simdi ayni
-   baglantilar tam ekran bir katmanda aciliyor. */
+   ve yerine hicbir sey konmuyordu: telefondan gelen ziyaretci hicbir
+   bolume ulasamiyordu. Simdi ayni baglantilar tam ekran bir katmanda
+   aciliyor. */
 export default function V2Nav() {
-  const { pathname, hash } = useLocation();
-  const onHome = pathname === V2_HOME;
+  const { pathname } = useLocation();
+  const { lang } = useLang();
+  const c = useCopy();
+  const home = pathFor('home', lang);
+  const onHome = pathname === home;
   const [open, setOpen] = useState(false);
-
-  /* Menu acikken arkadaki sayfa kaymamali; bir baglantiya basildiginda
-     ya da rota degistiginde kendiliginden kapaniyor. */
-  useEffect(() => setOpen(false), [pathname, hash]);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -26,11 +27,17 @@ export default function V2Nav() {
     const onKey = (event) => {
       if (event.key === 'Escape') setOpen(false);
     };
+    /* Baglantilar zaten kendileri kapatiyor; geri tusuyla gelen gezinme
+       menuyu acik birakirdi. */
+    const onPop = () => setOpen(false);
+
     window.addEventListener('keydown', onKey);
+    window.addEventListener('popstate', onPop);
 
     return () => {
       document.body.style.overflow = previous;
       window.removeEventListener('keydown', onKey);
+      window.removeEventListener('popstate', onPop);
     };
   }, [open]);
 
@@ -40,59 +47,68 @@ export default function V2Nav() {
     </>
   );
 
+  const close = () => setOpen(false);
+
   const renderLink = (link, className) => {
-    const to = resolveLink(link, onHome);
-    const current = link.path === pathname;
-    /* Ayni sayfadaki capa icin router'a gerek yok; Link kullanmak
-       burada gereksiz bir gezinme kaydi birakirdi. */
+    const to = resolveLink(link, lang, onHome);
+    const current = to === pathname;
+    /* Ayni sayfadaki capa icin router'a gerek yok; Link kullanmak burada
+       gereksiz bir gezinme kaydi birakirdi. */
     return to.startsWith('#') ? (
-      <a
-        key={link.label}
-        className={className}
-        href={to}
-        onClick={() => setOpen(false)}
-      >
+      <a key={link.key} className={className} href={to} onClick={close}>
         {link.label}
       </a>
     ) : (
       <Link
-        key={link.label}
+        key={link.key}
         className={className}
         to={to}
         aria-current={current ? 'page' : undefined}
-        onClick={() => setOpen(false)}
+        onClick={close}
       >
         {link.label}
       </Link>
     );
   };
 
+  /* Dil degistirici ayni sayfanin oteki dildeki adresine gidiyor; detay
+     sayfalarinda kimlik korunuyor. Anasayfaya atmak, okunan seyi
+     kaybettirir. */
+  const other = LANGS.find((item) => item !== lang);
+  const switchTo = swapLangPath(pathname, lang, other);
+
+  const cta = onHome ? (
+    <a className="v2-btn v2-btn--primary" href="#iletisim" onClick={close}>
+      {c.nav.cta}
+    </a>
+  ) : (
+    <Link className="v2-btn v2-btn--primary" to={pathFor('contact', lang)} onClick={close}>
+      {c.nav.cta}
+    </Link>
+  );
+
   return (
     <>
-      <nav className="v2-nav" aria-label="Ana menü">
+      <nav className="v2-nav" aria-label={c.nav.aria}>
         {onHome ? (
           <a className="v2-nav__brand" href="#top">
             {brand}
           </a>
         ) : (
-          <Link className="v2-nav__brand" to={V2_HOME}>
+          <Link className="v2-nav__brand" to={home}>
             {brand}
           </Link>
         )}
 
         <div className="v2-nav__links">
-          {V2_NAV_LINKS.map((link) => renderLink(link, 'v2-nav__link'))}
+          {c.nav.links.map((link) => renderLink(link, 'v2-nav__link'))}
         </div>
 
-        {onHome ? (
-          <a className="v2-btn v2-btn--primary" href="#iletisim">
-            Görüşme ayarla
-          </a>
-        ) : (
-          <Link className="v2-btn v2-btn--primary" to={`${V2_HOME}#iletisim`}>
-            Görüşme ayarla
-          </Link>
-        )}
+        <Link className="v2-nav__lang" to={switchTo} hrefLang={other} onClick={close}>
+          {c.switchTo}
+        </Link>
+
+        {cta}
 
         {/* Dar ekranin tek gezinme yolu. Genis ekranda gizli: orada
             baglantilar zaten pilin icinde duruyor. */}
@@ -102,42 +118,25 @@ export default function V2Nav() {
           onClick={() => setOpen((value) => !value)}
           aria-expanded={open}
           aria-controls="v2-menu"
-          aria-label={open ? 'Menüyü kapat' : 'Menüyü aç'}
+          aria-label={open ? c.nav.close : c.nav.open}
         >
           <span className="v2-nav__bar" aria-hidden="true" />
           <span className="v2-nav__bar" aria-hidden="true" />
         </button>
       </nav>
 
-      <div
-        id="v2-menu"
-        className={`v2-menu${open ? ' is-open' : ''}`}
-        hidden={!open}
-      >
+      <div id="v2-menu" className={`v2-menu${open ? ' is-open' : ''}`} hidden={!open}>
         <div className="v2-menu__links">
-          {V2_NAV_LINKS.map((link) => renderLink(link, 'v2-menu__link'))}
+          {c.nav.links.map((link) => renderLink(link, 'v2-menu__link'))}
         </div>
 
         <div className="v2-menu__foot">
-          {onHome ? (
-            <a
-              className="v2-btn v2-btn--primary"
-              href="#iletisim"
-              onClick={() => setOpen(false)}
-            >
-              Görüşme ayarla
-            </a>
-          ) : (
-            <Link
-              className="v2-btn v2-btn--primary"
-              to={`${V2_HOME}#iletisim`}
-              onClick={() => setOpen(false)}
-            >
-              Görüşme ayarla
-            </Link>
-          )}
+          {cta}
 
           <div className="v2-menu__social">
+            <Link className="v2-menu__social-link" to={switchTo} hrefLang={other} onClick={close}>
+              {c.switchTo}
+            </Link>
             {V2_SOCIAL.map((item) => (
               <a
                 key={item.label}

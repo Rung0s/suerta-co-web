@@ -1,17 +1,19 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { V2_HOME, V2_NAV_LINKS, V2_SOCIAL, resolveLink } from './nav-links';
+import { V2_SOCIAL, CONTACT, resolveLink } from './nav-links';
+import { useCopy, useLang } from '../i18n';
+import { pathFor } from '../i18n/paths';
 
 /* Kapanis bandi.
    Referans sayfayi tam genislik bir gorselle kapatiyor ve telif satirini
-   onun uzerine serilen koyu gradyanda tasiyor. Bizde o yeri tesisin drone
-   cekimi tutuyor.
+   onun uzerine serilen koyu gradyanda tasiyor.
 
-   Duzen ana sitedeki alt bilgiyle ayni: uc kolon, dev logotype, en altta
-   telif ve yukari don. */
+   Duzen uc kolon, dev logotype, en altta telif ve yukari don. */
 export default function V2Footer() {
   const { pathname } = useLocation();
-  const onHome = pathname === V2_HOME;
+  const { lang } = useLang();
+  const c = useCopy();
+  const onHome = pathname === pathFor('home', lang);
 
   return (
     <footer className="v2-band">
@@ -19,15 +21,15 @@ export default function V2Footer() {
         <div className="v2-shell">
           <div className="v2-fcols">
             <div className="v2-fcol">
-              <span className="v2-fcol__title">Menü</span>
-              {V2_NAV_LINKS.map((link) => {
-                const to = resolveLink(link, onHome);
+              <span className="v2-fcol__title">{c.footer.menu}</span>
+              {c.nav.links.map((link) => {
+                const to = resolveLink(link, lang, onHome);
                 return to.startsWith('#') ? (
-                  <a key={link.label} className="v2-fcol__link" href={to}>
+                  <a key={link.key} className="v2-fcol__link" href={to}>
                     {link.label}
                   </a>
                 ) : (
-                  <Link key={link.label} className="v2-fcol__link" to={to}>
+                  <Link key={link.key} className="v2-fcol__link" to={to}>
                     {link.label}
                   </Link>
                 );
@@ -35,7 +37,7 @@ export default function V2Footer() {
             </div>
 
             <div className="v2-fcol">
-              <span className="v2-fcol__title">Sosyal</span>
+              <span className="v2-fcol__title">{c.footer.social}</span>
               {V2_SOCIAL.map((item) => (
                 <a
                   key={item.label}
@@ -50,12 +52,12 @@ export default function V2Footer() {
             </div>
 
             <div className="v2-fcol">
-              <span className="v2-fcol__title">İletişim</span>
-              <a className="v2-fcol__link" href="mailto:suerta.info@gmail.com">
-                suerta.info@gmail.com
+              <span className="v2-fcol__title">{c.footer.contact}</span>
+              <a className="v2-fcol__link" href={`mailto:${CONTACT.mail}`}>
+                {CONTACT.mail}
               </a>
               <span className="v2-fcol__link v2-fcol__link--plain">
-                Eskişehir, Türkiye (Global)
+                {c.footer.location}
               </span>
             </div>
           </div>
@@ -67,17 +69,13 @@ export default function V2Footer() {
           </div>
 
           <div className="v2-band__bottom">
-            <span className="v2-band__copy">
-              © {new Date().getFullYear()} suerta.co — dijital ajans. İnternet siteleri,
-              e-ticaret, rezervasyon sistemleri ve yapay zekâ otomasyonları. Tüm
-              hakları saklıdır.
-            </span>
+            <span className="v2-band__copy">{c.footer.copy(new Date().getFullYear())}</span>
             <button
               type="button"
               className="v2-totop"
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             >
-              Yukarı dön ↑
+              {c.footer.toTop}
             </button>
           </div>
         </div>
@@ -85,9 +83,7 @@ export default function V2Footer() {
 
       {/* Sayfanin en alti: firlatma anini kutlayan kontrol odasi. Telif
           satirindan sonra geliyor, sayfa onun uzerinde kapaniyor.
-          Halftone baski; koyu bantta ters cevriliyor (bkz. closing.css).
-          Once bir drone videosu vardi — guzel bir cekimdi ama sayfanin
-          diliyle konusmuyordu ve 3,5 MB indiriliyordu. */}
+          Halftone baski; koyu bantta ters cevriliyor (bkz. closing.css). */}
       <img
         className="v2-band__scene"
         src="/img/control.webp"

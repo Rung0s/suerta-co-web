@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { HERO_CARDS } from './card-list';
+import { useCopy, useLang } from '../i18n';
+import { pathFor } from '../i18n/paths';
 
 /* ==========================================================================
    Firlatma sahnesi — sabitlenen hero
@@ -42,6 +44,8 @@ function span(value, from, to) {
 }
 
 export default function HeroLaunch() {
+  const c = useCopy();
+  const { lang } = useLang();
   const outer = useRef(null);
   const [progress, setProgress] = useState(0);
   /* Ilk cizim her yerde ayni olmali: prerender masaustu genisliginde
@@ -148,15 +152,14 @@ export default function HeroLaunch() {
         suerta<span className="v2-hero__brand-dot">.co</span>
       </span>
       <h1 className="v2-display">
-        <span className="v2-tone-lead">Ziyaretçiyi müşteriye çeviren</span> premium web
-        siteleri.
+        <span className="v2-tone-lead">{c.hero.lead}</span> {c.hero.tail}
       </h1>
       <div className="v2-hero__actions">
         <a className="v2-btn v2-btn--primary" href="#iletisim">
-          Görüşme ayarla
+          {c.hero.ctaPrimary}
         </a>
         <a className="v2-btn v2-btn--ghost" href="#isler">
-          İşleri gör
+          {c.hero.ctaSecondary}
         </a>
       </div>
     </div>
@@ -196,13 +199,13 @@ export default function HeroLaunch() {
           <div className="v2-launch__slot" key={key} style={style}>
             <Link
               className="v2-launch__card-link"
-              to={`/blog/${post.slug}`}
+              to={pathFor('blogItem', lang, { id: post })}
               tabIndex={i === active ? undefined : -1}
               aria-hidden={i === active ? undefined : 'true'}
             >
               <Card />
               <span className="v2-launch__read">
-                {post.label}
+                {c.cards[key].read}
                 <span className="v2-launch__read-arrow" aria-hidden="true">
                   →
                 </span>
@@ -286,13 +289,13 @@ export default function HeroLaunch() {
             style={pinned ? { opacity: span(progress, 0.2, 0.3) } : undefined}
             aria-hidden="true"
           >
-            {HERO_CARDS[active].area}
+            {c.cards[HERO_CARDS[active].key].area}
           </span>
 
           {deck}
         </div>
 
-        <div className="v2-launch__dots" role="tablist" aria-label="Çalışma alanları">
+        <div className="v2-launch__dots" role="tablist" aria-label={c.hero.areasLabel}>
           {HERO_CARDS.map((card, i) => (
             <button
               key={card.key}
@@ -300,7 +303,7 @@ export default function HeroLaunch() {
               role="tab"
               className={`v2-deck__dot${i === active ? ' is-active' : ''}`}
               aria-selected={i === active}
-              aria-label={card.area}
+              aria-label={c.hero.dotLabel(c.cards[card.key].area)}
               onClick={() => goTo(i)}
             />
           ))}
@@ -313,7 +316,7 @@ export default function HeroLaunch() {
           animate={{ opacity: progress > 0.08 ? 0 : 1 }}
           transition={{ duration: 0.3 }}
         >
-          kaydır
+          {c.hero.hint}
         </motion.span>
       </div>
     </header>

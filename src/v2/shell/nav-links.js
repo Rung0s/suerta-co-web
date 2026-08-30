@@ -1,30 +1,26 @@
-/* /v2 kabugunun tek link kaynagi. Menu ve alt bilgi ayni diziden okuyor;
-   ikisi ayri yazildiginda biri guncellenip digeri unutuluyordu.
+import { pathFor } from '../i18n/paths';
 
-   `hash` tek sayfa anasayfadaki bolume, `path` o bolumun kendi sayfasina
-   isaret ediyor. Bir bolumun sayfasi henuz yoksa `path` bos kalir ve link
-   anasayfadaki bolume duser. */
-export const V2_HOME = '/v2';
+/* Menunun tek link kaynagi. Etiketler dil dosyalarindan (copy.tr / copy.en)
+   geliyor; burada yalnizca o etiketin nereye gittigi hesaplaniyor.
 
-export const V2_NAV_LINKS = [
-  { label: 'İşler', hash: '#isler', path: null },
-  { label: 'Hizmetler', hash: '#hizmetler', path: '/v2/hizmetlerimiz' },
-  { label: 'Süreç', hash: '#surec', path: null },
-  { label: 'SSS', hash: '#sss', path: null },
-];
+   Bir baglanti iki yere birden isaret edebiliyor: anasayfadaki bolume
+   (`hash`) ve o bolumun kendi sayfasina (`key` ile PAGES tablosuna). Ayni
+   sayfadayken capa, baska sayfadayken tam adres kullaniliyor — boylece
+   anasayfanin tek parca akisi bolunmuyor. */
 
 export const V2_SOCIAL = [
   { label: 'Instagram ↗', href: 'https://instagram.com/suerta.co' },
   { label: 'WhatsApp ↗', href: 'https://wa.me/905060693525' },
 ];
 
-/* Anasayfadayken menu ici çapa, baska sayfadayken tam yol uretiyor.
-   Bolumun kendi sayfasi varsa oraya, yoksa anasayfanin ilgili bolumune. */
-export function resolveLink(link, onHome) {
-  /* Anasayfada menu hep ayni sayfadaki bolume gidiyor: tek sayfa akisi
-     bolunmesin. Bolumun kendi sayfasina gecis, o bolumun kendi icindeki
-     baglantidan yapiliyor. */
-  if (onHome) return link.hash;
-  if (link.path) return link.path;
-  return `${V2_HOME}${link.hash}`;
+export const CONTACT = {
+  mail: 'suerta.info@gmail.com',
+  whatsapp: '905060693525',
+  instagram: 'https://instagram.com/suerta.co',
+};
+
+export function resolveLink(link, lang, onHome) {
+  if (onHome && link.hash) return link.hash;
+  const path = pathFor(link.key, lang);
+  return link.hash && path === pathFor('home', lang) ? `${path}${link.hash}` : path;
 }

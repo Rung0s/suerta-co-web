@@ -4,8 +4,12 @@ import HeroLaunch from './hero/HeroLaunch';
 import { referencesData } from '../data/references';
 import { Reveal, Item, TwoTone } from './primitives';
 import V2Layout from './shell/V2Layout';
-import { SERVICES as services } from './data/services';
-import { STEPS as steps, FAQS as faqs } from './data/process';
+import { useCopy, useLang } from './i18n';
+import { pathFor } from './i18n/paths';
+import Seo, { faqPage } from './seo/Seo';
+import { SITE_URL } from '../components/Seo';
+import { HTML_LANG } from './i18n/paths';
+import ContactSection from './sections/ContactSection';
 
 /* Firlatma sahnesi.
    Onceki hali tek parca bir roket silueti idi ve cikartma gibi duruyordu:
@@ -16,23 +20,6 @@ import { STEPS as steps, FAQS as faqs } from './data/process';
    Bitmap degil SVG: her olcekte net kaliyor ve renkleri tokenlardan
    aliyor. Govde tek dolgu degil, kademeli: panel cizgileri ve kademe
    halkalari uzaklik hissini veren tek sey. */
-/* Kapanisin roketi: hero'daki havalanan baskinin aynisi. Once kodla
-   cizilmis bir SVG vardi ve sayfadaki halftone baskilarin yanina
-   oturmuyordu. */
-function LaunchScene() {
-  return (
-    <img
-      className="v2-rocket"
-      src="/img/rocket-fly.webp"
-      width="900"
-      height="1592"
-      decoding="async"
-      loading="lazy"
-      alt="Havalanan roket"
-    />
-  );
-}
-
 const ASCII_RAMP = '-=+*#%@$&';
 
 function asciiBlock(rows, cols, seed) {
@@ -138,6 +125,7 @@ function ScriptedLine({ text }) {
    sadece bir slogan olurdu; parayi bir kez atmis olmak onu bir sonuca
    ceviriyor. */
 function LuckCoin() {
+  const c = useCopy().manifesto;
   /* Yarim tur cinsinden. Cift toplam tura, tek toplam yazi verir; her
      basista 9 ya da 10 yarim tur eklendigi icin sonuc gercekten rastgele
      ama para hep ayni yonde donuyor, geri sarma hissi olmuyor. */
@@ -191,7 +179,7 @@ function LuckCoin() {
     setStage(2);
   };
 
-  const side = halfTurns % 2 === 0 ? 'Tura' : 'Yazı';
+  const side = halfTurns % 2 === 0 ? c.heads : c.tails;
 
   /* Dokunulmamis para hicbir sey yapmiyorsa dokunulmuyor. Arada bir kendi
      ekseninde sallaniyor: "bu cevrilebilir" demenin yaziyla degil hareketle
@@ -206,13 +194,13 @@ function LuckCoin() {
       <div className="v2-altar">
         <div className="v2-halo v2-halo--altar" aria-hidden="true" />
         <div className="v2-luckcard" role="group" aria-label="suerta.co kartviziti">
-          <p className="v2-luckcard__line">İşini şansa bırakma.</p>
+          <p className="v2-luckcard__line">{c.cardLine}</p>
           <p className="v2-luckcard__brand">
             suerta<span className="v2-luckcard__dot">.co</span>
           </p>
-          <p className="v2-luckcard__tag">markanızın şansı</p>
+          <p className="v2-luckcard__tag">{c.cardTag}</p>
           <a className="v2-btn v2-btn--primary v2-luckcard__cta" href="#iletisim">
-            Görüşme ayarla
+            {c.cardCta}
           </a>
         </div>
       </div>
@@ -234,7 +222,7 @@ function LuckCoin() {
             ? { transform: `rotateY(${driftTurn}deg)` }
             : { transform: `rotateY(${halfTurns * 180}deg)` }
         }
-        aria-label={stage === 0 ? 'Parayı çevir' : 'Bir daha bas'}
+        aria-label={stage === 0 ? c.coinFlip : c.coinAgain}
       >
         <span className="v2-coin__face" aria-hidden="true">
           <span className="v2-coin__mark">s</span>
@@ -271,11 +259,11 @@ function LuckCoin() {
             strokeLinejoin="round"
           />
         </svg>
-        {stage === 0 ? 'bu paraya dokunma' : 'bir daha bas'}
+        {stage === 0 ? c.noteIdle : c.noteAgain}
       </p>
 
       <p className="v2-altar__result" aria-live="polite">
-        {stage === 1 ? `${side} geldi.` : ''}
+        {stage === 1 ? `${side} ${c.resultSuffix}` : ''}
       </p>
     </div>
   );
@@ -371,244 +359,6 @@ function useDriftingCarousel(ref) {
   return takeOverRef;
 }
 
-/* Iletisim.
-   Arkada sunucu yok, o yuzden form "gonderiliyor" numarasi yapmiyor:
-   alanlari duzenli bir mesaja cevirip WhatsApp'ta aciyor. Sahte bir
-   basari ekrani gostermektense mesajin nereye gittigini gormek daha
-   durust ve pratikte daha hizli donuyor. */
-const PROJECT_TYPES = [
-  'Otel & rezervasyon',
-  'Emlak & kiralama',
-  'İnternet sitesi',
-  'E-ticaret',
-  'Yapay zekâ otomasyonu',
-  'Görünürlük & büyüme',
-  'Henüz emin değilim',
-];
-
-const WHATSAPP = '905060693525';
-
-function ArrowGlyph() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path
-        d="M4 12L12 4M12 4H5.5M12 4v6.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function ContactSection() {
-  const [type, setType] = useState(PROJECT_TYPES[0]);
-  const [sent, setSent] = useState(false);
-
-  const submit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const lines = [
-      'Merhaba suerta.co,',
-      '',
-      `Ad: ${data.get('ad') || '—'}`,
-      `Marka: ${data.get('marka') || '—'}`,
-      `İletişim: ${data.get('iletisim') || '—'}`,
-      `Proje tipi: ${type}`,
-      '',
-      data.get('mesaj') || '',
-    ];
-    window.open(
-      `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join('\n'))}`,
-      '_blank',
-      'noopener'
-    );
-    setSent(true);
-  };
-
-  return (
-    <section className="v2-section v2-close v2-contact" id="iletisim">
-      <div className="v2-halo" aria-hidden="true" />
-      <div className="v2-shell">
-        {/* Kapanis ve iletisim ayri iki bolumdu ve ikisi de ayni basligi
-            tasiyip ayni seyi istiyordu. Tek perde halinde birlestiler:
-            once sahne ve kontenjan, hemen ardindan doldurulacak alan. */}
-        <Reveal className="v2-close__inner">
-          <Item>
-            <LaunchScene />
-          </Item>
-          <Item as="h2" className="v2-display">
-            Ne inşa ettiğinizi anlatın
-          </Item>
-          <Item>
-            <span className="v2-ticket">
-              <span className="v2-ticket__num">2</span>
-              <span className="v2-ticket__label">yer · bu ay</span>
-            </span>
-          </Item>
-          <Item className="v2-status">
-            <span className="v2-status__dot" aria-hidden="true" />
-            Bu hafta yanıt süresi: birkaç saat
-          </Item>
-        </Reveal>
-
-        <Reveal className="v2-contact__grid">
-          <Item>
-            {sent ? (
-              <div className="v2-form">
-                <div className="v2-form__sent">
-                  <p className="v2-form__sent-title">WhatsApp’ta açıldı.</p>
-                  <p className="v2-form__note">
-                    Pencere açılmadıysa engellenmiş olabilir; aşağıdaki kanallardan
-                    doğrudan yazabilirsiniz.
-                  </p>
-                  <button
-                    type="button"
-                    className="v2-btn v2-btn--ghost"
-                    onClick={() => setSent(false)}
-                  >
-                    Formu tekrar aç
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <form className="v2-form" onSubmit={submit}>
-                <div className="v2-form__row">
-                  <label className="v2-field">
-                    <span className="v2-field__label">Ad</span>
-                    <input name="ad" type="text" placeholder="Adınız" required />
-                  </label>
-                  <label className="v2-field">
-                    <span className="v2-field__label">Marka</span>
-                    <input name="marka" type="text" placeholder="İşletme veya marka adı" />
-                  </label>
-                </div>
-
-                <label className="v2-field">
-                  <span className="v2-field__label">Telefon veya e-posta</span>
-                  <input
-                    name="iletisim"
-                    type="text"
-                    placeholder="Size nereden dönelim?"
-                    required
-                  />
-                </label>
-
-                <fieldset className="v2-field" style={{ border: 0, padding: 0, margin: 0 }}>
-                  <legend className="v2-field__label">Proje tipi</legend>
-                  <div className="v2-choices">
-                    {PROJECT_TYPES.map((option) => (
-                      <label className="v2-choice" key={option}>
-                        <input
-                          type="radio"
-                          name="tip"
-                          value={option}
-                          checked={type === option}
-                          onChange={() => setType(option)}
-                        />
-                        <span>{option}</span>
-                      </label>
-                    ))}
-                  </div>
-                </fieldset>
-
-                <label className="v2-field">
-                  <span className="v2-field__label">Mesaj</span>
-                  <textarea
-                    name="mesaj"
-                    placeholder="Ne yapmak istediğinizi birkaç cümleyle anlatın."
-                  />
-                </label>
-
-                <div className="v2-form__foot">
-                  <p className="v2-form__note">
-                    Form WhatsApp’ta açılır; hiçbir bilgi burada saklanmaz.
-                  </p>
-                  <button type="submit" className="v2-btn v2-btn--primary">
-                    Gönder
-                  </button>
-                </div>
-              </form>
-            )}
-          </Item>
-
-          <Item className="v2-channels">
-            <a
-              className="v2-channel"
-              href={`https://wa.me/${WHATSAPP}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span className="v2-channel__icon">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm0 2a8 8 0 110 16 8 8 0 01-4.2-1.2l-.4-.2-2.5.7.7-2.4-.3-.4A8 8 0 0112 4zm-3.3 4c-.2 0-.5 0-.7.4-.3.3-.9.9-.9 2.1s.9 2.4 1 2.6c.2.2 1.8 2.9 4.5 3.9 2.2.9 2.7.7 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.2.2-1.3l-.6-.3-1.8-.9c-.3-.1-.5-.2-.7.1l-.7.9c-.1.2-.3.2-.5.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.1-.3 0-.4.1-.5l.5-.5.3-.5v-.5l-.8-1.9c-.2-.5-.4-.4-.6-.4z" />
-                </svg>
-              </span>
-              <span className="v2-channel__body">
-                <span className="v2-channel__name">WhatsApp</span>
-                <span className="v2-channel__meta">En hızlı yol — genelde birkaç saat</span>
-              </span>
-              <span className="v2-channel__go">
-                <ArrowGlyph />
-              </span>
-            </a>
-
-            <a className="v2-channel" href="mailto:suerta.info@gmail.com">
-              <span className="v2-channel__icon">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <rect x="2.5" y="5" width="19" height="14" rx="2.5" stroke="currentColor" strokeWidth="1.7" />
-                  <path d="M3.5 7l8.5 6 8.5-6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
-                </svg>
-              </span>
-              <span className="v2-channel__body">
-                <span className="v2-channel__name">E-posta</span>
-                <span className="v2-channel__meta">suerta.info@gmail.com</span>
-              </span>
-              <span className="v2-channel__go">
-                <ArrowGlyph />
-              </span>
-            </a>
-
-            <a
-              className="v2-channel"
-              href="https://instagram.com/suerta.co"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span className="v2-channel__icon">
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.7" />
-                  <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.7" />
-                  <circle cx="17.4" cy="6.6" r="1.15" fill="currentColor" />
-                </svg>
-              </span>
-              <span className="v2-channel__body">
-                <span className="v2-channel__name">Instagram</span>
-                <span className="v2-channel__meta">@suerta.co — işleri buradan da görebilirsiniz</span>
-              </span>
-              <span className="v2-channel__go">
-                <ArrowGlyph />
-              </span>
-            </a>
-
-            <div className="v2-reply">
-              <span className="v2-reply__head">
-                <span className="v2-status__dot" aria-hidden="true" />
-                Yanıt süresi
-              </span>
-              <p className="v2-reply__text">
-                Hafta içi mesajlara aynı gün, hafta sonu ertesi iş günü dönüyoruz. Üç
-                kişilik bir ekibiz; size yazan da işi yapan kişi oluyor.
-              </p>
-            </div>
-          </Item>
-        </Reveal>
-      </div>
-    </section>
-  );
-}
-
 /* Oklar kendi konum durumunu tutmuyor; bir kart genisligi kadar kaydiriyor
    ve durmayi tarayiciya birakiyor. Durum tutulsaydi kullanici parmakla
    kaydirdiginda sayac gercekle uyusmaz hale gelirdi. */
@@ -643,13 +393,16 @@ function PartnerPortrait({ letter, tint, seed }) {
    kalin basliklar halinde duruyor ("*   **Shopify Entegrasyonu:** ...").
    Ayri bir liste tutmak yerine oradan cikariyoruz: tek kaynak kaliyor ve
    proje guncellenince kart kendiliginden dogru sayiyor. */
+
 function serviceLabels(project) {
   if (!project.details) return [];
   return [...project.details.matchAll(/\*\s+\*\*([^:*]+):/g)].map((m) => m[1].trim());
 }
 
-function WorkTile({ project, wide, result, film }) {
-  const labels = serviceLabels(project);
+function WorkTile({ project, wide, result, film, copy }) {
+  /* Film tuglalarinin "neler yaptik" listesi dil dosyasindan, musteri
+     projelerininki proje metninden turuyor. */
+  const labels = project.did ?? serviceLabels(project);
   /* Filmlerin gidilecek bir adresi yok; baglantisi olmayani <a> yapmak
      tiklanabilirmis gibi gosterir ve klavye ile bos bir durak yaratir. */
   const Shell = project.link ? 'a' : 'div';
@@ -684,7 +437,7 @@ function WorkTile({ project, wide, result, film }) {
           </video>
 
           <div className="v2-tv__overlay">
-            <span className="v2-tv__overlay-label">Neler yaptık</span>
+            <span className="v2-tv__overlay-label">{copy.didLabel}</span>
             <ul className="v2-tv__list">
               {labels.map((label) => (
                 <li key={label}>{label}</li>
@@ -711,7 +464,7 @@ function WorkTile({ project, wide, result, film }) {
             <img
               className="v2-tv__media"
               src={project.image}
-              alt={`${project.name} projesinden ekran görüntüsü`}
+              alt={copy.shot(project.name)}
               loading="lazy"
               decoding="async"
             />
@@ -722,13 +475,13 @@ function WorkTile({ project, wide, result, film }) {
 
           {/* Uzerine gelince ekrani o projede yaptigimiz isler kapliyor. */}
           <div className="v2-tv__overlay">
-            <span className="v2-tv__overlay-label">Neler yaptık</span>
+            <span className="v2-tv__overlay-label">{copy.didLabel}</span>
             <ul className="v2-tv__list">
               {labels.map((label) => (
                 <li key={label}>{label}</li>
               ))}
             </ul>
-            {project.link && <span className="v2-tv__go">Siteyi gör ↗</span>}
+            {project.link && <span className="v2-tv__go">{copy.visit}</span>}
           </div>
         </div>
 
@@ -833,145 +586,98 @@ function VerifiedMark() {
   );
 }
 
-/* Uc sayi, uc ayri musteri ve uc ayri is turu: rezervasyon, arsiv
+/* Sayfadaki her sayi, her yorum ve her film basligi dil dosyasindan
+   geliyor; burada yalnizca hangi verinin nereye girdigi duruyor.
+
+   Uc sayi, uc ayri musteri ve uc ayri is turu: rezervasyon, arsiv
    yazilimi ve teslim edilen proje sayisi. Onceden ucu de tek bir otel
    projesinin etrafinda donuyordu ve sayfa "otel yazilimi satan bir yer"
-   gibi okunuyordu. Sayilar referanslardaki musteri yorumlarindan
-   geliyor. */
-const kpis = [
-  { unit: '%', value: '40', label: 'Emsa Otel’de doğrudan rezervasyon artışı' },
-  { value: '1.000+', label: 'Argüman Fabrikası’nda aranabilir arşiv kaydı' },
-  {
-    value: String(referencesData.length),
-    label: 'Farklı sektörde teslim edilen proje',
-    laurel: true,
-  },
-];
+   gibi okunuyordu. Proje sayisi elle yazilmiyor, referans listesinden
+   turuyor. */
+function kpisFrom(copy) {
+  return copy.kpis.map((kpi) => ({
+    ...kpi,
+    value: kpi.value ?? String(referencesData.length),
+  }));
+}
 
-/* Her tugla kendi sonucunu tasiyor. Tek projenin sonucu one cikarilinca
-   digerleri "isim listesi" gibi kaliyordu; oysa dordunun de olculebilir
-   bir ciktisi var. Anahtar references.js'teki proje id'si. */
-const WORK_RESULTS = {
-  1: 'Doğrudan rezervasyon %40 arttı',
-  2: 'Kontenjan takibi 7/24 otomatik',
-  3: 'Sıfırdan e-ticaret, tek akışta ödeme',
-  4: '1.000+ konu aranabilir arşive dönüştü',
+/* Video isleri: musteri sitesi degil, cektigimiz tanitim filmleri.
+   Gorsel ve poster sabit, baslik ve "neler yaptik" listesi dile bagli. */
+const FILM_MEDIA = {
+  'film-kiralik': { video: '/video/reel.mp4', poster: '/video/reel-poster.jpg' },
+  'film-araz': { video: '/video/showcase.mp4', poster: '/video/showcase-poster.jpg' },
 };
 
-/* Video isleri.
-   Bunlar musteri sitesi degil, cektigimiz tanitim filmleri — hizmet
-   listesinde zaten fotograf ve icerik uretimi var. Site ekran goruntusuymus
-   gibi sunmak yaniltici olurdu; kendi girdileri olarak duruyorlar ve
-   `details` alani ayni kalibi kullandigi icin hover listesi de otomatik
-   dogru cikiyor. */
-const mediaWorks = [
-  {
-    id: 'film-kiralik',
-    name: 'Kiralık Daire Tanıtımı',
-    desc: 'Roma · Tanıtım Filmi & Görsel İçerik',
-    video: '/video/reel.mp4',
-    poster: '/video/reel-poster.jpg',
-    details: `
-*   **Mekân Çekimi:** Daire ve çevresi misafirin göreceği sırayla çekildi.
-*   **Kurgu ve Renk:** Listing sayfasında döngüde oynayacak şekilde kurgulandı.
-*   **Web İçin Optimizasyon:** Sayfayı yavaşlatmayacak boyuta indirildi.
-*   **Listing Entegrasyonu:** Rezervasyon sayfasına gömüldü.
-    `,
-  },
-  {
-    id: 'film-araz',
-    name: 'Araz Wooden Concept',
-    desc: 'Adrasan · Drone Çekimi & Tesis Tanıtımı',
-    video: '/video/showcase.mp4',
-    poster: '/video/showcase-poster.jpg',
-    details: `
-*   **Drone Çekimi:** Tesisin bütünü ve konumu havadan gösterildi.
-*   **Ünite Çekimleri:** Her bungalov tipi ayrı ayrı kaydedildi.
-*   **Kurgu:** Ana sayfada sessiz döngü için hazırlandı.
-*   **Web İçin Optimizasyon:** Mobilde de akıcı oynayacak şekilde sıkıştırıldı.
-    `,
-  },
-];
+function filmsFrom(copy) {
+  return copy.films.map((film) => ({ ...film, ...FILM_MEDIA[film.id] }));
+}
 
-/* One cikan is: sonucu en net olcülen proje. */
+/* One cikan is: sonucu en net olculen proje. */
 const FEATURED_ID = 1;
 
 /* Yerlesim uc satir:
-   1. Dort musteri projesi, esit dar tugla. Emsa en sona alindi; one cikan
-      genis tugla oldugu surece Arguman Fabrikasi'ndan uzaktaydi, artik
-      yaninda duruyor.
+   1. Dort musteri projesi, esit dar tugla.
    2. Iki tanitim filmi, yarim genislikte. Bunlar site ekran goruntusu
       degil cekim; televizyon cercevesi goruntuyu kucultup uzerine cam,
       tarama cizgisi ve dugme koyuyordu. Film kendi ekraninda duruyor.
    3. Sayi seridi tam genislikte. */
-function buildWorkLayout() {
+function buildWorkLayout(copy) {
   const featured = referencesData.find((p) => p.id === FEATURED_ID);
   const clients = [
     ...referencesData.filter((p) => p !== featured),
     ...(featured ? [featured] : []),
   ];
 
-  return { clients, films: mediaWorks, featured };
+  return { clients, films: filmsFrom(copy), featured };
 }
 
-/* Ne yaptigimiz. Etiketler somut teslimat, sifat degil.
+/* Yorumun yanindaki portrenin rengi ve dokusu markaya bagli, metni dile.
+   Dort gercek proje, dordu de references.js'te; her yorum o projede
+   fiilen yapilan ise dayaniyor. */
+const QUOTE_ART = {
+  'Emsa Otel': { letter: 'E', tint: '#9a3b32', seed: 11 },
+  'Rönesans Edu': { letter: 'R', tint: '#5c9cd8', seed: 29 },
+  'Pawsec Shop': { letter: 'P', tint: '#4f8f6a', seed: 53 },
+  'Argüman Fabrikası': { letter: 'A', tint: '#c08a2e', seed: 71 },
+};
 
-   Emlak, gunluk kiralik ve Airbnb ayri hatlar degil: musteri acisindan
-   ucu de "mulkumu doldurmak" isi. Ayri ayri yazmak uc farkli hizmet
-   satiyormus gibi gosteriyordu; tek baslikta toplandi. */
-/* Baslik sayiyi elle tasiyordu ve hizmet eklenince yalan soyluyordu; artik
-   diziden turuyor. */
-const NUMBER_WORDS = ['sıfır', 'tek', 'iki', 'üç', 'dört', 'beş', 'altı', 'yedi', 'sekiz'];
+function quotesFrom(copy) {
+  return copy.quotes.map((quote) => ({ ...quote, ...QUOTE_ART[quote.brand] }));
+}
 
-/* Dort gercek proje, dordu de references.js'te. Her yorum o projede fiilen
-   yapilan ise dayaniyor — genel ovgu cumlesi yazmak yerine teslim edilen
-   seyi soyletmek hem daha inandirici hem de dogru. */
-const quotes = [
-  {
-    brand: 'Emsa Otel',
-    letter: 'E',
-    tint: '#9a3b32',
-    seed: 11,
-    text:
-      'Otelimizin dijital dönüşümünde suerta.co ile çalışmak verdiğimiz en doğru karardı. Komisyonsuz rezervasyon sistemi sayesinde doğrudan satışlarımız %40 arttı.',
-    role: 'Yönetim Kurulu',
-  },
-  {
-    brand: 'Rönesans Edu',
-    letter: 'R',
-    tint: '#5c9cd8',
-    seed: 29,
-    text:
-      'Sınav kontenjanı takibi elle imkânsızdı. Kurdukları Telegram botu kontenjan açıldığı an haber veriyor; öğrencilerimiz artık fırsat kaçırmıyor.',
-    role: 'Kurucu Ortak',
-  },
-  {
-    brand: 'Pawsec Shop',
-    letter: 'P',
-    tint: '#4f8f6a',
-    seed: 53,
-    text:
-      'Sıfırdan e-ticaret kurduk. Sepetten ödemeye kadar tek akışta ilerliyor ve ürünlerimi kendim güncelliyorum — her değişiklik için kimseye dönmem gerekmiyor.',
-    role: 'Marka Sahibi',
-  },
-  {
-    brand: 'Argüman Fabrikası',
-    letter: 'A',
-    tint: '#c08a2e',
-    seed: 71,
-    text:
-      'Binden fazla münazara konusunu aranabilir bir arşive çevirdiler. Reklam ve SEO tarafını da yürüttükleri için içerik gerçekten karşılığını buldu.',
-    role: 'Kurucu',
-  },
-];
+/* Sitenin kimligi. Her dilin kendi adresi ve kendi dil etiketi var. */
+function websiteSchema(lang) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'suerta co.',
+    alternateName: 'suerta.co',
+    url: `${SITE_URL}${pathFor('home', lang)}`,
+    inLanguage: HTML_LANG[lang],
+    publisher: { '@id': `${SITE_URL}/#organization` },
+  };
+}
 
 export default function HomeV2() {
-  const work = buildWorkLayout();
+  const c = useCopy();
+  const { lang } = useLang();
+  const work = buildWorkLayout(c.work);
+  const quotes = quotesFrom(c.partners);
+  const kpis = kpisFrom(c.work);
+  const services = c.services.items;
+  const steps = c.process.steps;
+  const faqs = c.faq.items;
   const carousel = useRef(null);
   const carouselTakeOver = useDriftingCarousel(carousel);
 
   return (
     <V2Layout>
+      <Seo
+        title={c.meta.home.title}
+        description={c.meta.home.description}
+        jsonLd={[websiteSchema(lang), faqPage(faqs)]}
+      />
+
       <HeroLaunch />
 
       {/* Secili isler ----------------------------------------------------- */}
@@ -980,7 +686,7 @@ export default function HomeV2() {
           <Reveal>
             <Item className="v2-section__head">
               <h2 className="v2-title">
-                <TwoTone lead="Seçili" tail="işler." />
+                <TwoTone lead={c.work.lead} tail={c.work.tail} />
               </h2>
             </Item>
           </Reveal>
@@ -990,14 +696,15 @@ export default function HomeV2() {
               <Item key={project.id} className="v2-work__brick">
                 <WorkTile
                   project={project}
-                  result={WORK_RESULTS[project.id]}
+                  result={c.work.results[project.id]}
+                  copy={c.work}
                 />
               </Item>
             ))}
 
             {work.films.map((film) => (
               <Item key={film.id} className="v2-work__film">
-                <WorkTile project={film} film />
+                <WorkTile project={film} film copy={c.work} />
               </Item>
             ))}
 
@@ -1029,11 +736,11 @@ export default function HomeV2() {
             <Item className="v2-section__head">
               <h2 className="v2-title">
                 <TwoTone
-                  lead={`${NUMBER_WORDS[services.length] ?? services.length} alanda`}
-                  tail="çalışıyoruz."
+                  lead={c.services.headLead(services.length)}
+                  tail={c.services.headTail}
                 />
               </h2>
-              <Annotation text="hepsinde aynı mesele: aracıyı aradan çıkarmak" />
+              <Annotation text={c.services.annotation} />
             </Item>
           </Reveal>
 
@@ -1060,8 +767,8 @@ export default function HomeV2() {
               kime uygun oldugu ve ne teslim edildigi. */}
           <Reveal className="v2-list__more">
             <Item>
-              <Link className="v2-btn v2-btn--ghost" to="/v2/hizmetlerimiz">
-                Hizmetlerin ayrıntısı
+              <Link className="v2-btn v2-btn--ghost" to={pathFor('services', lang)}>
+                {c.services.more}
               </Link>
             </Item>
           </Reveal>
@@ -1074,7 +781,7 @@ export default function HomeV2() {
           <Reveal>
             <Item className="v2-section__head">
               <h2 className="v2-title">
-                <TwoTone lead="İlk görüşmeden" tail="yayına kadar." />
+                <TwoTone lead={c.process.lead} tail={c.process.tail} />
               </h2>
             </Item>
           </Reveal>
@@ -1098,14 +805,14 @@ export default function HomeV2() {
           <Reveal>
             <Item className="v2-partners__head">
               <h2 className="v2-title">
-                <TwoTone lead="Çalıştığımız" tail="markalar ne diyor." />
+                <TwoTone lead={c.partners.lead} tail={c.partners.tail} />
               </h2>
               <div className="v2-carousel-nav">
                 <button
                   type="button"
                   className="v2-arrow"
                   onClick={() => scrollCarousel(carousel, -1, carouselTakeOver)}
-                  aria-label="Önceki referans"
+                  aria-label={c.partners.prev}
                 >
                   ←
                 </button>
@@ -1113,7 +820,7 @@ export default function HomeV2() {
                   type="button"
                   className="v2-arrow"
                   onClick={() => scrollCarousel(carousel, 1, carouselTakeOver)}
-                  aria-label="Sonraki referans"
+                  aria-label={c.partners.next}
                 >
                   →
                 </button>
@@ -1156,12 +863,10 @@ export default function HomeV2() {
                   aria-hidden={pass === 1 ? 'true' : undefined}
                 >
                   <div className="v2-pcard__body">
-                    <span className="v2-pcard__brand">Ayrılmış</span>
-                    <p className="v2-pcard__open-text">
-                      Bu alan sizinle kuracağımız iş için ayrıldı.
-                    </p>
+                    <span className="v2-pcard__brand">{c.partners.openBrand}</span>
+                    <p className="v2-pcard__open-text">{c.partners.openText}</p>
                     <a className="v2-btn v2-btn--primary" href="#iletisim" tabIndex={pass === 1 ? -1 : undefined}>
-                      Görüşme ayarla
+                      {c.partners.openCta}
                     </a>
                   </div>
                   <PartnerPortrait letter="?" tint="#d0aa64" seed={47} />
@@ -1176,7 +881,7 @@ export default function HomeV2() {
       <section className="v2-section v2-manifesto" id="hakkimizda">
         <div className="v2-shell">
           <div className="v2-manifesto__grid">
-            <ScriptedLine text="Biz suerta.co'yuz. Otel, kiralama, eğitim ve e-ticaret markalarına ziyaretçiyi müşteriye çeviren siteler kuruyoruz." />
+            <ScriptedLine text={c.manifesto.line} />
             <LuckCoin />
           </div>
         </div>
@@ -1191,7 +896,7 @@ export default function HomeV2() {
           <Reveal>
             <Item className="v2-section__head">
               <h2 className="v2-title">
-                <TwoTone lead="Görüşmeden önce" tail="merak edilenler." />
+                <TwoTone lead={c.faq.lead} tail={c.faq.tail} />
               </h2>
             </Item>
           </Reveal>

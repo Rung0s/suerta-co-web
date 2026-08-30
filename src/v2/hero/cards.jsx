@@ -1,4 +1,5 @@
 import React from 'react';
+import { useCopy } from '../i18n';
 
 /* ==========================================================================
    Alan kartlari
@@ -11,11 +12,14 @@ import React from 'react';
    Sepet, WhatsApp...): alan adi zaten kartin ustunde buyuk yaziyla
    duruyor, ikisi ayni seyi yazinca kart kendini tekrar ediyordu.
 
-   Simdi her kart o alanda teslim edilen seyin kendi arayuzu: rezervasyon
-   icin takvim, bot icin sohbet, site icin canli ziyaretci, e-ticaret icin
+   Her kart o alanda teslim edilen seyin kendi arayuzu: rezervasyon icin
+   takvim, bot icin sohbet, site icin canli ziyaretci, e-ticaret icin
    sepet, gorunurluk icin arama sonucu. Ortak olan tek sey cerceve —
    baslik satiri, rozet ve ayni yuzey.
-   ========================================================================== */
+
+   Kartlarin icindeki her cumle dil dosyasindan geliyor: bu kartlar
+   sayfanin en cok bakilan nesnesi, yari Turkce yari Ingilizce bir kart
+   Ingilizce sayfada en cok goze batan sey olurdu. */
 
 function CardShell({ area, badge, children, tone }) {
   return (
@@ -41,18 +45,20 @@ const CAL_DAYS = Array.from({ length: 28 }, (_, i) => {
 });
 
 export function BookingCard() {
+  const t = useCopy().cards.otel;
+
   return (
-    <CardShell area="Rezervasyon" badge="komisyon %0">
+    <CardShell area={t.screen} badge={t.badge}>
       <div className="v2-hc__room">
         <span className="v2-hc__thumb v2-hc__thumb--room" />
         <span className="v2-hc__stack">
-          <span className="v2-hc__name">Deniz Manzaralı Deluxe</span>
-          <span className="v2-hc__meta">2 misafir · kahvaltı dahil</span>
+          <span className="v2-hc__name">{t.room}</span>
+          <span className="v2-hc__meta">{t.meta}</span>
         </span>
       </div>
 
       <div className="v2-hc__cal">
-        <span className="v2-hc__cal-head">Ağustos</span>
+        <span className="v2-hc__cal-head">{t.calHead}</span>
         <div className="v2-hc__cal-grid">
           {CAL_DAYS.map((state, i) => (
             <span key={i} className={`v2-hc__day v2-hc__day--${state}`} />
@@ -61,11 +67,11 @@ export function BookingCard() {
       </div>
 
       <div className="v2-hc__total">
-        <span className="v2-hc__meta">3 gece · 14–17 Ağu</span>
-        <span className="v2-hc__price">₺12.600</span>
+        <span className="v2-hc__meta">{t.staySummary}</span>
+        <span className="v2-hc__price">{t.price}</span>
       </div>
 
-      <span className="v2-hc__cta">Rezervasyonu tamamla</span>
+      <span className="v2-hc__cta">{t.cta}</span>
     </CardShell>
   );
 }
@@ -73,25 +79,21 @@ export function BookingCard() {
 /* 2 — Emlak & kiralama -----------------------------------------------------
    Ayni daire uc kanalda. Iki kanal komisyon aliyor, biri almiyor; kartin
    tek isi bunu yan yana gostermek. */
-const CHANNELS = [
-  { name: 'Airbnb', state: 'Dolu', fee: 'komisyon %15', tone: 'off' },
-  { name: 'Booking', state: 'Dolu', fee: 'komisyon %18', tone: 'off' },
-  { name: 'Kendi siteniz', state: 'Müsait', fee: 'komisyon yok', tone: 'on' },
-];
-
 export function ListingCard() {
+  const t = useCopy().cards.kiralama;
+
   return (
-    <CardShell area="İlan takvimi" badge="takvim senkron">
+    <CardShell area={t.screen} badge={t.badge}>
       <div className="v2-hc__room">
         <span className="v2-hc__thumb v2-hc__thumb--flat" />
         <span className="v2-hc__stack">
-          <span className="v2-hc__name">Deniz Manzaralı 2+1</span>
-          <span className="v2-hc__meta">Bodrum · 4 misafir</span>
+          <span className="v2-hc__name">{t.flat}</span>
+          <span className="v2-hc__meta">{t.meta}</span>
         </span>
       </div>
 
       <ul className="v2-hc__channels">
-        {CHANNELS.map((channel) => (
+        {t.channels.map((channel) => (
           <li key={channel.name} className={`v2-hc__channel v2-hc__channel--${channel.tone}`}>
             <span className="v2-hc__channel-name">{channel.name}</span>
             <span className="v2-hc__channel-fee">{channel.fee}</span>
@@ -101,8 +103,8 @@ export function ListingCard() {
       </ul>
 
       <div className="v2-hc__total">
-        <span className="v2-hc__meta">gecelik</span>
-        <span className="v2-hc__price">₺4.200</span>
+        <span className="v2-hc__meta">{t.perNight}</span>
+        <span className="v2-hc__price">{t.price}</span>
       </div>
     </CardShell>
   );
@@ -128,12 +130,14 @@ function sparkPath(values, width, height) {
 }
 
 export function VisitorsCard() {
+  const t = useCopy().cards.site;
+
   return (
-    <CardShell area="Canlı trafik" badge="mobil öncelikli">
+    <CardShell area={t.screen} badge={t.badge}>
       <div className="v2-hc__live">
         <span className="v2-hc__pulse" aria-hidden="true" />
-        <span className="v2-hc__meta">şu an sitede</span>
-        <span className="v2-hc__live-count">38</span>
+        <span className="v2-hc__meta">{t.now}</span>
+        <span className="v2-hc__live-count">{t.count}</span>
       </div>
 
       <svg className="v2-hc__spark" viewBox="0 0 200 56" fill="none" aria-hidden="true">
@@ -142,17 +146,13 @@ export function VisitorsCard() {
       </svg>
 
       <ul className="v2-hc__bars">
-        {[
-          ['Mobil', 68],
-          ['Masaüstü', 24],
-          ['Tablet', 8],
-        ].map(([label, value]) => (
-          <li key={label} className="v2-hc__bar">
-            <span className="v2-hc__bar-label">{label}</span>
+        {t.devices.map((device) => (
+          <li key={device.label} className="v2-hc__bar">
+            <span className="v2-hc__bar-label">{device.label}</span>
             <span className="v2-hc__bar-track">
-              <span className="v2-hc__bar-fill" style={{ width: `${value}%` }} />
+              <span className="v2-hc__bar-fill" style={{ width: `${device.value}%` }} />
             </span>
-            <span className="v2-hc__bar-value">%{value}</span>
+            <span className="v2-hc__bar-value">%{device.value}</span>
           </li>
         ))}
       </ul>
@@ -163,16 +163,13 @@ export function VisitorsCard() {
 /* 4 — E-ticaret ------------------------------------------------------------
    Sepetten odemeye tek akis. Kart o akisin son adiminda duruyor: iki urun,
    kargo bedava, odeme tamam. */
-const CART = [
-  { name: 'Tahıllı Köpek Maması 12 kg', price: '₺1.240', tone: 'a' },
-  { name: 'Otomatik Su Kabı', price: '₺600', tone: 'b' },
-];
-
 export function CheckoutCard() {
+  const t = useCopy().cards.eticaret;
+
   return (
-    <CardShell area="Sepet" badge="tek akış">
+    <CardShell area={t.screen} badge={t.badge}>
       <ul className="v2-hc__cart">
-        {CART.map((item) => (
+        {t.items.map((item) => (
           <li key={item.name} className="v2-hc__cart-row">
             <span className={`v2-hc__thumb v2-hc__thumb--${item.tone}`} />
             <span className="v2-hc__cart-name">{item.name}</span>
@@ -182,16 +179,16 @@ export function CheckoutCard() {
       </ul>
 
       <div className="v2-hc__line">
-        <span className="v2-hc__meta">Kargo</span>
-        <span className="v2-hc__meta">Bedava</span>
+        <span className="v2-hc__meta">{t.shippingLabel}</span>
+        <span className="v2-hc__meta">{t.shippingValue}</span>
       </div>
 
       <div className="v2-hc__total">
-        <span className="v2-hc__meta">toplam</span>
-        <span className="v2-hc__price">₺1.840</span>
+        <span className="v2-hc__meta">{t.totalLabel}</span>
+        <span className="v2-hc__price">{t.total}</span>
       </div>
 
-      <span className="v2-hc__cta v2-hc__cta--done">Ödeme tamamlandı ✓</span>
+      <span className="v2-hc__cta v2-hc__cta--done">{t.done}</span>
     </CardShell>
   );
 }
@@ -199,17 +196,13 @@ export function CheckoutCard() {
 /* 5 — Yapay zeka otomasyonlari ---------------------------------------------
    Botun isi gece yarisi gelen soruyu yanitsiz birakmamak. Kart bunu bir
    sohbet olarak gosteriyor; sayi sohbetin altinda kaliyor. */
-const CHAT = [
-  { from: 'them', text: 'Merhaba, 14–17 Ağustos boş oda var mı?' },
-  { from: 'us', text: '14–17 Ağustos deniz manzaralı deluxe müsait. 3 gece ₺12.600.' },
-  { from: 'them', text: 'Kahvaltı dahil mi?' },
-];
-
 export function ChatCard() {
+  const t = useCopy().cards.bot;
+
   return (
-    <CardShell area="WhatsApp" badge="otomatik yanıt" tone="chat">
+    <CardShell area={t.screen} badge={t.badge} tone="chat">
       <div className="v2-hc__chat">
-        {CHAT.map((line) => (
+        {t.chat.map((line) => (
           <span key={line.text} className={`v2-hc__bubble v2-hc__bubble--${line.from}`}>
             {line.text}
           </span>
@@ -222,8 +215,8 @@ export function ChatCard() {
       </div>
 
       <div className="v2-hc__line">
-        <span className="v2-hc__meta">ortalama yanıt</span>
-        <span className="v2-hc__price v2-hc__price--sm">0,4 sn</span>
+        <span className="v2-hc__meta">{t.avgLabel}</span>
+        <span className="v2-hc__price v2-hc__price--sm">{t.avgValue}</span>
       </div>
     </CardShell>
   );
@@ -232,22 +225,18 @@ export function ChatCard() {
 /* 6 — Gorunurluk & buyume --------------------------------------------------
    Iki yerde bulunmak gerekiyor: arama sonucunda ve yapay zeka yanitinda.
    Kart ikisini de gosteriyor — ustte siralama, altta yanitin kaynagi. */
-const RESULTS = [
-  { rank: '1', label: 'suerta.co', highlight: true },
-  { rank: '2', label: 'rakip ajans' },
-  { rank: '3', label: 'dizin sitesi' },
-];
-
 export function RankCard() {
+  const t = useCopy().cards.gorunurluk;
+
   return (
-    <CardShell area="Arama sonucu" badge="SEO + GEO">
+    <CardShell area={t.screen} badge={t.badge}>
       <div className="v2-hc__search">
         <span className="v2-hc__search-icon" aria-hidden="true" />
-        <span className="v2-hc__search-text">otel web sitesi kurulumu</span>
+        <span className="v2-hc__search-text">{t.query}</span>
       </div>
 
       <ul className="v2-hc__results">
-        {RESULTS.map((result) => (
+        {t.results.map((result) => (
           <li key={result.rank} className={`v2-hc__result${result.highlight ? ' is-us' : ''}`}>
             <span className="v2-hc__rank">{result.rank}</span>
             <span className="v2-hc__result-label">{result.label}</span>
@@ -256,9 +245,11 @@ export function RankCard() {
       </ul>
 
       <div className="v2-hc__ai">
-        <span className="v2-hc__ai-label">Yapay zekâ yanıtı</span>
+        <span className="v2-hc__ai-label">{t.aiLabel}</span>
         <span className="v2-hc__ai-text">
-          “…otel siteleri için <b>suerta.co</b> gibi ajanslar…”
+          {t.aiBefore}
+          <b>suerta.co</b>
+          {t.aiAfter}
         </span>
       </div>
     </CardShell>

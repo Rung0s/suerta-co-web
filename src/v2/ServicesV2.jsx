@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { referencesData } from '../data/references';
 import { Reveal, Item, TwoTone } from './primitives';
 import V2Layout from './shell/V2Layout';
-import { SERVICES } from './data/services';
-import { STEPS, FAQS } from './data/process';
+import { useCopy, useLang } from './i18n';
+import { pathFor } from './i18n/paths';
+import Seo, { breadcrumb, faqPage } from './seo/Seo';
 import './services.css';
 
 /* /v2 kabugunun ilk ic sayfasi.
@@ -18,7 +19,7 @@ function proofProjects(ids) {
     .filter(Boolean);
 }
 
-function ServiceCard({ service, index }) {
+function ServiceCard({ service, index, copy }) {
   const proof = proofProjects(service.proof);
 
   return (
@@ -28,12 +29,12 @@ function ServiceCard({ service, index }) {
       <Item as="p" className="v2-svc__desc">{service.desc}</Item>
 
       <Item className="v2-svc__meta">
-        <span className="v2-label">Kimin için</span>
+        <span className="v2-label">{copy.audienceLabel}</span>
         <p className="v2-svc__audience">{service.audience}</p>
       </Item>
 
       <Item className="v2-svc__meta">
-        <span className="v2-label">Teslim edilenler</span>
+        <span className="v2-label">{copy.deliverablesLabel}</span>
         <ul className="v2-svc__list">
           {service.deliverables.map((item) => (
             <li key={item} className="v2-svc__item">
@@ -55,7 +56,7 @@ function ServiceCard({ service, index }) {
           referans. */}
       {proof.length > 0 && (
         <Item className="v2-svc__proof">
-          <span className="v2-label">Bu alanda</span>
+          <span className="v2-label">{copy.pageProofLabel}</span>
           {proof.map((project) => (
             <a
               key={project.id}
@@ -74,29 +75,43 @@ function ServiceCard({ service, index }) {
 }
 
 export default function ServicesV2() {
+  const c = useCopy();
+  const { lang } = useLang();
+  const home = pathFor('home', lang);
+
   return (
     <V2Layout>
+      <Seo
+        title={c.meta.services.title}
+        description={c.meta.services.description}
+        jsonLd={[
+          faqPage(c.faq.items),
+          breadcrumb([
+            { name: c.nav.home, path: home },
+            { name: c.pages.services.label, path: pathFor('services', lang) },
+          ]),
+        ]}
+      />
+
       <header className="v2-section v2-pagehead" id="top">
         <div className="v2-halo" aria-hidden="true" />
         <div className="v2-shell">
           <Reveal className="v2-pagehead__inner">
             <Item>
-              <span className="v2-label">Hizmetler</span>
+              <span className="v2-label">{c.pages.services.label}</span>
             </Item>
             <Item as="h1" className="v2-display">
-              <TwoTone lead="Altı alanda" tail="çalışıyoruz." />
+              <TwoTone lead={c.pages.services.lead} tail={c.pages.services.tail} />
             </Item>
             <Item as="p" className="v2-lead">
-              Hepsi tek bir işe çıkıyor: ziyaretçiyi müşteriye çevirmek. Aşağıda her
-              alanın kime uygun olduğu, ne teslim ettiğimiz ve o alanda yaptığımız iş
-              yazıyor.
+              {c.pages.services.intro}
             </Item>
             <Item className="v2-pagehead__actions">
-              <Link className="v2-btn v2-btn--primary" to="/v2#iletisim">
-                Görüşme ayarla
+              <Link className="v2-btn v2-btn--primary" to={`${home}#iletisim`}>
+                {c.hero.ctaPrimary}
               </Link>
-              <Link className="v2-btn v2-btn--ghost" to="/v2#isler">
-                İşleri gör
+              <Link className="v2-btn v2-btn--ghost" to={`${home}#isler`}>
+                {c.hero.ctaSecondary}
               </Link>
             </Item>
           </Reveal>
@@ -107,8 +122,13 @@ export default function ServicesV2() {
       <section className="v2-section" id="hizmetler">
         <div className="v2-shell">
           <div className="v2-svc-grid">
-            {SERVICES.map((service, index) => (
-              <ServiceCard key={service.slug} service={service} index={index} />
+            {c.services.items.map((service, index) => (
+              <ServiceCard
+                key={service.slug}
+                service={service}
+                index={index}
+                copy={{ ...c.services, pageProofLabel: c.pages.services.proofLabel }}
+              />
             ))}
           </div>
         </div>
@@ -120,13 +140,13 @@ export default function ServicesV2() {
           <Reveal>
             <Item className="v2-section__head">
               <h2 className="v2-title">
-                <TwoTone lead="Hangi alan olursa olsun" tail="süreç aynı." />
+                <TwoTone lead={c.pages.services.processLead} tail={c.pages.services.processTail} />
               </h2>
             </Item>
           </Reveal>
 
           <Reveal className="v2-steps">
-            {STEPS.map((step) => (
+            {c.process.steps.map((step) => (
               <Item key={step.num} className="v2-step">
                 <span className="v2-step__num">{step.num}</span>
                 <span className="v2-step__title">{step.title}</span>
@@ -143,13 +163,13 @@ export default function ServicesV2() {
           <Reveal>
             <Item className="v2-section__head">
               <h2 className="v2-title">
-                <TwoTone lead="Görüşmeden önce" tail="merak edilenler." />
+                <TwoTone lead={c.faq.lead} tail={c.faq.tail} />
               </h2>
             </Item>
           </Reveal>
 
           <Reveal className="v2-faq">
-            {FAQS.map((faq) => (
+            {c.faq.items.map((faq) => (
               <Item key={faq.q} as="details" className="v2-faq__item">
                 <summary className="v2-faq__q">
                   {faq.q}
@@ -167,15 +187,14 @@ export default function ServicesV2() {
         <div className="v2-shell">
           <Reveal className="v2-svc-cta__box">
             <Item as="h2" className="v2-title">
-              <TwoTone lead="Hangi alanda olduğunuzu" tail="15 dakikada netleştirelim." />
+              <TwoTone lead={c.pages.services.ctaLead} tail={c.pages.services.ctaTail} />
             </Item>
             <Item as="p" className="v2-muted">
-              Ne sattığınızı, kime sattığınızı ve neyin eksik olduğunu konuşuyoruz.
-              Görüşme ücretsiz, kapsam ve fiyat sonrasında yazılı geliyor.
+              {c.pages.services.ctaText}
             </Item>
             <Item>
-              <Link className="v2-btn v2-btn--primary" to="/v2#iletisim">
-                Görüşme ayarla
+              <Link className="v2-btn v2-btn--primary" to={`${home}#iletisim`}>
+                {c.hero.ctaPrimary}
               </Link>
             </Item>
           </Reveal>
