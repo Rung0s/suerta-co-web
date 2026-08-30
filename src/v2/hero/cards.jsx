@@ -7,6 +7,10 @@ import React from 'react';
    kullaniyordu: yalnizca yazilar degisiyordu, dolayisiyla kart donerken
    "ayni sey, baska etiket" gibi okunuyordu.
 
+   Kart basligi alan adini degil o ekranin adini tasiyor (Rezervasyon,
+   Sepet, WhatsApp...): alan adi zaten kartin ustunde buyuk yaziyla
+   duruyor, ikisi ayni seyi yazinca kart kendini tekrar ediyordu.
+
    Simdi her kart o alanda teslim edilen seyin kendi arayuzu: rezervasyon
    icin takvim, bot icin sohbet, site icin canli ziyaretci, e-ticaret icin
    sepet, gorunurluk icin arama sonucu. Ortak olan tek sey cerceve —
@@ -38,7 +42,7 @@ const CAL_DAYS = Array.from({ length: 28 }, (_, i) => {
 
 export function BookingCard() {
   return (
-    <CardShell area="Otel & rezervasyon" badge="komisyon %0">
+    <CardShell area="Rezervasyon" badge="komisyon %0">
       <div className="v2-hc__room">
         <span className="v2-hc__thumb v2-hc__thumb--room" />
         <span className="v2-hc__stack">
@@ -77,7 +81,7 @@ const CHANNELS = [
 
 export function ListingCard() {
   return (
-    <CardShell area="Emlak & kiralama" badge="takvim senkron">
+    <CardShell area="İlan takvimi" badge="takvim senkron">
       <div className="v2-hc__room">
         <span className="v2-hc__thumb v2-hc__thumb--flat" />
         <span className="v2-hc__stack">
@@ -125,7 +129,7 @@ function sparkPath(values, width, height) {
 
 export function VisitorsCard() {
   return (
-    <CardShell area="İnternet siteleri" badge="mobil öncelikli">
+    <CardShell area="Canlı trafik" badge="mobil öncelikli">
       <div className="v2-hc__live">
         <span className="v2-hc__pulse" aria-hidden="true" />
         <span className="v2-hc__meta">şu an sitede</span>
@@ -166,7 +170,7 @@ const CART = [
 
 export function CheckoutCard() {
   return (
-    <CardShell area="E-ticaret" badge="tek akış">
+    <CardShell area="Sepet" badge="tek akış">
       <ul className="v2-hc__cart">
         {CART.map((item) => (
           <li key={item.name} className="v2-hc__cart-row">
@@ -203,7 +207,7 @@ const CHAT = [
 
 export function ChatCard() {
   return (
-    <CardShell area="Yapay zekâ otomasyonları" badge="otomatik yanıt" tone="chat">
+    <CardShell area="WhatsApp" badge="otomatik yanıt" tone="chat">
       <div className="v2-hc__chat">
         {CHAT.map((line) => (
           <span key={line.text} className={`v2-hc__bubble v2-hc__bubble--${line.from}`}>
@@ -236,7 +240,7 @@ const RESULTS = [
 
 export function RankCard() {
   return (
-    <CardShell area="Görünürlük & büyüme" badge="SEO + GEO">
+    <CardShell area="Arama sonucu" badge="SEO + GEO">
       <div className="v2-hc__search">
         <span className="v2-hc__search-icon" aria-hidden="true" />
         <span className="v2-hc__search-text">otel web sitesi kurulumu</span>

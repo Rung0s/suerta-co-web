@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { HERO_CARDS } from './card-list';
 
 /* ==========================================================================
@@ -98,9 +99,18 @@ export default function HeroLaunch() {
     };
   }, [pinned]);
 
-  /* Kart treni: t=0 ilk kart ortada, t=1 son kart ortada. */
+  /* Kart treni: t=0 ilk kart ortada, t=1 son kart ortada.
+
+     Ilerleme dogrudan konuma cevrilirse kartlar yolun buyuk kisminda iki
+     kartin arasinda kaliyor ve ikisi de yari saydam durdugu icin hicbiri
+     okunmuyor. Her adimin ortasinda hizli bir gecis, iki yaninda durus
+     var: kart yolun ucte ikisinde tam ortada ve tam belirgin duruyor. */
   const t = span(progress, CARDS_IN, CARDS_OUT);
-  const head = t * (CARD_COUNT - 1);
+  const seg = t * (CARD_COUNT - 1);
+  const index = Math.min(CARD_COUNT - 2, Math.floor(seg));
+  const frac = CARD_COUNT > 1 ? clamp(seg - index) : 0;
+  const move = clamp((frac - 0.42) / 0.18);
+  const head = index + move * move * (3 - 2 * move);
   const active = Math.round(head);
 
   const copyOut = span(progress, 0.04, COPY_OUT);
@@ -156,27 +166,48 @@ export default function HeroLaunch() {
     /* Kartlar yazi cekilirken geliyor: ikisi ayni anda ortada durunca
        kartlar yazinin uzerine biniyordu. */
     <div className="v2-launch__deck" style={pinned ? { opacity: span(progress, 0.18, 0.28) } : undefined}>
-      {HERO_CARDS.map(({ key, Card }, i) => {
+      {HERO_CARDS.map(({ key, Card, post }, i) => {
         const offset = i - head;
         const distance = Math.abs(offset);
 
         const style = pinned
           ? {
-              /* Komsu kartlar daha uzakta ve daha soluk: onceki araliklarda
-                 yandaki kart roketin uzerine biniyor ve ikisi birbirini
-                 okunmaz yapiyordu. */
-              transform: `translate(-50%, -50%) translateX(${offset * 132}%) scale(${
-                1 - Math.min(distance, 2) * 0.08
+              /* Yalnizca sirada olan kart okunuyor. Komsular hem daha
+                 uzakta hem neredeyse gorunmez: uc yarim saydam kart yan
+                 yana durunca hicbiri okunmuyor, uclu bir leke cikiyordu. */
+              transform: `translate(-50%, -50%) translateX(${offset * 118}%) scale(${
+                1 - Math.min(distance, 2) * 0.12
               })`,
-              opacity: distance > 1.15 ? 0 : 1 - distance * 0.78,
+              /* Ortadaki kart hep tam belirgin; solma yalnizca kart
+                 kadrajdan cikarken basliyor. Yari saydam kart, ustunde
+                 durulunca "kaybolmus" gorunuyordu. */
+              opacity: distance <= 0.55 ? 1 : Math.max(0, 1 - (distance - 0.55) * 3),
               zIndex: Math.max(1, 10 - Math.round(distance * 10)),
               pointerEvents: i === active ? 'auto' : 'none',
             }
           : undefined;
 
+        /* Kart bir baglanti: gordugun ekrani anlatan yaziya gidiyor.
+           Kartin kendisi tiklanabilir olunca "bu bir resim mi, dugme mi"
+           sorusu kalmiyor; altindaki satir da nereye gidildigini yaziyla
+           soyluyor. Yalnizca sirada olan kart tiklanabilir — arkadaki
+           kartlar zaten pointerEvents ile kapali. */
         return (
           <div className="v2-launch__slot" key={key} style={style}>
-            <Card />
+            <Link
+              className="v2-launch__card-link"
+              to={`/blog/${post.slug}`}
+              tabIndex={i === active ? undefined : -1}
+              aria-hidden={i === active ? undefined : 'true'}
+            >
+              <Card />
+              <span className="v2-launch__read">
+                {post.label}
+                <span className="v2-launch__read-arrow" aria-hidden="true">
+                  →
+                </span>
+              </span>
+            </Link>
           </div>
         );
       })}
@@ -246,6 +277,18 @@ export default function HeroLaunch() {
 
         <div className="v2-shell v2-launch__inner">
           {copy}
+
+          {/* Sirada olan alanin adi kartin ustunde yaziyla duruyor: kart
+              kendi basina hangi isten bahsettigini soylemekte zayif
+              kaliyordu ve bolum basliksiz gorunuyordu. */}
+          <span
+            className="v2-launch__area"
+            style={pinned ? { opacity: span(progress, 0.2, 0.3) } : undefined}
+            aria-hidden="true"
+          >
+            {HERO_CARDS[active].area}
+          </span>
+
           {deck}
         </div>
 

@@ -144,6 +144,42 @@ function LuckCoin() {
   const [halfTurns, setHalfTurns] = useState(0);
   const [stage, setStage] = useState(0);
   const [spinning, setSpinning] = useState(false);
+  /* Dokunulmadan once para kaydirmayla donuyor: bolum ekrandan gecerken
+     kendi ekseninde yarim turdan biraz fazla aliyor. Duran bir daireyi
+     kimse cevrilebilir sanmiyordu; donen bir sey ise elle durdurulmak
+     istiyor. Donme miktari kaydirma konumundan geliyor, zamanlayicidan
+     degil: okuyucu durursa para da duruyor. */
+  const altar = useRef(null);
+  const [drift, setDrift] = useState(0);
+
+  useEffect(() => {
+    const node = altar.current;
+    if (!node) return undefined;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+
+    let frame = 0;
+    const measure = () => {
+      frame = 0;
+      const rect = node.getBoundingClientRect();
+      const travel = window.innerHeight + rect.height;
+      /* 0 = bolum ekranin altindan giriyor, 1 = ustunden cikiyor. */
+      const ratio = (window.innerHeight - rect.top) / travel;
+      setDrift(Math.min(1, Math.max(0, ratio)));
+    };
+
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(measure);
+    };
+
+    measure();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
 
   const press = () => {
     if (stage === 0) {
@@ -161,6 +197,9 @@ function LuckCoin() {
      ekseninde sallaniyor: "bu cevrilebilir" demenin yaziyla degil hareketle
      soylenmis hali. */
   const idle = stage === 0 && !spinning;
+  /* Kaydirmadan gelen donus yalnizca el degmemis parada; para bir kez
+     atildiktan sonra sonucu okunabilir kalmali. */
+  const driftTurn = idle ? drift * 220 - 40 : 0;
 
   if (stage === 2) {
     return (
@@ -181,7 +220,7 @@ function LuckCoin() {
   }
 
   return (
-    <div className={`v2-altar${spinning ? ' is-spinning' : ''}`}>
+    <div className={`v2-altar${spinning ? ' is-spinning' : ''}`} ref={altar}>
       <div className="v2-halo v2-halo--altar" aria-hidden="true" />
       <span className="v2-altar__glow" aria-hidden="true" />
 
@@ -190,7 +229,11 @@ function LuckCoin() {
         className={`v2-coin${idle ? ' is-idle' : ''}`}
         onClick={press}
         onTransitionEnd={() => setSpinning(false)}
-        style={idle ? undefined : { transform: `rotateY(${halfTurns * 180}deg)` }}
+        style={
+          idle
+            ? { transform: `rotateY(${driftTurn}deg)` }
+            : { transform: `rotateY(${halfTurns * 180}deg)` }
+        }
         aria-label={stage === 0 ? 'Parayı çevir' : 'Bir daha bas'}
       >
         <span className="v2-coin__face" aria-hidden="true">
@@ -790,13 +833,30 @@ function VerifiedMark() {
   );
 }
 
-/* Referansta gecen sayilar: %40 Emsa Otel yorumundan, proje sayisi
-   references.js'ten turuyor, ekip buyuklugu sabit. */
+/* Uc sayi, uc ayri musteri ve uc ayri is turu: rezervasyon, arsiv
+   yazilimi ve teslim edilen proje sayisi. Onceden ucu de tek bir otel
+   projesinin etrafinda donuyordu ve sayfa "otel yazilimi satan bir yer"
+   gibi okunuyordu. Sayilar referanslardaki musteri yorumlarindan
+   geliyor. */
 const kpis = [
   { unit: '%', value: '40', label: 'Emsa Otel’de doğrudan rezervasyon artışı' },
-  { value: String(referencesData.length), label: 'Teslim edilen proje' },
-  { value: '3', label: 'Kişilik ekip, tek masa', laurel: true },
+  { value: '1.000+', label: 'Argüman Fabrikası’nda aranabilir arşiv kaydı' },
+  {
+    value: String(referencesData.length),
+    label: 'Farklı sektörde teslim edilen proje',
+    laurel: true,
+  },
 ];
+
+/* Her tugla kendi sonucunu tasiyor. Tek projenin sonucu one cikarilinca
+   digerleri "isim listesi" gibi kaliyordu; oysa dordunun de olculebilir
+   bir ciktisi var. Anahtar references.js'teki proje id'si. */
+const WORK_RESULTS = {
+  1: 'Doğrudan rezervasyon %40 arttı',
+  2: 'Kontenjan takibi 7/24 otomatik',
+  3: 'Sıfırdan e-ticaret, tek akışta ödeme',
+  4: '1.000+ konu aranabilir arşive dönüştü',
+};
 
 /* Video isleri.
    Bunlar musteri sitesi degil, cektigimiz tanitim filmleri — hizmet
@@ -930,9 +990,7 @@ export default function HomeV2() {
               <Item key={project.id} className="v2-work__brick">
                 <WorkTile
                   project={project}
-                  result={
-                    project === work.featured ? 'Doğrudan rezervasyon %40 arttı' : undefined
-                  }
+                  result={WORK_RESULTS[project.id]}
                 />
               </Item>
             ))}
@@ -1114,6 +1172,19 @@ export default function HomeV2() {
         </div>
       </section>
 
+      {/* Biz kimiz -------------------------------------------------------- */}
+      <section className="v2-section v2-manifesto" id="hakkimizda">
+        <div className="v2-shell">
+          <div className="v2-manifesto__grid">
+            <ScriptedLine text="Biz suerta.co'yuz. Otel, kiralama, eğitim ve e-ticaret markalarına ziyaretçiyi müşteriye çeviren siteler kuruyoruz." />
+            <LuckCoin />
+          </div>
+        </div>
+      </section>
+
+      {/* Kapanis + iletisim ------------------------------------------------ */}
+      <ContactSection />
+
       {/* SSS -------------------------------------------------------------- */}
       <section className="v2-section" id="sss">
         <div className="v2-shell">
@@ -1138,19 +1209,6 @@ export default function HomeV2() {
           </Reveal>
         </div>
       </section>
-
-      {/* Biz kimiz -------------------------------------------------------- */}
-      <section className="v2-section v2-manifesto" id="hakkimizda">
-        <div className="v2-shell">
-          <div className="v2-manifesto__grid">
-            <ScriptedLine text="Biz suerta.co'yuz. Otel, kiralama, eğitim ve e-ticaret markalarına ziyaretçiyi müşteriye çeviren siteler kuruyoruz." />
-            <LuckCoin />
-          </div>
-        </div>
-      </section>
-
-      {/* Kapanis + iletisim ------------------------------------------------ */}
-      <ContactSection />
 
     </V2Layout>
   );

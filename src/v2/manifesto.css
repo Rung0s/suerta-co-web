@@ -111,24 +111,22 @@
   z-index: 1;
 }
 
-/* Bosta duran para: uzun bir duraklamadan sonra iki yana salinip
-   duruyor. Surekli donmesi dikkati calar ve tiklamanin anlamini
-   oldururdu; buradaki hareket yalnizca "ben bir dugmeyim" diyor. */
-.v2-coin.is-idle {
-  animation: v2CoinTease 4.4s var(--ease-out) infinite;
-}
+/* El degmemis para kaydirmayla donuyor: acisi bolumun ekrandaki
+   konumundan geliyor (JSX'te hesaplaniyor), bu yuzden burada uzun bir
+   gecis olamaz — gecis olsa para kaydirmanin gerisinde kalirdi. Kisa
+   gecis yalnizca kare atlamalarini yumusatiyor.
 
-@keyframes v2CoinTease {
-  0%, 58%, 100% { transform: rotateY(0deg); }
-  66% { transform: rotateY(-26deg); }
-  74% { transform: rotateY(22deg); }
-  82% { transform: rotateY(-13deg); }
-  90% { transform: rotateY(7deg); }
+   Onceden burada kendi kendine calisan bir salinim animasyonu vardi;
+   animasyon satir ici stili ezdigi icin kaydirmali donus onunla birlikte
+   calisamiyor. */
+.v2-coin.is-idle {
+  transition: transform 120ms linear;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .v2-coin.is-idle {
-    animation: none;
+    transition: none;
+    transform: none;
   }
 }
 

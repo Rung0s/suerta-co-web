@@ -6,37 +6,11 @@
    `proof` degerleri src/data/references.js'teki proje id'leri. Isi olmayan
    alan bos birakiliyor — olmayan referans uydurmak yerine o kart kanitsiz
    duruyor. */
+
+/* Sira, kitlenin genisligine gore: site ve e-ticaret her sektorden
+   markanin isi, otel ve emlak daha dar. Rezervasyon basta durunca
+   listenin tamami otel isiymis gibi okunuyordu. */
 export const SERVICES = [
-  {
-    slug: 'otel-rezervasyon',
-    title: 'Otel & rezervasyon sistemleri',
-    desc:
-      'Misafir OTA üzerinden değil, doğrudan sizden rezervasyon yapar. Oda envanteri, sezonluk fiyat ve müsaitlik tek panelden yönetilir.',
-    tags: ['Komisyonsuz rezervasyon', 'Channel manager / PMS', 'Sezonluk fiyatlama', 'Online ödeme'],
-    audience: 'Butik otel, apart, bungalov ve tesis işletmeleri.',
-    deliverables: [
-      'Oda ve müsaitlik paneli',
-      'Rezervasyon motoru + online ödeme',
-      'Channel manager / PMS senkronu',
-      'Çok dilli misafir akışı',
-    ],
-    proof: [1],
-  },
-  {
-    slug: 'emlak-kiralama',
-    title: 'Emlak & kiralama',
-    desc:
-      'Portföy, günlük kiralık ve Airbnb tek yerde. Airbnb ve Booking takvimleriyle senkron çalışır; aynı daireyi komisyon ödemeden kendi sitenizden de doldurursunuz.',
-    tags: ['Portföy paneli', 'Takvim senkronu (iCal)', 'Filtreli arama', 'Harita görünümü'],
-    audience: 'Emlak ofisleri, günlük kiralık ve Airbnb yöneticileri.',
-    deliverables: [
-      'İlan ve portföy paneli',
-      'iCal takvim senkronu',
-      'Filtreli arama + harita',
-      'Talep ve görüşme formu',
-    ],
-    proof: [],
-  },
   {
     slug: 'internet-siteleri',
     title: 'İnternet siteleri',
@@ -81,6 +55,37 @@ export const SERVICES = [
       'Mevcut panele entegrasyon',
     ],
     proof: [2],
+  },
+
+  {
+    slug: 'otel-rezervasyon',
+    title: 'Otel & rezervasyon sistemleri',
+    desc:
+      'Misafir OTA üzerinden değil, doğrudan sizden rezervasyon yapar. Oda envanteri, sezonluk fiyat ve müsaitlik tek panelden yönetilir.',
+    tags: ['Komisyonsuz rezervasyon', 'Channel manager / PMS', 'Sezonluk fiyatlama', 'Online ödeme'],
+    audience: 'Butik otel, apart, bungalov ve tesis işletmeleri.',
+    deliverables: [
+      'Oda ve müsaitlik paneli',
+      'Rezervasyon motoru + online ödeme',
+      'Channel manager / PMS senkronu',
+      'Çok dilli misafir akışı',
+    ],
+    proof: [1],
+  },
+  {
+    slug: 'emlak-kiralama',
+    title: 'Emlak & kiralama',
+    desc:
+      'Portföy, günlük kiralık ve Airbnb tek yerde. Airbnb ve Booking takvimleriyle senkron çalışır; aynı daireyi komisyon ödemeden kendi sitenizden de doldurursunuz.',
+    tags: ['Portföy paneli', 'Takvim senkronu (iCal)', 'Filtreli arama', 'Harita görünümü'],
+    audience: 'Emlak ofisleri, günlük kiralık ve Airbnb yöneticileri.',
+    deliverables: [
+      'İlan ve portföy paneli',
+      'iCal takvim senkronu',
+      'Filtreli arama + harita',
+      'Talep ve görüşme formu',
+    ],
+    proof: [],
   },
   {
     slug: 'gorunurluk-buyume',
