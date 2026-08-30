@@ -27,3 +27,11 @@ dist-ssr
 .netlify/
 fetch_netlify.js
 netlify_output.txt
+
+# Tasarim sirasinda alinan tarayici ekran goruntuleri ve tek seferlik
+# playwright/puppeteer olcum betikleri. Repo kokunde birikiyorlar ve
+# hicbiri sitenin parcasi degil.
+/*_shot*.mjs
+/btn*.mjs
+/hero_*.mjs
+/*.png
