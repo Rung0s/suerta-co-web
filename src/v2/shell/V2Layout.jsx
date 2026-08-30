@@ -10,6 +10,7 @@ import '../manifesto.css';
 import '../closing.css';
 import '../contact.css';
 import '../cursor.css';
+import '../hero.css';
 /* v2.css en son: digerlerindeki kurallari kasten eziyor. */
 import '../v2.css';
 

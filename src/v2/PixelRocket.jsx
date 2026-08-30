@@ -176,18 +176,28 @@ function buildPaths() {
 
 const PATHS = buildPaths();
 
-export default function PixelRocket({ className }) {
+/* Hangi parcalarin cizilecegi: sahnede roket havalanirken kule ve rampa
+   yerinde kalmali. Ikisi ayni viewBox'ta ust uste duran iki svg olarak
+   ciziliyor, boylece hizalari bozulmuyor. */
+const GROUPS = {
+  rocket: ['body', 'highlight', 'shade', 'ring', 'mark', 'flame', 'flameCore'],
+  pad: ['tower', 'towerDim', 'pad'],
+};
+
+export default function PixelRocket({ className, style, only }) {
+  const keys = only ? GROUPS[only] : Object.keys(PALETTE);
   return (
     <svg
       className={className}
+      style={style}
       viewBox={`0 0 ${COLS} ${ROWS}`}
       shapeRendering="crispEdges"
       fill="none"
       aria-hidden="true"
       focusable="false"
     >
-      {Object.entries(PATHS).map(([key, d]) =>
-        d ? <path key={key} d={d} fill={PALETTE[key]} /> : null
+      {keys.map((key) =>
+        PATHS[key] ? <path key={key} d={PATHS[key]} fill={PALETTE[key]} /> : null
       )}
     </svg>
   );

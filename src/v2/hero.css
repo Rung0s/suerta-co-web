@@ -1,0 +1,798 @@
+/* ==========================================================================
+   Firlatma sahnesi + alan kartlari
+   --------------------------------------------------------------------------
+   Bolum bir ekran boyundan uzun: her kart icin bir ekranin bir bolumu kadar
+   yol veriliyor. Icindeki sahne yapisiyor (sticky), dolayisiyla o yol
+   boyunca sayfa degil sahne ilerliyor.
+
+   Sahnenin katmanlari, arkadan one: hale ve dusen isik, seyirci kalabaligi,
+   roket, kartlar. Hepsi ayni yuzey sisteminden (surface.css) besleniyor.
+   ========================================================================== */
+
+.v2-launch {
+  position: relative;
+  background: transparent;
+}
+
+/* Kart basina ~68vh yol. Daha kisasinda kartlar birbirine giriyor, daha
+   uzununda sahne oyalaniyor. */
+.v2-launch.is-pinned {
+  height: calc(100vh + var(--cards, 6) * 68vh);
+}
+
+.v2-launch__stage {
+  position: relative;
+  overflow: hidden;
+  padding-top: clamp(7rem, 11vw, 9.5rem);
+}
+
+.v2-launch.is-pinned .v2-launch__stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.v2-launch__inner {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+}
+
+/* Roket, kule ve kalabaligin kutusu. Sabitliyken sahnenin tamamini
+   kapliyor ve yazinin arkasinda duruyor; sabitleme kapaliyken yazinin ve
+   kartlarin altinda kendi yuksekligi olan bir blok. */
+.v2-launch__scene {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.v2-launch:not(.is-pinned) .v2-launch__scene {
+  position: relative;
+  inset: auto;
+  height: 44vh;
+  min-height: 16rem;
+  margin-top: var(--space-12);
+}
+
+/* Yazi -------------------------------------------------------------------- */
+
+.v2-launch__copy {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  text-align: center;
+  max-width: 46rem;
+  margin: 0 auto;
+  will-change: transform, opacity;
+}
+
+.v2-launch__copy .v2-display {
+  max-width: 17ch;
+}
+
+.v2-launch__copy .v2-lead {
+  max-width: 54ch;
+}
+
+.v2-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+  margin-top: var(--space-2);
+}
+
+/* Kalabalik ---------------------------------------------------------------
+   Sahnenin alt kenarinda, tam genislikte. Alt kenardan maske gecirilmiyor:
+   ayaklari soluklasinca insanlar yere basmiyor, havada duran bloklar gibi
+   okunuyordu. Kontrast bilerek dusuk — kalabalik sahneyi tasimiyor,
+   roketin olcegini veriyor. */
+
+.v2-launch__crowd {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  /* Yukseklik genislikten cikiyor (viewBox 170x15): boylece hucreler her
+     ekranda kare kaliyor ve siluetler bozulmuyor. */
+  height: auto;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Roket -------------------------------------------------------------------
+   Kalabaligin arkasinda ve solda duruyor: kartlar sagda, ikisi ayni sahneyi
+   ust uste binmeden paylasiyor. */
+
+.v2-launch__rocket {
+  position: absolute;
+  left: 4%;
+  bottom: clamp(2.5rem, 6vh, 4.5rem);
+  height: clamp(20rem, 58vh, 34rem);
+  width: auto;
+  z-index: 1;
+  transform-origin: 50% 100%;
+  pointer-events: none;
+}
+
+/* Maske yalnizca kule ve rampada: alt kenar sayfaya karisiyor. Havalanan
+   rokete uygulaninca motor kismi silik kaliyordu. */
+.v2-launch__rocket--pad {
+  -webkit-mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 88%, transparent 100%);
+}
+
+/* Roket kalkarken arkasinda kalan sutun: alev degil, alevin rampada
+   biraktigi duman. Piksel roketin kendi alevi zaten var. */
+.v2-launch__plume {
+  position: absolute;
+  left: calc(4% + clamp(3rem, 7vw, 5rem));
+  bottom: clamp(2rem, 5vh, 4rem);
+  width: clamp(2.5rem, 5vw, 4rem);
+  height: clamp(6rem, 16vh, 12rem);
+  z-index: 0;
+  transform-origin: 50% 100%;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(217, 58, 43, 0.28) 0%,
+    rgba(184, 137, 43, 0.16) 34%,
+    rgba(17, 17, 16, 0.06) 68%,
+    transparent 100%
+  );
+  filter: blur(6px);
+}
+
+/* Kart treni --------------------------------------------------------------
+   Kartlar ust uste degil yan yana duruyor; sahne ilerledikce hepsi birlikte
+   sola kayiyor ve sirada olan ortaya geliyor. Yanlardakiler gorunur kaliyor
+   (soluk ve kucuk), boylece "sirada baska bir sey var" okunuyor. */
+
+.v2-launch__deck {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Kartlarin ekseni ortada degil sagda: roket solda duruyor ve yanlardaki
+   soluk kart onun uzerine binince ikisi de okunmuyordu. */
+.v2-launch__slot {
+  position: absolute;
+  left: 62%;
+  top: 58%;
+  width: min(23rem, 78vw);
+  transform: translate(-50%, -50%);
+  transition: opacity 220ms linear;
+  will-change: transform, opacity;
+}
+
+.v2-launch__dots {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(1.25rem, 4vh, 2.5rem);
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  gap: 6px;
+}
+
+.v2-deck__dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(17, 17, 16, 0.18);
+  cursor: pointer;
+  transition: background var(--dur-hover) var(--ease-out), transform var(--dur-hover) var(--ease-out);
+}
+
+.v2-deck__dot:hover {
+  background: rgba(17, 17, 16, 0.38);
+}
+
+.v2-deck__dot.is-active {
+  background: var(--accent);
+  transform: scale(1.25);
+}
+
+.v2-deck__dot:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.v2-launch__hint {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(3rem, 8vh, 5rem);
+  transform: translateX(-50%);
+  z-index: 4;
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Dar masaustunde kart hem kuculuyor hem de daha saga kayiyor: 23rem kart
+   1280px ekranda roketin uzerine geliyordu. */
+@media (max-width: 1320px) {
+  .v2-launch__slot {
+    left: 66%;
+    width: min(20.5rem, 78vw);
+  }
+}
+
+/* ==========================================================================
+   Alan kartlari
+   Alti kart alti ayri arayuz gosteriyor; ortak olan cerceve, baslik satiri
+   ve yuzey. Icerideki her blok ayni dikey ritmi tutuyor.
+   ========================================================================== */
+
+.v2-hc {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--surface);
+  background-image: var(--paper-tile), var(--paper-base);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-raised);
+  overflow: hidden;
+  text-align: left;
+}
+
+.v2-hc__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-sunken);
+}
+
+.v2-hc__area {
+  font-size: var(--text-micro);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.v2-hc__badge {
+  font-size: 0.6875rem;
+  padding: 0.1875rem 0.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  color: #fff;
+  white-space: nowrap;
+}
+
+.v2-hc__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+}
+
+/* Ortak parcalar ---------------------------------------------------------- */
+
+.v2-hc__room,
+.v2-hc__cart-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.v2-hc__stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.v2-hc__thumb {
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 10px;
+  background: var(--surface-sunken);
+}
+
+.v2-hc__thumb--room {
+  background: linear-gradient(135deg, #3f3a33 0%, #7d6c58 55%, #c3ac8a 100%);
+}
+
+.v2-hc__thumb--flat {
+  background: linear-gradient(135deg, #2f4034 0%, #5c7a5f 55%, #a8c0a2 100%);
+}
+
+.v2-hc__thumb--a {
+  background: linear-gradient(135deg, #4a3a2a 0%, #99754c 100%);
+}
+
+.v2-hc__thumb--b {
+  background: linear-gradient(135deg, #23303f 0%, #6b8199 100%);
+}
+
+.v2-hc__name {
+  font-size: var(--text-small);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.v2-hc__meta {
+  font-size: var(--text-micro);
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.v2-hc__line,
+.v2-hc__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.v2-hc__total {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--line);
+}
+
+.v2-hc__price {
+  font-family: var(--font-numeric);
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.v2-hc__price--sm {
+  font-size: 1rem;
+}
+
+.v2-hc__cta {
+  display: block;
+  padding: 0.625rem;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+  color: var(--bg);
+  font-size: var(--text-micro);
+  font-weight: 600;
+  text-align: center;
+}
+
+.v2-hc__cta--done {
+  background: #1f6b3f;
+}
+
+/* 1 — Takvim -------------------------------------------------------------- */
+
+.v2-hc__cal {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-inner);
+  background: var(--surface);
+}
+
+.v2-hc__cal-head {
+  font-size: var(--text-micro);
+  color: var(--muted);
+}
+
+.v2-hc__cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.v2-hc__day {
+  height: 10px;
+  border-radius: 3px;
+  background: rgba(17, 17, 16, 0.07);
+}
+
+.v2-hc__day--busy {
+  background: rgba(17, 17, 16, 0.18);
+}
+
+/* Secili aralik: uclar tam renk, arasi soluk — bir aralik oldugu tek
+   bakista okunmali. */
+.v2-hc__day--start,
+.v2-hc__day--end {
+  background: var(--accent);
+}
+
+.v2-hc__day--mid {
+  background: rgba(154, 22, 31, 0.32);
+}
+
+/* 2 — Kanallar ------------------------------------------------------------ */
+
+.v2-hc__channels {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-inner);
+  overflow: hidden;
+}
+
+.v2-hc__channel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    'name state'
+    'fee state';
+  align-items: center;
+  gap: 0 var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: var(--surface);
+}
+
+.v2-hc__channel + .v2-hc__channel {
+  border-top: 1px solid var(--line);
+}
+
+.v2-hc__channel-name {
+  grid-area: name;
+  font-size: var(--text-micro);
+  font-weight: 600;
+}
+
+.v2-hc__channel-fee {
+  grid-area: fee;
+  font-size: 0.6875rem;
+  color: var(--muted);
+}
+
+.v2-hc__channel-state {
+  grid-area: state;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  padding: 0.125rem 0.5rem;
+  border-radius: var(--radius-pill);
+  background: rgba(17, 17, 16, 0.08);
+  color: var(--muted);
+}
+
+.v2-hc__channel--on {
+  background: rgba(31, 107, 63, 0.06);
+}
+
+.v2-hc__channel--on .v2-hc__channel-state {
+  background: rgba(31, 107, 63, 0.14);
+  color: #1f6b3f;
+}
+
+/* 3 — Ziyaretciler -------------------------------------------------------- */
+
+.v2-hc__live {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.v2-hc__live-count {
+  margin-left: auto;
+  font-family: var(--font-numeric);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+/* Canli oldugunu soyleyen tek isaret; sabit bir nokta "canli" demiyor. */
+.v2-hc__pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #1f6b3f;
+  box-shadow: 0 0 0 0 rgba(31, 107, 63, 0.5);
+  animation: v2HcPulse 2s var(--ease-out) infinite;
+}
+
+@keyframes v2HcPulse {
+  70% { box-shadow: 0 0 0 8px rgba(31, 107, 63, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(31, 107, 63, 0); }
+}
+
+.v2-hc__spark {
+  width: 100%;
+  height: 3.5rem;
+  display: block;
+}
+
+.v2-hc__spark-line {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.v2-hc__spark-fill {
+  fill: rgba(154, 22, 31, 0.08);
+  stroke: none;
+}
+
+.v2-hc__bars {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.v2-hc__bar {
+  display: grid;
+  grid-template-columns: 4.25rem minmax(0, 1fr) 2.25rem;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.v2-hc__bar-label {
+  font-size: 0.6875rem;
+  color: var(--muted);
+}
+
+.v2-hc__bar-track {
+  height: 5px;
+  border-radius: var(--radius-pill);
+  background: rgba(17, 17, 16, 0.08);
+  overflow: hidden;
+}
+
+.v2-hc__bar-fill {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+}
+
+.v2-hc__bar-value {
+  font-size: 0.6875rem;
+  text-align: right;
+  color: var(--muted);
+}
+
+/* 4 — Sepet --------------------------------------------------------------- */
+
+.v2-hc__cart {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.v2-hc__cart-name {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--text-micro);
+  line-height: 1.3;
+}
+
+.v2-hc__cart-price {
+  font-size: var(--text-micro);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* 5 — Sohbet -------------------------------------------------------------- */
+
+.v2-hc--chat .v2-hc__body {
+  background: var(--surface-sunken);
+}
+
+.v2-hc__chat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.v2-hc__bubble {
+  max-width: 84%;
+  padding: 0.5rem 0.75rem;
+  font-size: var(--text-micro);
+  line-height: 1.4;
+  border-radius: 14px;
+}
+
+/* Gelen mesaj solda ve beyaz, giden sagda ve koyu: her sohbet arayuzunun
+   ayni dili, kart aciklama istemeden okunuyor. */
+.v2-hc__bubble--them {
+  align-self: flex-start;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-bottom-left-radius: 4px;
+}
+
+.v2-hc__bubble--us {
+  align-self: flex-end;
+  background: var(--ink);
+  color: var(--bg);
+  border-bottom-right-radius: 4px;
+}
+
+.v2-hc__bubble--typing {
+  display: inline-flex;
+  gap: 4px;
+  padding: 0.625rem 0.75rem;
+}
+
+.v2-hc__bubble--typing i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(246, 245, 242, 0.7);
+  animation: v2HcType 1.1s var(--ease-out) infinite;
+}
+
+.v2-hc__bubble--typing i:nth-child(2) { animation-delay: 140ms; }
+.v2-hc__bubble--typing i:nth-child(3) { animation-delay: 280ms; }
+
+@keyframes v2HcType {
+  0%, 60%, 100% { opacity: 0.3; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-3px); }
+}
+
+/* 6 — Arama --------------------------------------------------------------- */
+
+.v2-hc__search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+}
+
+.v2-hc__search-icon {
+  width: 11px;
+  height: 11px;
+  border: 1.5px solid var(--muted);
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.v2-hc__search-icon::after {
+  content: '';
+  position: absolute;
+  right: -4px;
+  bottom: -3px;
+  width: 5px;
+  height: 1.5px;
+  background: var(--muted);
+  transform: rotate(45deg);
+}
+
+.v2-hc__search-text {
+  font-size: var(--text-micro);
+  color: var(--muted);
+}
+
+.v2-hc__results {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.v2-hc__result {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-micro);
+  color: var(--muted);
+}
+
+.v2-hc__result.is-us {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.v2-hc__rank {
+  font-family: var(--font-numeric);
+  width: 1.25rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.v2-hc__result.is-us .v2-hc__rank {
+  color: var(--accent);
+}
+
+.v2-hc__ai {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--space-3);
+  border-radius: var(--radius-inner);
+  background: var(--surface-sunken);
+}
+
+.v2-hc__ai-label {
+  font-size: 0.625rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.v2-hc__ai-text {
+  font-size: var(--text-micro);
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   Sabitlemenin kapali oldugu hal
+   Dar ekran ve hareket kisitlamasi. Sahne normal akista duruyor: yazi,
+   roket + kalabalik, sonra kartlar yatay kaydirilan bir serit.
+   ========================================================================== */
+
+.v2-launch:not(.is-pinned) .v2-launch__stage {
+  padding-bottom: var(--space-12);
+}
+
+.v2-launch:not(.is-pinned) .v2-launch__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+/* Sabitleme kapaliyken de roket rampada duruyor; yalnizca sahne kucuk. */
+.v2-launch:not(.is-pinned) .v2-launch__rocket {
+  height: 100%;
+  bottom: 2.5rem;
+  left: 8%;
+}
+
+.v2-launch:not(.is-pinned) .v2-launch__deck {
+  position: relative;
+  inset: auto;
+  display: flex;
+  gap: var(--space-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: var(--space-4);
+  pointer-events: auto;
+  /* Kaydirma serdi kabuk kenarindan tasabilsin: kart yarim gorunurse
+     yanda devam ettigi anlasiliyor. */
+  margin-inline: calc(var(--gutter) * -1);
+  padding-inline: var(--gutter);
+}
+
+.v2-launch:not(.is-pinned) .v2-launch__slot {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  flex: 0 0 min(20rem, 78vw);
+  scroll-snap-align: center;
+}
+
+.v2-launch:not(.is-pinned) .v2-launch__dots,
+.v2-launch:not(.is-pinned) .v2-launch__hint,
+.v2-launch:not(.is-pinned) .v2-launch__plume {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-hc__pulse,
+  .v2-hc__bubble--typing i {
+    animation: none;
+  }
+}

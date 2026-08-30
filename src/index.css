@@ -22,8 +22,13 @@
   padding: 0;
 }
 
+/* clip, hidden degil: overflow-x: hidden bu ogeleri kaydirma kapsayicisina
+   cevirir ve icerideki position: sticky calismaz (v2 hero sahnesi bunu
+   kullaniyor). clip yatay tasmayi ayni sekilde keser, kapsayici yaratmaz.
+   Destegi olmayan tarayici hidden satirinda kaliyor. */
 html {
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -33,11 +38,13 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  overflow-x: clip;
   width: 100%;
 }
 
 #root {
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 h1, h2, h3, h4, h5, h6 {
