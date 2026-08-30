@@ -14,10 +14,11 @@
   background: transparent;
 }
 
-/* Kart basina ~68vh yol. Daha kisasinda kartlar birbirine giriyor, daha
-   uzununda sahne oyalaniyor. */
+/* Kart basina bir ekran boyu yol. Onceden 68vh idi ve kartlar goze
+   okunacak zaman birakmadan geciyordu: kart bir arayuz gosteriyor, bir
+   basliktan uzun sure istiyor. */
 .v2-launch.is-pinned {
-  height: calc(100vh + var(--cards, 6) * 68vh);
+  height: calc(100vh + var(--cards, 6) * 100vh);
 }
 
 .v2-launch__stage {
@@ -107,7 +108,11 @@
   /* Yukseklik genislikten cikiyor (viewBox 170x15): boylece hucreler her
      ekranda kare kaliyor ve siluetler bozulmuyor. */
   height: auto;
-  z-index: 1;
+  /* Kalabalik roketin onunde: roket havalanirken govdesinin ve duman
+     sutununun alt kenari bir yerde bitiyor ve o kesik kenar sahnenin
+     ortasinda duz bir cizgi olarak goruluyordu. Siluetlerin arkasinda
+     bitince kesim gorunmuyor. */
+  z-index: 2;
   pointer-events: none;
 }
 

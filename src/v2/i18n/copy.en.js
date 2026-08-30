@@ -158,7 +158,7 @@ export const en = {
   services: {
     headLead: (count) => `${count} things`,
     headTail: 'we build.',
-    annotation: 'all of them the same question: cut out the middleman',
+    annotation: 'the same measure in all six: does a visitor become a customer',
     more: 'Services in detail',
     audienceLabel: 'Who it is for',
     deliverablesLabel: 'What you get',

@@ -112,13 +112,16 @@ export default function HeroLaunch() {
 
      Ilerleme dogrudan konuma cevrilirse kartlar yolun buyuk kisminda iki
      kartin arasinda kaliyor ve ikisi de yari saydam durdugu icin hicbiri
-     okunmuyor. Her adimin ortasinda hizli bir gecis, iki yaninda durus
-     var: kart yolun ucte ikisinde tam ortada ve tam belirgin duruyor. */
+     okunmuyor. Her adimin ortasinda bir gecis, iki yaninda durus var:
+     kart yolun dortte ucunde tam ortada ve tam belirgin duruyor.
+
+     Gecis penceresi adimin %26'si: daha darinda kart yerine zipliyor,
+     daha genisinde iki kart arasinda gecen sure uzuyor. */
   const t = span(progress, CARDS_IN, CARDS_OUT);
   const seg = t * (CARD_COUNT - 1);
   const index = Math.min(CARD_COUNT - 2, Math.floor(seg));
   const frac = CARD_COUNT > 1 ? clamp(seg - index) : 0;
-  const move = clamp((frac - 0.42) / 0.18);
+  const move = clamp((frac - 0.38) / 0.26);
   const head = index + move * move * (3 - 2 * move);
   const active = Math.round(head);
 
@@ -149,6 +152,12 @@ export default function HeroLaunch() {
 
   const copyOut = span(progress, 0.04, COPY_OUT);
   const lift = span(progress, 0.1, 1);
+  /* Iki roket baskisi var: rampadaki ve havalanan. Ikisi ayni anda
+     gorunurse sahnenin ortasinda ust uste binmis iki govde cikiyor ve
+     goruntu bozulmus gibi duruyor. Rampadaki once tamamen soniyor,
+     havalanan ondan sonra beliriyor; aradaki bosluk kasitli. */
+  const padOut = 1 - span(lift, 0, 0.22);
+  const flyIn = span(lift, 0.26, 0.5);
 
   /* Kartin sahnedeki yerine gitmek: nokta gostergesine basinca sayfa o
      kartin denk geldigi kaydirma konumuna gidiyor. */
@@ -290,7 +299,7 @@ export default function HeroLaunch() {
             width="900"
             height="1739"
             decoding="async"
-            style={pinned ? { opacity: 1 - Math.min(1, lift * 2.4) } : undefined}
+            style={pinned ? { opacity: padOut } : undefined}
           />
 
           <img
@@ -304,7 +313,7 @@ export default function HeroLaunch() {
             style={
               pinned
                 ? {
-                    opacity: Math.min(1, lift * 2.6),
+                    opacity: flyIn,
                     transform: `translateY(${(1 - lift) * 24}%) scale(${0.92 + lift * 0.08})`,
                   }
                 : { opacity: 0 }

@@ -159,7 +159,7 @@ export const tr = {
   services: {
     headLead: (count) => `${count} alanda`,
     headTail: 'çalışıyoruz.',
-    annotation: 'hepsinde aynı mesele: aracıyı aradan çıkarmak',
+    annotation: 'hepsinde aynı ölçü: ziyaretçi müşteriye dönüyor mu',
     more: 'Hizmetlerin ayrıntısı',
     audienceLabel: 'Kimin için',
     deliverablesLabel: 'Teslim edilenler',
