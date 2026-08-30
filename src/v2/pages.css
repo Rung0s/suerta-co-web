@@ -351,3 +351,18 @@
   height: 100%;
   object-fit: cover;
 }
+
+/* Anasayfadaki "tum isler" baglantisi tam genislikte kendi satirinda:
+   tuglalarin arasina sikistirilinca besinci bir tugla gibi okunuyordu.
+   Kolon sayilari work.css'teki izgarayla ayni. */
+.v2-work > .v2-work__more {
+  grid-column: span 12;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 1080px) {
+  .v2-work > .v2-work__more {
+    grid-column: span 6;
+  }
+}

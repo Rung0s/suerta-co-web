@@ -123,6 +123,7 @@ export const en = {
   work: {
     lead: 'Selected',
     tail: 'work.',
+    detail: 'See the project →',
     visit: 'Visit site ↗',
     shot: (name) => `Screenshot from the ${name} project`,
     didLabel: 'What we did',

@@ -400,20 +400,22 @@ function serviceLabels(project) {
   return [...project.details.matchAll(/\*\s+\*\*([^:*]+):/g)].map((m) => m[1].trim());
 }
 
-function WorkTile({ project, wide, result, film, copy }) {
+function WorkTile({ project, wide, result, film, copy, href }) {
   /* Film tuglalarinin "neler yaptik" listesi dil dosyasindan, musteri
      projelerininki proje metninden turuyor. */
   const labels = project.did ?? serviceLabels(project);
-  /* Filmlerin gidilecek bir adresi yok; baglantisi olmayani <a> yapmak
+  /* Tugla musterinin sitesine degil, o isin kendi sayfasina gidiyor:
+     disari cikan baglanti orada duruyor. Once her tugla dogrudan disari
+     aciliyordu ve ziyaretci ne yaptigimizi okumadan siteden cikiyordu.
+
+     Filmlerin gidilecek bir adresi yok; baglantisi olmayani <a> yapmak
      tiklanabilirmis gibi gosterir ve klavye ile bos bir durak yaratir. */
-  const Shell = project.link ? 'a' : 'div';
-  const linkProps = project.link
-    ? { href: project.link, target: '_blank', rel: 'noreferrer' }
-    : {};
+  const Shell = href ? Link : 'div';
+  const linkProps = href ? { to: href } : {};
 
   return (
     <Shell
-      className={`v2-tile${wide ? ' v2-tile--wide' : ''}${film ? ' v2-tile--film' : ''}${project.link ? '' : ' v2-tile--static'}`}
+      className={`v2-tile${wide ? ' v2-tile--wide' : ''}${film ? ' v2-tile--film' : ''}${href ? '' : ' v2-tile--static'}`}
       {...linkProps}
     >
       {/* Musteri projesi bir televizyonun icinde: cerceve, kavisli cam,
@@ -472,7 +474,7 @@ function WorkTile({ project, wide, result, film, copy }) {
                 <li key={label}>{label}</li>
               ))}
             </ul>
-            {project.link && <span className="v2-tv__go">{copy.visit}</span>}
+            {href && <span className="v2-tv__go">{copy.detail}</span>}
           </div>
         </div>
 
@@ -689,6 +691,7 @@ export default function HomeV2() {
                   project={project}
                   result={c.work.results[project.id]}
                   copy={c.work}
+                  href={pathFor('workItem', lang, { id: project.id })}
                 />
               </Item>
             ))}
@@ -698,6 +701,14 @@ export default function HomeV2() {
                 <WorkTile project={film} film copy={c.work} />
               </Item>
             ))}
+
+            {/* Anasayfa dort isi gosteriyor; hepsi ve ayrintilari kendi
+                sayfasinda. */}
+            <Item className="v2-work__more">
+              <Link className="v2-btn v2-btn--ghost" to={pathFor('work', lang)}>
+                {c.work.all}
+              </Link>
+            </Item>
 
             <Item className="v2-work__stats">
               <div className="v2-kpi">

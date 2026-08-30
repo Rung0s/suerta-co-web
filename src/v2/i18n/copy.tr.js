@@ -124,6 +124,7 @@ export const tr = {
   work: {
     lead: 'Seçili',
     tail: 'işler.',
+    detail: 'İşi incele →',
     visit: 'Siteyi gör ↗',
     shot: (name) => `${name} projesinden ekran görüntüsü`,
     didLabel: 'Neler yaptık',
