@@ -141,17 +141,6 @@ export default function HeroLaunch() {
         <span className="v2-tone-lead">Ziyaretçiyi müşteriye çeviren</span> premium web
         siteleri.
       </h1>
-      {/* Iki satir. Uzun paragraf hero'da okunmuyor: ziyaretci once basligi,
-          sonra dugmeyi ariyor. Ayrinti hizmet sayfasinda duruyor.
-
-          Kapsam tek bir nise daralmiyor: rezervasyon isi yaptigimiz alanlardan
-          yalnizca biri. Ajans internet sitesinden e-ticarete, otomasyondan
-          gorunurluge kadar isin tamamini kuruyor. */}
-      <p className="v2-lead">
-        Dijital ajans. İnternet siteleri, e-ticaret, rezervasyon sistemleri, yapay
-        zekâ otomasyonları ve görünürlük — markanızın internetteki işini uçtan uca
-        kuruyoruz.
-      </p>
       <div className="v2-hero__actions">
         <a className="v2-btn v2-btn--primary" href="#iletisim">
           Görüşme ayarla

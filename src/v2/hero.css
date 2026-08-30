@@ -23,7 +23,9 @@
 .v2-launch__stage {
   position: relative;
   overflow: hidden;
-  padding-top: clamp(7rem, 11vw, 9.5rem);
+  /* Yazi yukarida duruyor: alt yariyi roket ve kalabalik dolduruyor, orada
+     kalan bir satir gorselin altinda eziliyordu. */
+  padding-top: clamp(6rem, 9vw, 8rem);
 }
 
 .v2-launch.is-pinned .v2-launch__stage {
@@ -68,17 +70,18 @@
   align-items: center;
   gap: var(--space-6);
   text-align: center;
-  max-width: 46rem;
+  /* Baslik iki satirda kalsin diye genis: 46rem'de ucuncu satira
+     kiriliyordu. */
+  max-width: 58rem;
   margin: 0 auto;
   will-change: transform, opacity;
 }
 
+/* Baslik iki satira sigsin: 17ch'te uc satira kiriliyordu ve ucuncu satir
+   sahnenin icine giriyordu. Aciklama paragrafi kaldirildi — hero'da bir
+   cumle okunuyor, o da baslik. */
 .v2-launch__copy .v2-display {
-  max-width: 17ch;
-}
-
-.v2-launch__copy .v2-lead {
-  max-width: 54ch;
+  max-width: 24ch;
 }
 
 .v2-hero__actions {
