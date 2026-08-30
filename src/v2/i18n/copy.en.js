@@ -467,34 +467,34 @@ export const en = {
 
   meta: {
     home: {
-      title: 'suerta co. — Websites, E-Commerce & AI Automation',
+      title: 'Web Design, E-Commerce & AI Automation Studio — suerta co.',
       description:
-        'suerta co. (suerta.co) is a boutique digital studio building websites, e-commerce, booking systems, AI automation and SEO/GEO work. Fixed scope, fixed price, measured results.',
+        'A boutique digital studio building websites, online shops, AI automation, hotel booking systems and SEO. Fixed scope, fixed price, delivered in 2–6 weeks.',
     },
     services: {
-      title: 'Services — Websites, E-Commerce, Automation, Booking',
+      title: 'Services: Websites, E-Commerce & AI Automation',
       description:
-        'Websites, e-commerce setup, AI automation, hotel booking systems, property and rental platforms, SEO & GEO work — with scope and deliverables.',
+        'Six areas, each with who it is for and what you get: websites, e-commerce, AI automation, hotel booking, property and rentals, SEO and GEO.',
     },
     work: {
-      title: 'Work — Projects We Delivered',
+      title: 'Work: Projects We Delivered',
       description:
-        'Commission-free booking at Emsa Otel, education automation at Rönesans Edu, e-commerce at Pawsec, a searchable archive at Argüman Fabrikası. Work delivered by suerta co.',
+        'Direct bookings up 40% at Emsa Otel, quota tracking automated at Rönesans Edu, e-commerce built from scratch for Pawsec. What we did, and what came of it.',
     },
     blog: {
-      title: 'Blog — Guides on Web, E-Commerce and Automation',
+      title: 'Blog: Guides on Web, E-Commerce and SEO',
       description:
-        'What a website costs, Shopify versus WooCommerce, an SEO checklist, setting up a WhatsApp chatbot, GEO and visibility in AI search.',
+        'What a website costs, Shopify versus WooCommerce, a pre-launch SEO checklist, setting up a WhatsApp chatbot, and being visible in AI search (GEO).',
     },
     about: {
-      title: 'About — suerta co.',
+      title: 'About: A Three-Person Digital Studio',
       description:
-        'A three-person digital studio based in Eskişehir. Design, software and growth at one table; fixed scope, fixed price, and a site that stays yours.',
+        'Design, software and growth at one table. Fixed scope and fixed price, training at handover, 30 days of support — the code and the domain stay yours.',
     },
     contact: {
-      title: 'Contact — Tell Us About Your Project',
+      title: 'Contact: Tell Us About Your Project',
       description:
-        'Reach suerta co. on WhatsApp, by email or through the form. Scope, timing and budget are settled on the first call.',
+        'Write on WhatsApp, by email or through the form. Scope, timing and budget are settled on the first call; weekday messages get an answer the same day.',
     },
   },
 };

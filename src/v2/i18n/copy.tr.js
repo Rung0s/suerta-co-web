@@ -468,34 +468,34 @@ export const tr = {
 
   meta: {
     home: {
-      title: 'suerta co. — İnternet Siteleri, E-Ticaret & Yapay Zekâ Otomasyonları',
+      title: 'İnternet Sitesi & E-Ticaret Ajansı — Eskişehir | suerta co.',
       description:
-        'suerta co. (suerta.co) internet siteleri, e-ticaret, rezervasyon sistemleri, yapay zekâ otomasyonları ve SEO/GEO işleri yapan butik bir dijital stüdyo. Sabit kapsam, sabit fiyat, ölçülen sonuç.',
+        'Eskişehir merkezli dijital stüdyo: internet siteleri, e-ticaret, yapay zekâ otomasyonları ve rezervasyon sistemleri. Sabit kapsam, sabit fiyat.',
     },
     services: {
-      title: 'Hizmetler — Site, E-Ticaret, Otomasyon, Rezervasyon',
+      title: 'Hizmetler: Web Sitesi, E-Ticaret & Otomasyon',
       description:
-        'İnternet siteleri, e-ticaret kurulumu, yapay zekâ otomasyonları, otel rezervasyon sistemleri, emlak ve kiralama platformları, SEO & GEO çalışmaları. Kapsam ve teslim edilenlerle.',
+        'Altı alan; her biri kime uygun ve ne teslim ediliyor: internet siteleri, e-ticaret, yapay zekâ otomasyonları, otel rezervasyonu, emlak, SEO ve GEO.',
     },
     work: {
-      title: 'İşler — Teslim Edilen Projeler',
+      title: 'Referanslar: Teslim Ettiğimiz Projeler',
       description:
-        'Emsa Otel’de komisyonsuz rezervasyon, Rönesans Edu’da eğitim otomasyonu, Pawsec’te e-ticaret, Argüman Fabrikası’nda aranabilir arşiv. suerta co.’nun teslim ettiği işler.',
+        'Emsa Otel’de doğrudan rezervasyon %40 arttı, Rönesans Edu’da kontenjan takibi otomatikleşti, Pawsec sıfırdan e-ticarete geçti. Ne yaptık, ne çıktı?',
     },
     blog: {
-      title: 'Blog — Web, E-Ticaret ve Otomasyon Rehberleri',
+      title: 'Blog: Web, E-Ticaret ve SEO Rehberleri',
       description:
-        'Web sitesi maliyeti, Shopify ve WooCommerce karşılaştırması, SEO kontrol listesi, WhatsApp chatbot kurulumu, GEO ve yapay zekâ aramaları üzerine rehberler.',
+        'Web sitesi maliyeti, Shopify mı WooCommerce mi, yayın öncesi SEO kontrol listesi, WhatsApp chatbot kurulumu ve yapay zekâ aramalarında görünürlük.',
     },
     about: {
-      title: 'Hakkımızda — suerta co.',
+      title: 'Hakkımızda: Üç Kişilik Dijital Stüdyo',
       description:
-        'Eskişehir merkezli üç kişilik dijital stüdyo. Tasarım, yazılım ve büyüme aynı masada; sabit kapsam, sabit fiyat ve size kalan bir site.',
+        'Tasarım, yazılım ve büyüme aynı masada. Sabit kapsam ve sabit fiyat, panel eğitimiyle teslim, 30 gün destek — kod ve alan adı sizde kalır.',
     },
     contact: {
-      title: 'İletişim — Projenizi Anlatın',
+      title: 'İletişim: Projenizi Anlatın',
       description:
-        'WhatsApp, e-posta veya form üzerinden suerta co. ile iletişime geçin. Kapsam, süre ve bütçeyi ilk görüşmede netleştiriyoruz.',
+        'WhatsApp, e-posta veya form üzerinden yazın. Kapsamı, süreyi ve bütçeyi ilk görüşmede netleştiriyoruz; hafta içi mesajlara aynı gün dönüyoruz.',
     },
   },
 };

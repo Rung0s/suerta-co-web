@@ -41,9 +41,16 @@ export default function V2Nav() {
     };
   }, [open]);
 
+  /* Markanin isareti: kirmizi yorungeli kure. Ayni dosya favicon olarak da
+     kullaniliyor — sekme, arama sonucu ve menu ayni isareti gosteriyor.
+     Yazi isaretin yanindan kaldirilmiyor: kure tek basina markayi
+     okutmuyor. */
   const brand = (
     <>
-      suerta<span className="v2-nav__brand-dot">.co</span>
+      <img className="v2-nav__mark" src="/favicon-v2.svg" alt="" width="26" height="26" />
+      <span>
+        suerta<span className="v2-nav__brand-dot">.co</span>
+      </span>
     </>
   );
 

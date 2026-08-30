@@ -3,31 +3,54 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon-v2.svg" />
+    <link rel="apple-touch-icon" href="/favicon-v2.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0a0a0c" />
-    <link rel="canonical" href="https://suerta.co/" />
-    <title>suerta co. — Otel, Airbnb &amp; Emlak Siteleri Stüdyosu</title>
-    <meta name="description" content="suerta co. (suerta.co) — otel, günlük kiralık ve emlak markaları için rezervasyon ve ilan siteleri kuran butik dijital stüdyo. Komisyonsuz direkt rezervasyon, çok dilli listing, hızlı görsel altyapı." />
+    <meta name="theme-color" content="#f6f5f2" />
+
+    <!-- Buradaki etiketler yalnizca ilk kare icin: her rota kendi basligini,
+         aciklamasini, canonical'ini ve hreflang ciftini src/v2/seo/Seo.jsx
+         uzerinden yaziyor, prerender de bunlari statik HTML'e gomuyor.
+         Yine de dogru olmalari gerekiyor: JavaScript'i calistirmadan once
+         bakan bir tarayici bu satirlari goruyor. -->
+    <title>İnternet Sitesi &amp; E-Ticaret Ajansı — Eskişehir | suerta co.</title>
+    <meta
+      name="description"
+      content="Eskişehir merkezli dijital stüdyo: internet siteleri, e-ticaret, yapay zekâ otomasyonları ve rezervasyon sistemleri. Sabit kapsam, sabit fiyat."
+    />
+
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="suerta co." />
-    <meta property="og:title" content="suerta co. — Otel, Airbnb &amp; Emlak Siteleri Stüdyosu" />
-    <meta property="og:description" content="Otel, günlük kiralık ve emlak markaları için rezervasyon ve ilan siteleri. Komisyon ödemek yerine doğrudan rezervasyon kazandıran siteler kuruyoruz." />
+    <meta property="og:title" content="İnternet Sitesi &amp; E-Ticaret Ajansı — Eskişehir | suerta co." />
+    <meta
+      property="og:description"
+      content="İnternet siteleri, e-ticaret, yapay zekâ otomasyonları ve rezervasyon sistemleri kuran butik dijital stüdyo. Sabit kapsam, sabit fiyat, ölçülen sonuç."
+    />
     <meta property="og:url" content="https://suerta.co/" />
     <meta property="og:image" content="https://suerta.co/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="suerta co. — dijital stüdyo" />
     <meta property="og:locale" content="tr_TR" />
+    <meta property="og:locale:alternate" content="en_GB" />
+
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="suerta co. — Otel, Airbnb &amp; Emlak Siteleri Stüdyosu" />
-    <meta name="twitter:description" content="Otel, günlük kiralık ve emlak markaları için rezervasyon ve ilan siteleri. Komisyon ödemek yerine doğrudan rezervasyon kazandıran siteler kuruyoruz." />
+    <meta name="twitter:title" content="İnternet Sitesi &amp; E-Ticaret Ajansı — Eskişehir | suerta co." />
+    <meta
+      name="twitter:description"
+      content="İnternet siteleri, e-ticaret, yapay zekâ otomasyonları ve rezervasyon sistemleri kuran butik dijital stüdyo."
+    />
     <meta name="twitter:image" content="https://suerta.co/og-image.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Great+Vibes&family=Jost:ital,wght@0,100..900;1,100..900&family=Outfit:wght@300;400;500;600;900&display=swap" rel="stylesheet">
-    <!-- v2 prototipi: Inter (govde/baslik), Caveat (el yazisi notlar), Doto (sayilar) -->
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Doto:wght@400;700;900&family=Inter:opsz,wght@14..32,400..700&display=swap" rel="stylesheet">
-    <!-- Not: JSON-LD (Organization/Article/FAQPage/Breadcrumb) her route için
-         Seo bileşeni üzerinden üretilir ve prerender ile statik HTML'e gömülür. -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Uc aile: Inter (govde ve baslik), Caveat (el yazisi notlar), Doto
+         (sayilar). Onceki tasarimin dort ailesi (Cormorant, Great Vibes,
+         Jost, Outfit) artik hicbir yerde kullanilmiyordu ve her sayfada
+         indiriliyordu. -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Doto:wght@400;700;900&family=Inter:opsz,wght@14..32,400..700&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div id="root"></div>
