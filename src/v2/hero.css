@@ -20,9 +20,13 @@
   height: calc(100vh + var(--cards, 6) * 68vh);
 }
 
+/* Zemin acikca veriliyor: sahne sticky oldugu icin kendi yigin baglamini
+   kuruyor ve kalabaligin multiply harmanlamasi ancak bu baglamin icindeki
+   bir zemine karisabiliyor. */
 .v2-launch__stage {
   position: relative;
   overflow: hidden;
+  background: var(--bg);
   padding-top: clamp(7rem, 11vw, 9.5rem);
 }
 
@@ -41,10 +45,13 @@
 /* Roket, kule ve kalabaligin kutusu. Sabitliyken sahnenin tamamini
    kapliyor ve yazinin arkasinda duruyor; sabitleme kapaliyken yazinin ve
    kartlarin altinda kendi yuksekligi olan bir blok. */
+/* z-index verilmiyor: deger verildigi anda kutu kendi yigin baglamini
+   kuruyor ve icindeki multiply harmanlamasi sayfa zeminini degil bos bir
+   arka plani goruyor — kalabaligin kagidi beyaz bir dikdortgen olarak
+   kaliyordu. Yazi zaten kendi z-index'iyle ustte. */
 .v2-launch__scene {
   position: absolute;
   inset: 0;
-  z-index: 0;
 }
 
 .v2-launch:not(.is-pinned) .v2-launch__scene {

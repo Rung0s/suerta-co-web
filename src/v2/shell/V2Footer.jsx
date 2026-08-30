@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import PixelControl from '../hero/PixelControl';
 import { V2_HOME, V2_NAV_LINKS, V2_SOCIAL, resolveLink } from './nav-links';
 
 /* Kapanis bandi.
@@ -16,10 +15,20 @@ export default function V2Footer() {
 
   return (
     <footer className="v2-band">
-      {/* Sayfayi kapatan sahne: firlatmayi izleyen kontrol odasi. Burada
-          once bir drone videosu vardi — guzel bir cekimdi ama sayfanin
-          piksel diliyle konusmuyordu ve 3,5 MB indiriliyordu. */}
-      <PixelControl className="v2-band__scene" />
+      {/* Sayfayi kapatan sahne: firlatma anini kutlayan kontrol odasi.
+          Halftone baski; koyu bantta ters cevriliyor (bkz. closing.css).
+          Once bir drone videosu vardi — guzel bir cekimdi ama sayfanin
+          diliyle konusmuyordu ve 3,5 MB indiriliyordu. */}
+      <img
+        className="v2-band__scene"
+        src="/img/control.webp"
+        alt=""
+        aria-hidden="true"
+        width="2400"
+        height="837"
+        decoding="async"
+        loading="lazy"
+      />
       <div className="v2-band__foot">
         <div className="v2-shell">
           <div className="v2-fcols">

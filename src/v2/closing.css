@@ -140,7 +140,9 @@
   background-color: var(--dark-bg);
   overflow: hidden;
   /* Ustte gorsel icin nefes payi; alt bilgi bunun uzerine biniyor. */
-  padding-top: clamp(9rem, 20vw, 16rem);
+  /* Sahne genisligin ~%35i kadar yer kapliyor; kolonlar onun altindan
+     basliyor. */
+  padding-top: clamp(13rem, 36vw, 34rem);
 }
 
 /* Kapanis sahnesi: bandin ust yarisini kapliyor, alt bilgi uzerine
@@ -151,10 +153,15 @@
   right: 0;
   top: 0;
   width: 100%;
-  /* Yukseklik genislikten cikiyor (viewBox 420x72): sahne kirpilmadan
-     tam giriyor. */
   height: auto;
   display: block;
+  /* Baski siyah-beyaz ve kagit zeminli; bant koyu. Ters cevirip screen ile
+     bindirince kagit zemin kayboluyor ve figurler acik kaliyor. */
+  /* contrast: ters cevrilen kagit zemin tam siyaha insin, yoksa screen
+     ile bandin uzerinde soluk bir dikdortgen kaliyor. */
+  filter: invert(1) contrast(1.22) brightness(0.94);
+  mix-blend-mode: screen;
+  opacity: 0.92;
 }
 
 /* Sahnenin uzerine serilen tabaka: sahne gorunsun ama telif satirinin

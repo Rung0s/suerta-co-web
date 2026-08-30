@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import PixelRocket from '../PixelRocket';
-import PixelCrowd from './PixelCrowd';
 import { HERO_CARDS } from './card-list';
 
 /* ==========================================================================
@@ -209,8 +208,18 @@ export default function HeroLaunch() {
 
         <div className="v2-launch__scene">
           {/* Kalabalik sahnenin zemini: roketin olcegini veren ve bakisin
-              nereye dondugunu soyleyen sey. */}
-          <PixelCrowd className="v2-launch__crowd" />
+              nereye dondugunu soyleyen sey. Halftone bir baski olarak
+              uretildi; ayni sahneyi kodla cizmeyi denedik ve tutmadi —
+              siluetler insan degil sehir siluetine benziyordu. */}
+          <img
+            className="v2-launch__crowd"
+            src="/img/crowd.webp"
+            alt=""
+            aria-hidden="true"
+            width="2400"
+            height="455"
+            decoding="async"
+          />
 
           {/* Kule ve rampa yerinde kaliyor; havalanan yalnizca roket. */}
           <PixelRocket className="v2-launch__rocket v2-launch__rocket--pad" only="pad" />
