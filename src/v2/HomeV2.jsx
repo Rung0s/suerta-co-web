@@ -818,7 +818,7 @@ function serviceLabels(project) {
   return [...project.details.matchAll(/\*\s+\*\*([^:*]+):/g)].map((m) => m[1].trim());
 }
 
-function WorkTile({ project, wide, result }) {
+function WorkTile({ project, wide, result, film }) {
   const labels = serviceLabels(project);
   /* Filmlerin gidilecek bir adresi yok; baglantisi olmayani <a> yapmak
      tiklanabilirmis gibi gosterir ve klavye ile bos bir durak yaratir. */
@@ -829,13 +829,40 @@ function WorkTile({ project, wide, result }) {
 
   return (
     <Shell
-      className={`v2-tile${wide ? ' v2-tile--wide' : ''}${project.link ? '' : ' v2-tile--static'}`}
+      className={`v2-tile${wide ? ' v2-tile--wide' : ''}${film ? ' v2-tile--film' : ''}${project.link ? '' : ' v2-tile--static'}`}
       {...linkProps}
     >
-      {/* Ekran bir televizyonun icinde: cerceve, kavisli cam, tarama
-          cizgileri ve dugmeler. Referans bunu sahnelenmis fotografla
+      {/* Musteri projesi bir televizyonun icinde: cerceve, kavisli cam,
+          tarama cizgileri ve dugmeler. Referans bunu sahnelenmis fotografla
           yapiyor; bizde nesne cizilerek kuruluyor, ama okunusu ayni —
-          site bir yerde, bir seyin icinde duruyor. */}
+          site bir yerde, bir seyin icinde duruyor.
+
+          Filmde cerceve yok. Cekimin kendisi is; onu bir cihazin icine
+          koymak "bu bir ekran goruntusu" diyor ve goruntuyu kucultuyor. */}
+      {film ? (
+        <div className="v2-film">
+          <video
+            className="v2-film__media"
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            poster={project.poster}
+          >
+            <source src={project.video} type="video/mp4" />
+          </video>
+
+          <div className="v2-tv__overlay">
+            <span className="v2-tv__overlay-label">Neler yaptık</span>
+            <ul className="v2-tv__list">
+              {labels.map((label) => (
+                <li key={label}>{label}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ) : (
       <div className="v2-tv">
         <div className="v2-tv__screen">
           {project.video ? (
@@ -883,6 +910,7 @@ function WorkTile({ project, wide, result }) {
           </span>
         </div>
       </div>
+      )}
 
       <div className="v2-tile__foot">
         <span className="v2-tile__name">
@@ -896,22 +924,6 @@ function WorkTile({ project, wide, result }) {
   );
 }
 
-function EmptyTile() {
-  return (
-    <div className="v2-tile v2-tile--empty">
-      <p className="v2-tile__empty-text">Bu slot bir sonraki iş için ayrıldı.</p>
-    </div>
-  );
-}
-
-/* Kirmizi nokta imlec.
-   Konum React durumundan degil, dogrudan DOM'a yaziliyor: her fare
-   hareketinde render tetiklemek bu sayfanin geri kalanini (karakter karakter
-   beliren cumle, kayan bant) da yeniden hesaplatirdi.
-
-   Halka noktayi gecikmeli takip ediyor. Ayni karede ikisi de tam konuma
-   giderse hareketin agirligi olmuyor; gecikme tek basina "bu bir nesne"
-   hissini veriyor. */
 function Laurel({ side }) {
   return (
     <svg
@@ -1103,9 +1115,9 @@ const mediaWorks = [
     `,
   },
   {
-    id: 'film-bungalov',
-    name: 'Bungalov Tesisi',
-    desc: 'Drone Çekimi & Tesis Tanıtımı',
+    id: 'film-araz',
+    name: 'Araz Wooden Concept',
+    desc: 'Adrasan · Drone Çekimi & Tesis Tanıtımı',
     video: '/video/showcase.mp4',
     poster: '/video/showcase-poster.jpg',
     details: `
@@ -1117,39 +1129,25 @@ const mediaWorks = [
   },
 ];
 
-/* Izgaraya once musteri projeleri, sonra filmler giriyor. */
-const allWorks = [...referencesData, ...mediaWorks];
-
 /* One cikan is: sonucu en net olcülen proje. */
 const FEATURED_ID = 1;
 
-/* Yerlesimi proje sayisi belirliyor.
-   Alti projede referansin birebir duzeni cikiyor: ust sirada dort dar tugla,
-   alt sirada bir dar + bir genis + sayi karti. Daha az projede ust sira
-   genisleyip bosluk birakmadan kapaniyor — "yakinda" kutusu ancak tam bir
-   slot acikta kalirsa devreye giriyor, dolgu olsun diye degil. */
-function buildWorkLayout(projects) {
-  const featured = projects.find((p) => p.id === FEATURED_ID) || projects[0];
-  const rest = projects.filter((p) => p !== featured);
-  const dense = rest.length >= 4;
+/* Yerlesim uc satir:
+   1. Dort musteri projesi, esit dar tugla. Emsa en sona alindi; one cikan
+      genis tugla oldugu surece Arguman Fabrikasi'ndan uzaktaydi, artik
+      yaninda duruyor.
+   2. Iki tanitim filmi, yarim genislikte. Bunlar site ekran goruntusu
+      degil cekim; televizyon cercevesi goruntuyu kucultup uzerine cam,
+      tarama cizgisi ve dugme koyuyordu. Film kendi ekraninda duruyor.
+   3. Sayi seridi tam genislikte. */
+function buildWorkLayout() {
+  const featured = referencesData.find((p) => p.id === FEATURED_ID);
+  const clients = [
+    ...referencesData.filter((p) => p !== featured),
+    ...(featured ? [featured] : []),
+  ];
 
-  const top = dense ? rest.slice(0, 4) : rest;
-  const small = dense ? rest[4] || null : undefined;
-
-  return {
-    featured,
-    top,
-    /* 12 kolonda ust sira tam kapanir. Ara genislikte izgara 6 kolona
-       dusuyor ve orada da bolunme tam olmali: uc tugla varsa satira ucu
-       birden, dort varsa ikiser ikiser girer. Sabit bir deger verilseydi
-       biri ya da digeri yanina delik birakirdi. */
-    topSpan: top.length ? 12 / top.length : 12,
-    topSpanMd: top.length === 3 ? 2 : 3,
-    small,
-    wideSpan: dense ? 6 : 8,
-    kpiSpan: dense ? 3 : 4,
-    smallSpan: 3,
-  };
+  return { clients, films: mediaWorks, featured };
 }
 
 /* Ne yaptigimiz. Etiketler somut teslimat, sifat degil.
@@ -1204,7 +1202,7 @@ const quotes = [
 ];
 
 export default function HomeV2() {
-  const work = buildWorkLayout(allWorks);
+  const work = buildWorkLayout();
   const carousel = useRef(null);
   const carouselTakeOver = useDriftingCarousel(carousel);
 
@@ -1257,34 +1255,25 @@ export default function HomeV2() {
             </Item>
           </Reveal>
 
-          <Reveal className="v2-work" style={{ '--top-span-md': work.topSpanMd }}>
-            {work.top.map((project) => (
-              <Item key={project.id} style={{ gridColumn: `span ${work.topSpan}` }}>
-                <WorkTile project={project} />
+          <Reveal className="v2-work">
+            {work.clients.map((project) => (
+              <Item key={project.id} className="v2-work__brick">
+                <WorkTile
+                  project={project}
+                  result={
+                    project === work.featured ? 'Doğrudan rezervasyon %40 arttı' : undefined
+                  }
+                />
               </Item>
             ))}
 
-            {work.small !== undefined && (
-              <Item style={{ gridColumn: `span ${work.smallSpan}` }}>
-                {work.small ? <WorkTile project={work.small} /> : <EmptyTile />}
+            {work.films.map((film) => (
+              <Item key={film.id} className="v2-work__film">
+                <WorkTile project={film} film />
               </Item>
-            )}
+            ))}
 
-            <Item
-              className="v2-work__wide"
-              style={{ gridColumn: `span ${work.wideSpan}` }}
-            >
-              <WorkTile
-                project={work.featured}
-                wide
-                result="Doğrudan rezervasyon %40 arttı"
-              />
-            </Item>
-
-            <Item
-              className="v2-work__kpi"
-              style={{ gridColumn: `span ${work.kpiSpan}` }}
-            >
+            <Item className="v2-work__stats">
               <div className="v2-kpi">
                 {kpis.map((kpi) => (
                   <div className="v2-kpi__row" key={kpi.label}>

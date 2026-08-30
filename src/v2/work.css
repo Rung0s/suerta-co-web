@@ -23,6 +23,20 @@
   display: flex;
 }
 
+/* Ust sira: dort musteri tuglasi. Alt sira: iki film, yarim genislik.
+   Sonuncu satir: sayi seridi, tam genislik. */
+.v2-work > .v2-work__brick {
+  grid-column: span 3;
+}
+
+.v2-work > .v2-work__film {
+  grid-column: span 6;
+}
+
+.v2-work > .v2-work__stats {
+  grid-column: span 12;
+}
+
 .v2-work > * > * {
   flex: 1;
   min-width: 0;
@@ -139,6 +153,32 @@
     rgba(255, 255, 255, 0.05) 22%,
     transparent 44%
   );
+}
+
+/* Film ------------------------------------------------------------------
+   Tanitim filmleri cerceve icinde degil. Cekimin kendisi is; bir cihazin
+   icine koymak onu "bir yerde gosterilen ekran goruntusu" yapiyor ve
+   goruntuyu kucultuyordu. Kalan tek sey kavisi olmayan bir ekran. */
+
+.v2-film {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-inner);
+  background: #0d0d0c;
+  aspect-ratio: 16 / 9;
+}
+
+.v2-film__media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 600ms var(--ease-out);
+}
+
+.v2-tile--film:hover .v2-film__media {
+  transform: scale(1.03);
 }
 
 /* Hizmet katmani ----------------------------------------------------------
@@ -355,6 +395,15 @@
   text-align: center;
 }
 
+/* Tam genislikte oldugu icin sayilar alt alta degil yan yana; dikey
+   dizilim dar kolondaki halinden kalmaydi ve serit bos duruyordu. */
+.v2-work__stats .v2-kpi {
+  flex-direction: row;
+  justify-content: space-around;
+  gap: var(--space-8);
+  padding: var(--space-8);
+}
+
 .v2-kpi__row {
   display: flex;
   flex-direction: column;
@@ -469,14 +518,13 @@
   .v2-work {
     grid-template-columns: repeat(6, minmax(0, 1fr));
   }
-  /* Span'i proje sayisi belirliyor (--top-span-md, HomeV2'den gelir), boylece
-     ust sira uc de dort de olsa tam kapanir. */
-  .v2-work > * {
-    grid-column: span var(--top-span-md, 3) !important;
+  /* Alti kolonda: tuglalar ikiser ikiser, filmler ve serit tam genislik. */
+  .v2-work > .v2-work__brick {
+    grid-column: span 3;
   }
-  .v2-work > .v2-work__wide,
-  .v2-work > .v2-work__kpi {
-    grid-column: span 6 !important;
+  .v2-work > .v2-work__film,
+  .v2-work > .v2-work__stats {
+    grid-column: span 6;
   }
 }
 
@@ -486,6 +534,11 @@
   }
   .v2-work > * {
     grid-column: span 1 !important;
+  }
+  /* Tek kolonda uc sayi yan yana sigmiyor. */
+  .v2-work__stats .v2-kpi {
+    flex-direction: column;
+    gap: var(--space-6);
   }
   .v2-tile--wide .v2-tile__frame {
     aspect-ratio: 16 / 11;
