@@ -80,11 +80,11 @@ export default function ContactSection() {
           <Item as="h2" className="v2-display">
             {c.heading}
           </Item>
-          <Item>
-            <span className="v2-ticket">
-              <span className="v2-ticket__num">2</span>
-              <span className="v2-ticket__label">{c.slots}</span>
-            </span>
+          {/* Once burada "bu ay 2 yer" yazan yirtik bir bilet duruyordu.
+              Kontenjan numarasi baski yapiyor ve dogrulanamiyor; yerine
+              isin neden yapildigini soyleyen duz bir cumle var. */}
+          <Item as="p" className="v2-close__line">
+            {c.vision}
           </Item>
           <Item className="v2-status">
             <span className="v2-status__dot" aria-hidden="true" />

@@ -342,7 +342,7 @@ export const tr = {
 
   contact: {
     heading: 'Ne inşa ettiğinizi anlatın',
-    slots: 'yer · bu ay',
+    vision: 'Bir markanın internette en çok çalışan şeyi kendi sitesidir: aracıya komisyon ödemez, mesai bitince kapanmaz, gelen her ziyaretçiyi hatırlar. Sizinkini birlikte kuralım.',
     status: 'Bu hafta yanıt süresi: birkaç saat',
     sentTitle: 'WhatsApp’ta açıldı.',
     sentNote: 'Pencere açılmadıysa engellenmiş olabilir; aşağıdaki kanallardan doğrudan yazabilirsiniz.',

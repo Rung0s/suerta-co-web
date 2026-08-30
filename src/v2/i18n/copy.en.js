@@ -341,7 +341,7 @@ export const en = {
 
   contact: {
     heading: 'Tell us what you are building',
-    slots: 'slots · this month',
+    vision: 'The hardest-working thing a brand owns online is its own site: it pays no commission, it does not close at six, and it remembers every visitor who arrives. Let us build yours.',
     status: 'Reply time this week: a few hours',
     sentTitle: 'Opened in WhatsApp.',
     sentNote: 'If the window did not open it may have been blocked; you can write to us directly through the channels below.',
