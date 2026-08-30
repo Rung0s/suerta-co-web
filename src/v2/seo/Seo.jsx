@@ -3,7 +3,7 @@
    bilesene veriliyor. Kural yalnizca sicak yenilemeyi ilgilendiriyor. */
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { organizationSchema, SITE_URL, SITE_NAME } from '../../components/Seo';
+import { organizationSchema, SITE_URL, SITE_NAME } from './brand';
 import { useLang } from '../i18n';
 import { HTML_LANG, LANGS, swapLangPath } from '../i18n/paths';
 

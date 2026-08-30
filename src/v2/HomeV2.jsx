@@ -8,7 +8,7 @@ import V2Layout from './shell/V2Layout';
 import { useCopy, useLang } from './i18n';
 import { pathFor } from './i18n/paths';
 import Seo, { faqPage } from './seo/Seo';
-import { SITE_URL } from '../components/Seo';
+import { SITE_URL } from './seo/brand';
 import { HTML_LANG } from './i18n/paths';
 import ContactSection from './sections/ContactSection';
 

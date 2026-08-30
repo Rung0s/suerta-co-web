@@ -1,8 +1,13 @@
 /* ==========================================================================
-   v2 prototip tasarim sistemi
-   Tum kurallar .v2-root altina kapsanmistir; mevcut siteye sizmaz.
+   Tasarim sistemi
+   Sitenin tamami bu sistemi kullaniyor; kurallar kabuk (.v2-root) altinda
+   kapsanmis halde kaliyor, tokenlar ayrica belge kokunde tanimli.
    ========================================================================== */
 
+/* Tokenlar belgenin kokunde de tanimli: onceki tasarim kaldirildi, artik
+   sizacak baska bir sistem yok ve <body> de ayni zemini ve tipografiyi
+   kullanabilmeli. `.v2-root` secicisi kaliyor. */
+:root,
 .v2-root {
   /* Renk ------------------------------------------------------------------ */
   --bg: #f6f5f2;
