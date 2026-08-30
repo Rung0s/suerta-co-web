@@ -3,65 +3,60 @@ import React from 'react';
 /* ==========================================================================
    Piksel seyirci kalabaligi
    --------------------------------------------------------------------------
-   Referansin hero'sunda roketi izleyen bir kalabalik var: sahnenin alt
-   kenarinda, ditherli, piksel piksel. Kalabaligin isi dekor degil olcek —
-   roketin ne kadar buyuk oldugu ancak onunde duran insan boyuyla okunuyor.
+   Referansin hero'sunda roketi izleyen bir kalabalik var: koyu, iri,
+   ditherli, alt kenara dogru zemine karisan bir kutle. Isi dekor degil
+   olcek — roketin buyuklugu ancak onunde duran insan boyuyla okunuyor.
 
-   PixelRocket ile ayni yontem: elle bitmap yazilmiyor, silueter izgaraya
-   rasterleniyor ve satirdaki ayni renkli hucreler tek <path>'e birlesiyor.
-   Uc sira var; arkadakiler daha kisa ve daha soluk, boylece derinlik
-   cikiyor. Kimse birebir digerinin ayni degil ama desen deterministik:
+   Ilk halinde siluetler kucuk ve grimsiydi; uzaktan bir sehir siluetine
+   benziyordu. Referansin yaptigi sey iki karar: kalabalik cok yakin
+   (yalnizca kafa ve omuz giriyor, govde yok) ve cok koyu. Derinlik
+   boyuttan degil tondan geliyor.
+
+   Cizim yontemi PixelRocket ile ayni: elle bitmap yazilmiyor, her hucre
+   icin "bu nokta kafanin mi omzun mu icinde" diye soruluyor ve satirdaki
+   ayni renkli hucreler tek <path>'e birlesiyor. Desen deterministik —
    prerender ile tarayici ayni kalabaligi ciziyor.
    ========================================================================== */
 
-const COLS = 220;
-const ROWS = 16;
+const COLS = 240;
+const ROWS = 48;
 
-/* Zemin cizgisi: herkes bunun uzerinde duruyor. */
-const GROUND = ROWS - 1;
-
-function noise(seed) {
-  const n = Math.sin(seed * 41.7891) * 27183.4577;
+function noise(x, y) {
+  const n = Math.sin(x * 12.9898 + y * 78.233) * 43758.5453;
   return n - Math.floor(n);
 }
 
-/* Uc sira. Arkadaki kisa ve soluk, ondeki uzun ve koyu; aradaki bosluk
-   (`lift`) siralari birbirinden ayiriyor. */
-/* Oranlar onemli: siluet boyundan cok omuzdan okunuyor. Ince ve uzun
-   dikdortgenler insan degil bina gibi duruyordu; omuz genisligi boyun
-   yarisina yaklastiginda kalabalik cikti. Aralik genislikten buyuk: bitisik
-   dizilince siluetler tek bir kutleye kaynayip yeniden bina oluyor, aradaki
-   bosluk kalabaligi kalabalik yapiyor. */
+/* Uc sira. Arkadaki kucuk ve soluk, ondeki iri ve neredeyse siyah.
+   `base` sirayi asagi indiriyor: arkadaki sira daha yukarida bitiyor. */
 const TIERS = [
-  { key: 'far', seed: 3, lift: 3, width: [3, 4], gap: [6, 8], height: [7, 9], armChance: 0.08 },
-  { key: 'mid', seed: 17, lift: 1, width: [4, 5], gap: [7, 10], height: [9, 11], armChance: 0.16 },
-  { key: 'near', seed: 41, lift: 0, width: [5, 6], gap: [9, 13], height: [11, 14], armChance: 0.22 },
+  { key: 'far', seed: 7, base: 10, head: [4.2, 5.2], shoulder: [11, 14], gap: [26, 34] },
+  { key: 'mid', seed: 23, base: 4, head: [5.4, 6.6], shoulder: [14, 18], gap: [33, 43] },
+  { key: 'near', seed: 51, base: 0, head: [6.8, 8.4], shoulder: [18, 23], gap: [41, 53] },
 ];
 
-/* Bir siradaki insanlari uretiyor: x konumu, boy, kollar. */
 function buildTier(tier) {
   const people = [];
-  let x = -2;
+  let x = -4;
   let i = 0;
 
-  while (x < COLS + 2) {
-    const r1 = noise(tier.seed + i * 1.31);
-    const r2 = noise(tier.seed + i * 2.77);
-    const r3 = noise(tier.seed + i * 5.19);
+  while (x < COLS + 6) {
+    const r1 = noise(tier.seed + i * 1.7, 3);
+    const r2 = noise(tier.seed + i * 2.9, 11);
+    const r3 = noise(tier.seed + i * 4.3, 29);
 
-    const height = Math.round(tier.height[0] + r1 * (tier.height[1] - tier.height[0]));
-    const gap = Math.round(tier.gap[0] + r2 * (tier.gap[1] - tier.gap[0]));
+    const headR = tier.head[0] + r1 * (tier.head[1] - tier.head[0]);
+    const shoulderHalf = tier.shoulder[0] + r2 * (tier.shoulder[1] - tier.shoulder[0]);
+    const gap = tier.gap[0] + r3 * (tier.gap[1] - tier.gap[0]);
 
     people.push({
-      x,
-      height,
-      /* Bir kismi omuz genisliginde, bir kismi dar: hepsi ayni genislikte
-         olunca sira cit gibi duruyor. */
-      width: Math.round(tier.width[0] + r3 * (tier.width[1] - tier.width[0])),
-      arm: r3 < tier.armChance,
-      /* Kafa govdenin ortasinda degil, hafif kayabiliyor: birbirine
-         bakan, oturan, egilen insanlar. */
-      headShift: r2 > 0.78 ? 1 : 0,
+      cx: x,
+      headR,
+      shoulderHalf,
+      /* Kafa omuzun tam ortasinda degil: birine donmus, egilmis,
+         yukari bakan insanlar. Hepsi ayni eksende olsa sira olur. */
+      headShift: (r1 - 0.5) * headR * 0.9,
+      /* Sira icinde de kucuk yukseklik farki: herkes ayni boyda degil. */
+      rise: tier.base + Math.round(r2 * 2),
     });
 
     x += gap;
@@ -71,63 +66,57 @@ function buildTier(tier) {
   return people;
 }
 
-/* Insan silueti izgaraya basiliyor.
-   Ilk denemede siluet kafa + govde kutusuydu ve kalabalik bir sehir
-   siluetine benziyordu. Insan yapan sey dort ayrinti: kafanin govdeden
-   bir boyunla ayrilmasi, omuzun govdeden genis olmasi, govdenin daralmasi
-   ve altta iki bacagin arasindaki bosluk. Dordu de tek hucrelik detay ama
-   siluet ancak hepsi varken insan okunuyor. */
-function stamp(grid, people, tier) {
-  for (const person of people) {
-    const bottom = GROUND - tier.lift;
-    const top = bottom - person.height;
-    const { width } = person;
-    const headLeft = person.x + Math.floor((width - 2) / 2) + person.headShift;
+/* Bir insanin bu hucreyi kaplayip kaplamadigi.
+   Kafa elips, omuz asagi dogru acilan bir yay. Ikisinin arasinda boyun
+   icin bir daralma var; boyun olmadan siluet tas gibi duruyor. */
+function covers(person, x, y, bottom) {
+  const headCx = person.cx + person.headShift;
+  const headCy = bottom - person.rise - person.shoulderHalf * 0.62 - person.headR;
 
-    const paint = (y, left, right) => {
-      if (y < 0 || y >= ROWS) return;
-      for (let x = left; x <= right; x += 1) {
-        if (x < 0 || x >= COLS) continue;
-        grid[y][x] = tier.key;
-      }
-    };
+  const dx = (x - headCx) / person.headR;
+  const dy = (y - headCy) / (person.headR * 1.12);
+  if (dx * dx + dy * dy <= 1) return true;
 
-    /* kafa (iki satir), boyun, omuz */
-    paint(top, headLeft, headLeft + 1);
-    paint(top + 1, headLeft, headLeft + 1);
-    paint(top + 2, headLeft, headLeft);
-    paint(top + 3, person.x, person.x + width - 1);
+  const shoulderTop = headCy + person.headR * 0.75;
+  const foot = bottom - person.rise;
+  if (y < shoulderTop || y > foot) return false;
 
-    /* govde: omuzdan bir hucre dar */
-    for (let y = top + 4; y <= bottom - 2; y += 1) {
-      paint(y, person.x + 1, person.x + width - 2);
-    }
-
-    /* bacaklar: iki sutun, aralarinda bosluk */
-    for (let y = bottom - 1; y <= bottom; y += 1) {
-      paint(y, person.x + 1, person.x + 1);
-      paint(y, person.x + width - 2, person.x + width - 2);
-    }
-
-    /* Kaldirilmis kol: kalabaligin durgun bir dokudan cok bir seye bakan
-       insanlar oldugunu soyleyen tek isaret. */
-    if (person.arm) {
-      const armX = person.x + width;
-      for (let y = top + 1; y <= top + 4; y += 1) paint(y, armX, armX);
-    }
-  }
+  /* Omuz genisligi boyundan basliyor ve karekokle aciliyor: dogrusal
+     acilim koni gibi duruyordu. */
+  const t = (y - shoulderTop) / Math.max(1, foot - shoulderTop);
+  const half = person.headR * 0.72 + (person.shoulderHalf - person.headR * 0.72) * Math.sqrt(t);
+  return Math.abs(x - person.cx) <= half;
 }
 
 const PALETTE = {
-  far: 'var(--crowd-far, rgba(17, 17, 16, 0.14))',
-  mid: 'var(--crowd-mid, rgba(17, 17, 16, 0.24))',
-  near: 'var(--crowd-near, rgba(17, 17, 16, 0.38))',
+  far: 'var(--crowd-far, rgba(17, 17, 16, 0.42))',
+  mid: 'var(--crowd-mid, rgba(17, 17, 16, 0.68))',
+  near: 'var(--crowd-near, rgba(17, 17, 16, 0.92))',
 };
 
 function buildPaths() {
   const grid = Array.from({ length: ROWS }, () => Array(COLS).fill(null));
-  /* Arkadan one dogru basiliyor: ondeki sira arkadakini kapatiyor. */
-  for (const tier of TIERS) stamp(grid, buildTier(tier), tier);
+
+  /* Arkadan one: ondeki sira arkadakini kapatiyor. */
+  for (const tier of TIERS) {
+    const people = buildTier(tier);
+    for (let y = 0; y < ROWS; y += 1) {
+      for (let x = 0; x < COLS; x += 1) {
+        for (const person of people) {
+          if (!covers(person, x, y, ROWS - 1)) continue;
+
+          /* Dither: alt satirlara indikce hucreler seyreliyor ve kalabalik
+             zemine karisiyor. Duz bir maske ile solmak yerine boyle
+             cozulmesi, sahnenin geri kalanindaki piksel diliyle ayni. */
+          const fade = Math.max(0, (y - ROWS * 0.74) / (ROWS * 0.26));
+          if (fade > 0 && noise(x * 3.1, y * 1.7) < fade) break;
+
+          grid[y][x] = tier.key;
+          break;
+        }
+      }
+    }
+  }
 
   const paths = { far: '', mid: '', near: '' };
 

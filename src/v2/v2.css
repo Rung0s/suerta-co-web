@@ -12,6 +12,9 @@
   --muted: #6b6a66;
   --line: rgba(17, 17, 16, 0.09);
   --accent: #9a161f;
+  /* Markadaki ".co" govde kirmizisindan koyu: adin parcasi oldugu okunuyor
+     ama basligin yanindaki kirmizi butonla yarismiyor. */
+  --brand-dot: #6d0f17;
   --gold: #b8892b;
 
   /* Koyu bolumler --------------------------------------------------------- */
@@ -338,7 +341,7 @@
 
 .v2-hero__brand-dot,
 .v2-nav__brand-dot {
-  color: var(--accent);
+  color: var(--brand-dot);
 }
 
 /* Hero sahnesi (sabitlenen firlatma, alan kartlari, kalabalik) hero.css'te. */

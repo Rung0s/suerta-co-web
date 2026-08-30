@@ -165,17 +165,25 @@
 .v2-launch__slot {
   position: absolute;
   left: 62%;
-  top: 58%;
+  /* Kalabalik alt %20yi kapliyor; kart ortasi ondan yukarida durmali. */
+  top: 50%;
   width: min(23rem, 78vw);
   transform: translate(-50%, -50%);
   transition: opacity 220ms linear;
   will-change: transform, opacity;
 }
 
+/* Gostergeler kalabaligin ustunde degil icinde duruyor; koyu siluetlerin
+   uzerinde okunabilsin diye kendi acik zemini var. */
 .v2-launch__dots {
   position: absolute;
   left: 50%;
-  bottom: clamp(1.25rem, 4vh, 2.5rem);
+  bottom: 1.25rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-pill);
+  background: rgba(246, 245, 242, 0.86);
+  box-shadow: var(--shadow-tile);
+  align-items: center;
   transform: translateX(-50%);
   z-index: 4;
   display: flex;
@@ -210,7 +218,10 @@
 .v2-launch__hint {
   position: absolute;
   left: 50%;
-  bottom: clamp(3rem, 8vh, 5rem);
+  bottom: 3.25rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--radius-pill);
+  background: rgba(246, 245, 242, 0.86);
   transform: translateX(-50%);
   z-index: 4;
   font-size: var(--text-micro);

@@ -30,7 +30,9 @@ const CARD_COUNT = HERO_CARDS.length;
    0.20–0.92  kartlar sirayla geciyor, roket yukseliyor
    0.92–1.00  son kart ortada duruyor, sahne birakiliyor */
 const COPY_OUT = 0.2;
-const CARDS_IN = 0.12;
+/* Kartlar yazi tamamen cekildikten sonra giriyor. Onceden ikisi ayni anda
+   ortadaydi ve kartlar paragrafin uzerine biniyordu. */
+const CARDS_IN = 0.24;
 const CARDS_OUT = 0.94;
 
 const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
@@ -141,11 +143,11 @@ export default function HeroLaunch() {
         <span className="v2-tone-lead">Ziyaretçiyi müşteriye çeviren</span> premium web
         siteleri.
       </h1>
+      {/* Iki satir. Uzun paragraf hero'da okunmuyor: ziyaretci once basligi,
+          sonra dugmeyi ariyor. Ayrinti hizmet sayfasinda duruyor. */}
       <p className="v2-lead">
-        Otelinizin odasını Booking doldurduğunda kazancın beşte biri komisyona gidiyor;
-        dairenizi Airbnb doldurduğunda misafirin adı bile sizde kalmıyor. Kendi siteniz
-        bu zinciri kırar: rezervasyon, satış ve talep doğrudan size gelir. Otel, kiralama,
-        eğitim ve e-ticaret markalarına bunu yapan siteleri kuruyoruz.
+        Otel, kiralama, eğitim ve e-ticaret markaları için. Komisyonu aracıya
+        bırakmayan, rezervasyonu ve satışı doğrudan size getiren siteler.
       </p>
       <div className="v2-hero__actions">
         <a className="v2-btn v2-btn--primary" href="#iletisim">
@@ -161,7 +163,7 @@ export default function HeroLaunch() {
   const deck = (
     /* Kartlar yazi cekilirken geliyor: ikisi ayni anda ortada durunca
        kartlar yazinin uzerine biniyordu. */
-    <div className="v2-launch__deck" style={pinned ? { opacity: copyOut } : undefined}>
+    <div className="v2-launch__deck" style={pinned ? { opacity: span(progress, 0.18, 0.28) } : undefined}>
       {HERO_CARDS.map(({ key, Card }, i) => {
         const offset = i - head;
         const distance = Math.abs(offset);

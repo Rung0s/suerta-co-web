@@ -111,6 +111,27 @@
   z-index: 1;
 }
 
+/* Bosta duran para: uzun bir duraklamadan sonra iki yana salinip
+   duruyor. Surekli donmesi dikkati calar ve tiklamanin anlamini
+   oldururdu; buradaki hareket yalnizca "ben bir dugmeyim" diyor. */
+.v2-coin.is-idle {
+  animation: v2CoinTease 4.4s var(--ease-out) infinite;
+}
+
+@keyframes v2CoinTease {
+  0%, 58%, 100% { transform: rotateY(0deg); }
+  66% { transform: rotateY(-26deg); }
+  74% { transform: rotateY(22deg); }
+  82% { transform: rotateY(-13deg); }
+  90% { transform: rotateY(7deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-coin.is-idle {
+    animation: none;
+  }
+}
+
 .v2-coin:focus-visible {
   outline: 2px solid var(--flare);
   outline-offset: 8px;
@@ -278,7 +299,7 @@
 }
 
 .v2-luckcard__dot {
-  color: var(--accent);
+  color: var(--brand-dot);
 }
 
 .v2-luckcard__tag {

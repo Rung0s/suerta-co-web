@@ -226,6 +226,11 @@ function LuckCoin() {
 
   const side = halfTurns % 2 === 0 ? 'Tura' : 'Yazı';
 
+  /* Dokunulmamis para hicbir sey yapmiyorsa dokunulmuyor. Arada bir kendi
+     ekseninde sallaniyor: "bu cevrilebilir" demenin yaziyla degil hareketle
+     soylenmis hali. */
+  const idle = stage === 0 && !spinning;
+
   if (stage === 2) {
     return (
       <div className="v2-altar">
@@ -251,10 +256,10 @@ function LuckCoin() {
 
       <button
         type="button"
-        className="v2-coin"
+        className={`v2-coin${idle ? ' is-idle' : ''}`}
         onClick={press}
         onTransitionEnd={() => setSpinning(false)}
-        style={{ transform: `rotateY(${halfTurns * 180}deg)` }}
+        style={idle ? undefined : { transform: `rotateY(${halfTurns * 180}deg)` }}
         aria-label={stage === 0 ? 'Parayı çevir' : 'Bir daha bas'}
       >
         <span className="v2-coin__face" aria-hidden="true">

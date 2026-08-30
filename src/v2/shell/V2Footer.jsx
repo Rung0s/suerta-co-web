@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import PixelControl from '../hero/PixelControl';
 import { V2_HOME, V2_NAV_LINKS, V2_SOCIAL, resolveLink } from './nav-links';
 
 /* Kapanis bandi.
@@ -15,19 +16,10 @@ export default function V2Footer() {
 
   return (
     <footer className="v2-band">
-      <video
-        className="v2-band__video"
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="metadata"
-        poster="/video/showcase-poster.jpg"
-        aria-label="Bungalov tesisi drone çekimi"
-      >
-        <source src="/video/showcase.mp4" type="video/mp4" />
-      </video>
-      <div className="v2-band__dither" aria-hidden="true" />
+      {/* Sayfayi kapatan sahne: firlatmayi izleyen kontrol odasi. Burada
+          once bir drone videosu vardi — guzel bir cekimdi ama sayfanin
+          piksel diliyle konusmuyordu ve 3,5 MB indiriliyordu. */}
+      <PixelControl className="v2-band__scene" />
       <div className="v2-band__foot">
         <div className="v2-shell">
           <div className="v2-fcols">
