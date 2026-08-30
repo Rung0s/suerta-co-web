@@ -10,6 +10,7 @@
 
 export const projectsEn = {
   1: {
+    metaDesc: 'We built Emsa Otel a commission-free direct booking system, a mobile-first site, English language support and SEO; direct sales rose 40%.',
     category: 'Web Design',
     desc: 'Hotel Website & Digital Marketing',
     details: `
@@ -44,6 +45,7 @@ We took on Emsa Otel's online visibility and performance end to end.
   },
 
   2: {
+    metaDesc: 'For Rönesans Edu we built a Telegram bot watching CENT-S exam quotas, a WhatsApp chatbot and custom web software; tracking now runs 24/7.',
     category: 'Custom Software',
     desc: 'Education, Exam Tracking & Automation',
     details: `
@@ -78,6 +80,7 @@ A broad project digitising the teaching and student side of Rönesans Edu.
   },
 
   3: {
+    metaDesc: 'We built Pawsec Shop an e-commerce setup from scratch: Shopify behind it, one flow from cart to payment, products and stock in the brand’s hands.',
     category: 'E-Commerce',
     desc: 'Pet Supplies E-Commerce Store',
     details: `
@@ -109,6 +112,7 @@ We built Pawsec an e-commerce setup from scratch.
   },
 
   4: {
+    metaDesc: 'For Argüman Fabrikası we turned 1,000+ debate topics into a searchable archive, with a WhatsApp chatbot, Meta and Google ads, SEO and GEO.',
     category: 'Web Design',
     desc: 'Portfolio Site & Digital Marketing',
     details: `

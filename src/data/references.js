@@ -1,6 +1,11 @@
+/* `desc` kartin altindaki tek satirlik etiket, `metaDesc` arama sonucunda
+   ve paylasimda gorunen aciklama. Ikisi ayri: "Otel Web Sitesi & Dijital
+   Pazarlama" bir etiket olarak dogru ama arama sonucunda hicbir sey
+   soylemiyordu ve 39 karakterde kaliyordu. */
 export const referencesData = [
   {
     id: 1,
+    metaDesc: "Emsa Otel’e komisyonsuz doğrudan rezervasyon sistemi, mobil öncelikli site, İngilizce dil desteği ve SEO kurduk; doğrudan satışlar %40 arttı.",
     name: "Emsa Otel",
     category: "Web Tasarım",
     desc: "Otel Web Sitesi & Dijital Pazarlama",
@@ -35,6 +40,7 @@ Emsa Otel'in dijital görünürlüğünü ve online performansını uçtan uca e
   },
   {
     id: 2,
+    metaDesc: "Rönesans Edu için CENT-S kontenjanını izleyen Telegram botu, WhatsApp chatbot ve özel web yazılımı geliştirdik; takip 7/24 otomatik çalışıyor.",
     name: "Rönesans Edu",
     category: "Özel Yazılım",
     desc: "Eğitim, Sınav Takip & Otomasyon",
@@ -70,6 +76,7 @@ Rönesans Edu'nun eğitim ve öğrenci süreçlerini dijitalleştirdiğimiz kaps
   },
   {
     id: 3,
+    metaDesc: "Pawsec Shop’a sıfırdan e-ticaret kurduk: Shopify altyapısı, sepetten ödemeye tek akış, ürün ve stok yönetimi markanın kendisinde.",
     name: "Pawsec Shop",
     category: "E-Ticaret",
     desc: "Evcil Hayvan Ürünleri E-Ticaret Sitesi",
@@ -102,6 +109,7 @@ Pawsec için sıfırdan bir e-ticaret altyapısı kurduk.
   },
   {
     id: 4,
+    metaDesc: "Argüman Fabrikası için 1.000’den fazla münazara konusunu aranabilir arşive çevirdik; WhatsApp chatbot, Meta & Google reklamları, SEO ve GEO.",
     name: "Argüman Fabrikası",
     category: "Web Tasarım",
     desc: "Kurumsal Portfolyo & Dijital Pazarlama",

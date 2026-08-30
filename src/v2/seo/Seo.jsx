@@ -69,7 +69,7 @@ function setJsonLd(schemas) {
   });
 }
 
-export default function Seo({ title, description, image, type = 'website', jsonLd }) {
+export default function Seo({ title, description, image, type = 'website', jsonLd, noindex = false }) {
   const { pathname } = useLocation();
   const { lang } = useLang();
 
@@ -91,11 +91,25 @@ export default function Seo({ title, description, image, type = 'website', jsonL
     upsertMeta('name', 'description', description);
     upsertCanonical(canonical);
 
+    /* Olmayan bir adres icin sunucu 200 donuyor (tek sayfa uygulamasi:
+       eslesmeyen her yol index.html'e dusuyor). O yuzden sayfanin kendisi
+       "beni indeksleme" demek zorunda; aksi halde arama motoru her hatali
+       baglantiyi anasayfanin kopyasi olarak kaydediyor. */
+    upsertMeta('name', 'robots', noindex ? 'noindex, follow' : 'index, follow');
+
     upsertMeta('property', 'og:title', fullTitle);
     upsertMeta('property', 'og:description', description);
     upsertMeta('property', 'og:url', canonical);
     upsertMeta('property', 'og:type', type);
     upsertMeta('property', 'og:image', imageAbs);
+    /* Paylasim karti her zaman 1200x630 PNG: olculer sabit oldugu icin
+       dogru. Proje ekran goruntuleri (webp, 1520x688) paylasim gorseli
+       olarak kullanilmiyordu — bazi platformlar webp'yi cizmiyor ve
+       sablondaki olcu de onlara uymuyordu. */
+    upsertMeta('property', 'og:image:width', '1200');
+    upsertMeta('property', 'og:image:height', '630');
+    upsertMeta('property', 'og:image:alt', lang === 'en' ? 'suerta.co — digital studio' : 'suerta.co — dijital stüdyo');
+    upsertMeta('property', 'og:locale:alternate', lang === 'en' ? 'tr_TR' : 'en_GB');
     upsertMeta('property', 'og:site_name', SITE_NAME);
     upsertMeta('property', 'og:locale', lang === 'en' ? 'en_GB' : 'tr_TR');
 
@@ -121,7 +135,7 @@ export default function Seo({ title, description, image, type = 'website', jsonL
     /* jsonLd her cagri yerinde yeni bir nesne; referansina baglanirsak
        efekt her cizimde script'leri silip yeniden yaratiyor. */
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fullTitle, description, canonical, imageAbs, type, lang, pathname, jsonLdKey]);
+  }, [fullTitle, description, canonical, imageAbs, type, lang, pathname, jsonLdKey, noindex]);
 
   return null;
 }
@@ -155,15 +169,24 @@ export function faqPage(faqs) {
   };
 }
 
-/* Tek yazi icin Article semasi. */
+/* Tek yazi icin Article semasi.
+   Tarih ISO 8601: sayfada gorunen "13 Temmuz 2026" bicimi schema.org icin
+   gecersiz ve Search Console butun yazilari hatali isaretliyordu. Yazi
+   verisinde iki alan var — `date` ekran icin, `iso` makine icin. */
 export function articleSchema(post, url, lang) {
+  const image = lang === 'en' ? '/og-image-en.png' : '/og-image.png';
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: post.title,
     description: post.desc,
     inLanguage: HTML_LANG[lang],
-    datePublished: post.date,
+    datePublished: post.iso,
+    /* Yazilar guncellendiginde bu alan da guncellenmeli; su an yayin
+       tarihiyle ayni, cunku hicbiri revize edilmedi. */
+    dateModified: post.iso,
+    image: `${SITE_URL}${image}`,
     author: { '@id': `${SITE_URL}/#organization` },
     publisher: { '@id': `${SITE_URL}/#organization` },
     mainEntityOfPage: `${SITE_URL}${url}`,
@@ -176,7 +199,7 @@ export function projectSchema(project, url, lang) {
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',
     name: project.name,
-    description: project.desc,
+    description: project.metaDesc ?? project.desc,
     inLanguage: HTML_LANG[lang],
     creator: { '@id': `${SITE_URL}/#organization` },
     url: `${SITE_URL}${url}`,

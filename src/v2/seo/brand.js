@@ -9,7 +9,10 @@
    alti alanda calisiyor ve liste de bunu yansitmali. */
 
 export const SITE_URL = 'https://suerta.co';
-export const SITE_NAME = 'suerta co.';
+/* Marka her yerde `suerta.co` yaziliyor — kullanicinin degismez kurali.
+   Diger yazimlar (suerta co., Suerta Co.) yalnizca `alternateName` icinde,
+   arama motoru bu varyantlari ayni varliga cozebilsin diye. */
+export const SITE_NAME = 'suerta.co';
 export const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
 
 const DESCRIPTION =
@@ -25,11 +28,15 @@ export const organizationSchema = {
   legalName: SITE_NAME,
   /* Marka sorgularinin (suerta.co / suerta co / suertaco) tek bir varliga
      cozulebilmesi icin butun yazim varyantlari. */
-  alternateName: ['suerta co', 'Suerta Co.', 'suerta.co', 'suertaco', 'Suerta'],
+  alternateName: ['suerta co.', 'suerta co', 'Suerta Co.', 'suertaco', 'Suerta'],
   url: SITE_URL,
+  /* Google'in logo yonergesi SVG kabul etmiyor (JPG/PNG/GIF); SVG verilince
+     logo sessizce yok sayiliyor. `npm run og` ile uretilen PNG. */
   logo: {
     '@type': 'ImageObject',
-    url: `${SITE_URL}/favicon-v2.svg`,
+    url: `${SITE_URL}/logo-512.png`,
+    width: 512,
+    height: 512,
   },
   image: DEFAULT_IMAGE,
   slogan: 'Markanızın Şansı',

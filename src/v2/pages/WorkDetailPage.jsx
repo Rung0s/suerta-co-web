@@ -27,8 +27,7 @@ export default function WorkDetailPage() {
     <V2Layout>
       <Seo
         title={`${project.name} — ${project.desc}`}
-        description={project.desc}
-        image={project.image}
+        description={project.metaDesc ?? project.desc}
         jsonLd={[
           projectSchema(project, url, lang),
           faqPage(project.faqs),

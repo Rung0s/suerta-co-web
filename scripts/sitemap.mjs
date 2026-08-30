@@ -8,6 +8,7 @@ import { writeFile } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { allRoutes, alternatesOf, LANGS } from './routes.mjs';
+import { blogsData } from '../src/data/blogs.js';
 
 const SITE = 'https://suerta.co';
 const HTML_LANG = { tr: 'tr-TR', en: 'en' };
@@ -26,6 +27,11 @@ const WEIGHT = {
   contact: { changefreq: 'yearly', priority: '0.7' },
 };
 
+/* Yazi sayfalarinin tarihi kendi yayin tarihi. Hepsine bugunu yazmak
+   arama motoruna her yeniden derlemede "46 sayfa da degisti" demek
+   oluyordu ve boyle bir lastmod dikkate alinmiyor. */
+const POST_DATES = Object.fromEntries(blogsData.map((post) => [post.id, post.iso]));
+
 export function buildSitemap(today) {
   const entries = allRoutes().map((route) => {
     const alternates = alternatesOf(route);
@@ -39,7 +45,7 @@ export function buildSitemap(today) {
     return [
       '  <url>',
       `    <loc>${SITE}${route.path}</loc>`,
-      `    <lastmod>${today}</lastmod>`,
+      `    <lastmod>${(route.page === 'blogItem' && POST_DATES[route.id]) || today}</lastmod>`,
       `    <changefreq>${weight.changefreq}</changefreq>`,
       `    <priority>${weight.priority}</priority>`,
       links,

@@ -31,7 +31,7 @@ export default function BlogPage() {
         description={c.meta.blog.description}
         jsonLd={breadcrumb([
           { name: c.nav.home, path: pathFor('home', lang) },
-          { name: c.pages.blog.lead, path: pathFor('blog', lang) },
+          { name: c.nav.links.find((link) => link.key === 'blog').label, path: pathFor('blog', lang) },
         ])}
       />
 

@@ -16,6 +16,7 @@ export const postsEn = {
   'web-sitesi-maliyeti-2026': {
     tag: 'Strategy & Budget',
     date: '13 July 2026',
+    iso: '2026-07-13',
     title: 'What a Website Costs in 2026: A Realistic Price Guide for Small Businesses',
     desc: 'What does a company website cost in 2026? A line-by-line breakdown, the hidden items, and how to build the budget properly.',
     content: `
@@ -58,6 +59,7 @@ At suerta co. we listen to the business before quoting: what you sell, who your 
   'shopify-mi-woocommerce-mi': {
     tag: 'E-Commerce',
     date: '13 July 2026',
+    iso: '2026-07-13',
     title: 'Shopify or WooCommerce? A 2026 Comparison for Your Business',
     desc: 'The two platforms compared on cost, speed, maintenance and growth. Five questions to settle which one fits your business.',
     content: `
@@ -100,6 +102,7 @@ At suerta co. we work in both worlds, from Shopify theme setup to custom-built c
   'yeni-site-seo-checklist': {
     tag: 'Performance & SEO',
     date: '13 July 2026',
+    iso: '2026-07-13',
     title: 'New Website SEO Checklist: 12 Steps Before You Launch',
     desc: 'The 12 SEO steps to check before a site goes live: technical setup, content, speed, and introducing the site to Google properly.',
     content: `
@@ -142,6 +145,7 @@ These 12 points are the summary of the pre-launch process suerta co. runs on eve
   'otel-rezervasyon-hizi': {
     tag: 'Performance & SEO',
     date: '12 July 2026',
+    iso: '2026-07-12',
     title: 'How Speeding Up a Hotel Booking Flow Raised Conversion by 40%',
     desc: 'Behind the zero-wait principle and the speed-first build on the Emsa Otel project.',
     content: `
@@ -173,6 +177,7 @@ The result: on phones, completing a booking went from three minutes to 45 second
   'karanlik-mod-premium': {
     tag: 'UI/UX Design',
     date: '5 July 2026',
+    iso: '2026-07-05',
     title: 'Why Dark Mode and a Premium Look Earn More Trust',
     desc: 'What dark mode and a luxury aesthetic do to how a brand is perceived.',
     content: `
@@ -204,6 +209,7 @@ On the Argüman Fabrikası and Nova Mimarlık projects we used a fully premium d
   'ozel-yazilim-vs-hazir-paketler': {
     tag: 'E-Commerce',
     date: '28 June 2026',
+    iso: '2026-06-28',
     title: 'Custom Software vs Off-the-Shelf: Which One Fits You?',
     desc: 'A case study on the flexibility and long-term return of an e-commerce platform built from scratch.',
     content: `
@@ -235,6 +241,7 @@ We built Pawsec Shop a custom React and Node.js platform from scratch, shaped en
   'fotograf-cekimi': {
     tag: 'Brand & Content',
     date: '20 July 2026',
+    iso: '2026-07-20',
     title: 'How Professional Photography Is Done for a Business',
     desc: 'Half of a good website is photography. The steps of a commercial shoot: light, composition and the editing that follows.',
     content: `
@@ -270,6 +277,7 @@ At suerta co. we take on the photography ourselves on most of our web projects, 
   'mobil-optimizasyon': {
     tag: 'Performance & SEO',
     date: '18 July 2026',
+    iso: '2026-07-18',
     title: 'What Mobile Optimisation Is, and Why Your Site Is Slow on a Phone',
     desc: 'Most visitors arrive on phones. What mobile optimisation means, the mistakes that slow a site down, and how to build one that opens fast.',
     content: `
@@ -305,6 +313,7 @@ At suerta co. we build every project mobile first and test on real devices befor
   'google-ads-donusum': {
     tag: 'Digital Marketing',
     date: '16 July 2026',
+    iso: '2026-07-16',
     title: 'How to Set Up Google Ads Conversion Tracking (and Stop Wasting Budget)',
     desc: 'Advertising without conversion tracking is throwing money into the dark. How Google Ads conversions are set up and how sales from ads are measured.',
     content: `
@@ -340,6 +349,7 @@ At suerta co. we always start ad management with the measurement setup, because 
   'google-isletme-profili': {
     tag: 'Local SEO',
     date: '15 July 2026',
+    iso: '2026-07-15',
     title: 'How to Optimise a Google Business Profile (Maps)',
     desc: 'Customers look for you on Google Maps first. Setting up the business profile, optimising it, and standing out through reviews.',
     content: `
@@ -375,6 +385,7 @@ At suerta co. we handle profile setup, optimisation and integration with the sit
   'whatsapp-chatbot': {
     tag: 'Automation & AI',
     date: '14 July 2026',
+    iso: '2026-07-14',
     title: 'How to Set Up a WhatsApp Chatbot for Round-the-Clock Replies',
     desc: 'If you are tired of answering the same questions over and over, the answer is automation. How a WhatsApp chatbot is built and what it takes off your hands.',
     content: `
@@ -410,6 +421,7 @@ At suerta co. we look at the messages your business actually receives and build 
   'telegram-sinav-botu': {
     tag: 'Custom Software',
     date: '11 July 2026',
+    iso: '2026-07-11',
     title: 'Tracking Exam Quotas with a Telegram Bot',
     desc: 'Automating opportunities that cannot be watched by hand. Behind a Telegram bot that watches an exam quota and reports the moment it changes.',
     content: `
@@ -445,6 +457,7 @@ At suerta co. we build watching and notification bots for specific businesses. I
   'geo-yapay-zeka-gorunurluk': {
     tag: 'GEO & AI',
     date: '10 July 2026',
+    iso: '2026-07-10',
     title: 'What Is GEO? What Happens When ChatGPT and Gemini Recommend You',
     desc: 'People now ask an AI instead of Google. Generative Engine Optimization, and getting your brand into AI answers.',
     content: `

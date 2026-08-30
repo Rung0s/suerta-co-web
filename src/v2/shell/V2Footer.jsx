@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { V2_SOCIAL, CONTACT, resolveLink } from './nav-links';
 import { useCopy, useLang } from '../i18n';
-import { pathFor } from '../i18n/paths';
 
 /* Kapanis bandi.
    Referans sayfayi tam genislik bir gorselle kapatiyor ve telif satirini
@@ -10,10 +9,8 @@ import { pathFor } from '../i18n/paths';
 
    Duzen uc kolon, dev logotype, en altta telif ve yukari don. */
 export default function V2Footer() {
-  const { pathname } = useLocation();
   const { lang } = useLang();
   const c = useCopy();
-  const onHome = pathname === pathFor('home', lang);
 
   return (
     <footer className="v2-band">
@@ -22,18 +19,14 @@ export default function V2Footer() {
           <div className="v2-fcols">
             <div className="v2-fcol">
               <span className="v2-fcol__title">{c.footer.menu}</span>
-              {c.nav.links.map((link) => {
-                const to = resolveLink(link, lang, onHome);
-                return to.startsWith('#') ? (
-                  <a key={link.key} className="v2-fcol__link" href={to}>
-                    {link.label}
-                  </a>
-                ) : (
-                  <Link key={link.key} className="v2-fcol__link" to={to}>
-                    {link.label}
-                  </Link>
-                );
-              })}
+              {/* Alt bilgi her zaman gercek adrese gidiyor, anasayfada bile:
+                  menu orada capa kullaniyor ve boylece anasayfa hicbir ic
+                  sayfaya baglanti vermiyordu. */}
+              {c.nav.links.map((link) => (
+                <Link key={link.key} className="v2-fcol__link" to={resolveLink(link, lang, false)}>
+                  {link.label}
+                </Link>
+              ))}
             </div>
 
             <div className="v2-fcol">

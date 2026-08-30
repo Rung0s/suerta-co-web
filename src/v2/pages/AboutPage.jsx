@@ -23,7 +23,7 @@ export default function AboutPage() {
         description={c.meta.about.description}
         jsonLd={breadcrumb([
           { name: c.nav.home, path: pathFor('home', lang) },
-          { name: c.pages.about.lead, path: pathFor('about', lang) },
+          { name: c.nav.links.find((link) => link.key === 'about').label, path: pathFor('about', lang) },
         ])}
       />
 

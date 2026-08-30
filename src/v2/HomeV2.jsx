@@ -7,7 +7,7 @@ import { Reveal, Item, TwoTone } from './primitives';
 import V2Layout from './shell/V2Layout';
 import { useCopy, useLang } from './i18n';
 import { pathFor } from './i18n/paths';
-import Seo, { faqPage } from './seo/Seo';
+import Seo from './seo/Seo';
 import { SITE_URL } from './seo/brand';
 import { HTML_LANG } from './i18n/paths';
 import ContactSection from './sections/ContactSection';
@@ -668,10 +668,13 @@ export default function HomeV2() {
 
   return (
     <V2Layout>
+      {/* SSS semasi yalnizca /hizmetlerimiz sayfasinda: ayni alti soru iki
+          adreste sema olarak durunca ikisi ayni yanitin rakip kaynagi
+          oluyor. Buradaki gorunur akordeon yerinde kaliyor. */}
       <Seo
         title={c.meta.home.title}
         description={c.meta.home.description}
-        jsonLd={[websiteSchema(lang), faqPage(faqs)]}
+        jsonLd={[websiteSchema(lang)]}
       />
 
       <HeroLaunch />

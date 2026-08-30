@@ -25,7 +25,7 @@ export default function WorkPage() {
         description={c.meta.work.description}
         jsonLd={breadcrumb([
           { name: c.nav.home, path: pathFor('home', lang) },
-          { name: c.pages.work.lead, path: pathFor('work', lang) },
+          { name: c.nav.links.find((link) => link.key === 'work').label, path: pathFor('work', lang) },
         ])}
       />
 

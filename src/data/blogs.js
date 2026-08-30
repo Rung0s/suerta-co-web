@@ -1,3 +1,7 @@
+/* `date` ekranda gorunen bicim, `iso` makine icin (schema.org Article
+   `datePublished` ISO 8601 istiyor; "13 Temmuz 2026" yaziliyordu ve Search
+   Console yazilarin hepsini hatali isaretleyecekti). Ikisi ayni gunu
+   gostermeli. */
 export const blogsData = [
   {
     id: 'web-sitesi-maliyeti-2026',
@@ -6,6 +10,7 @@ export const blogsData = [
     title: "Web Sitesi Maliyeti 2026: Küçük İşletmeniz İçin Gerçekçi Fiyat Rehberi",
     desc: "2026'da kurumsal web sitesi ne kadar tutar? Kalem kalem maliyet dökümü, gizli giderler ve bütçenizi doğru kurmanın yolu.",
     date: "13 Temmuz 2026",
+    iso: "2026-07-13",
     content: `
 Bir web sitesi yaptırmak 2026'da Türkiye'de birkaç bin liradan birkaç yüz bin liraya kadar değişen bir yatırım — ve bu aralığın bu kadar geniş olmasının nedeni, fiyatın "site"ye değil sitenin çözdüğü işe göre belirlenmesi. Fiyatı belirleyen şey sayfa sayısı değil, sitenin üstleneceği iştir. Bir tanıtım sitesi ile online satış yapan, stok yöneten, ödeme alan bir e-ticaret sitesi aynı sayfa sayısına sahip olabilir; ama aralarında kat kat maliyet farkı vardır. Teklif almadan önce cevaplamanız gereken soru şudur: bu site hangi davranışı üretirse işletmem para kazanır? Telefon mu çaldıracak, form mu doldurtacak, sepete ürün mü ekletecek?
 
@@ -45,6 +50,7 @@ suerta co. olarak teklif vermeden önce işinizi dinliyoruz: ne sattığınızı
     title: "Shopify mı WooCommerce mi? İşletmenize Göre 2026 Karşılaştırması",
     desc: "İki platformu maliyet, hız, bakım ve büyüme açısından karşılaştırdık. İşletmenize hangisinin uyduğunu 5 soruda netleştirin.",
     date: "13 Temmuz 2026",
+    iso: "2026-07-13",
     content: `
 E-ticarete başlarken verilecek ilk büyük karar platform seçimidir ve Türkiye'de bu karar çoğunlukla iki isim arasında verilir: Shopify ve WooCommerce. Kısa cevap şu: operasyona odaklanmak isteyen, teknik ekip bulundurmayan işletmeler için Shopify; tam kontrol ve özelleştirme isteyen, teknik desteğe erişimi olan işletmeler için WooCommerce daha doğru tercihtir.
 
@@ -84,6 +90,7 @@ suerta co. olarak Shopify tema kurulumundan özel e-ticaret geliştirmeye kadar 
     title: "Yeni Web Sitesi SEO Kontrol Listesi: Yayına Almadan Önce 12 Adım",
     desc: "Sitenizi yayına almadan önce kontrol etmeniz gereken 12 SEO adımı: teknik kurulum, içerik, hız ve Google'a doğru tanıtım.",
     date: "13 Temmuz 2026",
+    iso: "2026-07-13",
     content: `
 Yeni bir web sitesinin Google'da görünmemesinin en yaygın nedeni, yayın gününde atlanmış birkaç basit adımdır — ve bu adımların çoğu beş dakikada kontrol edilir. Aşağıdaki 12 maddelik liste, ajans olarak her projede uyguladığımız yayın öncesi kontrol sürecinin sadeleştirilmiş hâlidir.
 
@@ -123,6 +130,7 @@ Bu 12 madde, suerta co.'nun her projede uyguladığı yayın öncesi sürecin ö
     title: "Otel Rezervasyonlarında Hızı Artırarak Dönüşümü Nasıl %40 Yükselttik?",
     desc: "Emsa Otel projesinde kullanıcı deneyimini iyileştiren sıfır hata prensibi ve hız odaklı altyapının perde arkası.",
     date: "12 Temmuz 2026",
+    iso: "2026-07-12",
     content: `
 Otel sektöründe kullanıcılar genellikle saniyeler içinde karar verirler. Uzun yükleme süreleri, karmaşık rezervasyon adımları ve hantal arayüzler, potansiyel müşterilerin sayfayı terk etmesine (bounce rate) neden olur. Emsa Otel projesi için geliştirdiğimiz yeni nesil rezervasyon sisteminde önceliğimiz "Sıfır Bekleme" (Zero-Wait) prensibi oldu.
 
@@ -152,6 +160,7 @@ Sonuç olarak: Mobil cihazlarda rezervasyon tamamlama süresi 3 dakikadan 45 san
     title: "Karanlık Mod ve Premium Estetik Kullanıcılarda Neden Daha Çok Güven Uyandırıyor?",
     desc: "Modern web tasarım trendleri arasında yer alan 'Dark Mode' ve lüks görünümün marka algısına etkileri.",
     date: "05 Temmuz 2026",
+    iso: "2026-07-05",
     content: `
 Görsel algı, bir markaya duyulan güvenin ilk anahtarıdır. Özellikle B2B (işletmeden işletmeye) veya lüks tüketim (mimarlık, VIP transfer, özel yazılım) sektörlerinde "Karanlık Mod" (Dark Mode) tasarımı sadece estetik bir tercih değil, aynı zamanda stratejik bir konumlandırmadır.
 
@@ -181,6 +190,7 @@ Argüman Fabrikası ve Nova Mimarlık projelerinde tamamen premium dark mode est
     title: "Özel Yazılım vs Hazır Paketler: Hangi Sistem Size Göre?",
     desc: "Sıfırdan kurulan e-ticaret altyapılarının sağladığı esneklik ve uzun vadeli yatırım getirisi üzerine bir vaka çalışması.",
     date: "28 Haziran 2026",
+    iso: "2026-06-28",
     content: `
 Dijital dünyada var olmak isteyen markaların ilk sorduğu sorulardan biri şudur: "Hazır bir e-ticaret altyapısı (Shopify, Ticimax vb.) mı kullanmalıyım, yoksa özel (custom) bir yazılım mı geliştirtmeliyim?"
 
@@ -210,6 +220,7 @@ Biz Pawsec Shop için sıfırdan, markanın ihtiyaçlarına %100 uyumlu özel bi
     title: "İşletmeler İçin Profesyonel Fotoğraf Çekimi Nasıl Yapılır?",
     desc: "İyi bir web sitesinin yarısı fotoğraftır. Kurumsal fotoğraf çekiminin adımları, ışık, kompozisyon ve çekim sonrası düzenleme süreci.",
     date: "20 Temmuz 2026",
+    iso: "2026-07-20",
     content: `
 Bir web sitesinin verdiği ilk izlenimin büyük kısmı metin değil, görseldir; ziyaretçi bir cümle okumadan önce fotoğrafları görür ve markanız hakkında saniyeler içinde karar verir. Bu yüzden telefonla çekilmiş loş, dağınık kareler ne kadar iyi bir tasarımın içine konursa konsun siteyi ucuz gösterir. Profesyonel fotoğraf, bir "lüks" değil; ziyaretçiyi müşteriye çeviren temel bir yatırımdır.
 
@@ -243,6 +254,7 @@ suerta co. olarak web projelerimizin çoğunda fotoğraf çekimini de biz üstle
     title: "Mobil Optimizasyon Nedir, Siteniz Telefonda Neden Yavaş?",
     desc: "Ziyaretçilerin çoğu mobilden geliyor. Mobil optimizasyonun ne olduğu, siteyi yavaşlatan hatalar ve telefonda hızlı açılan site nasıl kurulur.",
     date: "18 Temmuz 2026",
+    iso: "2026-07-18",
     content: `
 Türkiye'de web trafiğinin büyük çoğunluğu mobil cihazlardan gelir ve Google, siteleri artık öncelikle mobil hâliyle değerlendirir (mobile-first indexing). Yani siteniz masaüstünde ne kadar iyi görünürse görünsün, telefonda yavaş açılıyor veya bozuk görünüyorsa hem ziyaretçiyi hem sıralamayı kaybedersiniz. Mobil optimizasyon, sitenin küçük ekranda hızlı, okunaklı ve parmakla kullanılabilir olmasını sağlama işidir.
 
@@ -276,6 +288,7 @@ suerta co. olarak her projeyi "mobil öncelikli" kurgular, yayına almadan önce
     title: "Google Ads Dönüşüm Takibi Nasıl Kurulur? (Reklam Bütçenizi Boşa Harcamayın)",
     desc: "Dönüşüm takibi olmayan reklam, karanlıkta para atmaktır. Google Ads dönüşümlerinin nasıl kurulduğu ve reklamdan gelen satışın nasıl ölçüldüğü.",
     date: "16 Temmuz 2026",
+    iso: "2026-07-16",
     content: `
 Reklam vermek kolaydır; reklamın işe yarayıp yaramadığını bilmek zordur. Google Ads'te en sık yapılan hata, dönüşüm takibi kurmadan kampanya başlatmaktır. Dönüşüm takibi olmayan bir reklam hesabı, hangi kelimenin müşteri getirdiğini, hangisinin sadece para yaktığını göstermez — bütçeyi karanlıkta harcarsınız. İyi haber: doğru kurulduğunda Google, her liranın nereye gittiğini net biçimde raporlar.
 
@@ -309,6 +322,7 @@ suerta co. olarak reklam yönetimine her zaman ölçüm kurulumuyla başlarız; 
     title: "Google İşletme Profili (Haritalar) Optimizasyonu Nasıl Yapılır?",
     desc: "Müşteriler sizi önce Google Haritalar'da arıyor. İşletme profilini kurmanın, optimize etmenin ve yorumlarla öne çıkmanın adımları.",
     date: "15 Temmuz 2026",
+    iso: "2026-07-15",
     content: `
 "Yakınımdaki otel", "deniz manzaralı günlük kiralık daire", "en yakın butik otel"... İnsanlar bir yerel hizmet ararken çoğunlukla siteye değil, önce Google Haritalar'daki işletme kartlarına bakar. Bu kartların kaynağı, ücretsiz olan Google İşletme Profili'dir (eski adıyla Google My Business). Profili olmayan bir işletme, aramanın en değerli bölümünde — haritada ve "yerel paket" denen üçlü listede — hiç görünmez.
 
@@ -342,6 +356,7 @@ suerta co. olarak yerel işletmeler için profil kurulumu, optimizasyonu ve site
     title: "WhatsApp Chatbot Nasıl Kurulur? 7/24 Otomatik Müşteri Yanıtı",
     desc: "Aynı soruları tekrar tekrar yanıtlamaktan yorulduysanız çözüm otomasyonda. WhatsApp chatbot'un nasıl kurulduğu ve neleri otomatikleştirdiği.",
     date: "14 Temmuz 2026",
+    iso: "2026-07-14",
     content: `
 Türkiye'de müşteri iletişiminin merkezinde WhatsApp var. Fiyat sormak, randevu almak, "açık mısınız?" diye kontrol etmek için insanlar önce WhatsApp yazar. Sorun şu: bu mesajların büyük kısmı aynı birkaç sorunun tekrarıdır ve her birine elle yanıt vermek, özellikle mesai dışında, hem yorucu hem de gecikince müşteri kaybettiren bir yüktür. WhatsApp chatbot, bu tekrarlayan yükü devralan otomatik bir yanıt sistemidir.
 
@@ -375,6 +390,7 @@ suerta co. olarak işletmenizin sık gelen mesajlarını analiz edip size uygun 
     title: "Telegram Botu ile Sınav & Kontenjan Takibi Nasıl Yapılır?",
     desc: "Elle takip edilmesi imkansız fırsatları otomatikleştirmek. Bir Telegram botunun sınav kontenjanını nasıl izleyip anında haber verdiğinin perde arkası.",
     date: "11 Temmuz 2026",
+    iso: "2026-07-11",
     content: `
 Bazı fırsatlar saniyelerle ölçülür: açılan bir sınav kontenjanı, boşalan bir randevu, güncellenen bir liste... Bu tür bilgiler bir web sayfasında sessizce değişir ve elle takip etmek pratikte imkansızdır — kimse sayfayı gün boyu her dakika yenileyemez. Rönesans Edu için çözdüğümüz problem tam olarak buydu: CENT-S sınavının kontenjanı açıldığı an öğrencilerin haberdar olması gerekiyordu, ama bunu insan gücüyle yakalamak mümkün değildi. Çözüm bir Telegram botu oldu.
 
@@ -408,6 +424,7 @@ suerta co. olarak işletmenize özel izleme ve bildirim botları geliştiriyoruz
     title: "GEO Nedir? ChatGPT ve Gemini Sizi Önerirse Ne Olur?",
     desc: "İnsanlar artık Google yerine yapay zekâya soruyor. Generative Engine Optimization (GEO) ile markanızın yapay zekâ yanıtlarında görünmesi.",
     date: "10 Temmuz 2026",
+    iso: "2026-07-10",
     content: `
 Arama alışkanlığı değişiyor. Giderek daha çok insan "Kapadokya'da havuzlu butik otel öner" ya da "otelim için hangi rezervasyon sistemini kullanmalıyım" gibi soruları Google'a değil, doğrudan ChatGPT, Gemini veya Perplexity gibi yapay zekâ araçlarına soruyor. Bu araçlar on mavi link listelemez; tek bir yanıt verir ve o yanıtta birkaç markayı önerir. GEO (Generative Engine Optimization), markanızın işte bu yapay zekâ yanıtlarında yer almasını sağlama çalışmasıdır — SEO'nun yeni nesil kardeşi.
 
