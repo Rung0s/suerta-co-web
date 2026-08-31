@@ -1,9 +1,0 @@
-# Eski tasarimda ekip kendi sayfasindaydi; yeni sitede hakkimizda sayfasinin
-# bir bolumu. Adres Google'da indeksli oldugu icin kalici olarak
-# yonlendiriliyor — kaldirilan bir sayfayi 404'e birakmak birikmis sirayi
-# da atar.
-/ekibimiz    /hakkimizda#ekip    301
-
-# SPA fallback — prerender edilmis statik dosyalar once sunulur, yalnizca
-# eslesmeyen yollar client-side router icin index.html'e duser.
-/*    /index.html   200
