@@ -27,7 +27,7 @@ export const tr = {
 
   hero: {
     lead: 'Ziyaretçiyi müşteriye çeviren',
-    tail: 'premium web siteleri.',
+    tail: 'premium sistemler.',
     ctaPrimary: 'Görüşme ayarla',
     ctaSecondary: 'İşleri gör',
     hint: 'KAYDIR',
