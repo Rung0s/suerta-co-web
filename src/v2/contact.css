@@ -283,3 +283,12 @@
     padding: var(--space-4);
   }
 }
+
+/* Dokunmatik ------------------------------------------------------------
+   Secim etiketleri 37px yuksekligindeydi. Dolgu 44px'e cikariliyor; yazi
+   olcusu ve satir ritmi ayni kaliyor. */
+@media (pointer: coarse) {
+  .v2-choice span {
+    padding-block: 0.6875rem;
+  }
+}

@@ -80,6 +80,8 @@ export default function V2Footer() {
       <img
         className="v2-band__scene"
         src="/img/control.webp"
+        srcSet="/img/control-800.webp 800w, /img/control-1200.webp 1200w, /img/control.webp 2400w"
+        sizes="100vw"
         alt=""
         aria-hidden="true"
         width="2400"

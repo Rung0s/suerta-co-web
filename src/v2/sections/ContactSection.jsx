@@ -10,6 +10,8 @@ function LaunchScene() {
     <img
       className="v2-rocket"
       src="/img/rocket-fly.webp"
+      srcSet="/img/rocket-fly-360.webp 360w, /img/rocket-fly-600.webp 600w, /img/rocket-fly.webp 900w"
+      sizes="(max-width: 900px) 190px, 380px"
       width="900"
       height="1592"
       decoding="async"

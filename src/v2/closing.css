@@ -242,3 +242,21 @@
   color: var(--muted);
   text-wrap: pretty;
 }
+
+/* Dokunmatik ------------------------------------------------------------
+   Alt bilgi baglantilari 22px yuksekligindeydi. Kutu 44px'e cikariliyor ve
+   sutun bosluu sifirlaniyor: kutular birbirine deger, ust uste binmez.
+   "Yukari don" da ayni olcuye getiriliyor. */
+@media (pointer: coarse) {
+  .v2-fcol {
+    gap: 0;
+  }
+
+  .v2-fcol__link {
+    padding-block: 0.6875rem;
+  }
+
+  .v2-totop {
+    min-height: 2.75rem;
+  }
+}

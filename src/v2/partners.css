@@ -275,3 +275,13 @@
     flex-basis: 92%;
   }
 }
+
+/* Dokunmatik ------------------------------------------------------------
+   Ok 36px idi: parmakla guvenli basilan en kucuk olcu 44px. Fare ile
+   kullanilan ekranda olcu degismiyor, orada isaretci zaten kesin. */
+@media (pointer: coarse) {
+  .v2-arrow {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+}

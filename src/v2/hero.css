@@ -905,3 +905,47 @@
     animation: none;
   }
 }
+
+/* Dar ekran ---------------------------------------------------------------
+   Sabitleme JS ile kapatiliyor (HeroLaunch, max-width: 900px). Ama on
+   uretilmis HTML sinifi tasiyarak geliyor: JS gelene kadar bolum yedi ekran
+   boyunda duruyor ve hidratlanma aninda coken bu yukseklik buyuk bir yerlesim
+   kaymasi yaratiyor. Ayni esik burada da yaziliyor ki ilk boyama dogru olsun. */
+@media (max-width: 900px) {
+  .v2-launch.is-pinned {
+    height: auto;
+  }
+
+  .v2-launch.is-pinned .v2-launch__stage {
+    position: static;
+    height: auto;
+  }
+
+  /* Sahne sabitleme kapaliyken akista kendi yuksekligi olan bir blok. Mutlak
+     konumda kalirsa yukseklikten dusen kutu bos bir seride cizilirdi. */
+  .v2-launch.is-pinned .v2-launch__scene {
+    position: relative;
+    inset: auto;
+    height: 44vh;
+    min-height: 16rem;
+    margin-top: var(--space-12);
+  }
+
+  .v2-launch.is-pinned .v2-launch__area {
+    display: none;
+  }
+}
+
+/* Okunabilirlik ---------------------------------------------------------
+   Kart maketlerinin etiketleri 10-11px idi. Masaustunde kart bir ekran
+   goruntusu gibi okunuyor, telefonda ise gercek metin gibi okunuyor ve o
+   olcude yorucu. Dar ekranda taban 12px'e cekiliyor. */
+@media (max-width: 900px) {
+  .v2-hc__badge,
+  .v2-hc__channel-fee,
+  .v2-hc__channel-state,
+  .v2-hc__bar-label,
+  .v2-hc__ai-label {
+    font-size: 0.75rem;
+  }
+}

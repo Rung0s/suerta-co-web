@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { HERO_CARDS } from './card-list';
 import { useCopy, useLang } from '../i18n';
@@ -280,6 +279,8 @@ export default function HeroLaunch() {
           <img
             className="v2-launch__crowd"
             src="/img/crowd.webp"
+            srcSet="/img/crowd-800.webp 800w, /img/crowd-1200.webp 1200w, /img/crowd.webp 2400w"
+            sizes="100vw"
             alt=""
             aria-hidden="true"
             width="2400"
@@ -294,6 +295,8 @@ export default function HeroLaunch() {
           <img
             className="v2-launch__pad"
             src="/img/rocket-pad.webp"
+            srcSet="/img/rocket-pad-360.webp 360w, /img/rocket-pad-600.webp 600w, /img/rocket-pad.webp 900w"
+            sizes="(max-width: 900px) 190px, 380px"
             alt=""
             aria-hidden="true"
             width="900"
@@ -305,6 +308,8 @@ export default function HeroLaunch() {
           <img
             className="v2-launch__fly"
             src="/img/rocket-fly.webp"
+            srcSet="/img/rocket-fly-360.webp 360w, /img/rocket-fly-600.webp 600w, /img/rocket-fly.webp 900w"
+            sizes="(max-width: 900px) 190px, 380px"
             alt=""
             aria-hidden="true"
             width="900"
@@ -354,13 +359,15 @@ export default function HeroLaunch() {
 
         {/* Sahnenin kaydirmayla ilerledigini bir yerde soylemek gerekiyor;
             aksi halde sayfa donmus gibi duruyor. */}
-        <motion.span
+        <span
           className="v2-launch__hint"
-          animate={{ opacity: progress > 0.08 ? 0 : 1 }}
-          transition={{ duration: 0.3 }}
+          style={{
+            opacity: progress > 0.08 ? 0 : 1,
+            transition: 'opacity 300ms linear',
+          }}
         >
           {c.hero.hint}
-        </motion.span>
+        </span>
       </div>
     </header>
   );

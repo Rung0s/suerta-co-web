@@ -45,17 +45,23 @@
          ama hicbir yerden isaret edilmiyordu. -->
     <link rel="alternate" type="text/markdown" href="/llms.txt" title="suerta.co — llms.txt" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Uc aile: Inter (govde ve baslik), Caveat (el yazisi notlar), Doto
          (sayilar). Onceki tasarimin dort ailesi (Cormorant, Great Vibes,
          Jost, Outfit) artik hicbir yerde kullanilmiyordu ve her sayfada
-         indiriliyordu. -->
+         indiriliyordu.
+
+         Dosyalar /fonts/ altinda duruyor (bkz. scripts/fetch-fonts.mjs).
+         Google'dan gelirken once o sunucuya DNS + TLS + CSS istegi gerekiyordu
+         ve o zincir bitmeden govde yazisi cizilmiyordu. Govde yazisinin latin
+         dilimi burada onden isteniyor: sayfanin ilk satiri onu bekliyor. -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Doto:wght@400;700;900&family=Inter:opsz,wght@14..32,400..700&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="/fonts/inter-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
-  </head>
+    </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>

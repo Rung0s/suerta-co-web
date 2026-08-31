@@ -547,3 +547,27 @@
     font-size: 1.125rem;
   }
 }
+
+/* Not yazisi tek satirda duruyor: uzun cumle 320px'lik ekranlarda kuyrugunu
+   kaybediyordu, cunku govde yatay tasmayi kirpiyor. Dar ekranda satir
+   kirilmasina izin veriliyor; el yazisi etkisi iki satirda da duruyor. */
+@media (max-width: 400px) {
+  .v2-anno {
+    max-width: 100%;
+  }
+
+  .v2-anno__text {
+    white-space: normal;
+    text-wrap: balance;
+  }
+}
+
+/* Okunabilirlik ---------------------------------------------------------
+   Televizyon serisindeki marka plaketi 9px idi: dar ekranda okunmuyordu.
+   Harf araligi biraz kisiliyor ki serit ayni genislikte kalsin. */
+@media (max-width: 900px) {
+  .v2-tv__brand {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+}

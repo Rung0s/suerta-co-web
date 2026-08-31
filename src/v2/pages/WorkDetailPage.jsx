@@ -8,6 +8,7 @@ import { useCopy, useLang } from '../i18n';
 import { pathFor } from '../i18n/paths';
 import Seo, { breadcrumb, faqPage, projectSchema } from '../seo/Seo';
 import { projectById } from '../data/content';
+import { shotSrcSet } from '../media/shot';
 
 /* Tek bir isin sayfasi: ne yapildi, sonucu ne oldu, o projede sorulan
    sorular. Musterinin kendi sitesine giden baglanti burada duruyor —
@@ -90,6 +91,8 @@ export default function WorkDetailPage() {
               <img
                 className="v2-detail__shot"
                 src={project.image}
+                srcSet={shotSrcSet(project.image)}
+                sizes="(max-width: 900px) 92vw, 56rem"
                 alt={c.work.shot(project.name)}
                 loading="lazy"
                 decoding="async"

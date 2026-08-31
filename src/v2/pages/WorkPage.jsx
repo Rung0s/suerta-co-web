@@ -7,6 +7,7 @@ import { useCopy, useLang } from '../i18n';
 import { pathFor } from '../i18n/paths';
 import Seo, { breadcrumb } from '../seo/Seo';
 import { projectsFor } from '../data/content';
+import { shotSrcSet } from '../media/shot';
 
 /* Isler sayfasi.
    Anasayfadaki "secili isler" bandi dort tuglayi gosteriyor ama tugla
@@ -45,6 +46,8 @@ export default function WorkPage() {
                   <span className="v2-card__shot">
                     <img
                       src={project.image}
+                      srcSet={shotSrcSet(project.image)}
+                      sizes="(max-width: 900px) 92vw, 30vw"
                       alt={c.work.shot(project.name)}
                       loading="lazy"
                       decoding="async"

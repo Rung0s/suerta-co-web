@@ -91,6 +91,16 @@ async function run() {
       // Seo useEffect'inin head etiketlerini yazması için kısa bekleme
       await new Promise((r) => setTimeout(r, 250));
 
+      // Beliren blokların "gizle" işareti statik HTML'e yazılmasın: ekranın
+      // altında kalan bölümler o işaretle geldiğinde, sayfa hidratlanana
+      // kadar boş duruyor ve betiksiz okuyucuya hiç görünmüyor. İşareti JS
+      // hidratlanınca kendisi geri koyuyor (bkz. v2/primitives.jsx).
+      await page.evaluate(() => {
+        document
+          .querySelectorAll('.v2-reveal.is-armed')
+          .forEach((el) => el.classList.remove('is-armed', 'is-revealed'));
+      });
+
       let html = await page.content();
       // React'in yeniden render sırasında flash'ı azaltmak için body'yi tekrar temizlemesi normaldir.
       html = '<!doctype html>\n' + html.replace(/^<!doctype html>/i, '').trim();

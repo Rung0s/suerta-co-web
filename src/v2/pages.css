@@ -366,3 +366,13 @@
     grid-column: span 6;
   }
 }
+
+/* Dokunmatik ------------------------------------------------------------
+   Geri baglantisi 22px yuksekligindeydi; dolgu ile 44px'lik kutuya cikiyor. */
+@media (pointer: coarse) {
+  .v2-back {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+}

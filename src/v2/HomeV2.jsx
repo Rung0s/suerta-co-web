@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HeroLaunch from './hero/HeroLaunch';
 import LazyVideo from './media/LazyVideo';
+import { shotSrcSet } from './media/shot';
 import { referencesData } from '../data/references';
 import { Reveal, Item, TwoTone } from './primitives';
 import V2Layout from './shell/V2Layout';
@@ -457,6 +458,8 @@ function WorkTile({ project, wide, result, film, copy, href }) {
             <img
               className="v2-tv__media"
               src={project.image}
+              srcSet={shotSrcSet(project.image)}
+              sizes="(max-width: 900px) 92vw, 34vw"
               alt={copy.shot(project.name)}
               loading="lazy"
               decoding="async"

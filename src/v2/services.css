@@ -199,3 +199,19 @@
     padding-top: calc(var(--section-y) + 3rem);
   }
 }
+
+/* Dokunmatik ------------------------------------------------------------
+   Kanit satirindaki proje baglantilari 23px yuksekligindeydi. Satir yan yana
+   akiyor, bu yuzden yukseklik dolguyla degil en az olcuyle veriliyor: kutular
+   birbirine degmiyor, aradaki bosluk korunuyor. */
+@media (pointer: coarse) {
+  .v2-svc__proof {
+    align-items: center;
+  }
+
+  .v2-svc__proof-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+  }
+}

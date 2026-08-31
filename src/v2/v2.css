@@ -841,3 +841,137 @@
   justify-content: flex-start;
   margin-top: var(--space-8);
 }
+
+/* Dokunmatik ------------------------------------------------------------
+   Marka baglantisi ve menudeki ikincil baglantilar 22-26px yuksekligindeydi.
+   Dolgu ile 44px'lik kutuya cikiyorlar; yazi olcusu ayni kaliyor. */
+@media (pointer: coarse) {
+  .v2-nav__brand {
+    padding-block: 0.5625rem;
+  }
+
+  .v2-menu__social-link {
+    padding-block: 0.6875rem;
+  }
+
+  /* Menu dugmesi 40px, butonlar 43px idi: ikisi de esigin bir tik altinda. */
+  .v2-nav__toggle {
+    width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .v2-btn {
+    min-height: 2.75rem;
+  }
+}
+
+/* Reveal -----------------------------------------------------------------
+   Bir blok gorus alanina girince icindeki ogeler sirayla beliriyor
+   (bkz. primitives.jsx). Gizleme yalnizca "is-armed" isaretiyle geliyor ve o
+   isareti JS koyuyor — hem de sadece blok ekranin altinda kaldiysa. Boylece
+   betik kapaliyken, on uretilmis HTML hidratlanmadan once ve acilista zaten
+   gorunen bolumlerde icerik hicbir an gizlenmiyor. */
+.v2-reveal.is-armed .v2-reveal__item {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 450ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item,
+.v2-reveal.is-armed.is-revealed .v2-reveal__item {
+  opacity: 1;
+  transform: none;
+}
+
+/* Kademe: kardesler 60ms arayla giriyor, grup 40ms sonra basliyor. Sira
+   nth-child ile sayiliyor; listelerin en uzunu yirmi ogeden kisa. */
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(1) {
+  transition-delay: 40ms;
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(2) {
+  transition-delay: 100ms;
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(3) {
+  transition-delay: 160ms;
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(4) {
+  transition-delay: 220ms;
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(5) {
+  transition-delay: 280ms;
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(6) {
+  transition-delay: 340ms;
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(7) {
+  transition-delay: 400ms;
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(8) {
+  transition-delay: 460ms;
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(9) {
+  transition-delay: 520ms;
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(10) {
+  transition-delay: 580ms;
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(11) {
+  transition-delay: 640ms;
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(12) {
+  transition-delay: 700ms;
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(13) {
+  transition-delay: 760ms;
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(14) {
+  transition-delay: 820ms;
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(15) {
+  transition-delay: 880ms;
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(16) {
+  transition-delay: 940ms;
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(17) {
+  transition-delay: 1000ms;
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(18) {
+  transition-delay: 1060ms;
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(19) {
+  transition-delay: 1120ms;
+}
+
+.v2-reveal.is-armed.is-revealed > .v2-reveal__item:nth-child(20) {
+  transition-delay: 1180ms;
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-reveal.is-armed .v2-reveal__item {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
