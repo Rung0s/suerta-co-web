@@ -426,7 +426,7 @@ export const en = {
     about: {
       lead: 'Three people,',
       tail: 'one table.',
-      intro: 'suerta co. is a digital studio based in Eskişehir. Design, software and growth run at the same table; the job is not passed from agency to agency.',
+      intro: 'suerta.co is a digital studio based in Eskişehir. Design, software and growth run at the same table; the job is not passed from agency to agency.',
       valuesTitle: 'How we work',
       values: [
         {
@@ -467,7 +467,7 @@ export const en = {
 
   meta: {
     home: {
-      title: 'Web Design, E-Commerce & AI Automation Studio — suerta co.',
+      title: 'Web Design, E-Commerce & AI Automation Studio — suerta.co',
       description:
         'A boutique digital studio building websites, online shops, AI automation, hotel booking systems and SEO. Fixed scope, fixed price, delivered in 2–6 weeks.',
     },

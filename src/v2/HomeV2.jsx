@@ -646,8 +646,8 @@ function websiteSchema(lang) {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'suerta co.',
-    alternateName: 'suerta.co',
+    name: 'suerta.co',
+    alternateName: 'suerta co.',
     url: `${SITE_URL}${pathFor('home', lang)}`,
     inLanguage: HTML_LANG[lang],
     publisher: { '@id': `${SITE_URL}/#organization` },

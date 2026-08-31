@@ -22,7 +22,7 @@ Bütçeyi "ne kadar harcayabilirim" sorusuyla değil, "bir müşteri bana ne kaz
 
 Teklif alırken her ajansa şu beş soruyu sorun ve cevapları yazılı isteyin: Teklife neler dahil, neler değil? Site teslim edildiğinde teknik SEO kurulumu yapılmış olacak mı? Sitenin mülkiyeti kimde — alan adı ve hosting sizin adınıza mı kayıtlı? Yayın sonrası destek nasıl işliyor? Benzer bir işletme için ne yaptınız, sonucu ne oldu? Bu soruların herhangi birine net cevap veremeyen bir teklif, fiyatı ne olursa olsun pahalıdır.
 
-suerta co. olarak teklif vermeden önce işinizi dinliyoruz: ne sattığınızı, müşterinizin kim olduğunu, sitenin hangi işi üstleneceğini. Keşif görüşmesi ücretsiz — suerta.info@gmail.com adresine yazın, 1 iş günü içinde dönelim.
+suerta.co olarak teklif vermeden önce işinizi dinliyoruz: ne sattığınızı, müşterinizin kim olduğunu, sitenin hangi işi üstleneceğini. Keşif görüşmesi ücretsiz — suerta.info@gmail.com adresine yazın, 1 iş günü içinde dönelim.
     `,
     faqs: [
       {
@@ -62,7 +62,7 @@ Hız ve SEO tarafında iki platform da doğru kurulduğunda Google'da rekabet ed
 
 Kararınızı netleştirecek 5 soru: Ekipte teknik bilgisi olan biri var mı? (Hayır: Shopify / Evet: WooCommerce) — Sabit gider mi, değişken gider mi tercih edersiniz? (Sabit: Shopify) — Standart bir katalogla mı satıyorsunuz? (Evet: Shopify) — Siteyle haftada 1 saatten az mı uğraşabilirsiniz? (Evet: Shopify) — İçerik/blog işinizde merkezi mi? (Evet: WooCommerce). Eşitlik çıkarsa Shopify'dan başlayın: yanlış karar olsa bile daha ucuza öğrenirsiniz.
 
-suerta co. olarak Shopify tema kurulumundan özel e-ticaret geliştirmeye kadar iki dünyada da çalışıyoruz — bu yüzden size platformu değil, işinize uyanı öneririz. Ürününüzü ve hedefinizi suerta.info@gmail.com adresine yazın, ücretsiz keşif görüşmesinde birlikte netleştirelim.
+suerta.co olarak Shopify tema kurulumundan özel e-ticaret geliştirmeye kadar iki dünyada da çalışıyoruz — bu yüzden size platformu değil, işinize uyanı öneririz. Ürününüzü ve hedefinizi suerta.info@gmail.com adresine yazın, ücretsiz keşif görüşmesinde birlikte netleştirelim.
     `,
     faqs: [
       {
@@ -102,7 +102,7 @@ Performans ve güven (10-12): Türkiye'de trafiğin büyük çoğunluğu mobilde
 
 Liste bitince iş bitmez; ilk hafta üç şeyi izleyin: Search Console'da sayfalarınız "indekslendi" durumuna geçiyor mu? Marka aramanızda ilk sırada kendi siteniz çıkıyor mu? Hedef sorgularınızı not ettiniz mi? İlk haftalardaki sıralamalara bakıp karamsarlığa kapılmayın — yeni bir sitenin rekabetçi sorgularda yerini bulması haftalar değil aylar meselesidir ve bu normaldir. Bu dönemde yapılacak en doğru yatırım, hedef sorgulara cevap veren içerikleri düzenli üretmektir.
 
-Bu 12 madde, suerta co.'nun her projede uyguladığı yayın öncesi sürecin özetidir — bizde site, bu liste tamamlanmadan yayına çıkmaz. Mevcut sitenizin bu listeden kaç madde geçtiğini merak ediyorsanız suerta.info@gmail.com adresine yazın; kısa bir ön değerlendirmeyle size raporlayalım.
+Bu 12 madde, suerta.co'nun her projede uyguladığı yayın öncesi sürecin özetidir — bizde site, bu liste tamamlanmadan yayına çıkmaz. Mevcut sitenizin bu listeden kaç madde geçtiğini merak ediyorsanız suerta.info@gmail.com adresine yazın; kısa bir ön değerlendirmeyle size raporlayalım.
     `,
     faqs: [
       {
@@ -230,7 +230,7 @@ Işık, fotoğrafın en belirleyici unsurudur. Doğal ışığın yumuşak oldu�
 
 Çekim biter, iş bitmez: asıl fark çekim sonrası düzenlemede (retouch) ortaya çıkar. Renk düzeltme, pozlama dengesi, gereksiz nesnelerin temizlenmesi ve web için optimize edilmiş boyutlandırma bu aşamada yapılır. Yüksek çözünürlüklü ama sıkıştırılmış (WebP) görseller, hem net görünür hem de sayfayı yavaşlatmaz — bu denge kurulmazsa güzel fotoğraflar siteyi yavaşlatan bir yüke dönüşür.
 
-suerta co. olarak web projelerimizin çoğunda fotoğraf çekimini de biz üstleniriz; çünkü siteyi tasarlayan ekip, hangi karenin nereye gireceğini en baştan bilir. İşletmenizin görsellerini yenilemek isterseniz suerta.info@gmail.com adresine yazın, ihtiyaç listenizi birlikte çıkaralım.
+suerta.co olarak web projelerimizin çoğunda fotoğraf çekimini de biz üstleniriz; çünkü siteyi tasarlayan ekip, hangi karenin nereye gireceğini en baştan bilir. İşletmenizin görsellerini yenilemek isterseniz suerta.info@gmail.com adresine yazın, ihtiyaç listenizi birlikte çıkaralım.
     `,
     faqs: [
       {
@@ -264,7 +264,7 @@ Siteyi mobilde yavaşlatan en yaygın suçlu, optimize edilmemiş görsellerdir.
 
 Üçüncüsü teknik yüktür: gereksiz yazı tipleri, ağır animasyon kütüphaneleri ve fazladan kod, telefonun işlemcisini zorlar. Doğru kurulmuş bir site yalnızca ihtiyaç duyduğu kaynağı yükler. İşinizin bu kısmını ölçmek için ücretsiz Google PageSpeed Insights aracına sitenizi yazın; mobil skorunuz düşükse en büyük iyileştirme fırsatları da orada listelenir.
 
-suerta co. olarak her projeyi "mobil öncelikli" kurgular, yayına almadan önce gerçek cihazlarda test ederiz. Sitenizin mobil performansını ölçmemizi isterseniz suerta.info@gmail.com adresine yazın, kısa bir hız raporu çıkaralım.
+suerta.co olarak her projeyi "mobil öncelikli" kurgular, yayına almadan önce gerçek cihazlarda test ederiz. Sitenizin mobil performansını ölçmemizi isterseniz suerta.info@gmail.com adresine yazın, kısa bir hız raporu çıkaralım.
     `,
     faqs: [
       {
@@ -298,7 +298,7 @@ Kritik nokta, izlemenin doğru olayı saymasıdır. Formun "gönderildiği" an m
 
 Takip kurulduktan sonra reklam optimize edilebilir hâle gelir: dönüşüm getiren kelimelere bütçe kaydırılır, getirmeyenler durdurulur, kampanya "dönüşüm başına maliyet" hedefiyle akıllı teklife bırakılabilir. Meta (Facebook/Instagram) reklamlarında da mantık aynıdır; orada izleme Meta Pixel ile kurulur. Ölçülemeyen reklam yönetilemez — bu yüzden dönüşüm takibi lüks değil, reklamın ön koşuludur.
 
-suerta co. olarak reklam yönetimine her zaman ölçüm kurulumuyla başlarız; çünkü hedefimiz "gösterim" değil, ölçülebilir müşteridir. Reklam bütçenizin geri dönüşünü netleştirmek isterseniz suerta.info@gmail.com adresine yazın.
+suerta.co olarak reklam yönetimine her zaman ölçüm kurulumuyla başlarız; çünkü hedefimiz "gösterim" değil, ölçülebilir müşteridir. Reklam bütçenizin geri dönüşünü netleştirmek isterseniz suerta.info@gmail.com adresine yazın.
     `,
     faqs: [
       {
@@ -332,7 +332,7 @@ Optimizasyon, profili "canlı" tutmakla ilgilidir. Kaliteli fotoğraflar (dış 
 
 Son olarak profil, sitenizle ve reklamlarınızla birlikte çalışır: profildeki "web sitesi" ve "yol tarifi" tıklamaları ölçülebilir, telefon aramaları takip edilebilir. Böylece haritadan gelen ilginin gerçek müşteriye dönüşüp dönüşmediğini görürsünüz. Yerel bir işletme için Google İşletme Profili, çoğu zaman siteden bile önce gelen ilk vitrindir.
 
-suerta co. olarak yerel işletmeler için profil kurulumu, optimizasyonu ve site ile entegrasyonunu birlikte ele alıyoruz. Haritalarda görünürlüğünüzü artırmak isterseniz suerta.info@gmail.com adresine yazın.
+suerta.co olarak yerel işletmeler için profil kurulumu, optimizasyonu ve site ile entegrasyonunu birlikte ele alıyoruz. Haritalarda görünürlüğünüzü artırmak isterseniz suerta.info@gmail.com adresine yazın.
     `,
     faqs: [
       {
@@ -366,7 +366,7 @@ Teknik tarafta bot, WhatsApp'ın işletmeler için sunduğu resmi altyapı (What
 
 Doğru kurulan bir chatbot yalnızca yük almaz, satış da üretir: mesai dışında gelen mesajı anında karşılar, müşteriyi bekletmeden bilgi verir ve ilgilenen kişiyi randevuya veya siparişe yönlendirir. Rönesans Edu ve Argüman Fabrikası projelerinde kurduğumuz WhatsApp botları, sık sorulan soruların önemli kısmını otomatik yanıtlayarak ekibin zamanını gerçek işe ayırmasını sağladı.
 
-suerta co. olarak işletmenizin sık gelen mesajlarını analiz edip size uygun bir WhatsApp otomasyonu kuruyoruz. Hangi soruların otomatikleşebileceğini konuşmak için suerta.info@gmail.com adresine yazın.
+suerta.co olarak işletmenizin sık gelen mesajlarını analiz edip size uygun bir WhatsApp otomasyonu kuruyoruz. Hangi soruların otomatikleşebileceğini konuşmak için suerta.info@gmail.com adresine yazın.
     `,
     faqs: [
       {
@@ -400,7 +400,7 @@ Kurulumda üç parça vardır. Birincisi izleme motoru: kaynağı belirli aralı
 
 Bu yaklaşım yalnızca sınav kontenjanı için değil; stok takibi, fiyat değişikliği, randevu boşluğu, yeni ilan gibi "anında haberdar olmanın değer kattığı" her senaryo için çalışır. İşin özü, bir insanın yapmasının imkansız olduğu sürekli izleme işini bir yazılıma devretmek ve sonucu insanların kullandığı bir kanala (Telegram, WhatsApp, e-posta) taşımaktır.
 
-suerta co. olarak işletmenize özel izleme ve bildirim botları geliştiriyoruz. Elle takip etmekte zorlandığınız bir süreç varsa suerta.info@gmail.com adresine yazın, otomatikleştirilebilir mi birlikte bakalım.
+suerta.co olarak işletmenize özel izleme ve bildirim botları geliştiriyoruz. Elle takip etmekte zorlandığınız bir süreç varsa suerta.info@gmail.com adresine yazın, otomatikleştirilebilir mi birlikte bakalım.
     `,
     faqs: [
       {
@@ -434,7 +434,7 @@ Pratikte GEO birkaç şeyi bir araya getirir. Birincisi, hedef kitlenizin yapay 
 
 GEO henüz yeni bir alan ve tam da bu yüzden erken davranan markalar için büyük bir fırsat: rakipleriniz henüz yapay zekâ görünürlüğünü düşünmezken doğru içerikle şimdi konumlanmak, önümüzdeki dönemin "ilk sırada çıkma" avantajını bugünden kapmak demektir. Argüman Fabrikası projesinde SEO ile GEO'yu birlikte kurgulayarak markayı hem Google'da hem de yapay zekâ yanıtlarında görünür kılmayı hedefledik.
 
-suerta co. olarak içerik stratejinizi hem klasik SEO hem de GEO'yu kapsayacak şekilde kuruyoruz. Markanızın yapay zekâ aramalarında görünmesini konuşmak için suerta.info@gmail.com adresine yazın.
+suerta.co olarak içerik stratejinizi hem klasik SEO hem de GEO'yu kapsayacak şekilde kuruyoruz. Markanızın yapay zekâ aramalarında görünmesini konuşmak için suerta.info@gmail.com adresine yazın.
     `,
     faqs: [
       {

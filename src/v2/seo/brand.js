@@ -16,7 +16,7 @@ export const SITE_NAME = 'suerta.co';
 export const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
 
 const DESCRIPTION =
-  'suerta co. (suerta.co) internet siteleri, e-ticaret, rezervasyon sistemleri, yapay zekâ otomasyonları ve SEO/GEO işleri yapan butik bir dijital stüdyo.';
+  'suerta.co, internet siteleri, e-ticaret, rezervasyon sistemleri, yapay zekâ otomasyonları ve SEO/GEO işleri yapan butik bir dijital stüdyo.';
 
 /* Organization, LocalBusiness degil: marka yerel bir isletme paketine
    sokulmadan da adres tasiyabiliyor. */

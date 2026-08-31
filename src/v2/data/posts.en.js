@@ -30,7 +30,7 @@ Set the budget by asking what a customer is worth to you, not what you can affor
 
 Ask every agency these five questions and ask for the answers in writing: What is in the quote and what is not? Will the technical SEO setup be done when the site is handed over? Who owns the site — are the domain and hosting registered in your name? How does support work after launch? What have you built for a business like mine, and what came of it? A quote that cannot answer any one of those clearly is expensive whatever the number on it.
 
-At suerta co. we listen to the business before quoting: what you sell, who your customer is, what job the site has to take on. The discovery call is free — write to suerta.info@gmail.com and we will come back within one working day.
+At suerta.co we listen to the business before quoting: what you sell, who your customer is, what job the site has to take on. The discovery call is free — write to suerta.info@gmail.com and we will come back within one working day.
     `,
     faqs: [
       {
@@ -73,7 +73,7 @@ On speed and SEO, both platforms compete in Google when built properly; the diff
 
 Five questions that settle it: Is there anyone technical on the team? (No: Shopify / Yes: WooCommerce) — Do you prefer a fixed cost or a variable one? (Fixed: Shopify) — Are you selling a standard catalogue? (Yes: Shopify) — Can you spend less than an hour a week on the site? (Yes: Shopify) — Is content and blogging central to your business? (Yes: WooCommerce). If it comes out even, start with Shopify: even if it turns out to be the wrong call, you learn it more cheaply.
 
-At suerta co. we work in both worlds, from Shopify theme setup to custom-built commerce — which is why we recommend the one that fits your business rather than a platform. Write your product and your goal to suerta.info@gmail.com and we will settle it together on a free discovery call.
+At suerta.co we work in both worlds, from Shopify theme setup to custom-built commerce — which is why we recommend the one that fits your business rather than a platform. Write your product and your goal to suerta.info@gmail.com and we will settle it together on a free discovery call.
     `,
     faqs: [
       {
@@ -116,7 +116,7 @@ Performance and trust (10–12): Most traffic arrives on phones and Google judge
 
 The work does not end when the list does. Watch three things in the first week: are your pages moving to "indexed" in Search Console? Does your own site come first for your brand name? Have you written down your target queries? Do not despair at the rankings in those first weeks — a new site finding its place on competitive queries is a matter of months, not weeks, and that is normal. The best investment during that period is publishing content that answers the target queries, regularly.
 
-These 12 points are the summary of the pre-launch process suerta co. runs on every project — a site does not go live here until the list is complete. If you want to know how many of them your current site passes, write to suerta.info@gmail.com and we will report back after a short review.
+These 12 points are the summary of the pre-launch process suerta.co runs on every project — a site does not go live here until the list is complete. If you want to know how many of them your current site passes, write to suerta.info@gmail.com and we will report back after a short review.
     `,
     faqs: [
       {
@@ -253,7 +253,7 @@ Light is what decides a photograph. The hours when daylight is soft — early mo
 
 The work does not end when the shoot does: the real difference appears in the retouch. Colour correction, exposure balance, removing what should not be in frame, and sizing for the web all happen here. High-resolution but compressed images (WebP) look sharp without slowing the page down — get that balance wrong and beautiful photographs become the thing that makes the site slow.
 
-At suerta co. we take on the photography ourselves on most of our web projects, because the team designing the site knows from the start which frame goes where. If you want to refresh your business's images, write to suerta.info@gmail.com and we will put the list together with you.
+At suerta.co we take on the photography ourselves on most of our web projects, because the team designing the site knows from the start which frame goes where. If you want to refresh your business's images, write to suerta.info@gmail.com and we will put the list together with you.
     `,
     faqs: [
       {
@@ -289,7 +289,7 @@ The second area is layout. On a phone the content should fall into one column, t
 
 The third is technical weight: unnecessary fonts, heavy animation libraries and extra code all push against the phone's processor. A well-built site loads only what it needs. To measure this part, put your site into the free Google PageSpeed Insights; if your mobile score is low, the biggest opportunities are listed right there.
 
-At suerta co. we build every project mobile first and test on real devices before launch. If you want us to measure your site's mobile performance, write to suerta.info@gmail.com and we will produce a short speed report.
+At suerta.co we build every project mobile first and test on real devices before launch. If you want us to measure your site's mobile performance, write to suerta.info@gmail.com and we will produce a short speed report.
     `,
     faqs: [
       {
@@ -325,7 +325,7 @@ What matters is that the tracking counts the right event. Is it the moment the f
 
 Once tracking is in place the advertising becomes something you can optimise: budget moves to the keywords that convert, the ones that do not get stopped, and the campaign can be handed to smart bidding with a cost-per-conversion target. Meta (Facebook/Instagram) works the same way, with tracking through the Meta Pixel. Advertising that cannot be measured cannot be managed — which is why conversion tracking is not a luxury but a precondition.
 
-At suerta co. we always start ad management with the measurement setup, because the goal is a measurable customer rather than an impression. If you want to see the return on your ad budget clearly, write to suerta.info@gmail.com.
+At suerta.co we always start ad management with the measurement setup, because the goal is a measurable customer rather than an impression. If you want to see the return on your ad budget clearly, write to suerta.info@gmail.com.
     `,
     faqs: [
       {
@@ -361,7 +361,7 @@ Optimisation is about keeping the profile alive. Good photographs (exterior, int
 
 Finally, the profile works together with your site and your advertising: clicks on "website" and "directions" can be measured, and calls can be tracked. That way you see whether the interest coming from the map turns into a real customer. For a local business the Google Business Profile is often the first shop window, ahead even of the website.
 
-At suerta co. we handle profile setup, optimisation and integration with the site together for local businesses. If you want to be more visible on Maps, write to suerta.info@gmail.com.
+At suerta.co we handle profile setup, optimisation and integration with the site together for local businesses. If you want to be more visible on Maps, write to suerta.info@gmail.com.
     `,
     faqs: [
       {
@@ -397,7 +397,7 @@ Technically the bot is built on WhatsApp's official infrastructure for businesse
 
 A well-built chatbot does not only absorb load, it produces sales: it answers the message that arrives at midnight, gives information without making anyone wait, and moves an interested person towards a booking or an order. The WhatsApp bots we built on the Rönesans Edu and Argüman Fabrikası projects answer a large share of the recurring questions automatically, which gives the team its time back for real work.
 
-At suerta co. we look at the messages your business actually receives and build the automation that fits. To talk about which questions could be automated, write to suerta.info@gmail.com.
+At suerta.co we look at the messages your business actually receives and build the automation that fits. To talk about which questions could be automated, write to suerta.info@gmail.com.
     `,
     faqs: [
       {
@@ -433,7 +433,7 @@ There are three parts to the build. First, the watcher: software that checks the
 
 The same approach works well beyond exam quotas — stock levels, price changes, a free appointment, a new listing: any case where knowing immediately is worth something. The essence is handing continuous watching, which a person cannot do, to software, and delivering the result to a channel people already use: Telegram, WhatsApp or email.
 
-At suerta co. we build watching and notification bots for specific businesses. If there is a process you are struggling to follow by hand, write to suerta.info@gmail.com and we will look at whether it can be automated.
+At suerta.co we build watching and notification bots for specific businesses. If there is a process you are struggling to follow by hand, write to suerta.info@gmail.com and we will look at whether it can be automated.
     `,
     faqs: [
       {
@@ -469,7 +469,7 @@ In practice GEO brings a few things together. First, working out the real questi
 
 GEO is still a new field, and that is exactly why it is an opportunity for brands that move early: while your competitors are not yet thinking about AI visibility, positioning now with the right content means taking the "first result" advantage of the coming period today. On the Argüman Fabrikası project we planned SEO and GEO together, aiming to make the brand visible in Google and in AI answers alike.
 
-At suerta co. we build content strategy to cover both classic SEO and GEO. To talk about being visible in AI search, write to suerta.info@gmail.com.
+At suerta.co we build content strategy to cover both classic SEO and GEO. To talk about being visible in AI search, write to suerta.info@gmail.com.
     `,
     faqs: [
       {

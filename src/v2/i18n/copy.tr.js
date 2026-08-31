@@ -427,7 +427,7 @@ export const tr = {
     about: {
       lead: 'Üç kişilik ekip,',
       tail: 'tek masa.',
-      intro: 'suerta co. Eskişehir merkezli bir dijital stüdyo. Tasarım, yazılım ve büyüme tarafını aynı masada yürütüyoruz; iş ajanstan ajansa devredilmiyor.',
+      intro: 'suerta.co Eskişehir merkezli bir dijital stüdyo. Tasarım, yazılım ve büyüme tarafını aynı masada yürütüyoruz; iş ajanstan ajansa devredilmiyor.',
       valuesTitle: 'Nasıl çalışıyoruz',
       values: [
         {
@@ -468,7 +468,7 @@ export const tr = {
 
   meta: {
     home: {
-      title: 'İnternet Sitesi & E-Ticaret Ajansı — Eskişehir | suerta co.',
+      title: 'İnternet Sitesi & E-Ticaret Ajansı — Eskişehir | suerta.co',
       description:
         'Eskişehir merkezli dijital stüdyo: internet siteleri, e-ticaret, yapay zekâ otomasyonları ve rezervasyon sistemleri. Sabit kapsam, sabit fiyat.',
     },
