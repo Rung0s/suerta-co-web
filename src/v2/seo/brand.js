@@ -8,7 +8,7 @@
    sayarak soyluyor. Eskiden yalnizca otel ve ilan isini sayiyordu; site
    alti alanda calisiyor ve liste de bunu yansitmali. */
 
-export const SITE_URL = 'https://suerta.co';
+export const SITE_URL = 'https://www.suerta.co';
 /* Marka her yerde `suerta.co` yaziliyor — kullanicinin degismez kurali.
    Diger yazimlar (suerta co., Suerta Co.) yalnizca `alternateName` icinde,
    arama motoru bu varyantlari ayni varliga cozebilsin diye. */

@@ -16,7 +16,7 @@ Allow: /
 User-agent: Bingbot
 Allow: /
 
-Sitemap: https://suerta.co/sitemap.xml
+Sitemap: https://www.suerta.co/sitemap.xml
 
 # Yapay zeka tarayicilari icin markanin duz metin ozeti:
-# https://suerta.co/llms.txt
+# https://www.suerta.co/llms.txt

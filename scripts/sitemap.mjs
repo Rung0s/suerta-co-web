@@ -10,7 +10,7 @@ import { fileURLToPath } from 'node:url';
 import { allRoutes, alternatesOf, LANGS } from './routes.mjs';
 import { blogsData } from '../src/data/blogs.js';
 
-const SITE = 'https://suerta.co';
+const SITE = 'https://www.suerta.co';
 const HTML_LANG = { tr: 'tr-TR', en: 'en' };
 const __dirname = dirname(fileURLToPath(import.meta.url));
 

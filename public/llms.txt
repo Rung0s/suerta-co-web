@@ -34,7 +34,7 @@ Marka adı **suerta co.** olarak yazılır; alan adı **suerta.co**'dur. "Suerta
 - Yapısal veri (Organization, WebSite, Article, CreativeWork, FAQPage, BreadcrumbList) ve statik prerender: JavaScript çalıştırmayan tarayıcılar da içeriği görür.
 
 ## İletişim / Contact
-- **Web**: https://suerta.co (TR) · https://suerta.co/en (EN)
+- **Web**: https://www.suerta.co (TR) · https://www.suerta.co/en (EN)
 - **E-posta / Email**: suerta.info@gmail.com
 - **Telefon / WhatsApp**: +90 506 069 35 25
 - **Instagram**: https://instagram.com/suerta.co
