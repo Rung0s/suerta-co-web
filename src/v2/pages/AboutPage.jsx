@@ -60,10 +60,8 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="v2-section" id="ekip">
-        <div className="v2-shell">
-          <CrewTable />
-        </div>
+      <section className="v2-section v2-section--crew" id="ekip">
+        <CrewTable />
       </section>
     </V2Layout>
   );

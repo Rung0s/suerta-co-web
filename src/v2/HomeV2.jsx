@@ -910,10 +910,8 @@ export default function HomeV2() {
       </section>
 
       {/* Masanin basindaki yedi gorev ----------------------------------- */}
-      <section className="v2-section" id="ekip">
-        <div className="v2-shell">
-          <CrewTable />
-        </div>
+      <section className="v2-section v2-section--crew" id="ekip">
+        <CrewTable />
       </section>
 
       {/* Kapanis + iletisim ------------------------------------------------ */}

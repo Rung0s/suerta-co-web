@@ -225,7 +225,6 @@
   width: 6rem;
   height: 6rem;
   object-fit: contain;
-  mix-blend-mode: multiply;
   opacity: 0.9;
   pointer-events: none;
 }
