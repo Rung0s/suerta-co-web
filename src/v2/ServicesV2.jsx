@@ -5,6 +5,7 @@ import { Reveal, Item, TwoTone } from './primitives';
 import V2Layout from './shell/V2Layout';
 import { useCopy, useLang } from './i18n';
 import { pathFor } from './i18n/paths';
+import { objectFor } from './media/art';
 import Seo, { breadcrumb, faqPage } from './seo/Seo';
 import './services.css';
 
@@ -24,6 +25,15 @@ function ServiceCard({ service, index, copy }) {
 
   return (
     <Reveal className="v2-svc" id={service.slug}>
+      <img
+        className="v2-svc__art"
+        src={objectFor(service.slug)}
+        alt=""
+        width="360"
+        height="360"
+        loading="lazy"
+        decoding="async"
+      />
       <Item as="span" className="v2-svc__num">{String(index + 1).padStart(2, '0')}</Item>
       <Item as="h2" className="v2-svc__title">{service.title}</Item>
       <Item as="p" className="v2-svc__desc">{service.desc}</Item>

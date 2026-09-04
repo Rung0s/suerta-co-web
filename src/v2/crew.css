@@ -1,0 +1,222 @@
+/* Masanin basindaki yedi gorev ------------------------------------------ */
+
+.v2-crew__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas:
+    'head  stage'
+    'card  stage';
+  column-gap: clamp(2rem, 5vw, 5rem);
+  row-gap: var(--space-8);
+  align-items: center;
+}
+
+.v2-crew--compact .v2-crew__grid {
+  grid-template-areas: 'card stage';
+}
+
+.v2-crew__head {
+  grid-area: head;
+  align-self: end;
+}
+
+.v2-crew__head .v2-lead {
+  margin-top: var(--space-4);
+  max-width: 34rem;
+}
+
+.v2-crew__stage {
+  grid-area: stage;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+  padding-top: 1.25rem;
+}
+
+/* Sabit ibre: masa doner, ibre saat 12'de kalir. */
+.v2-crew__needle {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 2;
+  width: 0;
+  height: 0;
+  transform: translateX(-50%);
+  border-left: 0.55rem solid transparent;
+  border-right: 0.55rem solid transparent;
+  border-top: 1.1rem solid var(--accent);
+  filter: drop-shadow(0 2px 2px rgba(17, 17, 16, 0.25));
+}
+
+.v2-crew__table {
+  position: relative;
+  width: min(100%, 30rem);
+  aspect-ratio: 1;
+  transition: transform 640ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+
+.v2-crew__top {
+  position: absolute;
+  inset: 34%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255, 255, 255, 0.9), rgba(246, 245, 242, 0.6) 60%, rgba(17, 17, 16, 0.06) 100%),
+    var(--paper-tile);
+  border: 1px solid var(--line);
+  box-shadow:
+    inset 0 0 0 0.75rem var(--bg),
+    inset 0 0 0 calc(0.75rem + 1px) var(--line),
+    var(--shadow-tile);
+}
+
+/* Koltuk: merkezden disari tasinip aciya gore donduruluyor; figur boylece
+   masanin ortasina bakar. */
+.v2-crew__seat {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 25%;
+  aspect-ratio: 1;
+  margin: -12.5%;
+  transform: rotate(var(--a)) translateY(-138%);
+  transition: opacity 300ms var(--ease);
+  opacity: 0.72;
+}
+
+.v2-crew__seat.is-live {
+  opacity: 1;
+}
+
+.v2-crew__seat.is-live::after {
+  content: '';
+  position: absolute;
+  inset: -8%;
+  border-radius: 50%;
+  border: 1.5px solid var(--accent);
+  opacity: 0.8;
+}
+
+.v2-crew__figure {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+}
+
+.v2-crew__hint {
+  font-family: var(--font-note);
+  font-size: 1.25rem;
+  color: var(--accent);
+  transform: rotate(-3deg);
+}
+
+.v2-crew__card {
+  grid-area: card;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-8);
+  background-color: var(--surface);
+  background-image: var(--paper-tile), var(--paper-base);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-tile);
+  min-height: 15rem;
+}
+
+.v2-crew__num {
+  font-family: var(--font-numeric);
+  font-size: var(--text-small);
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+}
+
+.v2-crew__role {
+  font-size: var(--text-title);
+  font-weight: 600;
+  letter-spacing: var(--tracking-title);
+  line-height: var(--leading-title);
+  animation: v2-crew-in 380ms var(--ease) both;
+}
+
+.v2-crew__mission {
+  font-size: var(--text-lead);
+  color: var(--muted);
+  line-height: 1.5;
+  animation: v2-crew-in 380ms 60ms var(--ease) both;
+}
+
+@keyframes v2-crew-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.v2-crew__dots {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: auto;
+  padding-top: var(--space-4);
+}
+
+.v2-crew__dots i {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: var(--line);
+  transition: background 200ms var(--ease);
+}
+
+.v2-crew__dots i.is-on {
+  background: var(--accent);
+}
+
+.v2-crew__nav {
+  display: flex;
+  gap: var(--space-2);
+}
+
+@media (max-width: 900px) {
+  .v2-crew__grid,
+  .v2-crew--compact .v2-crew__grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'head'
+      'stage'
+      'card';
+  }
+  .v2-crew__table {
+    width: min(100%, 22rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-crew__table {
+    transition: none;
+  }
+  .v2-crew__role,
+  .v2-crew__mission {
+    animation: none;
+  }
+}
+
+/* Karusel oklari koyu zemin icin yazilmis; burada acik zemin. */
+.v2-crew .v2-arrow {
+  border-color: var(--line);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.v2-crew .v2-arrow:hover {
+  background: var(--surface-sunken);
+}

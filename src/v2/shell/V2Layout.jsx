@@ -7,6 +7,7 @@ import '../surface.css';
 import '../work.css';
 import '../partners.css';
 import '../manifesto.css';
+import '../crew.css';
 import '../closing.css';
 import '../contact.css';
 import '../cursor.css';

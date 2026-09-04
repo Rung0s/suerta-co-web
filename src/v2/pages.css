@@ -376,3 +376,50 @@
     min-height: 2.75rem;
   }
 }
+
+/* Yazi kapaklari — halftone cizim, kartin ustunden tasar --------------- */
+
+.v2-post__cover {
+  display: block;
+  margin: calc(var(--space-6) * -1) calc(var(--space-6) * -1) var(--space-2);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+}
+
+.v2-post__cover img,
+.v2-post__hero img,
+.v2-lost img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+}
+
+.v2-post__cover img {
+  transition: transform var(--dur-base) var(--ease);
+}
+
+.v2-post:hover .v2-post__cover img {
+  transform: scale(1.03);
+}
+
+.v2-post__hero {
+  margin-top: var(--space-6);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--line);
+  background: #fff;
+}
+
+.v2-lost {
+  max-width: 36rem;
+  aspect-ratio: 2 / 1;
+  margin-bottom: var(--space-4);
+  overflow: hidden;
+  border-radius: var(--radius-card);
+}

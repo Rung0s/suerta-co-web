@@ -5,6 +5,7 @@ import V2Layout from '../shell/V2Layout';
 import PageHead from './PageHead';
 import { useCopy, useLang } from '../i18n';
 import { pathFor } from '../i18n/paths';
+import { coverFor } from '../media/art';
 import Seo, { breadcrumb } from '../seo/Seo';
 import { postsFor, readingMinutes } from '../data/content';
 
@@ -70,6 +71,18 @@ export default function BlogPage() {
             {shown.map((post) => (
               <Item key={post.id}>
                 <Link className="v2-post" to={pathFor('blogItem', lang, { id: post.id })}>
+                  <span className="v2-post__cover" aria-hidden="true">
+                    <img
+                      src={coverFor(post.id).src}
+                      srcSet={coverFor(post.id).srcSet}
+                      sizes="(max-width: 900px) 92vw, 40vw"
+                      alt=""
+                      width="1200"
+                      height="675"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </span>
                   <span className="v2-post__meta">
                     <span className="v2-post__tag">{post.tag}</span>
                     <span className="v2-post__time">

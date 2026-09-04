@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Reveal, Item } from '../primitives';
 import V2Layout from '../shell/V2Layout';
 import PageHead from './PageHead';
-import { teamData } from '../../data/team';
+import CrewTable from '../sections/CrewTable';
 import { useCopy, useLang } from '../i18n';
 import { pathFor } from '../i18n/paths';
 import Seo, { breadcrumb } from '../seo/Seo';
@@ -62,28 +62,7 @@ export default function AboutPage() {
 
       <section className="v2-section" id="ekip">
         <div className="v2-shell">
-          <Reveal>
-            <Item className="v2-section__head">
-              <h2 className="v2-title">{c.pages.about.teamTitle}</h2>
-            </Item>
-          </Reveal>
-
-          <Reveal className="v2-team">
-            {teamData.map((person, i) => (
-              <Item key={person.name} className="v2-person">
-                <span className="v2-person__mark" aria-hidden="true">
-                  {person.initial}
-                </span>
-                <span className="v2-person__name">{person.name}</span>
-                <span className="v2-person__role">
-                  {c.pages.about.team[i]?.role ?? person.role}
-                </span>
-                <span className="v2-person__desc">
-                  {c.pages.about.team[i]?.desc ?? person.desc}
-                </span>
-              </Item>
-            ))}
-          </Reveal>
+          <CrewTable />
         </div>
       </section>
     </V2Layout>

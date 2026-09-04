@@ -6,6 +6,7 @@ import Prose from './Prose';
 import NotFoundPage from './NotFoundPage';
 import { useCopy, useLang } from '../i18n';
 import { pathFor } from '../i18n/paths';
+import { coverFor } from '../media/art';
 import Seo, { articleSchema, breadcrumb, faqPage } from '../seo/Seo';
 import { postById, postsFor, readingMinutes } from '../data/content';
 
@@ -73,6 +74,17 @@ export default function BlogDetailPage() {
                 <span className="v2-note">{c.pages.blog.untranslated}</span>
               </Item>
             )}
+            <Item className="v2-post__hero" aria-hidden="true">
+              <img
+                src={coverFor(post.id).src}
+                srcSet={coverFor(post.id).srcSet}
+                sizes="(max-width: 900px) 92vw, 56rem"
+                alt=""
+                width="1200"
+                height="675"
+                decoding="async"
+              />
+            </Item>
           </Reveal>
         </div>
       </header>

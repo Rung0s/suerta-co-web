@@ -25,7 +25,7 @@ export const en = {
   },
 
   hero: {
-    lead: 'Premium websites that turn',
+    lead: 'Premium systems that turn',
     tail: 'visitors into customers.',
     ctaPrimary: 'Book a call',
     ctaSecondary: 'See the work',
@@ -326,7 +326,7 @@ export const en = {
   },
 
   manifesto: {
-    line: 'We are suerta.co. We build sites that turn visitors into customers for hotel, rental, education and e-commerce brands.',
+    line: 'We are suerta.co. We build systems that turn visitors into customers for hotel, rental, education and e-commerce brands.',
     coinFlip: 'Flip the coin',
     coinAgain: 'Press again',
     noteIdle: 'do not touch this coin',
@@ -368,7 +368,7 @@ export const en = {
     ],
     mailLabel: 'Email',
     replyTitle: 'Reply time',
-    replyText: 'Weekday messages get an answer the same day, weekend ones the next working day. We are three people, so whoever writes back is the person doing the work.',
+    replyText: 'Weekday messages get an answer the same day, weekend ones the next working day. We are a team of seven, and whoever writes back is the person doing the work.',
     whatsappMeta: 'Fastest route — usually a few hours',
     mailMeta: 'For a detailed brief',
     instagramMeta: 'Work we have done',
@@ -379,11 +379,31 @@ export const en = {
     fieldType: 'Project type',
   },
 
+  crew: {
+    lead: 'Seven missions',
+    tail: 'at one table.',
+    intro: 'One table, seven seats. Scroll and the table turns; the seat under the needle tells you its mission.',
+    hint: 'scroll to turn the table',
+    prev: 'Previous seat',
+    next: 'Next seat',
+    seatLabel: (n) => `Mission ${String(n).padStart(2, '0')}`,
+    seatAria: (n, role) => `Seat ${n}: ${role}`,
+    seats: [
+      { role: 'Strategy', mission: 'Pins down what you sell, who buys it and what is missing, in 15 minutes.' },
+      { role: 'Design', mission: 'No off-the-shelf theme; an interface and visual language drawn for your brand.' },
+      { role: 'Front end', mission: 'Every pixel working the same on a phone, a desktop and a screen reader.' },
+      { role: 'Back end', mission: 'Bookings, stock, payments: data goes to the right place at the right moment.' },
+      { role: 'Automation & AI', mission: 'Hands the question you answer thirty times a day to a bot.' },
+      { role: 'Growth', mission: 'Being found on Google and in AI answers: SEO, GEO, ads.' },
+      { role: 'Content & film', mission: 'Drone, location shoots, editing; the footage and words that fill the site.' },
+    ],
+  },
+
   footer: {
     menu: 'Menu',
     social: 'Social',
     contact: 'Contact',
-    location: 'Eskişehir, Türkiye (worldwide)',
+    location: 'Türkiye · Worldwide',
     copy: (year) =>
       `© ${year} suerta.co — digital studio. Websites, e-commerce, booking systems and AI automation. All rights reserved.`,
     toTop: 'Back to top ↑',
@@ -424,9 +444,9 @@ export const en = {
       notFound: 'That post could not be found.',
     },
     about: {
-      lead: 'Three people,',
+      lead: 'Seven people,',
       tail: 'one table.',
-      intro: 'suerta.co is a digital studio based in Eskişehir. Design, software and growth run at the same table; the job is not passed from agency to agency.',
+      intro: 'suerta.co is a digital studio working for clients in Türkiye and worldwide. Strategy, design, software, growth and content run at the same table; the job is not passed from agency to agency.',
       valuesTitle: 'How we work',
       values: [
         {
@@ -487,7 +507,7 @@ export const en = {
         'What a website costs, Shopify versus WooCommerce, a pre-launch SEO checklist, setting up a WhatsApp chatbot, and being visible in AI search (GEO).',
     },
     about: {
-      title: 'About: A Three-Person Digital Studio',
+      title: 'About: A Seven-Person Digital Studio',
       description:
         'Design, software and growth at one table. Fixed scope and fixed price, training at handover, 30 days of support — the code and the domain stay yours.',
     },

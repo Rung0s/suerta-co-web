@@ -215,3 +215,31 @@
     min-height: 2.75rem;
   }
 }
+
+/* Kartin sag ust kosesindeki nesne -------------------------------------- */
+
+.v2-svc__art {
+  position: absolute;
+  top: var(--space-6);
+  right: var(--space-6);
+  width: 6rem;
+  height: 6rem;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.v2-svc__title {
+  padding-right: 6.5rem;
+}
+
+@media (max-width: 620px) {
+  .v2-svc__art {
+    width: 4.25rem;
+    height: 4.25rem;
+  }
+  .v2-svc__title {
+    padding-right: 4.75rem;
+  }
+}

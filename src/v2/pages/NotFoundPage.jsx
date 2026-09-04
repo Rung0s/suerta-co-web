@@ -28,6 +28,17 @@ export default function NotFoundPage() {
         <div className="v2-halo" aria-hidden="true" />
         <div className="v2-shell">
           <Reveal className="v2-pagehead__inner">
+            <Item className="v2-lost" aria-hidden="true">
+              <img
+                src="/img/lost-satellite-1200.webp"
+                srcSet="/img/lost-satellite-600.webp 600w, /img/lost-satellite-1200.webp 1200w"
+                sizes="(max-width: 900px) 92vw, 36rem"
+                alt=""
+                width="1200"
+                height="900"
+                decoding="async"
+              />
+            </Item>
             <Item>
               <span className="v2-label">404</span>
             </Item>

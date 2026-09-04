@@ -327,7 +327,7 @@ export const tr = {
   },
 
   manifesto: {
-    line: 'Biz suerta.co’yuz. Otel, kiralama, eğitim ve e-ticaret markalarına ziyaretçiyi müşteriye çeviren siteler kuruyoruz.',
+    line: 'Biz suerta.co’yuz. Otel, kiralama, eğitim ve e-ticaret markalarına ziyaretçiyi müşteriye çeviren sistemler kuruyoruz.',
     coinFlip: 'Parayı çevir',
     coinAgain: 'Bir daha bas',
     noteIdle: 'bu paraya dokunma',
@@ -369,7 +369,7 @@ export const tr = {
     ],
     mailLabel: 'E-posta',
     replyTitle: 'Yanıt süresi',
-    replyText: 'Hafta içi mesajlara aynı gün, hafta sonu ertesi iş günü dönüyoruz. Üç kişilik bir ekibiz; size yazan da işi yapan kişi oluyor.',
+    replyText: 'Hafta içi mesajlara aynı gün, hafta sonu ertesi iş günü dönüyoruz. Yedi kişilik bir ekibiz; size yazan da işi yapan kişi oluyor.',
     whatsappMeta: 'En hızlı yol — genelde birkaç saat',
     mailMeta: 'Ayrıntılı brief için',
     instagramMeta: 'Yaptığımız işler',
@@ -380,13 +380,33 @@ export const tr = {
     fieldType: 'Proje tipi',
   },
 
+  crew: {
+    lead: 'Masanın başında',
+    tail: 'yedi görev.',
+    intro: 'Tek masa, yedi koltuk. Kaydırdıkça masa döner; ibrenin durduğu koltuk görevini söyler.',
+    hint: 'kaydır, masa dönsün',
+    prev: 'Önceki koltuk',
+    next: 'Sonraki koltuk',
+    seatLabel: (n) => `Görev ${String(n).padStart(2, '0')}`,
+    seatAria: (n, role) => `${n}. koltuk: ${role}`,
+    seats: [
+      { role: 'Strateji', mission: 'Ne sattığınızı, kime sattığınızı ve neyin eksik olduğunu 15 dakikada netleştirir.' },
+      { role: 'Tasarım', mission: 'Hazır şablon değil; markanıza göre çizilen arayüz ve görsel dil.' },
+      { role: 'Ön yüz', mission: 'Her pikselin mobilde, masaüstünde ve ekran okuyucuda aynı çalışması.' },
+      { role: 'Arka uç', mission: 'Rezervasyon, stok, ödeme: veri doğru yere, doğru anda gider.' },
+      { role: 'Otomasyon & yapay zekâ', mission: 'Aynı soruyu günde onlarca kez yanıtlayan işi bota devreder.' },
+      { role: 'Büyüme', mission: 'Google’da ve yapay zekâ yanıtlarında bulunur olmanız: SEO, GEO, reklam.' },
+      { role: 'İçerik & film', mission: 'Drone, mekân çekimi, kurgu; siteyi dolduran görüntü ve metin.' },
+    ],
+  },
+
   footer: {
     menu: 'Menü',
     social: 'Sosyal',
     contact: 'İletişim',
-    location: 'Eskişehir, Türkiye (Global)',
+    location: 'Türkiye · Global',
     copy: (year) =>
-      `© ${year} suerta.co — dijital ajans. İnternet siteleri, e-ticaret, rezervasyon sistemleri ve yapay zekâ otomasyonları. Tüm hakları saklıdır.`,
+      `© ${year} suerta.co — dijital stüdyo. Ziyaretçiyi müşteriye çeviren premium sistemler: internet siteleri, e-ticaret, rezervasyon ve yapay zekâ otomasyonları. Tüm hakları saklıdır.`,
     toTop: 'Yukarı dön ↑',
   },
 
@@ -425,9 +445,9 @@ export const tr = {
       notFound: 'Bu yazı bulunamadı.',
     },
     about: {
-      lead: 'Üç kişilik ekip,',
+      lead: 'Yedi kişilik ekip,',
       tail: 'tek masa.',
-      intro: 'suerta.co Eskişehir merkezli bir dijital stüdyo. Tasarım, yazılım ve büyüme tarafını aynı masada yürütüyoruz; iş ajanstan ajansa devredilmiyor.',
+      intro: 'suerta.co Türkiye ve dünya için çalışan bir dijital stüdyo. Strateji, tasarım, yazılım, büyüme ve içerik aynı masada yürütülüyor; iş ajanstan ajansa devredilmiyor.',
       valuesTitle: 'Nasıl çalışıyoruz',
       values: [
         {
@@ -470,7 +490,7 @@ export const tr = {
     home: {
       title: 'İnternet Sitesi & E-Ticaret Ajansı — Eskişehir | suerta.co',
       description:
-        'Eskişehir merkezli dijital stüdyo: internet siteleri, e-ticaret, yapay zekâ otomasyonları ve rezervasyon sistemleri. Sabit kapsam, sabit fiyat.',
+        'Türkiye ve dünya için çalışan dijital stüdyo: internet siteleri, e-ticaret, yapay zekâ otomasyonları ve rezervasyon sistemleri. Sabit kapsam, sabit fiyat.',
     },
     services: {
       title: 'Hizmetler: Web Sitesi, E-Ticaret & Otomasyon',
@@ -488,7 +508,7 @@ export const tr = {
         'Web sitesi maliyeti, Shopify mı WooCommerce mi, yayın öncesi SEO kontrol listesi, WhatsApp chatbot kurulumu ve yapay zekâ aramalarında görünürlük.',
     },
     about: {
-      title: 'Hakkımızda: Üç Kişilik Dijital Stüdyo',
+      title: 'Hakkımızda: Yedi Kişilik Dijital Stüdyo',
       description:
         'Tasarım, yazılım ve büyüme aynı masada. Sabit kapsam ve sabit fiyat, panel eğitimiyle teslim, 30 gün destek — kod ve alan adı sizde kalır.',
     },

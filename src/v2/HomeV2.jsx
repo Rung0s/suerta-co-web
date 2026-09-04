@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import HeroLaunch from './hero/HeroLaunch';
 import LazyVideo from './media/LazyVideo';
 import { shotSrcSet } from './media/shot';
+import { objectFor } from './media/art';
 import { referencesData } from '../data/references';
 import { Reveal, Item, TwoTone } from './primitives';
 import V2Layout from './shell/V2Layout';
@@ -12,6 +13,7 @@ import Seo from './seo/Seo';
 import { SITE_URL } from './seo/brand';
 import { HTML_LANG } from './i18n/paths';
 import ContactSection from './sections/ContactSection';
+import CrewTable from './sections/CrewTable';
 
 /* Firlatma sahnesi.
    Onceki hali tek parca bir roket silueti idi ve cikartma gibi duruyordu:
@@ -760,6 +762,15 @@ export default function HomeV2() {
               <Item key={service.title} className="v2-row">
                 <span className="v2-row__num">{String(i + 1).padStart(2, '0')}</span>
                 <h3 className="v2-row__title">{service.title}</h3>
+                <img
+                  className="v2-row__art"
+                  src={objectFor(service.slug)}
+                  alt=""
+                  width="360"
+                  height="360"
+                  loading="lazy"
+                  decoding="async"
+                />
                 <div className="v2-row__body">
                   <p className="v2-row__desc">{service.desc}</p>
                   <div className="v2-tags">
@@ -895,6 +906,13 @@ export default function HomeV2() {
             <ScriptedLine text={c.manifesto.line} />
             <LuckCoin />
           </div>
+        </div>
+      </section>
+
+      {/* Masanin basindaki yedi gorev ----------------------------------- */}
+      <section className="v2-section" id="ekip">
+        <div className="v2-shell">
+          <CrewTable />
         </div>
       </section>
 
