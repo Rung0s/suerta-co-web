@@ -10,8 +10,8 @@ import Seo, { breadcrumb } from '../seo/Seo';
 
 /* Hakkimizda.
    Anasayfadaki manifesto tek cumle soyluyor; burada o cumlenin ardindaki
-   calisma bicimi ve ekip duruyor. Ekip verisi tek kaynaktan (data/team.js)
-   geliyor, rol aciklamalari dil dosyasindan. */
+   calisma bicimi ve masanin basindaki yedi gorev duruyor (CrewTable);
+   gorev metinleri dil dosyasindan geliyor. */
 export default function AboutPage() {
   const c = useCopy();
   const { lang } = useLang();

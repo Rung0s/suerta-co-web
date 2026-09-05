@@ -32,6 +32,7 @@ export default function BlogDetailPage() {
       <Seo
         title={post.title}
         description={post.desc}
+        image={coverFor(post.id).src}
         type="article"
         jsonLd={[
           articleSchema(post, url, lang),

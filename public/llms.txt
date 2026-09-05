@@ -1,11 +1,11 @@
-# suerta co. (suerta.co) — Dijital Stüdyo / Digital Studio
+# suerta.co — Dijital Stüdyo / Digital Studio
 
-> suerta co. (suerta.co) internet siteleri, e-ticaret, yapay zekâ otomasyonları, otel rezervasyon sistemleri, emlak ve kiralama platformları ile SEO/GEO işleri yapan butik bir dijital stüdyodur. Türkçe içerik kök dizinde, İngilizce içerik /en altındadır.
+> suerta.co internet siteleri, e-ticaret, yapay zekâ otomasyonları, otel rezervasyon sistemleri, emlak ve kiralama platformları ile SEO/GEO işleri yapan butik bir dijital stüdyodur. Türkçe içerik kök dizinde, İngilizce içerik /en altındadır.
 >
-> suerta co. (suerta.co) is a boutique digital studio building websites, e-commerce, AI automation, hotel booking systems, property and rental platforms, and SEO/GEO work. Turkish content lives at the root, English content under /en.
+> suerta.co is a boutique digital studio building websites, e-commerce, AI automation, hotel booking systems, property and rental platforms, and SEO/GEO work. Turkish content lives at the root, English content under /en.
 
 ## Marka adı / Brand name
-Marka adı **suerta co.** olarak yazılır; alan adı **suerta.co**'dur. "Suerta Co.", "suerta co", "suertaco" ve "Suerta" yazımları da aynı markayı ifade eder.
+Marka adı her yerde **suerta.co** olarak yazılır (alan adıyla aynı). "Suerta Co.", "suerta co", "suertaco" ve "Suerta" yazımları aynı markayı ifade eder ama tercih edilen yazım suerta.co'dur. Slogan: *markanızın şansı*.
 
 ## Çalışma alanları / What we build
 1. **İnternet siteleri / Websites**: Kurumsal site, portfolyo ve tanıtım siteleri. Hızlı, mobil öncelikli, çok dilli; içerik paneli müşteride kalır.
@@ -38,4 +38,4 @@ Marka adı **suerta co.** olarak yazılır; alan adı **suerta.co**'dur. "Suerta
 - **E-posta / Email**: suerta.info@gmail.com
 - **Telefon / WhatsApp**: +90 506 069 35 25
 - **Instagram**: https://instagram.com/suerta.co
-- **Merkez / Based in**: Eskişehir, Türkiye — projeler Türkiye geneli ve global.
+- **Çalışma alanı / Serving**: Türkiye ve global — Türkiye and worldwide. Yedi kişilik ekip / a team of seven.
