@@ -488,7 +488,7 @@ export const tr = {
 
   meta: {
     home: {
-      title: 'İnternet Sitesi & E-Ticaret Ajansı — Eskişehir | suerta.co',
+      title: 'İnternet Sitesi, E-Ticaret & Yapay Zekâ Otomasyon Stüdyosu | suerta.co',
       description:
         'Türkiye ve dünya için çalışan dijital stüdyo: internet siteleri, e-ticaret, yapay zekâ otomasyonları ve rezervasyon sistemleri. Sabit kapsam, sabit fiyat.',
     },
