@@ -29,6 +29,13 @@ const CARDS = [
     tail: 'visitors into customers.',
     areas: 'Websites · E-commerce · AI automation · Booking systems · SEO',
   },
+  {
+    file: 'og-image-it.png',
+    lang: 'it',
+    lead: 'Sistemi premium che trasformano',
+    tail: 'i visitatori in clienti.',
+    areas: 'Siti web · E-commerce · Automazioni con IA · Prenotazioni · SEO',
+  },
 ];
 
 function markup({ lang, lead, tail, areas }, logo) {

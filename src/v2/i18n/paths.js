@@ -10,22 +10,28 @@
    hreflang etiketleri, site haritasi ve prerender listesi hepsi bunu
    okuyor. */
 
-export const LANGS = ['tr', 'en'];
+export const LANGS = ['tr', 'en', 'it'];
 export const DEFAULT_LANG = 'tr';
 
-export const HTML_LANG = { tr: 'tr-TR', en: 'en' };
+export const HTML_LANG = { tr: 'tr-TR', en: 'en', it: 'it' };
+
+/* Dil degistiricide gorunen adlar — her dil kendi adiyla. */
+export const LANG_NAMES = { tr: 'Türkçe', en: 'English', it: 'Italiano' };
+
+/* Adres agacinin kok on eki. Turkce kokte, digerleri kendi on ekinde. */
+const PREFIX = { en: '/en', it: '/it' };
 
 /* Anahtar = sayfanin kimligi. Deger = o sayfanin dildeki adresi.
    `:id` tasiyanlar liste sayfasinin altindaki detay sayfalari. */
 export const PAGES = {
-  home: { tr: '/', en: '/en' },
-  services: { tr: '/hizmetlerimiz', en: '/en/services' },
-  work: { tr: '/referanslar', en: '/en/work' },
-  workItem: { tr: '/referanslar/:id', en: '/en/work/:id' },
-  blog: { tr: '/blog', en: '/en/blog' },
-  blogItem: { tr: '/blog/:id', en: '/en/blog/:id' },
-  about: { tr: '/hakkimizda', en: '/en/about' },
-  contact: { tr: '/iletisim', en: '/en/contact' },
+  home: { tr: '/', en: '/en', it: '/it' },
+  services: { tr: '/hizmetlerimiz', en: '/en/services', it: '/it/servizi' },
+  work: { tr: '/referanslar', en: '/en/work', it: '/it/progetti' },
+  workItem: { tr: '/referanslar/:id', en: '/en/work/:id', it: '/it/progetti/:id' },
+  blog: { tr: '/blog', en: '/en/blog', it: '/it/blog' },
+  blogItem: { tr: '/blog/:id', en: '/en/blog/:id', it: '/it/blog/:id' },
+  about: { tr: '/hakkimizda', en: '/en/about', it: '/it/chi-siamo' },
+  contact: { tr: '/iletisim', en: '/en/contact', it: '/it/contatti' },
 };
 
 /* Bir sayfanin adresi, gerekiyorsa `:id` yerine gercek deger konarak. */
@@ -39,9 +45,13 @@ export function pathFor(page, lang = DEFAULT_LANG, params) {
   );
 }
 
-/* Adresten dili okumak: /en ve /en/... Ingilizce, kalan her sey Turkce. */
+/* Adresten dili okumak: /en ve /en/... Ingilizce, /it ve /it/... Italyanca,
+   kalan her sey Turkce. */
 export function langFromPath(pathname) {
-  return pathname === '/en' || pathname.startsWith('/en/') ? 'en' : DEFAULT_LANG;
+  for (const [lang, prefix] of Object.entries(PREFIX)) {
+    if (pathname === prefix || pathname.startsWith(`${prefix}/`)) return lang;
+  }
+  return DEFAULT_LANG;
 }
 
 /* Ayni sayfanin diger dildeki karsiligi — dil degistiricinin ve hreflang

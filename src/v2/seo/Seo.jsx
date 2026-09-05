@@ -69,13 +69,22 @@ function setJsonLd(schemas) {
   });
 }
 
+/* Paylasim karti ve yerel ayarlar dile gore. Yeni dil = buraya bir satir. */
+const OG_CARD = { tr: '/og-image.png', en: '/og-image-en.png', it: '/og-image-it.png' };
+const OG_LOCALE = { tr: 'tr_TR', en: 'en_GB', it: 'it_IT' };
+const OG_ALT = {
+  tr: 'suerta.co — dijital stüdyo',
+  en: 'suerta.co — digital studio',
+  it: 'suerta.co — studio digitale',
+};
+
 export default function Seo({ title, description, image, type = 'website', jsonLd, noindex = false }) {
   const { pathname } = useLocation();
   const { lang } = useLang();
 
   /* Paylasim gorseli dile bagli: karttaki cumle sayfanin dilinde olmali,
      yoksa Ingilizce bir baglantinin altinda Turkce bir kart cikiyor. */
-  const card = image ?? (lang === 'en' ? '/og-image-en.png' : '/og-image.png');
+  const card = image ?? OG_CARD[lang] ?? OG_CARD.tr;
 
   const fullTitle = title?.toLowerCase().includes('suerta')
     ? title
@@ -108,10 +117,10 @@ export default function Seo({ title, description, image, type = 'website', jsonL
        sablondaki olcu de onlara uymuyordu. */
     upsertMeta('property', 'og:image:width', '1200');
     upsertMeta('property', 'og:image:height', '630');
-    upsertMeta('property', 'og:image:alt', lang === 'en' ? 'suerta.co — digital studio' : 'suerta.co — dijital stüdyo');
-    upsertMeta('property', 'og:locale:alternate', lang === 'en' ? 'tr_TR' : 'en_GB');
+    upsertMeta('property', 'og:image:alt', OG_ALT[lang] ?? OG_ALT.tr);
+    upsertMeta('property', 'og:locale:alternate', OG_LOCALE[lang === 'tr' ? 'en' : 'tr']);
     upsertMeta('property', 'og:site_name', SITE_NAME);
-    upsertMeta('property', 'og:locale', lang === 'en' ? 'en_GB' : 'tr_TR');
+    upsertMeta('property', 'og:locale', OG_LOCALE[lang] ?? OG_LOCALE.tr);
 
     upsertMeta('name', 'twitter:card', 'summary_large_image');
     upsertMeta('name', 'twitter:title', fullTitle);
@@ -120,15 +129,14 @@ export default function Seo({ title, description, image, type = 'website', jsonL
 
     /* Kendisi dahil her dilin adresi: Google ayni sayfanin oteki dilini
        ancak bu ciftle eslestirebiliyor. */
-    const other = LANGS.find((item) => item !== lang);
-    const alternates = [
-      { hrefLang: HTML_LANG[lang], href: canonical },
-      { hrefLang: HTML_LANG[other], href: `${SITE_URL}${swapLangPath(pathname, lang, other)}` },
-      {
-        hrefLang: 'x-default',
-        href: `${SITE_URL}${lang === 'tr' ? pathname : swapLangPath(pathname, lang, 'tr')}`,
-      },
-    ];
+    const alternates = LANGS.map((item) => ({
+      hrefLang: HTML_LANG[item],
+      href: item === lang ? canonical : `${SITE_URL}${swapLangPath(pathname, lang, item)}`,
+    }));
+    alternates.push({
+      hrefLang: 'x-default',
+      href: `${SITE_URL}${lang === 'tr' ? pathname : swapLangPath(pathname, lang, 'tr')}`,
+    });
     setAlternates(alternates);
 
     setJsonLd([organizationSchema, ...(Array.isArray(jsonLd) ? jsonLd : [jsonLd])]);
@@ -174,7 +182,7 @@ export function faqPage(faqs) {
    gecersiz ve Search Console butun yazilari hatali isaretliyordu. Yazi
    verisinde iki alan var — `date` ekran icin, `iso` makine icin. */
 export function articleSchema(post, url, lang) {
-  const image = lang === 'en' ? '/og-image-en.png' : '/og-image.png';
+  const image = OG_CARD[lang] ?? OG_CARD.tr;
 
   return {
     '@context': 'https://schema.org',

@@ -11,7 +11,7 @@ import { allRoutes, alternatesOf, LANGS } from './routes.mjs';
 import { blogsData } from '../src/data/blogs.js';
 
 const SITE = 'https://www.suerta.co';
-const HTML_LANG = { tr: 'tr-TR', en: 'en' };
+const HTML_LANG = { tr: 'tr-TR', en: 'en', it: 'it' };
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /* Sayfa turune gore tazelik ve onem. Blog listesi sik degisiyor, iletisim

@@ -6,13 +6,14 @@ import React, { createContext, useContext, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { tr } from './copy.tr';
 import { en } from './copy.en';
+import { it } from './copy.it';
 import { DEFAULT_LANG, langFromPath, pathFor } from './paths';
 
 /* Dil, adresin kendisinden geliyor — bir dugmeye basilinca degisen bir
    duruma degil. Boylece her dilin kendi adresi oluyor, geri tusu dogru
    calisiyor ve prerender her iki dili de statik olarak uretebiliyor. */
 
-const DICTIONARIES = { tr, en };
+const DICTIONARIES = { tr, en, it };
 
 const LangContext = createContext({ lang: DEFAULT_LANG, copy: tr });
 

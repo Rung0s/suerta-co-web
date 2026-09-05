@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { V2_SOCIAL, resolveLink } from './nav-links';
 import { useCopy, useLang } from '../i18n';
-import { LANGS, pathFor, swapLangPath } from '../i18n/paths';
+import { LANGS, pathFor, swapLangPath, LANG_NAMES } from '../i18n/paths';
 
 /* Yuzen menu pili. Anasayfada baglantilar ayni sayfadaki bolumlere,
    diger sayfalarda gercek rotalara gidiyor.
@@ -81,8 +81,11 @@ export default function V2Nav() {
   /* Dil degistirici ayni sayfanin oteki dildeki adresine gidiyor; detay
      sayfalarinda kimlik korunuyor. Anasayfaya atmak, okunan seyi
      kaybettirir. */
-  const other = LANGS.find((item) => item !== lang);
-  const switchTo = swapLangPath(pathname, lang, other);
+  const others = LANGS.filter((item) => item !== lang).map((item) => ({
+    lang: item,
+    to: swapLangPath(pathname, lang, item),
+    label: LANG_NAMES[item],
+  }));
 
   const cta = onHome ? (
     <a className="v2-btn v2-btn--primary" href="#iletisim" onClick={close}>
@@ -111,9 +114,20 @@ export default function V2Nav() {
           {c.nav.links.map((link) => renderLink(link, 'v2-nav__link'))}
         </div>
 
-        <Link className="v2-nav__lang" to={switchTo} hrefLang={other} onClick={close}>
-          {c.switchTo}
-        </Link>
+        <span className="v2-nav__langs">
+          {others.map((item) => (
+            <Link
+              key={item.lang}
+              className="v2-nav__lang"
+              to={item.to}
+              hrefLang={item.lang}
+              lang={item.lang}
+              onClick={close}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </span>
 
         {cta}
 
@@ -141,9 +155,18 @@ export default function V2Nav() {
           {cta}
 
           <div className="v2-menu__social">
-            <Link className="v2-menu__social-link" to={switchTo} hrefLang={other} onClick={close}>
-              {c.switchTo}
-            </Link>
+            {others.map((item) => (
+              <Link
+                key={item.lang}
+                className="v2-menu__social-link"
+                to={item.to}
+                hrefLang={item.lang}
+                lang={item.lang}
+                onClick={close}
+              >
+                {item.label}
+              </Link>
+            ))}
             {V2_SOCIAL.map((item) => (
               <a
                 key={item.label}

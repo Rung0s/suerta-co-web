@@ -306,6 +306,12 @@
 
 /* Menudeki dil baglantisi ------------------------------------------------- */
 
+.v2-nav__langs {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
 .v2-nav__lang {
   font-size: var(--text-small);
   color: var(--muted);
@@ -338,7 +344,7 @@
 
 @media (max-width: 620px) {
   /* Dil baglantisi pilde yer kaplıyor; dar ekranda acilir menude duruyor. */
-  .v2-nav__lang {
+  .v2-nav__langs {
     display: none;
   }
 }
