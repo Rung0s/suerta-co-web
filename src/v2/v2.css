@@ -797,6 +797,9 @@
   .v2-nav__links {
     display: none;
   }
+  .v2-nav__lang-mobile {
+    display: inline-flex;
+  }
   .v2-nav__toggle {
     display: inline-flex;
   }
@@ -857,6 +860,11 @@
   /* Menu dugmesi 40px, butonlar 43px idi: ikisi de esigin bir tik altinda. */
   .v2-nav__toggle {
     width: 2.75rem;
+    height: 2.75rem;
+  }
+
+  .v2-nav__lang-current {
+    min-width: 2.75rem;
     height: 2.75rem;
   }
 

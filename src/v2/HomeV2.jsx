@@ -5,6 +5,7 @@ import LazyVideo from './media/LazyVideo';
 import { shotSrcSet } from './media/shot';
 import { objectFor } from './media/art';
 import { referencesData } from '../data/references';
+import { projectsFor } from './data/content';
 import { Reveal, Item, TwoTone } from './primitives';
 import V2Layout from './shell/V2Layout';
 import { useCopy, useLang } from './i18n';
@@ -622,10 +623,11 @@ const FEATURED_ID = 1;
       degil cekim; televizyon cercevesi goruntuyu kucultup uzerine cam,
       tarama cizgisi ve dugme koyuyordu. Film kendi ekraninda duruyor.
    3. Sayi seridi tam genislikte. */
-function buildWorkLayout(copy) {
-  const featured = referencesData.find((p) => p.id === FEATURED_ID);
+function buildWorkLayout(copy, lang) {
+  const projects = projectsFor(lang);
+  const featured = projects.find((p) => p.id === FEATURED_ID);
   const clients = [
-    ...referencesData.filter((p) => p !== featured),
+    ...projects.filter((p) => p !== featured),
     ...(featured ? [featured] : []),
   ];
 
@@ -662,7 +664,7 @@ function websiteSchema(lang) {
 export default function HomeV2() {
   const c = useCopy();
   const { lang } = useLang();
-  const work = buildWorkLayout(c.work);
+  const work = buildWorkLayout(c.work, lang);
   const quotes = quotesFrom(c.partners);
   const kpis = kpisFrom(c.work);
   const services = c.services.items;

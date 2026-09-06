@@ -11,6 +11,8 @@ import { LANGS, pathFor, swapLangPath, LANG_NAMES } from '../i18n/paths';
    ve yerine hicbir sey konmuyordu: telefondan gelen ziyaretci hicbir
    bolume ulasamiyordu. Simdi ayni baglantilar tam ekran bir katmanda
    aciliyor. */
+const LANG_CODES = { tr: 'TR', en: 'EN', it: 'IT' };
+
 export default function V2Nav() {
   const { pathname } = useLocation();
   const { lang } = useLang();
@@ -18,6 +20,7 @@ export default function V2Nav() {
   const home = pathFor('home', lang);
   const onHome = pathname === home;
   const [open, setOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
 
   useEffect(() => {
     if (!open) return undefined;
@@ -40,6 +43,25 @@ export default function V2Nav() {
       window.removeEventListener('popstate', onPop);
     };
   }, [open]);
+
+  /* Dar ekrandaki dil acilir listesi: pilin disina tiklayinca ya da
+     Escape'le kapaniyor. Ayri bir katman degil, kucuk bir popover
+     oldugu icin body kilitlemiyor. */
+  useEffect(() => {
+    if (!langOpen) return undefined;
+    const onKey = (event) => {
+      if (event.key === 'Escape') setLangOpen(false);
+    };
+    const onClick = (event) => {
+      if (!event.target.closest('.v2-nav__lang-mobile')) setLangOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    document.addEventListener('click', onClick);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      document.removeEventListener('click', onClick);
+    };
+  }, [langOpen]);
 
   /* Markanin isareti: kirmizi yorungeli kure. Ayni dosya favicon olarak da
      kullaniliyor — sekme, arama sonucu ve menu ayni isareti gosteriyor.
@@ -127,6 +149,39 @@ export default function V2Nav() {
               {item.label}
             </Link>
           ))}
+        </span>
+
+        {/* Dar ekranda tam dil adi sigmiyor; sag ustte tek dokunusla acilan
+            kisa kod (TR/EN/IT) listesi kaliyor, hamburger menuye girmeden. */}
+        <span className="v2-nav__lang-mobile">
+          <button
+            type="button"
+            className="v2-nav__lang-current"
+            onClick={() => setLangOpen((value) => !value)}
+            aria-expanded={langOpen}
+            aria-haspopup="listbox"
+          >
+            {LANG_CODES[lang]}
+          </button>
+          {langOpen && (
+            <span className="v2-nav__lang-pop" role="listbox">
+              {others.map((item) => (
+                <Link
+                  key={item.lang}
+                  className="v2-nav__lang-opt"
+                  to={item.to}
+                  hrefLang={item.lang}
+                  lang={item.lang}
+                  onClick={() => {
+                    setLangOpen(false);
+                    close();
+                  }}
+                >
+                  {LANG_CODES[item.lang]}
+                </Link>
+              ))}
+            </span>
+          )}
         </span>
 
         {cta}
