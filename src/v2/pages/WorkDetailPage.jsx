@@ -23,6 +23,9 @@ export default function WorkDetailPage() {
   if (!project) return <NotFoundPage />;
 
   const url = pathFor('workItem', lang, { id: project.id });
+  /* Marka adi iki veri dosyasinda da ayni yaziliyor; eslesme onun uzerinden.
+     Yorumu olmayan bir proje icin blok hic basilmiyor. */
+  const quote = c.partners.quotes.find((item) => item.brand === project.name);
 
   return (
     <V2Layout>
@@ -102,6 +105,24 @@ export default function WorkDetailPage() {
             <Item>
               <Prose text={project.details} />
             </Item>
+            {/* Musterinin kendi cumlesi, isi anlatan sayfanin uzerinde.
+                Yorum ana sayfadaki banttan geliyor; oradaki bant akip
+                gecerken bu sayfa dogrudan inilen sayfa oluyor ve guven
+                isaretine asil burada ihtiyac var.
+
+                Bilerek `Review` semasi yok: kendi sitesinde kendisi
+                hakkinda yayimlanan yorumlar Google'in zengin sonuc
+                kurallarinda gecerli sayilmiyor, isaretlemek ihlal olur. */}
+            {quote && (
+              <Item>
+                <figure className="v2-detail__quote">
+                  <blockquote>“{quote.text}”</blockquote>
+                  <figcaption>
+                    {quote.role} · {quote.brand}
+                  </figcaption>
+                </figure>
+              </Item>
+            )}
           </Reveal>
         </div>
       </section>

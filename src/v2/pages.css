@@ -122,6 +122,26 @@
   box-shadow: var(--shadow-tile);
 }
 
+/* Musteri cumlesi. Solda tek cizgi, kutu degil: sayfada zaten kart var,
+   ikinci bir cerceve gurultu olurdu. Tirnak metnin kendisinde. */
+.v2-detail__quote {
+  margin: var(--space-8) 0 0;
+  padding-left: var(--space-6);
+  border-left: 2px solid var(--line);
+}
+
+.v2-detail__quote blockquote {
+  margin: 0;
+  font-size: var(--text-lead);
+  line-height: 1.5;
+}
+
+.v2-detail__quote figcaption {
+  margin-top: 0.75rem;
+  color: var(--muted);
+  font-size: var(--text-micro);
+}
+
 /* Yazi listesi ------------------------------------------------------------ */
 
 .v2-filters {
