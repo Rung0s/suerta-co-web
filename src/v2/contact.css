@@ -267,6 +267,24 @@
   letter-spacing: -0.01em;
 }
 
+/* Gonderim sonrasi iki cikis: "tekrar dene / formu tekrar ac" ve hata
+   durumunda WhatsApp. Dar ekranda alt alta gecmeleri gerekiyor, o yuzden
+   sarma acik. */
+.v2-form__after {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+}
+
+/* Gonderim suruyorken dugme kapali: cift gonderim, Formspree'nin aylik
+   kotasini bosa harciyor ve gelen kutusuna ayni mesaji iki kez dusuruyor. */
+.v2-btn[disabled] {
+  opacity: 0.55;
+  cursor: progress;
+  pointer-events: none;
+}
+
 /* Duyarli ------------------------------------------------------------------ */
 
 @media (max-width: 900px) {

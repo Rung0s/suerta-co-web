@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Reveal, Item } from '../primitives';
 import { useCopy } from '../i18n';
+import { track } from '../analytics';
 
 /* Kapanisin roketi: hero'daki havalanan baskinin aynisi. Once kodla
    cizilmis bir SVG vardi ve sayfadaki halftone baskilarin yanina
@@ -22,11 +23,20 @@ function LaunchScene() {
 }
 
 /* Iletisim.
-   Arkada sunucu yok, o yuzden form "gonderiliyor" numarasi yapmiyor:
-   alanlari duzenli bir mesaja cevirip WhatsApp'ta aciyor. Sahte bir
-   basari ekrani gostermektense mesajin nereye gittigini gormek daha
-   durust ve pratikte daha hizli donuyor. */
+   --------------------------------------------------------------------------
+   Form artik gercekten gonderiliyor: alanlar Formspree'ye POST ediliyor ve
+   mesaj e-postaya dusuyor. Onceki hali alanlari bir metne cevirip WhatsApp'i
+   aciyordu; o yol durusttu ama iz birakmiyordu — pencere engellenirse ya da
+   ziyaretci masaustunde WhatsApp Web'e girmek istemezse talep kayboluyordu ve
+   geriye sayilabilecek hicbir sey kalmiyordu.
+
+   WhatsApp kaybolmadi, ikinci yol olarak duruyor: hem hata ekraninda hem de
+   yandaki kanal listesinde. Anahtar tanimli degilse (VITE_FORMSPREE_ID bos)
+   dosya eski davranisina donuyor, yani yerelde ve anahtarsiz bir fork'ta form
+   yine calisiyor. */
 const WHATSAPP = '905060693525';
+const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_ID;
+const FORMSPREE_URL = FORMSPREE_ID ? `https://formspree.io/f/${FORMSPREE_ID}` : null;
 
 function ArrowGlyph() {
   return (
@@ -42,30 +52,70 @@ function ArrowGlyph() {
   );
 }
 
+/* Alanlari WhatsApp mesajina ceviren yardimci: hem anahtar yokken ana yol,
+   hem de gonderim hata verdiginde cikis kapisi. */
+function whatsappLink(c, data, type) {
+  const lines = [
+    c.greeting,
+    '',
+    `${c.fieldName}: ${data.get('ad') || '—'}`,
+    `${c.fieldBrand}: ${data.get('marka') || '—'}`,
+    `${c.fieldReach}: ${data.get('iletisim') || '—'}`,
+    `${c.fieldType}: ${type}`,
+    '',
+    data.get('mesaj') || '',
+  ];
+  return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join('\n'))}`;
+}
+
 export default function ContactSection() {
   const c = useCopy().contact;
   const [type, setType] = useState(c.types[0]);
-  const [sent, setSent] = useState(false);
+  /* Bes durum: 'idle' | 'sending' | 'sent' | 'wa' | 'error'.
+     'wa' ayri duruyor cunku metni farkli: mesaj bize ulasmadi, yalnizca
+     WhatsApp'ta acildi ve gondermesi hala ziyaretcide. */
+  const [state, setState] = useState('idle');
+  const [fallback, setFallback] = useState(null);
 
-  const submit = (event) => {
+  const submit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const lines = [
-      c.greeting,
-      '',
-      `${c.fieldName}: ${data.get('ad') || '—'}`,
-      `${c.fieldBrand}: ${data.get('marka') || '—'}`,
-      `${c.fieldReach}: ${data.get('iletisim') || '—'}`,
-      `${c.fieldType}: ${type}`,
-      '',
-      data.get('mesaj') || '',
-    ];
-    window.open(
-      `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join('\n'))}`,
-      '_blank',
-      'noopener'
-    );
-    setSent(true);
+
+    /* Bal kupu: gorunmez alan. Insan doldurmaz, basit botlar doldurur.
+       Doluysa gonderiyormus gibi yapip birakiyoruz — bota "yakalandin"
+       demek, bir daha denemesini sagliyor.
+
+       Adi `_gotcha`: Formspree bu adi taniyor ve dolu gelen gonderiyi kendi
+       tarafinda da eliyor. Iki katman, tek alan. */
+    if (data.get('_gotcha')) {
+      setState('sent');
+      return;
+    }
+
+    const wa = whatsappLink(c, data, type);
+    setFallback(wa);
+
+    if (!FORMSPREE_URL) {
+      window.open(wa, '_blank', 'noopener');
+      setState('wa');
+      track('contact_whatsapp', { tip: type });
+      return;
+    }
+
+    setState('sending');
+    try {
+      const response = await fetch(FORMSPREE_URL, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: data,
+      });
+      if (!response.ok) throw new Error(String(response.status));
+      setState('sent');
+      track('contact_submit', { tip: type });
+    } catch {
+      setState('error');
+      track('contact_error', { tip: type });
+    }
   };
 
   return (
@@ -96,18 +146,49 @@ export default function ContactSection() {
 
         <Reveal className="v2-contact__grid">
           <Item>
-            {sent ? (
+            {state === 'sent' || state === 'wa' || state === 'error' ? (
               <div className="v2-form">
-                <div className="v2-form__sent">
-                  <p className="v2-form__sent-title">{c.sentTitle}</p>
-                  <p className="v2-form__note">{c.sentNote}</p>
-                  <button
-                    type="button"
-                    className="v2-btn v2-btn--ghost"
-                    onClick={() => setSent(false)}
-                  >
-                    {c.reopen}
-                  </button>
+                {/* Durum degistiginde ekran okuyucu da haber alsin: gonderim
+                    tamamlandiginda odak formda kaliyor ve gorsel geri bildirim
+                    tek basina yetmiyor. */}
+                <div className="v2-form__sent" role="status" aria-live="polite">
+                  <p className="v2-form__sent-title">
+                    {state === 'error'
+                      ? c.errorTitle
+                      : state === 'wa'
+                        ? c.sentTitle
+                        : c.sentTitleMail}
+                  </p>
+                  <p className="v2-form__note">
+                    {state === 'error'
+                      ? c.errorNote
+                      : state === 'wa'
+                        ? c.sentNote
+                        : c.sentNoteMail}
+                  </p>
+                  <div className="v2-form__after">
+                    <button
+                      type="button"
+                      className="v2-btn v2-btn--ghost"
+                      onClick={() => setState('idle')}
+                    >
+                      {state === 'error' ? c.retry : c.reopen}
+                    </button>
+                    {/* Hatada mesaj zaten yazilmis durumda; ziyaretciyi bastan
+                        yazmaya zorlamak yerine ayni metni WhatsApp'a tasiyan
+                        bir baglanti veriyoruz. */}
+                    {state === 'error' && fallback ? (
+                      <a
+                        className="v2-btn v2-btn--primary"
+                        href={fallback}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => track('contact_whatsapp_fallback')}
+                      >
+                        {c.whatsappAlt}
+                      </a>
+                    ) : null}
+                  </div>
                 </div>
               </div>
             ) : (
@@ -156,10 +237,32 @@ export default function ContactSection() {
                   <textarea name="mesaj" placeholder={c.messagePlaceholder} />
                 </label>
 
+                {/* Bal kupu. Ekran okuyucudan ve klavye sirasindan cikarilmis;
+                    yalnizca formu tarayan bot goruyor. */}
+                <input
+                  type="text"
+                  name="_gotcha"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  style={{ position: 'absolute', left: '-9999px', width: 1, height: 1 }}
+                />
+
+                {/* Formspree'nin e-posta konusu: gelen kutusunda hangi formdan
+                    geldigi ve proje tipi tek satirda gorunsun. */}
+                <input type="hidden" name="_subject" value={`suerta.co — ${type}`} />
+                <input type="hidden" name="tip" value={type} />
+
                 <div className="v2-form__foot">
-                  <p className="v2-form__note">{c.formNote}</p>
-                  <button type="submit" className="v2-btn v2-btn--primary">
-                    {c.submit}
+                  <p className="v2-form__note">
+                    {FORMSPREE_URL ? c.formNoteMail : c.formNote}
+                  </p>
+                  <button
+                    type="submit"
+                    className="v2-btn v2-btn--primary"
+                    disabled={state === 'sending'}
+                  >
+                    {state === 'sending' ? c.sending : c.submit}
                   </button>
                 </div>
               </form>
@@ -171,7 +274,8 @@ export default function ContactSection() {
               className="v2-channel"
               href={`https://wa.me/${WHATSAPP}`}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
+              onClick={() => track('whatsapp_click', { yer: 'iletisim' })}
             >
               <span className="v2-channel__icon">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -187,7 +291,11 @@ export default function ContactSection() {
               </span>
             </a>
 
-            <a className="v2-channel" href="mailto:suerta.info@gmail.com">
+            <a
+              className="v2-channel"
+              href="mailto:suerta.info@gmail.com"
+              onClick={() => track('mail_click', { yer: 'iletisim' })}
+            >
               <span className="v2-channel__icon">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <rect x="2.5" y="5" width="19" height="14" rx="2.5" stroke="currentColor" strokeWidth="1.7" />
@@ -207,7 +315,7 @@ export default function ContactSection() {
               className="v2-channel"
               href="https://instagram.com/suerta.co"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               <span className="v2-channel__icon">
                 <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
