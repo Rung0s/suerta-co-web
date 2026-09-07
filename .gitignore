@@ -39,3 +39,6 @@ netlify_output.txt
 # Ortam degiskenleri: anahtarlar depoya girmiyor.
 .env
 .env.local
+
+# Vercel CLI'nin proje baglantisi ve indirdigi OIDC token.
+.vercel
