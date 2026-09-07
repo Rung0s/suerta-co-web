@@ -4,7 +4,12 @@
    Burada yalnizca latin ve latin-ext dilimleri indiriliyor (Turkce ve
    Ingilizce icin gereken hepsi bu), yollar yerele cevriliyor.
 
-   Calistir: node scripts/fetch-fonts.mjs  (yalnizca aile degisince gerekir) */
+   Calistir: node scripts/fetch-fonts.mjs  (yalnizca aile degisince gerekir)
+
+   DIKKAT: bu betik Inter'in latin-ext diliminin Google'daki tam halini
+   (133 KB, 733 glif) geri getirir. O dosya elle daraltildi; calistirdiktan
+   sonra src/fonts.css'in latin-ext blogundaki pyftsubset komutu yeniden
+   calistirilmali, yoksa sayfaya 100 KB fazla yazi tipi iner. */
 import { mkdir, writeFile } from 'node:fs/promises';
 
 const SOURCE =
