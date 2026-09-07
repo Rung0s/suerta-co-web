@@ -181,8 +181,11 @@ export function faqPage(faqs) {
    Tarih ISO 8601: sayfada gorunen "13 Temmuz 2026" bicimi schema.org icin
    gecersiz ve Search Console butun yazilari hatali isaretliyordu. Yazi
    verisinde iki alan var — `date` ekran icin, `iso` makine icin. */
-export function articleSchema(post, url, lang) {
-  const image = OG_CARD[lang] ?? OG_CARD.tr;
+export function articleSchema(post, url, lang, cover) {
+  /* Yazinin kendi kapagi varsa o kullaniliyor. Onceki hali her yaziya ayni
+     genel OG kartini yaziyordu: sayfanin `og:image`'i benzersiz kapagi
+     gosterirken semadaki `image` butun yazilarda ayniydi. */
+  const image = cover ?? OG_CARD[lang] ?? OG_CARD.tr;
 
   return {
     '@context': 'https://schema.org',
@@ -260,6 +263,8 @@ export function projectSchema(project, url, lang) {
     description: project.metaDesc ?? project.desc,
     inLanguage: HTML_LANG[lang],
     creator: { '@id': `${SITE_URL}/#organization` },
+    /* Isin ekran goruntusu: sayfada zaten duruyor, semada yoktu. */
+    ...(project.image ? { image: `${SITE_URL}${project.image}` } : {}),
     url: `${SITE_URL}${url}`,
   };
 }

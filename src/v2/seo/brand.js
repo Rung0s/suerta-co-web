@@ -89,6 +89,6 @@ export const websiteSchema = {
   url: SITE_URL,
   name: SITE_NAME,
   description: DESCRIPTION,
-  inLanguage: ['tr-TR', 'en-GB', 'it-IT'],
+  inLanguage: ['tr-TR', 'en', 'it'],
   publisher: { '@id': `${SITE_URL}/#organization` },
 };

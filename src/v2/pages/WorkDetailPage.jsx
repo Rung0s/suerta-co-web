@@ -29,6 +29,7 @@ export default function WorkDetailPage() {
       <Seo
         title={`${project.name} — ${project.desc}`}
         description={project.metaDesc ?? project.desc}
+        image={project.image}
         jsonLd={[
           projectSchema(project, url, lang),
           faqPage(project.faqs),

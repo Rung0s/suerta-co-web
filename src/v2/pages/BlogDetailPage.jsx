@@ -35,7 +35,7 @@ export default function BlogDetailPage() {
         image={coverFor(post.id).src}
         type="article"
         jsonLd={[
-          articleSchema(post, url, lang),
+          articleSchema(post, url, lang, coverFor(post.id).src),
           faqPage(post.faqs),
           breadcrumb([
             { name: c.nav.home, path: pathFor('home', lang) },
