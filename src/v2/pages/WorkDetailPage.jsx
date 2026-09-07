@@ -74,7 +74,7 @@ export default function WorkDetailPage() {
                   className="v2-btn v2-btn--primary"
                   href={project.link}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                 >
                   {c.pages.work.detailVisit}
                 </a>

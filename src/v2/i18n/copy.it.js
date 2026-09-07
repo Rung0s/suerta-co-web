@@ -380,6 +380,18 @@ export const it = {
     fieldBrand: 'Brand',
     fieldReach: 'Contatto',
     fieldType: 'Tipo di progetto',
+
+    /* Il modulo ora invia davvero (Formspree). Le stringhe qui sotto
+       appartengono a quel percorso; sentTitle/sentNote sopra restano per il
+       ripiego su WhatsApp. */
+    sending: 'Invio in corso…',
+    sentTitleMail: 'Il tuo messaggio è arrivato.',
+    sentNoteMail: 'Nei giorni feriali rispondiamo in giornata. Per qualcosa di più rapido c’è WhatsApp.',
+    errorTitle: 'Non è stato inviato.',
+    errorNote: 'C’è stato un problema di connessione. Riprova, oppure scrivici direttamente su WhatsApp.',
+    retry: 'Riprova',
+    whatsappAlt: 'Scrivi su WhatsApp',
+    formNoteMail: 'Il tuo messaggio arriva direttamente a noi via email; non viene condiviso con nessun altro.',
   },
 
   crew: {

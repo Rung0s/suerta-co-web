@@ -3,7 +3,7 @@
    bilesene veriliyor. Kural yalnizca sicak yenilemeyi ilgilendiriyor. */
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { organizationSchema, SITE_URL, SITE_NAME } from './brand';
+import { organizationSchema, websiteSchema, SITE_URL, SITE_NAME } from './brand';
 import { useLang } from '../i18n';
 import { HTML_LANG, LANGS, swapLangPath } from '../i18n/paths';
 
@@ -139,7 +139,7 @@ export default function Seo({ title, description, image, type = 'website', jsonL
     });
     setAlternates(alternates);
 
-    setJsonLd([organizationSchema, ...(Array.isArray(jsonLd) ? jsonLd : [jsonLd])]);
+    setJsonLd([organizationSchema, websiteSchema, ...(Array.isArray(jsonLd) ? jsonLd : [jsonLd])]);
     /* jsonLd her cagri yerinde yeni bir nesne; referansina baglanirsak
        efekt her cizimde script'leri silip yeniden yaratiyor. */
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -198,6 +198,56 @@ export function articleSchema(post, url, lang) {
     author: { '@id': `${SITE_URL}/#organization` },
     publisher: { '@id': `${SITE_URL}/#organization` },
     mainEntityOfPage: `${SITE_URL}${url}`,
+  };
+}
+
+/* Hizmet listesi semasi.
+   --------------------------------------------------------------------------
+   Sayfa alti hizmeti aciyor ama makineye bunlarin ayri ayri hizmetler
+   oldugunu soyleyen hicbir sey yoktu; sayfa duz metin olarak okunuyordu.
+   Her hizmet kendi `Service` nesnesi, hepsi bir `ItemList` icinde ve sira
+   sayfadaki sirayla ayni.
+
+   Fiyat alani bilerek yok: sabit fiyat is kapsamina gore belirleniyor,
+   uydurma bir rakam yazmak hem yanlis hem de arama sonucunda yanlis bir
+   vaat olarak gorunur. `url` her hizmetin sayfadaki capasina gidiyor, yani
+   baglanti ziyaretciyi dogru bolume indiriyor. */
+export function serviceList(items, path, lang) {
+  if (!items?.length) return null;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: SITE_NAME,
+    inLanguage: HTML_LANG[lang],
+    itemListElement: items.map((service, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'Service',
+        '@id': `${SITE_URL}${path}#${service.slug}`,
+        name: service.title,
+        description: service.desc,
+        serviceType: service.title,
+        url: `${SITE_URL}${path}#${service.slug}`,
+        provider: { '@id': `${SITE_URL}/#organization` },
+        areaServed: [
+          { '@type': 'Country', name: 'Türkiye' },
+          { '@type': 'Place', name: 'Worldwide' },
+        ],
+        /* Teslim edilenler listesi hizmetin ne icerdigini sayiyor; sayfada
+           zaten gorunen bilgi, burada makine icin ayni sirayla tekrar
+           ediyor. */
+        hasOfferCatalog: {
+          '@type': 'OfferCatalog',
+          name: service.title,
+          itemListElement: service.deliverables.map((item) => ({
+            '@type': 'Offer',
+            itemOffered: { '@type': 'Service', name: item },
+          })),
+        },
+      },
+    })),
   };
 }
 

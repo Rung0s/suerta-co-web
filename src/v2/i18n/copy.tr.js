@@ -378,6 +378,18 @@ export const tr = {
     fieldBrand: 'Marka',
     fieldReach: 'İletişim',
     fieldType: 'Proje tipi',
+
+    /* Form artik gercekten gonderiliyor (Formspree). Asagidaki metinler o
+       yolun durumlari; yukaridaki sentTitle/sentNote WhatsApp'a dusuldugunde
+       kullanilmaya devam ediyor. */
+    sending: 'Gönderiliyor…',
+    sentTitleMail: 'Mesajınız bize ulaştı.',
+    sentNoteMail: 'Hafta içi aynı gün dönüyoruz. Daha hızlısı için WhatsApp’tan da yazabilirsiniz.',
+    errorTitle: 'Gönderilemedi.',
+    errorNote: 'Bağlantıda bir sorun oldu. Tekrar deneyebilir ya da doğrudan WhatsApp’tan yazabilirsiniz.',
+    retry: 'Tekrar dene',
+    whatsappAlt: 'WhatsApp’tan yaz',
+    formNoteMail: 'Mesajınız doğrudan e-posta olarak bize ulaşır; üçüncü tarafla paylaşılmaz.',
   },
 
   crew: {

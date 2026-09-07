@@ -37,7 +37,7 @@ export default function V2Footer() {
                   className="v2-fcol__link"
                   href={item.href}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer"
                 >
                   {item.label}
                 </a>

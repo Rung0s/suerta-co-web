@@ -377,6 +377,17 @@ export const en = {
     fieldBrand: 'Brand',
     fieldReach: 'Contact',
     fieldType: 'Project type',
+
+    /* The form now actually sends (Formspree). The strings below belong to
+       that path; sentTitle/sentNote above still cover the WhatsApp fallback. */
+    sending: 'Sending…',
+    sentTitleMail: 'Your message reached us.',
+    sentNoteMail: 'We answer the same day on weekdays. For something faster, WhatsApp works too.',
+    errorTitle: 'It did not send.',
+    errorNote: 'Something went wrong with the connection. Try again, or write to us directly on WhatsApp.',
+    retry: 'Try again',
+    whatsappAlt: 'Write on WhatsApp',
+    formNoteMail: 'Your message comes straight to us by email; it is not shared with anyone else.',
   },
 
   crew: {

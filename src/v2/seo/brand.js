@@ -73,3 +73,22 @@ export const organizationSchema = {
   ],
   sameAs: ['https://instagram.com/suerta.co'],
 };
+
+/* Sitenin kendisi bir varlik olarak.
+   --------------------------------------------------------------------------
+   Organization "bu marka kim" diyor; WebSite "bu adres o markanin sitesi"
+   diyor ve ikisini `publisher` uzerinden birbirine bagliyor. Bu bag olmadan
+   arama motoru sayfalari markaya baglamak icin tahmin yuruyor.
+
+   Icinde arama kutusu olan siteler buraya `potentialAction` da koyuyor;
+   burada site ici arama yok, o yuzden uydurma bir uc nokta tarif etmiyoruz. */
+export const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': `${SITE_URL}/#website`,
+  url: SITE_URL,
+  name: SITE_NAME,
+  description: DESCRIPTION,
+  inLanguage: ['tr-TR', 'en-GB', 'it-IT'],
+  publisher: { '@id': `${SITE_URL}/#organization` },
+};

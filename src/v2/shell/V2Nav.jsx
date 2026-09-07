@@ -228,7 +228,7 @@ export default function V2Nav() {
                 className="v2-menu__social-link"
                 href={item.href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
               >
                 {item.label}
               </a>
