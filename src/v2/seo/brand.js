@@ -9,9 +9,19 @@
    alti alanda calisiyor ve liste de bunu yansitmali. */
 
 export const SITE_URL = 'https://www.suerta.co';
-/* Marka her yerde `suerta.co` yaziliyor — kullanicinin degismez kurali.
-   Diger yazimlar (suerta co., Suerta Co.) yalnizca `alternateName` icinde,
-   arama motoru bu varyantlari ayni varliga cozebilsin diye. */
+/* Iki ad, iki is.
+   --------------------------------------------------------------------------
+   Isletmenin adi "Suerta Co." — Google Isletme Profili'nde de boyle kayitli.
+   Sayfalarda ve baslik etiketlerinde `suerta.co` yaziliyor: nokta, adin
+   tiklanabilir bir adres oldugunu okuyana bir bakista soyluyor.
+
+   Sema tarafinda ikisi ayri alana giriyor. `name` ve `legalName`, Isletme
+   Profili'ndeki kayitla birebir ayni olmak zorunda: arama motoru markayi
+   dogrulanmis kayitla eslestirirken bu iki dizeye bakiyor ve aradaki her
+   fark eslesmeyi zayiflatiyor. Sitenin kendi adi (`WebSite.name`, sayfa
+   basliklarinin sonundaki ek, og:site_name) ise gorunen yazim olarak
+   kaliyor. Kalan varyantlar `alternateName` icinde. */
+export const LEGAL_NAME = 'Suerta Co.';
 export const SITE_NAME = 'suerta.co';
 export const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
 
@@ -30,11 +40,12 @@ export const organizationSchema = {
   '@context': 'https://schema.org',
   '@type': ['Organization', 'ProfessionalService'],
   '@id': `${SITE_URL}/#organization`,
-  name: SITE_NAME,
-  legalName: SITE_NAME,
+  name: LEGAL_NAME,
+  legalName: LEGAL_NAME,
   /* Marka sorgularinin (suerta.co / suerta co / suertaco) tek bir varliga
-     cozulebilmesi icin butun yazim varyantlari. */
-  alternateName: ['suerta co.', 'suerta co', 'Suerta Co.', 'suertaco', 'Suerta'],
+     cozulebilmesi icin butun yazim varyantlari. Sitenin gorunen yazimi olan
+     `suerta.co` da burada: adin kendisi artik "Suerta Co.". */
+  alternateName: ['suerta.co', 'suerta co', 'suerta co.', 'suertaco', 'Suerta'],
   url: SITE_URL,
   /* Google'in logo yonergesi SVG kabul etmiyor (JPG/PNG/GIF); SVG verilince
      logo sessizce yok sayiliyor. `npm run og` ile uretilen PNG. */
