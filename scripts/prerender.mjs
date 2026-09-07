@@ -44,17 +44,26 @@ const MIME = {
 };
 
 // dist/ klasörünü SPA fallback ile sunan minimal statik sunucu
-function startServer() {
+//
+// Kabuk (index.html) bellekte tutuluyor, diskten okunmuyor. Sebebi: ilk
+// route "/" ve onun ciktisi dist/index.html'in uzerine yaziliyor. Sonraki
+// butun rotalar SPA yedegi olarak o dosyayi aliyordu, yani ana sayfanin
+// prerender edilmis hali — icindeki calisma aninda eklenmis
+// `modulepreload` satirlariyla birlikte. Sonuc: /hakkimizda, hic
+// kullanmadigi sekiz ana sayfa parcasini (~23 KB JavaScript) on yukluyordu
+// ve o dosyalar sayfa boyanmadan once ana is parcacigini mesgul ediyordu.
+function startServer(shell) {
   return new Promise((resolve) => {
     const server = createServer(async (req, res) => {
       try {
         let urlPath = decodeURIComponent(req.url.split('?')[0]);
         let filePath = join(DIST, urlPath);
         if (!extname(urlPath) || !existsSync(filePath)) {
-          // uzantısız yollar → SPA index.html
-          if (!extname(urlPath)) filePath = join(DIST, 'index.html');
+          // uzantısız yollar → derlemeden cikan temiz kabuk
+          res.setHeader('Content-Type', MIME['.html']);
+          res.end(shell);
+          return;
         }
-        if (!existsSync(filePath)) filePath = join(DIST, 'index.html');
         const data = await readFile(filePath);
         res.setHeader('Content-Type', MIME[extname(filePath)] || 'application/octet-stream');
         res.end(data);
@@ -68,7 +77,8 @@ function startServer() {
 }
 
 async function run() {
-  const server = await startServer();
+  const shell = await readFile(join(DIST, 'index.html'));
+  const server = await startServer(shell);
   const browser = await launchBrowser();
   let ok = 0;
   try {
