@@ -18,11 +18,17 @@ export const DEFAULT_IMAGE = `${SITE_URL}/og-image.png`;
 const DESCRIPTION =
   'suerta.co, internet siteleri, e-ticaret, rezervasyon sistemleri, yapay zekâ otomasyonları ve SEO/GEO işleri yapan butik bir dijital stüdyo.';
 
-/* Organization, LocalBusiness degil: marka yerel bir isletme paketine
-   sokulmadan da adres tasiyabiliyor. */
+/* Tip hem Organization hem ProfessionalService.
+   --------------------------------------------------------------------------
+   Onceden yalnizca Organization'di ve yorum "yerel isletme paketine
+   sokulmadan da adres tasiyabiliyor" diyordu. Dogru, ama marka adi Google
+   tarafindan "suerte"nin yazim hatasi olarak okunuyor ve arama motoru bir
+   markayi en saglam sekilde dogrulanmis adres + telefondan taniyor.
+   ProfessionalService, LocalBusiness'in alt tipi: tek bir @id altinda kalip
+   yerel isletme anlamini da kazaniyoruz, iki ayri varlik uretmiyoruz. */
 export const organizationSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
+  '@type': ['Organization', 'ProfessionalService'],
   '@id': `${SITE_URL}/#organization`,
   name: SITE_NAME,
   legalName: SITE_NAME,
@@ -43,9 +49,14 @@ export const organizationSchema = {
   email: 'suerta.info@gmail.com',
   telephone: '+905060693525',
   description: DESCRIPTION,
+  /* Acik adres: Google Isletme Profili'ndeki kayitla birebir ayni yazilmali,
+     ikisi arasindaki her fark dogrulamayi zayiflatiyor. */
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Eskişehir',
+    streetAddress: 'Yenikent Mah. Rezzan Sk., Fulya Sitesi',
+    addressLocality: 'Odunpazarı',
+    addressRegion: 'Eskişehir',
+    postalCode: '26050',
     addressCountry: 'TR',
   },
   areaServed: [
@@ -71,6 +82,12 @@ export const organizationSchema = {
     'GEO (Generative Engine Optimization)',
     'Web Performans Optimizasyonu',
   ],
+  /* Markanin baska yerlerdeki ayni kimligi. Google bir markayi ancak birden
+     fazla bagimsiz kayitta ayni kimlikle gorurse ayri bir varlik sayiyor;
+     tek bir Instagram baglantisi bunun icin ince bir kanit. Isletme Profili,
+     LinkedIn ve YouTube adresleri acildikca buraya eklenecek — var olmayan
+     bir adres yazmak olu baglanti ve yanlis eslesme demek, o yuzden liste
+     yalnizca gercekten var olanlari tasiyor. */
   sameAs: ['https://instagram.com/suerta.co'],
 };
 
