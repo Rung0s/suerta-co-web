@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 /* Film, ekrana girene kadar indirilmiyor.
    --------------------------------------------------------------------------
-   Anasayfada iki tanitim filmi var ve ikisi birden 7,5 MB. Ikisi de sayfa
+   Anasayfada iki tanitim filmi var. Ikisi de sayfa
    acilir acilmaz otomatik oynadigi icin, hero'yu gorup ayrilan bir
    ziyaretci bile hic gormedigi iki filmi indiriyordu — mobil veride bu
    tek basina sayfanin en pahali kalemi.
@@ -17,6 +17,10 @@ export default function LazyVideo({ className, src, poster, alt = '' }) {
   const holder = useRef(null);
   const video = useRef(null);
   const [mounted, setMounted] = useState(false);
+
+  /* AV1 kopyasi mp4 ile ayni klasorde ve ayni adi tasiyor; cagiran tarafin
+     iki adres birden vermesi gerekmesin diye uzanti burada degistiriliyor. */
+  const webmSrc = src.replace(/\.mp4$/, '.webm');
 
   useEffect(() => {
     const node = holder.current;
@@ -64,6 +68,15 @@ export default function LazyVideo({ className, src, poster, alt = '' }) {
           preload="metadata"
           poster={poster}
         >
+          {/* Iki kodek, sirasi onemli: tarayici listeden oynatabildigi ilk
+              kaynagi aliyor ve digerini hic istemiyor.
+
+              AV1 once geliyor cunku ayni goruntuyu h264'un yaklasik yarisi
+              kadar veriyle veriyor (2,6 MB -> 1,8 MB). Destegi Chrome 70,
+              Firefox 67 ve Safari 17 ile geliyor; daha eskisi bu satiri
+              atlayip alttaki mp4'e dusuyor, yani kimse film goremez duruma
+              gelmiyor. */}
+          <source src={webmSrc} type="video/webm" />
           <source src={src} type="video/mp4" />
         </video>
       ) : (
