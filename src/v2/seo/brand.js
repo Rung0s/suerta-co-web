@@ -88,7 +88,14 @@ export const organizationSchema = {
      LinkedIn ve YouTube adresleri acildikca buraya eklenecek — var olmayan
      bir adres yazmak olu baglanti ve yanlis eslesme demek, o yuzden liste
      yalnizca gercekten var olanlari tasiyor. */
-  sameAs: ['https://instagram.com/suerta.co'],
+  sameAs: [
+    'https://instagram.com/suerta.co',
+    /* Google Isletme Profili. Kisa baglanti (maps.app.goo.gl/...) yerine
+       kaydin kalici kimligi (CID) yaziliyor: kisa baglantilar yonlendirme
+       ve Google'in kendi kisaltma servisinin omruyle birlikte degisebilir,
+       CID kaydin kendisine bagli. */
+    'https://www.google.com/maps?cid=17354213420392860441',
+  ],
 };
 
 /* Sitenin kendisi bir varlik olarak.
