@@ -5,6 +5,7 @@
 // dildeki karsiligini (hreflang) yaziyor — iki dilli bir sitede arama
 // motorunun iki adresi ayni icerigin kopyasi saymamasi icin gereken sey bu.
 import { writeFile } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { allRoutes, alternatesOf, LANGS } from './routes.mjs';
@@ -32,6 +33,48 @@ const WEIGHT = {
    oluyordu ve boyle bir lastmod dikkate alinmiyor. */
 const POST_DATES = Object.fromEntries(blogsData.map((post) => [post.id, post.iso]));
 
+/* Yazi disi sayfalarin tarihi de bugun yaziliyordu, yani ayni yalan onlar
+   icin suruyordu: her deploy "69 sayfanin hepsi degisti" diyordu. Gercek
+   tarih, o sayfayi ureten dosyalara dokunan son commit'in tarihi.
+
+   Hangi sayfanin hangi dosyalardan ciktigi asagida elle yaziliyor; bir
+   sayfa yeni bir dosyaya bolununce buraya da eklenmesi gerekiyor. Liste
+   eksik kalirsa tarih eskide kalir, yanlis bir tazelik iddiasi olusmaz. */
+const SOURCES = {
+  home: ['src/v2/HomeV2.jsx', 'src/v2/sections', 'src/v2/i18n'],
+  services: ['src/v2/ServicesV2.jsx', 'src/v2/i18n'],
+  work: ['src/v2/pages/WorkPage.jsx', 'src/data/references.js'],
+  workItem: ['src/v2/pages/WorkDetailPage.jsx', 'src/data/references.js'],
+  blog: ['src/v2/pages/BlogPage.jsx', 'src/data/blogs.js'],
+  about: ['src/v2/pages/AboutPage.jsx', 'src/v2/i18n'],
+  contact: ['src/v2/pages/ContactPage.jsx', 'src/v2/sections/ContactSection.jsx', 'src/v2/i18n'],
+};
+
+/* git yoksa ya da depo gecmisi kirpilmis olarak klonlanmissa (bazi CI
+   ortamlari boyle yapiyor) tarih bulunamaz; o zaman bugune duserek
+   derlemeyi kirmiyoruz. */
+function lastCommitDate(paths) {
+  try {
+    const out = execFileSync('git', ['log', '-1', '--format=%cs', '--', ...paths], {
+      cwd: join(__dirname, '..'),
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+    return /^\d{4}-\d{2}-\d{2}$/.test(out) ? out : null;
+  } catch {
+    return null;
+  }
+}
+
+const PAGE_DATES = Object.fromEntries(
+  Object.entries(SOURCES).map(([page, paths]) => [page, lastCommitDate(paths)])
+);
+
+function lastmodOf(route, today) {
+  if (route.page === 'blogItem') return POST_DATES[route.id] ?? today;
+  return PAGE_DATES[route.page] ?? today;
+}
+
 export function buildSitemap(today) {
   const entries = allRoutes().map((route) => {
     const alternates = alternatesOf(route);
@@ -45,7 +88,7 @@ export function buildSitemap(today) {
     return [
       '  <url>',
       `    <loc>${SITE}${route.path}</loc>`,
-      `    <lastmod>${(route.page === 'blogItem' && POST_DATES[route.id]) || today}</lastmod>`,
+      `    <lastmod>${lastmodOf(route, today)}</lastmod>`,
       `    <changefreq>${weight.changefreq}</changefreq>`,
       `    <priority>${weight.priority}</priority>`,
       links,
