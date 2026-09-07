@@ -35,3 +35,7 @@ netlify_output.txt
 /btn*.mjs
 /hero_*.mjs
 /*.png
+
+# Ortam degiskenleri: anahtarlar depoya girmiyor.
+.env
+.env.local
