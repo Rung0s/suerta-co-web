@@ -6,7 +6,7 @@ import V2Layout from './shell/V2Layout';
 import { useCopy, useLang } from './i18n';
 import { pathFor } from './i18n/paths';
 import { objectFor } from './media/art';
-import Seo, { breadcrumb, faqPage } from './seo/Seo';
+import Seo, { breadcrumb, faqPage, serviceList } from './seo/Seo';
 import './services.css';
 
 /* /v2 kabugunun ilk ic sayfasi.
@@ -73,7 +73,7 @@ function ServiceCard({ service, index, copy }) {
               className="v2-svc__proof-link"
               href={project.link}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
             >
               {project.name} ↗
             </a>
@@ -95,6 +95,7 @@ export default function ServicesV2() {
         title={c.meta.services.title}
         description={c.meta.services.description}
         jsonLd={[
+          serviceList(c.services.items, pathFor('services', lang), lang),
           faqPage(c.faq.items),
           breadcrumb([
             { name: c.nav.home, path: home },
