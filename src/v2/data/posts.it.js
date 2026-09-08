@@ -21,13 +21,23 @@ export const postsIt = {
     content: `
 Farsi costruire un sito web nel 2026 è un investimento che va da poche migliaia di lire a qualche centinaio di migliaia, e la forbice è così ampia perché il prezzo segue il lavoro che il sito deve fare, non il sito in sé. A fissare il prezzo non è il numero di pagine ma il compito che il sito si assume. Un sito vetrina e un negozio online che vende, gestisce le scorte e incassa possono avere lo stesso numero di pagine e costare comunque diverse volte di più l'uno dell'altro. La domanda a cui rispondere prima di chiedere un preventivo è questa: quale comportamento deve produrre questo sito perché la mia attività guadagni? Far squillare il telefono, far compilare un modulo, far mettere un prodotto nel carrello?
 
+### Da quali voci è composto il costo di un sito web?
+
 Il costo totale di un progetto web ha quattro parti: design e sviluppo (una tantum), dominio e hosting (annuali), produzione dei contenuti (testi, fotografie, grafica) e manutenzione (mensile o annuale). La maggior parte dei preventivi copre solo la prima. Le altre tre emergono dopo come "costi nascosti" proprio perché nessuno le ha chieste. Quando confronti i preventivi, chiedi che ogni parte sia quotata separatamente.
+
+### Dove risparmiano i preventivi economici?
 
 Ciò su cui un preventivo economico risparmia è invisibile; ciò che ti costa non lo è. Le tre voci tagliate più spesso sono la fase di scoperta (versare i contenuti in un template senza capire l'attività), i test (controllare il sito in un solo browser) e le basi SEO che permettono ai motori di ricerca di leggere il sito correttamente. Salta queste tre e il sito si apre ma non funziona: rotto sui telefoni, assente da Google, incapace di trasformare un visitatore in cliente. Ricostruirlo un anno dopo costa sempre più che costruirlo bene.
 
+### Come si stabilisce il budget?
+
 Imposta il budget chiedendoti quanto vale un cliente per te, non quanto puoi permetterti di spendere. Moltiplica il valore medio di un cliente per il numero di clienti che ti aspetti dal sito ogni mese: per un'attività di servizi con un lavoro medio da ₺20.000, un sito che porta due nuovi clienti al mese produce ₺480.000 di lavoro all'anno. Con questa aritmetica il costo del sito smette di essere la domanda e il suo ritorno diventa la domanda.
 
+### Quali domande fare prima di firmare un preventivo?
+
 Fai a ogni agenzia queste cinque domande e chiedi le risposte per iscritto: Cosa è incluso nel preventivo e cosa no? La configurazione SEO tecnica sarà fatta alla consegna? Di chi è il sito: dominio e hosting sono registrati a tuo nome? Come funziona il supporto dopo la pubblicazione? Cosa avete costruito per un'attività come la mia e cosa ne è uscito? Un preventivo che non sa rispondere chiaramente a una sola di queste è caro, qualunque cifra riporti.
+
+### Come si comincia?
 
 A suerta.co ascoltiamo l'attività prima di fare un preventivo: cosa vendi, chi è il tuo cliente, quale compito deve assumersi il sito. La call di scoperta è gratuita: scrivi a suerta.info@gmail.com e ti rispondiamo entro un giorno lavorativo.
     `,
@@ -64,13 +74,23 @@ A suerta.co ascoltiamo l'attività prima di fare un preventivo: cosa vendi, chi 
     content: `
 La prima grande decisione nell'e-commerce è la piattaforma, e in pratica si riduce a due nomi: Shopify e WooCommerce. La risposta breve: Shopify per le attività che vogliono concentrarsi sulle operazioni e non hanno personale tecnico; WooCommerce per le attività che vogliono pieno controllo e personalizzazione e hanno un supporto tecnico a disposizione.
 
+### Qual è la differenza di fondo tra Shopify e WooCommerce?
+
 Le due fanno lo stesso lavoro con filosofie opposte. Shopify è un negozio in affitto: hosting, sicurezza, aggiornamenti e infrastruttura sono responsabilità di Shopify; tu paghi un abbonamento mensile e ti concentri sulla vendita. WooCommerce è un negozio che costruisci sul tuo terreno: un plugin gratuito sopra WordPress, dove hosting, sicurezza e manutenzione li gestisci tu (o la tua agenzia). Questa differenza è tutto il confronto.
+
+### Quale costa davvero meno?
 
 Sui costi, l'etichetta "gratis" di WooCommerce inganna: aggiunti hosting, plugin premium e manutenzione regolare, il costo totale si avvicina a un abbonamento Shopify e a volte lo supera. Il costo di Shopify è trasparente ma rigido: non puoi saltare un mese. Su configurazione e gestione Shopify vince nettamente: un solo pannello, pagamenti pronti fin dall'inizio e un interlocutore chiaro da chiamare quando qualcosa si rompe. Su WooCommerce la flessibilità porta con sé la responsabilità: l'hosting sbagliato rallenta il negozio, un plugin non aggiornato diventa una falla di sicurezza. Per un'attività senza personale tecnico, un negozio WooCommerce significa in pratica un contratto di manutenzione con un'agenzia.
 
+### Quale vince su velocità, SEO e crescita?
+
 Su velocità e SEO, entrambe le piattaforme competono su Google se costruite bene; la differenza è la qualità della realizzazione, non la piattaforma. In uno scenario di crescita i limiti sono diversi: su Shopify il limite è la flessibilità (arrivi a un muro dove la piattaforma non ti lascia personalizzare), su WooCommerce sono le operazioni (al crescere dei volumi, server e manutenzione diventano lavoro vero). Una bussola approssimativa: catalogo standard e volumi in crescita, Shopify; modello di business insolito dove la personalizzazione è critica, WooCommerce.
 
+### Quale scegliere? Un test in cinque domande
+
 Cinque domande che decidono: C'è qualcuno di tecnico nel team? (No: Shopify / Sì: WooCommerce) — Preferisci un costo fisso o variabile? (Fisso: Shopify) — Vendi un catalogo standard? (Sì: Shopify) — Puoi dedicare al sito meno di un'ora a settimana? (Sì: Shopify) — Contenuti e blog sono centrali per la tua attività? (Sì: WooCommerce). Se il risultato è pari, parti con Shopify: anche se si rivelasse la scelta sbagliata, lo scopri a un costo minore.
+
+### Come si comincia?
 
 A suerta.co lavoriamo in entrambi i mondi, dal setup di temi Shopify all'e-commerce costruito su misura, ed è per questo che consigliamo quella che si adatta alla tua attività, non una piattaforma. Scrivi il tuo prodotto e il tuo obiettivo a suerta.info@gmail.com e lo decidiamo insieme in una call di scoperta gratuita.
     `,
@@ -107,13 +127,23 @@ A suerta.co lavoriamo in entrambi i mondi, dal setup di temi Shopify all'e-comme
     content: `
 Il motivo più comune per cui un nuovo sito non compare su Google è una manciata di passi semplici saltati il giorno del lancio, e la maggior parte richiede cinque minuti di verifica. La lista in 12 punti qui sotto è la versione breve del processo pre-lancio che seguiamo su ogni progetto.
 
+### Quali controlli tecnici vengono per primi? (1-5)
+
 Basi tecniche (1–5): Tutte e quattro le varianti del tuo indirizzo — con www, senza www, http e https — devono reindirizzare a un unico indirizzo canonico; quattro indirizzi significano quattro siti e la tua forza si divide tra loro. Il certificato SSL deve essere installato e pulito, senza avvisi "non sicuro" su nessuna pagina. Controlla il robots.txt: se contiene "Disallow: /" il tuo sito sta dicendo a Google di non indicizzarlo — il lucchetto messo durante lo sviluppo e notoriamente dimenticato il giorno del lancio. tuosito.com/sitemap.xml deve restituire una sitemap aggiornata. E configura Google Search Console: lì invii la sitemap e lì vedi i problemi di indicizzazione. È gratuita e richiede dieci minuti.
+
+### Cosa controllare sul fronte contenuti (6-9)
 
 Contenuti (6–9): Ogni pagina che vuoi indicizzare ha bisogno di una sola query obiettivo: cosa digita su Google chi cerca questa pagina? Se non hai una risposta, la pagina non ha SEO. Il titolo deve stare sotto i 60 caratteri, contenere la query in modo naturale ed essere diverso su ogni pagina; la descrizione deve stare sotto i 155 caratteri e invitare al clic. Ogni pagina ha bisogno di un solo H1, con sottotitoli che scendono in ordine. I nomi dei file immagine devono avere un senso e il testo alternativo va compilato: studio-web-design-milano.jpg invece di IMG_4821.jpg.
 
+### Cosa richiedono prestazioni e fiducia (10-12)
+
 Prestazioni e fiducia (10–12): La maggior parte del traffico arriva da telefono e Google giudica i siti dalla versione mobile: inserisci il tuo sito in PageSpeed Insights e, se il punteggio è basso, il primo sospettato sono le immagini non compresse; passare a WebP è da solo il più grande guadagno di velocità sulla maggior parte dei siti. Quando il tuo sito viene condiviso su WhatsApp deve comparire con un titolo, una descrizione e un'immagine con il brand: WhatsApp è dove i link si condividono di più, e una scheda vuota è una scheda che nessuno tocca. Infine, i dati strutturati: Organization sulla home, Article sugli articoli, e una regola: non aggiungere schema per contenuti che non esistono. FAQ finte e stelle finte sono un rischio di penalizzazione, non un vantaggio.
 
+### Cosa monitorare nella prima settimana?
+
 Il lavoro non finisce con la lista. Nella prima settimana tieni d'occhio tre cose: le tue pagine stanno passando a "indicizzate" in Search Console? Il tuo sito compare per primo per il nome del tuo brand? Hai messo per iscritto le tue query obiettivo? Non disperare per i posizionamenti in quelle prime settimane: un sito nuovo che trova il suo posto su query competitive è questione di mesi, non di settimane, ed è normale. L'investimento migliore in quel periodo è pubblicare, con regolarità, contenuti che rispondono alle query obiettivo.
+
+### Come si comincia?
 
 Questi 12 punti sono il riassunto del processo pre-lancio che suerta.co segue su ogni progetto: qui un sito non va online finché la lista non è completa. Se vuoi sapere quanti ne supera il tuo sito attuale, scrivi a suerta.info@gmail.com e ti rispondiamo dopo una breve revisione.
     `,
@@ -150,7 +180,11 @@ Questi 12 punti sono il riassunto del processo pre-lancio che suerta.co segue su
     content: `
 Nel settore alberghiero le persone decidono in secondi. Tempi di caricamento lunghi, passaggi di prenotazione complicati e interfacce pesanti rimandano i potenziali ospiti da dove sono venuti. Per il sistema di prenotazione costruito per Emsa Otel la priorità è stata un principio di zero attesa.
 
+### Come è stato velocizzato il flusso di prenotazione?
+
 Abbiamo costruito il sistema da zero con React e strumenti web moderni. I passaggi che prima avanzavano ricaricando la pagina sono diventati un unico flusso ininterrotto. Ottimizzare le immagini senza perdita visibile di qualità ha ridotto il peso delle pagine del 70%.
+
+### Qual è stato il risultato?
 
 Il risultato: da telefono, completare una prenotazione è passato da tre minuti a 45 secondi, e le vendite dirette, senza commissioni, sono cresciute del 40%.
     `,
@@ -182,7 +216,11 @@ Il risultato: da telefono, completare una prenotazione è passato da tre minuti 
     content: `
 La percezione visiva è la prima chiave per fidarsi di un brand. Nel B2B e nei settori del lusso — architettura, transfer VIP, software su misura — un'interfaccia scura non è solo una preferenza estetica ma un pezzo di posizionamento.
 
+### Cosa comunica davvero una palette scura?
+
 Nei nostri progetti ci appoggiamo a nero, grigi profondi e dettagli oro o bordeaux. Quella palette comunica eleganza, discrezione, prestigio e professionalità. È anche più riposante per l'occhio, e questo tende ad allungare il tempo trascorso sul sito.
+
+### Dove è stato applicato questo approccio?
 
 Nei progetti Argüman Fabrikası e Nova Mimarlık abbiamo usato un'estetica scura completamente premium, così che il design da solo dicesse al pubblico di ciascun brand: questo è uno studio boutique che sa fare il suo lavoro.
     `,
@@ -214,7 +252,11 @@ Nei progetti Argüman Fabrikası e Nova Mimarlık abbiamo usato un'estetica scur
     content: `
 Una delle prime domande che un brand si pone quando va online è questa: usare una piattaforma e-commerce già pronta come Shopify o Ticimax, oppure farsi costruire un software su misura?
 
+### Quando un pacchetto pronto non basta?
+
 Dipende dalla scala dell'attività e da cosa vuole ottenere. Nel progetto Pawsec Shop il brand aveva bisogno di più di un elenco di prodotti standard: servivano piani alimentari personalizzati per animali. Costruirlo su un sistema pronto sarebbe stato costoso e goffo.
+
+### Cosa rende il software su misura nel lungo periodo?
 
 Abbiamo costruito per Pawsec Shop una piattaforma su misura in React e Node.js, da zero, modellata interamente su ciò di cui il brand aveva bisogno. Questo ha dato pieno controllo sul database, e le integrazioni con sistemi esterni — spedizioni, pagamenti, CRM — sono diventate questione di secondi. Nel tempo, il software su misura ha liberato l'attività dai limiti delle piattaforme e dal canone mensile, e si è rivelato di gran lunga l'investimento più redditizio.
     `,
@@ -246,11 +288,19 @@ Abbiamo costruito per Pawsec Shop una piattaforma su misura in React e Node.js, 
     content: `
 La maggior parte della prima impressione che un sito dà è visiva, non testuale; il visitatore vede le fotografie prima di leggere una frase e decide sul tuo brand in pochi secondi. Scatti da telefono scuri e disordinati fanno sembrare un sito economico, per quanto buono sia il design intorno. La fotografia professionale non è un lusso; è una parte fondamentale del trasformare un visitatore in cliente.
 
+### Cosa si pianifica prima dello shooting?
+
 Un servizio commerciale parte da un piano: quali inquadrature saranno usate e dove sul sito? Camere e spazi comuni per un hotel, prodotti su bianco per un negozio, il team e l'atmosfera dell'ufficio per uno studio. Uscire a fotografare senza quella lista finisce con centinaia di scatti e nessuno utilizzabile. Prima di ogni servizio prepariamo una shot list, abbinando in anticipo ogni spazio immagine nel layout del sito.
+
+### Come si imposta la luce?
 
 La luce è ciò che decide una fotografia. Le ore in cui la luce del giorno è morbida — prima mattina, tardo pomeriggio — sono adatte agli interni; per i prodotti, una luce da studio controllata o un softbox tiene le ombre sotto controllo. La composizione segue la regola dei terzi, uno sfondo pulito e la palette del brand. L'obiettivo non è "una bella foto" ma un linguaggio visivo coerente che dica qualcosa sul brand.
 
+### Cosa succede dopo lo shooting?
+
 Il lavoro non finisce con il servizio: la vera differenza emerge in post-produzione. Correzione del colore, bilanciamento dell'esposizione, rimozione di ciò che non dovrebbe stare nell'inquadratura e ridimensionamento per il web avvengono qui. Immagini ad alta risoluzione ma compresse (WebP) appaiono nitide senza rallentare la pagina; sbaglia questo equilibrio e le belle fotografie diventano ciò che rende lento il sito.
+
+### Come si comincia?
 
 A suerta.co ci occupiamo noi stessi della fotografia nella maggior parte dei progetti web, perché il team che disegna il sito sa fin dall'inizio quale inquadratura va dove. Se vuoi rinnovare le immagini della tua attività, scrivi a suerta.info@gmail.com e prepariamo la lista insieme.
     `,
@@ -282,11 +332,19 @@ A suerta.co ci occupiamo noi stessi della fotografia nella maggior parte dei pro
     content: `
 La grande maggioranza del traffico web arriva da telefono, e Google oggi giudica i siti prima di tutto dalla versione mobile. Per quanto bene appaia il tuo sito su un desktop, se è lento o rotto su un telefono perdi sia il visitatore sia il posizionamento. L'ottimizzazione mobile è il lavoro di rendere un sito veloce, leggibile e usabile con un pollice su uno schermo piccolo.
 
+### Cosa rallenta un sito sul telefono?
+
 Il colpevole più comune di un sito mobile lento sono le immagini non ottimizzate. Inviare a un telefono una fotografia da 4.000 pixel preparata per il desktop brucia i dati del visitatore e la sua pazienza. La soluzione: comprimere le immagini in formati moderni (WebP/AVIF), servire misure diverse per schermi diversi e rimandare il caricamento di quelle sotto la piega. Sulla maggior parte dei siti l'ottimizzazione delle immagini da sola è il più grande guadagno di velocità.
+
+### Come deve comportarsi il layout mobile?
 
 La seconda area è il layout. Su un telefono i contenuti devono disporsi su una colonna, il testo deve essere leggibile senza zoom e i pulsanti abbastanza grandi da premerli con un pollice. Tre colonne da desktop devono impilarsi; il menu deve diventare un pannello laterale invece di coprire lo schermo. I siti pubblicati senza testare questo perdono visitatori per lo scorrimento orizzontale e gli elementi sovrapposti.
 
+### Come si riduce il peso tecnico?
+
 La terza è il peso tecnico: font inutili, librerie di animazione pesanti e codice in eccesso gravano tutti sul processore del telefono. Un sito costruito bene carica solo ciò che gli serve. Per misurare questa parte, inserisci il tuo sito nel gratuito Google PageSpeed Insights; se il punteggio mobile è basso, le opportunità più grandi sono elencate proprio lì.
+
+### Come si comincia?
 
 A suerta.co costruiamo ogni progetto mobile first e testiamo su dispositivi reali prima della pubblicazione. Se vuoi che misuriamo le prestazioni mobile del tuo sito, scrivi a suerta.info@gmail.com e ti prepariamo un breve rapporto sulla velocità.
     `,
@@ -318,11 +376,19 @@ A suerta.co costruiamo ogni progetto mobile first e testiamo su dispositivi real
     content: `
 Fare pubblicità è facile; sapere se la pubblicità funziona è difficile. L'errore più comune in Google Ads è avviare una campagna senza tracciamento delle conversioni. Un account senza tracciamento non può dirti quale parola chiave ha portato un cliente e quale ha solo bruciato denaro: spendi il budget al buio. La buona notizia: configurato correttamente, Google riferisce chiaramente dove è finita ogni lira.
 
+### Che cosa conta come conversione?
+
 Una conversione è un'azione che ha valore per la tua attività: l'invio di un modulo, una telefonata, un tocco su WhatsApp, una prenotazione, una vendita. Il primo passo è definire quelle azioni: che aspetto ha il successo? Poi si crea in Google Ads un'azione di conversione per ciascuna, e uno snippet di tracciamento sul sito la riferisce. Oggi questo si gestisce per lo più tramite Google Tag Manager, con un unico contenitore sul sito, così le modifiche successive non richiedono codice.
+
+### Perché il tracciamento viene configurato male?
 
 Ciò che conta è che il tracciamento conti l'evento giusto. È il momento in cui il modulo viene inviato, o solo cliccato? Un tocco sul numero di telefono è una chiamata reale? Un tracciamento configurato male sovrastima o sottostima e ti spinge verso decisioni sbagliate. Quindi testa dopo la configurazione: compila un modulo vero e verifica che la conversione arrivi nel pannello.
 
+### Come si ottimizza quando il tracciamento funziona?
+
 Una volta in piedi il tracciamento, la pubblicità diventa qualcosa che puoi ottimizzare: il budget si sposta sulle parole chiave che convertono, quelle che non convertono vengono fermate e la campagna può essere affidata alle offerte automatiche con un obiettivo di costo per conversione. Meta (Facebook/Instagram) funziona allo stesso modo, con il tracciamento tramite Meta Pixel. La pubblicità che non si può misurare non si può gestire: ecco perché il tracciamento delle conversioni non è un lusso ma una precondizione.
+
+### Come si comincia?
 
 A suerta.co iniziamo sempre la gestione delle campagne dalla configurazione della misurazione, perché l'obiettivo è un cliente misurabile e non un'impressione. Se vuoi vedere chiaramente il ritorno del tuo budget pubblicitario, scrivi a suerta.info@gmail.com.
     `,
@@ -354,11 +420,19 @@ A suerta.co iniziamo sempre la gestione delle campagne dalla configurazione dell
     content: `
 "Hotel vicino a me", "appartamento vista mare", "hotel boutique più vicino": quando le persone cercano un servizio locale, la maggior parte guarda le schede delle attività su Google Maps prima di guardare qualsiasi sito. Quelle schede vengono dal gratuito Profilo dell'attività su Google (un tempo Google My Business). Un'attività senza profilo è invisibile nella parte più preziosa della ricerca: la mappa e il pacchetto locale a tre risultati.
 
+### Come si crea e si verifica il profilo?
+
 Il primo passo è creare il profilo e verificare la proprietà; Google di solito conferma l'indirizzo con un codice. Poi entrano le informazioni di base, complete e coerenti: nome dell'attività, indirizzo, telefono, orari di apertura e categoria. La regola che conta di più qui è la coerenza: nome, indirizzo e telefono devono essere scritti in modo identico sul sito, sui social e sul profilo. Google li confronta, e l'incoerenza ti costa fiducia e posizionamento.
+
+### Come si mantiene attivo il profilo?
 
 L'ottimizzazione consiste nel tenere vivo il profilo. Buone fotografie (esterni, interni, prodotti), l'elenco di servizi e prodotti, post regolari e, soprattutto, la gestione delle recensioni lo rafforzano. Google privilegia le attività con molte recensioni positive che rispondono. Chiedere recensioni ai clienti e rispondere a ognuna, positiva e negativa, con cortesia è il passo più efficace e più trascurato del posizionamento locale.
 
+### Come funziona il profilo insieme a sito e annunci?
+
 Infine, il profilo lavora insieme al sito e alla pubblicità: i clic su "sito web" e "indicazioni" si possono misurare e le chiamate si possono tracciare. Così vedi se l'interesse che arriva dalla mappa si trasforma in un cliente reale. Per un'attività locale il Profilo dell'attività su Google è spesso la prima vetrina, prima ancora del sito.
+
+### Come si comincia?
 
 A suerta.co gestiamo insieme configurazione del profilo, ottimizzazione e integrazione con il sito per le attività locali. Se vuoi essere più visibile su Maps, scrivi a suerta.info@gmail.com.
     `,
@@ -390,11 +464,19 @@ A suerta.co gestiamo insieme configurazione del profilo, ottimizzazione e integr
     content: `
 WhatsApp è al centro del contatto con i clienti, in Türkiye come in Italia. Per chiedere un prezzo, prenotare un appuntamento o sapere se siete aperti, le persone scrivono prima su WhatsApp. Il problema: la maggior parte di quei messaggi ripete le stesse poche domande, e rispondere a ciascuno a mano — soprattutto fuori orario — è faticoso e, quando la risposta arriva tardi, un modo per perdere clienti. Un chatbot WhatsApp ti toglie quel carico ripetitivo.
 
+### In quali forme si può creare un chatbot?
+
 Ci sono due modi per costruirlo. Per i casi semplici basta un flusso a menu: il cliente si muove tra le opzioni — "1: Prezzi, 2: Orari, 3: Parla con una persona" — e riceve una risposta immediata. Per esigenze più complesse, un bot basato sull'IA legge la frase del cliente e produce la risposta giusta, interpretando qualcosa come "avete posto domani pomeriggio?". Quale sia giusto dipende dalla complessità dell'attività; per la maggior parte, un flusso a menu ben progettato è sorprendentemente efficace.
+
+### Come si realizza dal punto di vista tecnico?
 
 Tecnicamente il bot si costruisce sull'infrastruttura ufficiale di WhatsApp per le aziende (WhatsApp Business API). Questo evita il rischio che il tuo numero personale venga bloccato e permette l'automazione in modo ufficiale. Si definiscono flussi per le domande frequenti, gli orari, lo stato dell'ordine o la prenotazione. La parte critica è lasciare un'uscita: il cliente deve poter dire "parla con una persona" in qualsiasi momento, e il bot deve passare ciò che non riesce a risolvere. L'esperienza più esasperante è un bot da cui non si può mai uscire.
 
+### Come genera vendite un chatbot?
+
 Un chatbot costruito bene non assorbe solo carico, produce vendite: risponde al messaggio che arriva a mezzanotte, dà informazioni senza far aspettare nessuno e porta una persona interessata verso una prenotazione o un ordine. I bot WhatsApp costruiti nei progetti Rönesans Edu e Argüman Fabrikası rispondono automaticamente a una grande quota delle domande ricorrenti, e questo restituisce al team il tempo per il lavoro vero.
+
+### Come si comincia?
 
 A suerta.co guardiamo i messaggi che la tua attività riceve davvero e costruiamo l'automazione che si adatta. Per parlare di quali domande potrebbero essere automatizzate, scrivi a suerta.info@gmail.com.
     `,
@@ -426,11 +508,19 @@ A suerta.co guardiamo i messaggi che la tua attività riceve davvero e costruiam
     content: `
 Alcune occasioni si misurano in secondi: un posto d'esame che si libera, un appuntamento disponibile, una lista aggiornata. Informazioni così cambiano in silenzio su una pagina web, e sorvegliarle a mano è impossibile in pratica: nessuno può ricaricare una pagina ogni minuto per tutto il giorno. È esattamente il problema che abbiamo risolto per Rönesans Edu: gli studenti dovevano sapere nell'istante in cui si apriva un posto per l'esame CENT-S, e nessuno sforzo umano poteva coglierlo. La risposta è stata un bot Telegram.
 
+### Come funziona un bot di notifica?
+
 La logica è semplice: un software controlla la fonte — una pagina o un sistema — a intervalli regolari, si accorge quando qualcosa cambia e invia una notifica immediata alle persone interessate. Telegram è un canale ideale per questo perché supporta i bot ufficialmente, le notifiche sono immediate e per l'utente la configurazione non è altro che entrare nel bot: nessuna app da installare, nessun account da creare. Il bot può avvisare centinaia di persone in pochi secondi.
+
+### Da quali pezzi è composto?
 
 La costruzione ha tre parti. Primo, il sorvegliante: un software che controlla la fonte a intervalli, la confronta con lo stato precedente e risponde alla domanda "c'è qualcosa di nuovo?". Secondo, il livello di notifica: il bot che porta il messaggio su Telegram quando viene colto un cambiamento. Terzo, l'affidabilità: tenere il sistema attivo su un server 24 ore su 24, recuperare dagli errori e non inviare avvisi falsi o inutili. La proprietà più preziosa del bot è che parla solo quando qualcosa conta davvero; un bot che manda rumore viene silenziato in fretta.
 
+### In quali altri casi funziona?
+
 Lo stesso approccio funziona ben oltre i posti d'esame: livelli di scorte, cambi di prezzo, un appuntamento libero, un nuovo annuncio: ogni caso in cui saperlo subito vale qualcosa. L'essenza è affidare al software la sorveglianza continua, che una persona non può fare, e consegnare il risultato su un canale che le persone già usano: Telegram, WhatsApp o email.
+
+### Come si comincia?
 
 A suerta.co costruiamo bot di monitoraggio e notifica per attività specifiche. Se c'è un processo che fatichi a seguire a mano, scrivi a suerta.info@gmail.com e valutiamo se si può automatizzare.
     `,
@@ -462,11 +552,19 @@ A suerta.co costruiamo bot di monitoraggio e notifica per attività specifiche. 
     content: `
 Le abitudini di ricerca stanno cambiando. Sempre più persone mettono domande come "consigliami un hotel boutique con piscina in Cappadocia" o "quale sistema di prenotazione dovrei usare per il mio hotel" non su Google ma direttamente in ChatGPT, Gemini o Perplexity. Quegli strumenti non elencano dieci link blu; danno una sola risposta, e quella risposta consiglia una manciata di brand. La GEO — Generative Engine Optimization — è il lavoro di portare il tuo brand in quelle risposte. È la sorella di nuova generazione della SEO.
 
+### In cosa la GEO è diversa dalla SEO?
+
 La SEO classica punta al posizionamento su Google; la GEO punta a far sì che un'IA ti scelga come fonte e ti consigli. I modelli di IA assemblano le loro risposte dai contenuti sul web e privilegiano materiale chiaro, strutturato, autorevole e che spiega davvero l'argomento. Quindi la base della GEO non è un trucco, sono i buoni contenuti: le pagine che spiegano un argomento a fondo e rispondono alle domande in modo diretto sono quelle di cui questi modelli si fidano e che citano di più.
+
+### Cosa richiede la GEO in pratica?
 
 In pratica la GEO mette insieme alcune cose. Primo, capire quali domande reali il tuo pubblico farà a un'IA e produrre contenuti che rispondano in modo chiaro. Secondo, strutturare quei contenuti perché le macchine li leggano facilmente: titoli chiari, domande frequenti, definizioni e dati strutturati. Terzo, assicurarsi che il brand sia descritto in modo coerente in tutto il web: le stesse informazioni, scritte nello stesso modo sul sito, nelle directory e sui social, così che il modello possa fidarsi. Un avvertimento: dati inventati e markup per contenuti che non esistono si ritorcono contro. IA e motori di ricerca penalizzano entrambi l'incoerenza e le affermazioni vuote. La strada verso la fiducia è un contenuto davvero utile.
 
+### Perché iniziare adesso è un vantaggio?
+
 La GEO è ancora un campo nuovo, ed è esattamente per questo che è un'opportunità per i brand che si muovono presto: mentre i tuoi concorrenti non pensano ancora alla visibilità nell'IA, posizionarsi ora con i contenuti giusti significa prendere oggi il vantaggio del "primo risultato" del prossimo periodo. Nel progetto Argüman Fabrikası abbiamo pianificato SEO e GEO insieme, con l'obiettivo di rendere il brand visibile tanto su Google quanto nelle risposte dell'IA.
+
+### Come si comincia?
 
 A suerta.co costruiamo strategie di contenuto che coprono sia la SEO classica sia la GEO. Per parlare di visibilità nella ricerca con IA, scrivi a suerta.info@gmail.com.
     `,
