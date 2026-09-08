@@ -6,6 +6,7 @@ import Prose from './Prose';
 import NotFoundPage from './NotFoundPage';
 import { useCopy, useLang } from '../i18n';
 import { pathFor } from '../i18n/paths';
+import { idFromSlug } from '../i18n/slugs';
 import { coverFor } from '../media/art';
 import Seo, { articleSchema, breadcrumb, faqPage } from '../seo/Seo';
 import { postById, postsFor, readingMinutes } from '../data/content';
@@ -16,8 +17,10 @@ import { postById, postsFor, readingMinutes } from '../data/content';
 export default function BlogDetailPage() {
   const c = useCopy();
   const { lang } = useLang();
-  const { id } = useParams();
-  const post = postById(lang, id);
+  const { id: slug } = useParams();
+  /* Adreste o dilin kelimesi duruyor, icerik tablolari ise kimlikle
+     anahtarli. Ceviri burada bir kez yapiliyor. */
+  const post = postById(lang, idFromSlug(slug, lang));
 
   if (!post) return <NotFoundPage />;
 

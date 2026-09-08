@@ -10,6 +10,8 @@
    hreflang etiketleri, site haritasi ve prerender listesi hepsi bunu
    okuyor. */
 
+import { slugFor, idFromSlug } from './slugs.js';
+
 export const LANGS = ['tr', 'en', 'it'];
 export const DEFAULT_LANG = 'tr';
 
@@ -34,12 +36,25 @@ export const PAGES = {
   contact: { tr: '/iletisim', en: '/en/contact', it: '/it/contatti' },
 };
 
-/* Bir sayfanin adresi, gerekiyorsa `:id` yerine gercek deger konarak. */
+/* Adreste gorunen parcasi dile gore cevrilen sayfalar. Projelerin kimligi
+   sayi oldugu icin cevrilecek bir sey yok; yazilarinki metin. */
+const SLUGGED = new Set(['blogItem']);
+
+/* Bir sayfanin adresi, gerekiyorsa `:id` yerine gercek deger konarak.
+   Cagiran taraf her zaman kimligi veriyor; adresin o dildeki halini
+   uretmek buranin isi, boylece baglanti kuran hicbir yerin ceviri
+   tablosunu bilmesi gerekmiyor. */
 export function pathFor(page, lang = DEFAULT_LANG, params) {
   const template = PAGES[page]?.[lang];
   if (!template) return PAGES.home[lang] ?? '/';
   if (!params) return template;
-  return Object.entries(params).reduce(
+
+  const resolved =
+    SLUGGED.has(page) && params.id != null
+      ? { ...params, id: slugFor(params.id, lang) }
+      : params;
+
+  return Object.entries(resolved).reduce(
     (acc, [key, value]) => acc.replace(`:${key}`, String(value)),
     template
   );
@@ -71,7 +86,7 @@ export function alternatePath(page, params) {
    Detay sayfalarinda kimlik korunuyor: yazinin ve projenin kimligi
    dilden bagimsiz, degisen yalnizca yolun kendisi. */
 export function swapLangPath(pathname, lang, other) {
-  for (const byLang of Object.values(PAGES)) {
+  for (const [page, byLang] of Object.entries(PAGES)) {
     const template = byLang[lang];
     if (!template) continue;
     if (template === pathname) return byLang[other];
@@ -79,8 +94,15 @@ export function swapLangPath(pathname, lang, other) {
     if (template.includes(':id')) {
       const prefix = template.split(':id')[0];
       if (pathname.startsWith(prefix)) {
-        const id = pathname.slice(prefix.length);
-        if (id && !id.includes('/')) return byLang[other].replace(':id', id);
+        const slug = pathname.slice(prefix.length);
+        if (slug && !slug.includes('/')) {
+          /* Adres o dilin kelimesini tasiyor; once kimlige cevriliyor,
+             sonra oteki dilin kelimesine. Aradaki kimlik olmadan iki
+             ceviri birbirini bulamaz. */
+          const id = SLUGGED.has(page) ? idFromSlug(slug, lang) : slug;
+          const outgoing = SLUGGED.has(page) ? slugFor(id, other) : id;
+          return byLang[other].replace(':id', outgoing);
+        }
       }
     }
   }

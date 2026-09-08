@@ -7,10 +7,138 @@
       "source": "/ekibimiz",
       "destination": "/hakkimizda#ekip",
       "permanent": true
+    },
+    {
+      "source": "/en/blog/web-sitesi-maliyeti-2026",
+      "destination": "/en/blog/website-cost-2026",
+      "permanent": true
+    },
+    {
+      "source": "/it/blog/web-sitesi-maliyeti-2026",
+      "destination": "/it/blog/costo-sito-web-2026",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/shopify-mi-woocommerce-mi",
+      "destination": "/en/blog/shopify-or-woocommerce",
+      "permanent": true
+    },
+    {
+      "source": "/it/blog/shopify-mi-woocommerce-mi",
+      "destination": "/it/blog/shopify-o-woocommerce",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/yeni-site-seo-checklist",
+      "destination": "/en/blog/new-website-seo-checklist",
+      "permanent": true
+    },
+    {
+      "source": "/it/blog/yeni-site-seo-checklist",
+      "destination": "/it/blog/checklist-seo-nuovo-sito",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/otel-rezervasyon-hizi",
+      "destination": "/en/blog/hotel-booking-speed",
+      "permanent": true
+    },
+    {
+      "source": "/it/blog/otel-rezervasyon-hizi",
+      "destination": "/it/blog/velocita-prenotazione-hotel",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/karanlik-mod-premium",
+      "destination": "/en/blog/dark-mode-premium-trust",
+      "permanent": true
+    },
+    {
+      "source": "/it/blog/karanlik-mod-premium",
+      "destination": "/it/blog/modalita-scura-premium",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/ozel-yazilim-vs-hazir-paketler",
+      "destination": "/en/blog/custom-software-vs-off-the-shelf",
+      "permanent": true
+    },
+    {
+      "source": "/it/blog/ozel-yazilim-vs-hazir-paketler",
+      "destination": "/it/blog/software-su-misura-o-pacchetti",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/fotograf-cekimi",
+      "destination": "/en/blog/professional-photography",
+      "permanent": true
+    },
+    {
+      "source": "/it/blog/fotograf-cekimi",
+      "destination": "/it/blog/servizio-fotografico-professionale",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/mobil-optimizasyon",
+      "destination": "/en/blog/mobile-optimisation",
+      "permanent": true
+    },
+    {
+      "source": "/it/blog/mobil-optimizasyon",
+      "destination": "/it/blog/ottimizzazione-mobile",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/google-ads-donusum",
+      "destination": "/en/blog/google-ads-conversion-tracking",
+      "permanent": true
+    },
+    {
+      "source": "/it/blog/google-ads-donusum",
+      "destination": "/it/blog/tracciamento-conversioni-google-ads",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/google-isletme-profili",
+      "destination": "/en/blog/google-business-profile",
+      "permanent": true
+    },
+    {
+      "source": "/it/blog/google-isletme-profili",
+      "destination": "/it/blog/profilo-attivita-google",
+      "permanent": true
+    },
+    {
+      "source": "/it/blog/whatsapp-chatbot",
+      "destination": "/it/blog/chatbot-whatsapp",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/telegram-sinav-botu",
+      "destination": "/en/blog/telegram-exam-bot",
+      "permanent": true
+    },
+    {
+      "source": "/it/blog/telegram-sinav-botu",
+      "destination": "/it/blog/bot-esami-telegram",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/geo-yapay-zeka-gorunurluk",
+      "destination": "/en/blog/what-is-geo-ai-visibility",
+      "permanent": true
+    },
+    {
+      "source": "/it/blog/geo-yapay-zeka-gorunurluk",
+      "destination": "/it/blog/cos-e-la-geo-visibilita-ai",
+      "permanent": true
     }
   ],
   "rewrites": [
-    { "source": "/((?!assets/|.*\\.).*)", "destination": "/index.html" }
+    {
+      "source": "/((?!assets/|.*\\.).*)",
+      "destination": "/index.html"
+    }
   ],
   "headers": [
     {
@@ -24,10 +152,22 @@
           "key": "Strict-Transport-Security",
           "value": "max-age=63072000; includeSubDomains"
         },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin"
+        },
         {
           "key": "Permissions-Policy",
           "value": "accelerometer=(), autoplay=(self), camera=(), display-capture=(), encrypted-media=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), usb=(), xr-spatial-tracking=()"
@@ -37,25 +177,37 @@
     {
       "source": "/assets/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/fonts/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/video/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=2592000" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000"
+        }
       ]
     },
     {
       "source": "/(.*).html",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     }
   ]

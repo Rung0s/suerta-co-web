@@ -7,6 +7,7 @@
 // Liste, uygulamanin kendi rota tablosundan (src/v2/i18n/paths.js) ve icerik
 // dosyalarindan turuyor; burada elle yazilan tek sey yok.
 import { PAGES, LANGS } from '../src/v2/i18n/paths.js';
+import { slugFor } from '../src/v2/i18n/slugs.js';
 import { referencesData } from '../src/data/references.js';
 import { blogsData } from '../src/data/blogs.js';
 
@@ -29,7 +30,10 @@ export function allRoutes() {
 
       if (template.includes(':id')) {
         for (const id of IDS[page] ?? []) {
-          routes.push({ page, lang, id, path: template.replace(':id', id) });
+          /* Kayitta kimlik, adreste o dilin kelimesi: site haritasi
+             tarihleri kimlikten okunuyor, adres ise yayinlanan hali. */
+          const segment = page === 'blogItem' ? slugFor(id, lang) : id;
+          routes.push({ page, lang, id, path: template.replace(':id', segment) });
         }
       } else {
         routes.push({ page, lang, id: null, path: template });
@@ -44,7 +48,12 @@ export function allRoutes() {
 export function alternatesOf(route) {
   return LANGS.reduce((acc, lang) => {
     const template = PAGES[route.page][lang];
-    acc[lang] = route.id ? template.replace(':id', route.id) : template;
+    if (!route.id) {
+      acc[lang] = template;
+      return acc;
+    }
+    const segment = route.page === 'blogItem' ? slugFor(route.id, lang) : route.id;
+    acc[lang] = template.replace(':id', segment);
     return acc;
   }, {});
 }

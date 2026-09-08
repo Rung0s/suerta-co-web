@@ -12,7 +12,8 @@
     "og": "node scripts/og.mjs",
     "images": "node scripts/images.mjs",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "redirects": "node scripts/slug-redirects.mjs"
   },
   "dependencies": {
     "react": "^19.2.6",
