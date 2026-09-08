@@ -147,7 +147,15 @@
   margin-bottom: var(--space-1);
 }
 
+/* Dokunma hedefi 28x22 idi. Yukseklik dolgu ile 44'e cikiyor, sutun araligi
+   da ayni kadar kisaliyor: gorunen ritim degismiyor, parmagin isabet ettigi
+   alan buyuyor. */
 .v2-fcol__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding-block: 0.6875rem;
+  margin-block: -0.6875rem;
   font-size: var(--text-small);
   color: rgba(246, 245, 242, 0.82);
   text-decoration: none;

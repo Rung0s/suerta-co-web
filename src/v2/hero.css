@@ -202,12 +202,13 @@
   padding: 0.4rem 0.8rem;
   border: 1px solid var(--line);
   border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(6px);
+  /* Zemin opak. Yarim saydamken altindaki halftone kalabalik noktalarini
+     gecirip yaziyi eledigi icin, blur da onu kurtarmiyordu. */
+  background: var(--surface);
   box-shadow: 0 1px 2px rgba(17, 17, 16, 0.06);
   font-size: 0.8125rem;
   letter-spacing: 0.01em;
-  color: var(--muted);
+  color: var(--ink);
 }
 
 .v2-launch__read-arrow {
@@ -256,13 +257,21 @@
   font-weight: 600;
 }
 
+/* Kart basligi, dar ekran serisinde. Genis ekranda .v2-launch__area zaten
+   ayni isi yaptigi icin burada gizli. */
+.v2-launch__slot-area {
+  display: none;
+}
+
 .v2-launch__dots {
   position: absolute;
   left: 50%;
   bottom: 1.25rem;
   padding: 0.5rem 0.75rem;
   border-radius: var(--radius-pill);
-  background: rgba(246, 245, 242, 0.86);
+  /* Ayni sebep: serit kalabaligin en yogun yerinde duruyor. */
+  background: var(--surface);
+  border: 1px solid var(--line);
   box-shadow: var(--shadow-tile);
   align-items: center;
   transform: translateX(-50%);
@@ -271,13 +280,15 @@
   gap: 6px;
 }
 
+/* Nokta 7 pikselken ve %18 opaklikta, kaydirma cubugunun kipirdamadigi bir
+   bolumde tek konum gostergesiydi ve gorunmuyordu. */
 .v2-deck__dot {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
   padding: 0;
   border: 0;
   border-radius: 50%;
-  background: rgba(17, 17, 16, 0.18);
+  background: rgba(17, 17, 16, 0.32);
   cursor: pointer;
   transition: background var(--dur-hover) var(--ease-out), transform var(--dur-hover) var(--ease-out);
 }
@@ -554,7 +565,8 @@
   padding: 0.125rem 0.5rem;
   border-radius: var(--radius-pill);
   background: rgba(17, 17, 16, 0.08);
-  color: var(--muted);
+  /* Kendi zemini var: --muted bu rozetin uzerinde 4,5'in altina dusuyor. */
+  color: #5c5b57;
 }
 
 .v2-hc__channel--on {
@@ -933,6 +945,14 @@
 
   .v2-launch.is-pinned .v2-launch__area {
     display: none;
+  }
+
+  .v2-launch__slot-area {
+    display: block;
+    margin-bottom: 0.625rem;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
   }
 }
 

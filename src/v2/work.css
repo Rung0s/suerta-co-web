@@ -463,7 +463,9 @@
   font-family: var(--font-note);
   font-size: 1.375rem;
   line-height: 1.15;
-  color: var(--flare);
+  /* --flare kagit zeminde 4,2:1'de kaliyor; bu boyut "buyuk metin" sayilmadigi
+     icin 4,5 gerekiyor. Ayni kirmizinin bir tik koyusu, yalnizca burada. */
+  color: #cc3626;
   transform: rotate(-3deg);
   white-space: nowrap;
 }

@@ -239,6 +239,13 @@ export default function HeroLaunch() {
            kartlar zaten pointerEvents ile kapali. */
         return (
           <div className="v2-launch__slot" key={key} style={style}>
+            {/* Kartin adi. Genis ekranda tek bir baslik (.v2-launch__area)
+                sirada olan karti adlandiriyor; dar ekranda sabitleme kapali
+                ve kartlar yan yana bir seride duruyor, orada o tek baslik
+                anlamsiz kaliyordu ve gizleniyordu. Sonuc: telefonda alti
+                isimsiz ekran goruntusu. Her kart kendi adini tasiyor,
+                gorunurlugu CSS'te ekran genisligine bagli. */}
+            <span className="v2-launch__slot-area">{c.cards[key].area}</span>
             <Link
               className="v2-launch__card-link"
               to={pathFor('blogItem', lang, { id: post })}

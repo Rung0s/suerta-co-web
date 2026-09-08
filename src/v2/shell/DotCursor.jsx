@@ -22,13 +22,17 @@ export default function DotCursor() {
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+    /* Hareket azaltmada dongu hic baslamiyor.
+       Onceki hal yumusatmayi kapatiyordu (ease = 1) ama requestAnimationFrame
+       yine her karede calisiyordu: hareketi istemeyen kullanicida sayfa omru
+       boyunca donen bos bir dongu. Halka artik dogrudan imlecin oldugu yere
+       yaziliyor. */
     const loop = () => {
       raf = requestAnimationFrame(loop);
       /* Basit yumusatma: hedefe kalan mesafenin bir kismi kadar yaklas.
          Kare suresinden bagimsiz olmasa da bu olcekte fark edilmiyor. */
-      const ease = reduced ? 1 : 0.16;
-      ringX += (targetX - ringX) * ease;
-      ringY += (targetY - ringY) * ease;
+      ringX += (targetX - ringX) * 0.16;
+      ringY += (targetY - ringY) * 0.16;
       ringNode.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
     };
 
@@ -36,6 +40,7 @@ export default function DotCursor() {
       targetX = event.clientX;
       targetY = event.clientY;
       dotNode.style.transform = `translate3d(${targetX}px, ${targetY}px, 0)`;
+      if (reduced) ringNode.style.transform = `translate3d(${targetX}px, ${targetY}px, 0)`;
 
       /* Uzerinde durulan sey tiklanabilir mi? Her harekette soruluyor ama
          `closest` ucuz; alternatifi her etkilesimli ogeye ayri dinleyici
@@ -56,7 +61,7 @@ export default function DotCursor() {
     window.addEventListener('pointermove', onMove, { passive: true });
     window.addEventListener('pointerdown', onDown, { passive: true });
     window.addEventListener('pointerup', onUp, { passive: true });
-    raf = requestAnimationFrame(loop);
+    if (!reduced) raf = requestAnimationFrame(loop);
 
     return () => {
       cancelAnimationFrame(raf);

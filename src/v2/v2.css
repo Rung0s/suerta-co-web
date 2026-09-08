@@ -115,6 +115,14 @@
   scroll-margin-top: clamp(5rem, 9vw, 6.5rem);
 }
 
+/* Ayni pay basliklarin kendisinde de gerekiyor. Kural yalnizca `id` tasiyan
+   ogelerdeydi; capasi olmayan bolum basliklari (Secili Isler, Nasil
+   calisiyoruz, Calistigimiz markalar ne diyor) sayfa o hizada durdugunda
+   menu hapinin altinda yarim kaliyordu. */
+.v2-root :is(h1, h2, h3, .v2-section__head) {
+  scroll-margin-top: clamp(5rem, 9vw, 6.5rem);
+}
+
 /* Ayni zeminde art arda gelen iki bolumun dolgusu ust uste binip devasa bir
    bosluk birakiyordu; ikincisinin ust dolgusunu kaldiriyoruz. */
 .v2-section + .v2-section:not(.v2-section--dark) {
@@ -210,6 +218,34 @@
   outline-offset: 3px;
 }
 
+/* Klavyeyle gezenin nerede oldugu her yerde gorunsun.
+   --------------------------------------------------------------------------
+   Dugmelerin, kartlarin ve karusel oklarinin kendi odak halkasi vardi; menu
+   baglantilari, dil secici, acilir menu, sosyal baglantilar ve footer
+   listeleri tarayicinin varsayilanina birakilmisti. Varsayilan halka koyu
+   zeminde ve hap menunun uzerinde ya kayboluyor ya da kirpiliyor. */
+.v2-root
+  :is(
+    .v2-nav__link,
+    .v2-nav__brand,
+    .v2-nav__toggle,
+    .v2-nav__lang,
+    .v2-nav__lang-current,
+    .v2-nav__lang-opt,
+    .v2-menu__link,
+    .v2-menu__social-link,
+    .v2-fcol__link
+  ):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Koyu zeminde kirmizi halka okunmuyor; orada altin cizgi. */
+.v2-section--dark :is(.v2-fcol__link, .v2-menu__social-link):focus-visible {
+  outline-color: var(--gold);
+}
+
 /* Referans butonu duz bir dikdortgen degil: ust kenarda ic beyaz cizgi,
    altinda iki kademeli golge. Basilinca 1px cokuyor ve golge kisaliyor —
    fiziksel bir tusa dokunmus gibi. */
@@ -274,6 +310,31 @@
   max-width: calc(100vw - var(--space-6));
 }
 
+/* Koyu bolumun uzerinde menu de koyulasiyor.
+   Beyaz hap koyu bandin ortasinda delik gibi duruyordu ve icindeki gri
+   baglantilar o zeminde okunmuyordu. Gecis renkten ibaret: olcu, konum ve
+   golge ayni kaliyor ki menu yerinden oynamis gibi gorunmesin. */
+.v2-nav--on-dark {
+  background: rgba(17, 17, 16, 0.86);
+  border-color: var(--dark-line);
+}
+
+.v2-nav--on-dark .v2-nav__link,
+.v2-nav--on-dark .v2-nav__lang {
+  color: rgba(246, 245, 242, 0.72);
+}
+
+.v2-nav--on-dark .v2-nav__link:hover,
+.v2-nav--on-dark .v2-nav__lang:hover,
+.v2-nav--on-dark .v2-nav__brand,
+.v2-nav--on-dark .v2-nav__lang-current {
+  color: var(--dark-ink);
+}
+
+.v2-nav--on-dark .v2-nav__bar {
+  background: var(--dark-ink);
+}
+
 .v2-nav__brand {
   display: inline-flex;
   align-items: center;
@@ -329,8 +390,8 @@
   flex-direction: column;
   justify-content: center;
   gap: 5px;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 2.75rem;
+  height: 2.75rem;
   padding: 0;
   border: 1px solid var(--line);
   border-radius: 50%;

@@ -63,6 +63,60 @@ export default function V2Nav() {
     };
   }, [langOpen]);
 
+  /* Menu koyu bir bolumun uzerinde mi?
+     --------------------------------------------------------------------
+     Pil beyaz ve sabit; koyu banda (.v2-section--dark) gelindiginde bandin
+     ortasinda parlak bir levha gibi duruyor ve icindeki gri baglantilar
+     koyu zemine karsi 4:1'in altina dusuyordu. Gozlemci, pilin durdugu ince
+     yatay serit disindaki her seyi kirpiyor: bir bolum yalnizca tam o
+     seride goruldugunde durum degisiyor.
+
+     Olcu pilden okunuyor, sabit yazilmiyor: pil hem yuksekligi hem ust
+     bosluguyla ekran genisligine gore degisiyor. */
+  const [onDark, setOnDark] = useState(false);
+
+  useEffect(() => {
+    const sections = document.querySelectorAll('.v2-section--dark');
+    if (!sections.length || !('IntersectionObserver' in window)) return undefined;
+
+    let observer;
+    const build = () => {
+      observer?.disconnect();
+      const pill = document.querySelector('.v2-nav');
+      if (!pill) return;
+      const rect = pill.getBoundingClientRect();
+      const top = Math.round(rect.top);
+      const bottom = Math.round(window.innerHeight - rect.bottom);
+      if (top < 0 || bottom < 0) return;
+
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) setOnDark(true);
+            else if (entry.boundingClientRect.top > 0 || entry.boundingClientRect.bottom < 0) {
+              /* Serit disina cikan bolum: yalnizca hicbir koyu bolum seride
+                 degmiyorsa kapaniyor. */
+              const stillDark = [...sections].some((node) => {
+                const box = node.getBoundingClientRect();
+                return box.top <= rect.bottom && box.bottom >= rect.top;
+              });
+              setOnDark(stillDark);
+            }
+          });
+        },
+        { rootMargin: `-${top}px 0px -${bottom}px 0px`, threshold: 0 }
+      );
+      sections.forEach((node) => observer.observe(node));
+    };
+
+    build();
+    window.addEventListener('resize', build);
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener('resize', build);
+    };
+  }, [pathname]);
+
   /* Markanin isareti: kirmizi yorungeli kure. Ayni dosya favicon olarak da
      kullaniliyor — sekme, arama sonucu ve menu ayni isareti gosteriyor.
      Yazi isaretin yanindan kaldirilmiyor: kure tek basina markayi
@@ -121,7 +175,7 @@ export default function V2Nav() {
 
   return (
     <>
-      <nav className="v2-nav" aria-label={c.nav.aria}>
+      <nav className={`v2-nav${onDark ? ' v2-nav--on-dark' : ''}`} aria-label={c.nav.aria}>
         {onHome ? (
           <a className="v2-nav__brand" href="#top">
             {brand}
