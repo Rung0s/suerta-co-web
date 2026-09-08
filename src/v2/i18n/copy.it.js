@@ -32,9 +32,6 @@ export const it = {
     tail: 'i visitatori in clienti.',
     ctaPrimary: 'Prenota una call',
     ctaSecondary: 'Guarda i progetti',
-    hint: 'SCORRI',
-    areasLabel: 'Aree di lavoro',
-    dotLabel: (area) => `Vai alla scheda ${area}`,
   },
 
   cards: {

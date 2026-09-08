@@ -29,9 +29,6 @@ export const en = {
     tail: 'visitors into customers.',
     ctaPrimary: 'Book a call',
     ctaSecondary: 'See the work',
-    hint: 'SCROLL',
-    areasLabel: 'Areas we work in',
-    dotLabel: (area) => `Go to the ${area} card`,
   },
 
   cards: {

@@ -30,9 +30,6 @@ export const tr = {
     tail: 'premium sistemler.',
     ctaPrimary: 'Görüşme ayarla',
     ctaSecondary: 'İşleri gör',
-    hint: 'KAYDIR',
-    areasLabel: 'Çalışma alanları',
-    dotLabel: (area) => `${area} kartına git`,
   },
 
   cards: {

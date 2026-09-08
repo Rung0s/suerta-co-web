@@ -1,24 +1,17 @@
 /* ==========================================================================
    Firlatma sahnesi + alan kartlari
    --------------------------------------------------------------------------
-   Bolum bir ekran boyundan uzun: her kart icin bir ekranin bir bolumu kadar
-   yol veriliyor. Icindeki sahne yapisiyor (sticky), dolayisiyla o yol
-   boyunca sayfa degil sahne ilerliyor.
+   Hero bir ekran; altinda alti alan kartı uc sutunlu bir izgarada duruyor.
+   Once sabitlenen (sticky) bir sahneydi ve alti kart icin 700vh yol
+   ayriliyordu; kaldirildi, gerekcesi HeroLaunch.jsx'in basinda.
 
    Sahnenin katmanlari, arkadan one: hale ve dusen isik, seyirci kalabaligi,
-   roket, kartlar. Hepsi ayni yuzey sisteminden (surface.css) besleniyor.
+   roket. Hepsi ayni yuzey sisteminden (surface.css) besleniyor.
    ========================================================================== */
 
 .v2-launch {
   position: relative;
   background: transparent;
-}
-
-/* Kart basina bir ekran boyu yol. Onceden 68vh idi ve kartlar goze
-   okunacak zaman birakmadan geciyordu: kart bir arayuz gosteriyor, bir
-   basliktan uzun sure istiyor. */
-.v2-launch.is-pinned {
-  height: calc(100vh + var(--cards, 6) * 100vh);
 }
 
 .v2-launch__stage {
@@ -29,36 +22,26 @@
   padding-top: clamp(6rem, 9vw, 8rem);
 }
 
-.v2-launch.is-pinned .v2-launch__stage {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-}
-
 .v2-launch__inner {
   position: relative;
   z-index: 2;
   height: 100%;
 }
 
-/* Roket, kule ve kalabaligin kutusu. Sabitliyken sahnenin tamamini
-   kapliyor ve yazinin arkasinda duruyor; sabitleme kapaliyken yazinin ve
-   kartlarin altinda kendi yuksekligi olan bir blok. */
-/* z-index verilmiyor: deger verildigi anda kutu kendi yigin baglamini
+/* Roket, kule ve kalabaligin kutusu. Yazinin altinda, kendi yuksekligi olan
+   bir blok. Sahne sabitken bu kutu ekranin tamamini kapliyordu; artik hero
+   bir ekran boyunda ve kutu o ekranin alt yarisi.
+
+   z-index verilmiyor: deger verildigi anda kutu kendi yigin baglamini
    kuruyor ve icindeki multiply harmanlamasi sayfa zeminini degil bos bir
    arka plani goruyor — kalabaligin kagidi beyaz bir dikdortgen olarak
    kaliyordu. Yazi zaten kendi z-index'iyle ustte. */
 .v2-launch__scene {
-  position: absolute;
-  inset: 0;
-}
-
-.v2-launch:not(.is-pinned) .v2-launch__scene {
   position: relative;
-  inset: auto;
-  height: 44vh;
-  min-height: 16rem;
-  margin-top: var(--space-12);
+  height: clamp(18rem, 44vh, 28rem);
+  margin-top: var(--space-10);
+  /* Kalabaligin alt kenari izgaranin ilk satirina yapisiyordu. */
+  margin-bottom: var(--space-12);
 }
 
 /* Yazi -------------------------------------------------------------------- */
@@ -121,54 +104,52 @@
    de solda, kartlarin girdigi alanin disinda. Kagit zeminleri multiply ile
    sayfaya karisiyor. */
 
-.v2-launch__pad,
-.v2-launch__fly {
+/* Roket rampada duruyor. Ikinci bir baski daha vardi (havalanan roket) ve
+   kaydirma ilerledikce biri sonup digeri beliriyordu; sahneyi ilerleten sey
+   kalkinca o baski hicbir zaman gorunmeyecek hale geldi ve kaldirildi. */
+.v2-launch__pad {
   position: absolute;
-  /* Kart ortaya alindi; roket kadrajin soluna cekiliyor ki ikisi ust uste
-     binmesin. */
-  left: -2%;
+  left: 3%;
   bottom: 0;
   width: auto;
-  height: clamp(24rem, 72vh, 44rem);
+  /* Kutudan uzun: roketin ucu kalabaligin ve kutunun ustune tasiyor.
+     Kutu boyunda kalinca siluetlerin arkasinda kucuk bir kule gibi
+     duruyordu, olcegi veren sey olmaktan cikiyordu. */
+  height: 128%;
   z-index: 1;
   pointer-events: none;
-  transform-origin: 50% 100%;
-  will-change: transform, opacity;
 }
 
-.v2-launch__fly {
-  /* Ucan baskinin duman sutunu asagi dogru uzuyor; sahnede biraz daha
-     yukaridan basliyor. */
-  bottom: 6vh;
-  height: clamp(26rem, 78vh, 48rem);
+/* Alan izgarasi -----------------------------------------------------------
+   Alti kart tek ekranda, uc sutun. Once bir kart treniydi: hepsi yan yana
+   duruyor, sahne ilerledikce sola kayiyor ve sirada olan ortaya geliyordu.
+   Tek seferde tek kart demek, iki alani karsilastirmak icin geri kaydirmak
+   demekti; izgarada karsilastirma tek bakista oluyor.
+
+   Sutun sayisi `auto-fit` ile degil elle veriliyor: kartlar bir arayuzun
+   kucultulmus hali ve 22rem'in altinda icindeki satirlar okunmuyor. */
+.v2-launch__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-10) var(--space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-/* Kart treni --------------------------------------------------------------
-   Kartlar ust uste degil yan yana duruyor; sahne ilerledikce hepsi birlikte
-   sola kayiyor ve sirada olan ortaya geliyor. Yanlardakiler gorunur kaliyor
-   (soluk ve kucuk), boylece "sirada baska bir sey var" okunuyor. */
-
-.v2-launch__deck {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
+.v2-launch__cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
 }
 
-/* Kart sahnenin ortasinda ve buyuk: kenara itilmis, kucuk ve yari saydam
-   halinde sayfanin geri kalaninin icinde kayboluyordu. Roket sola cekildi,
-   ikisi artik ayni yeri paylasmiyor. */
-.v2-launch__slot {
-  position: absolute;
-  left: 52%;
-  /* Kalabalik alt bandi kapliyor; kart ortasi ondan yukarida durmali. */
-  top: 47%;
-  width: min(26rem, 84vw);
-  transform: translate(-50%, -50%);
-  /* Opaklik da konum da her karede kaydirma konumundan hesaplaniyor.
-     Uzerine CSS gecisi binince opaklik konumun gerisinde kaliyor: hizli
-     kaydirmada kart yerine oturuyor ama hala solgun duruyor. */
-  will-change: transform, opacity;
+/* Kartin adi. Kart kendi basina hangi isten bahsettigini soylemekte zayif
+   kaliyor: bir arayuz gosteriyor, adini degil. */
+.v2-launch__cell-area {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
 }
 
 /* Kart bir baglanti: gordugun ekrani anlatan yaziya goturuyor. Cerceve
@@ -233,99 +214,18 @@
   }
 }
 
-/* Gostergeler kalabaligin ustunde degil icinde duruyor; koyu siluetlerin
-   uzerinde okunabilsin diye kendi acik zemini var. */
-/* Etkin alanin adi ------------------------------------------------------- */
-
-/* Alan adi kartin tam ustunde duruyor: konumu kartin merkezinden geriye
-   dogru, kartin gercek yuksekliginin yarisi kadar cikilarak bulunuyor
-   (--card-h JSX'te olculuyor). Sabit bir yuzde verilince kisa ve genis
-   ekranlarda yazi kartin baslik satirinin uzerine biniyordu.
-
-   Olcu de ekran genisligine birakilmiyor: genis ekranda 44 piksele cikan
-   yazi, kartin ustunde bir baslik degil ikinci bir hero gibi duruyordu. */
-.v2-launch__area {
-  position: absolute;
-  left: 52%;
-  top: 47%;
-  transform: translate(-50%, calc(-50% - var(--card-h, 320px) / 2 - 2rem));
-  z-index: 3;
-  white-space: nowrap;
-  font-size: clamp(1.125rem, 1.6vw, 1.5rem);
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  font-weight: 600;
-}
-
-/* Kart basligi, dar ekran serisinde. Genis ekranda .v2-launch__area zaten
-   ayni isi yaptigi icin burada gizli. */
-.v2-launch__slot-area {
-  display: none;
-}
-
-.v2-launch__dots {
-  position: absolute;
-  left: 50%;
-  bottom: 1.25rem;
-  padding: 0.5rem 0.75rem;
-  border-radius: var(--radius-pill);
-  /* Ayni sebep: serit kalabaligin en yogun yerinde duruyor. */
-  background: var(--surface);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-tile);
-  align-items: center;
-  transform: translateX(-50%);
-  z-index: 4;
-  display: flex;
-  gap: 6px;
-}
-
-/* Nokta 7 pikselken ve %18 opaklikta, kaydirma cubugunun kipirdamadigi bir
-   bolumde tek konum gostergesiydi ve gorunmuyordu. */
-.v2-deck__dot {
-  width: 8px;
-  height: 8px;
-  padding: 0;
-  border: 0;
-  border-radius: 50%;
-  background: rgba(17, 17, 16, 0.32);
-  cursor: pointer;
-  transition: background var(--dur-hover) var(--ease-out), transform var(--dur-hover) var(--ease-out);
-}
-
-.v2-deck__dot:hover {
-  background: rgba(17, 17, 16, 0.38);
-}
-
-.v2-deck__dot.is-active {
-  background: var(--accent);
-  transform: scale(1.25);
-}
-
-.v2-deck__dot:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-.v2-launch__hint {
-  position: absolute;
-  left: 50%;
-  bottom: 3.25rem;
-  padding: 0.25rem 0.625rem;
-  border-radius: var(--radius-pill);
-  background: rgba(246, 245, 242, 0.86);
-  transform: translateX(-50%);
-  z-index: 4;
-  font-size: var(--text-micro);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
+/* Sutun sayisi ekrana gore. 1320'nin altinda uc sutun kartlari 20rem'in
+   altina sikistiriyor; 900'un altinda iki sutun da sigmiyor. */
 @media (max-width: 1320px) {
-  .v2-launch__slot {
-    left: 55%;
-    width: min(23rem, 82vw);
+  .v2-launch__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .v2-launch__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-8);
   }
 }
 
@@ -841,118 +741,10 @@
   line-height: 1.4;
 }
 
-/* ==========================================================================
-   Sabitlemenin kapali oldugu hal
-   Dar ekran ve hareket kisitlamasi. Sahne normal akista duruyor: yazi,
-   roket + kalabalik, sonra kartlar yatay kaydirilan bir serit.
-   ========================================================================== */
-
-/* Sabitleme kapaliyken sira: once yazi ve kartlar, sonra sahne. DOM'da
-   sahne once geliyor (sabitliyken arkada durmasi gerekiyor), bu yuzden
-   sirayi flex order belirliyor. */
-.v2-launch:not(.is-pinned) .v2-launch__stage {
-  padding-bottom: var(--space-12);
-  display: flex;
-  flex-direction: column;
-}
-
-.v2-launch:not(.is-pinned) .v2-launch__inner {
-  order: 1;
-}
-
-.v2-launch:not(.is-pinned) .v2-launch__scene {
-  order: 2;
-}
-
-.v2-launch:not(.is-pinned) .v2-launch__inner {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-12);
-}
-
-/* Sabitleme kapaliyken de roket rampada duruyor; yalnizca sahne kucuk. */
-.v2-launch:not(.is-pinned) .v2-launch__pad {
-  height: 100%;
-  bottom: 2.5rem;
-  left: 8%;
-}
-
-.v2-launch:not(.is-pinned) .v2-launch__fly {
-  display: none;
-}
-
-.v2-launch:not(.is-pinned) .v2-launch__deck {
-  position: relative;
-  inset: auto;
-  display: flex;
-  gap: var(--space-4);
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: var(--space-4);
-  pointer-events: auto;
-  /* Kaydirma serdi kabuk kenarindan tasabilsin: kart yarim gorunurse
-     yanda devam ettigi anlasiliyor. */
-  margin-inline: calc(var(--gutter) * -1);
-  padding-inline: var(--gutter);
-}
-
-.v2-launch:not(.is-pinned) .v2-launch__slot {
-  position: relative;
-  left: auto;
-  top: auto;
-  transform: none;
-  flex: 0 0 min(20rem, 78vw);
-  scroll-snap-align: center;
-}
-
-.v2-launch:not(.is-pinned) .v2-launch__dots,
-.v2-launch:not(.is-pinned) .v2-launch__hint,
-.v2-launch:not(.is-pinned) .v2-launch__area {
-  display: none;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .v2-hc__pulse,
   .v2-hc__bubble--typing i {
     animation: none;
-  }
-}
-
-/* Dar ekran ---------------------------------------------------------------
-   Sabitleme JS ile kapatiliyor (HeroLaunch, max-width: 900px). Ama on
-   uretilmis HTML sinifi tasiyarak geliyor: JS gelene kadar bolum yedi ekran
-   boyunda duruyor ve hidratlanma aninda coken bu yukseklik buyuk bir yerlesim
-   kaymasi yaratiyor. Ayni esik burada da yaziliyor ki ilk boyama dogru olsun. */
-@media (max-width: 900px) {
-  .v2-launch.is-pinned {
-    height: auto;
-  }
-
-  .v2-launch.is-pinned .v2-launch__stage {
-    position: static;
-    height: auto;
-  }
-
-  /* Sahne sabitleme kapaliyken akista kendi yuksekligi olan bir blok. Mutlak
-     konumda kalirsa yukseklikten dusen kutu bos bir seride cizilirdi. */
-  .v2-launch.is-pinned .v2-launch__scene {
-    position: relative;
-    inset: auto;
-    height: 44vh;
-    min-height: 16rem;
-    margin-top: var(--space-12);
-  }
-
-  .v2-launch.is-pinned .v2-launch__area {
-    display: none;
-  }
-
-  .v2-launch__slot-area {
-    display: block;
-    margin-bottom: 0.625rem;
-    font-size: 1rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
   }
 }
 
