@@ -15,7 +15,7 @@ export const tr = {
     aria: 'Ana menü',
     open: 'Menüyü aç',
     close: 'Menüyü kapat',
-    cta: 'Görüşme ayarla',
+    cta: 'Projenizi anlatın',
     links: [
       { key: 'work', label: 'İşler', hash: '#isler' },
       { key: 'services', label: 'Hizmetler', hash: '#hizmetler' },
@@ -28,7 +28,7 @@ export const tr = {
   hero: {
     lead: 'Ziyaretçiyi müşteriye çeviren',
     tail: 'premium sistemler.',
-    ctaPrimary: 'Görüşme ayarla',
+    ctaPrimary: 'Projenizi anlatın',
     ctaSecondary: 'İşleri gör',
   },
 
@@ -298,7 +298,7 @@ export const tr = {
     next: 'Sonraki referans',
     openBrand: 'Ayrılmış',
     openText: 'Bu alan sizinle kuracağımız iş için ayrıldı.',
-    openCta: 'Görüşme ayarla',
+    openCta: 'Projenizi anlatın',
     quotes: [
       {
         brand: 'Emsa Otel',
@@ -334,7 +334,7 @@ export const tr = {
     resultSuffix: 'geldi.',
     cardLine: 'İşini şansa bırakma.',
     cardTag: 'markanızın şansı',
-    cardCta: 'Görüşme ayarla',
+    cardCta: 'Projenizi anlatın',
   },
 
   contact: {

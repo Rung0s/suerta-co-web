@@ -17,7 +17,7 @@ export const it = {
     aria: 'Menu principale',
     open: 'Apri il menu',
     close: 'Chiudi il menu',
-    cta: 'Prenota una call',
+    cta: 'Raccontaci il progetto',
     links: [
       { key: 'work', label: 'Progetti', hash: '#isler' },
       { key: 'services', label: 'Servizi', hash: '#hizmetler' },
@@ -30,7 +30,7 @@ export const it = {
   hero: {
     lead: 'Sistemi premium che trasformano',
     tail: 'i visitatori in clienti.',
-    ctaPrimary: 'Prenota una call',
+    ctaPrimary: 'Raccontaci il progetto',
     ctaSecondary: 'Guarda i progetti',
   },
 
@@ -300,7 +300,7 @@ export const it = {
     next: 'Testimonianza successiva',
     openBrand: 'Riservato',
     openText: 'Questo spazio è riservato al lavoro che faremo con te.',
-    openCta: 'Prenota una call',
+    openCta: 'Raccontaci il progetto',
     quotes: [
       {
         brand: 'Emsa Otel',
@@ -336,7 +336,7 @@ export const it = {
     resultSuffix: 'è uscita.',
     cardLine: 'Non lasciare la tua attività alla fortuna.',
     cardTag: 'la fortuna del tuo brand',
-    cardCta: 'Prenota una call',
+    cardCta: 'Raccontaci il progetto',
   },
 
   contact: {

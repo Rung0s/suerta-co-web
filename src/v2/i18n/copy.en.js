@@ -14,7 +14,7 @@ export const en = {
     aria: 'Main menu',
     open: 'Open menu',
     close: 'Close menu',
-    cta: 'Book a call',
+    cta: 'Tell us about your project',
     links: [
       { key: 'work', label: 'Work', hash: '#isler' },
       { key: 'services', label: 'Services', hash: '#hizmetler' },
@@ -27,7 +27,7 @@ export const en = {
   hero: {
     lead: 'Premium systems that turn',
     tail: 'visitors into customers.',
-    ctaPrimary: 'Book a call',
+    ctaPrimary: 'Tell us about your project',
     ctaSecondary: 'See the work',
   },
 
@@ -297,7 +297,7 @@ export const en = {
     next: 'Next testimonial',
     openBrand: 'Reserved',
     openText: 'This space is kept for the work we will do with you.',
-    openCta: 'Book a call',
+    openCta: 'Tell us about your project',
     quotes: [
       {
         brand: 'Emsa Otel',
@@ -333,7 +333,7 @@ export const en = {
     resultSuffix: 'it is.',
     cardLine: 'Do not leave your business to luck.',
     cardTag: 'your brand’s luck',
-    cardCta: 'Book a call',
+    cardCta: 'Tell us about your project',
   },
 
   contact: {
