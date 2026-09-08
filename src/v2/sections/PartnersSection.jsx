@@ -2,31 +2,6 @@ import React, { useEffect, useRef } from 'react';
 import { Reveal, Item, TwoTone } from '../primitives';
 import { useCopy } from '../i18n';
 
-const ASCII_RAMP = '-=+*#%@$&';
-
-function asciiBlock(rows, cols, seed) {
-  let out = '';
-  for (let y = 0; y < rows; y += 1) {
-    for (let x = 0; x < cols; x += 1) {
-      const n = Math.sin((x + 1) * 12.9898 + (y + 1) * 78.233 + seed) * 43758.5453;
-      const f = n - Math.floor(n);
-      out += ASCII_RAMP[Math.floor(f * ASCII_RAMP.length)];
-    }
-    if (y < rows - 1) out += '\n';
-  }
-  return out;
-}
-
-/* Maske olarak markanin bas harfi. SVG data-URI, cunku tek bir harf icin
-   ikili dosya tasimak israf ve harf her olcekte net kalmali. */
-function glyphMask(letter) {
-  const svg =
-    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 130'>` +
-    `<text x='50' y='104' text-anchor='middle' font-family='Inter,sans-serif' ` +
-    `font-size='128' font-weight='700' fill='%23000'>${letter}</text></svg>`;
-  return `url("data:image/svg+xml,${svg.replace(/#/g, '%23')}")`;
-}
-
 /* Bant kendi kendine saga iliyor. Onceki hali sayfa konumuna bagliydi ve
    yanlis hissettiriyordu: kullanici asagi kaydirdiginda bant da kayiyordu,
    yani sayfanin kendisi yerinden oynuyormus gibi oluyordu. Simdi sayfa tam
@@ -133,15 +108,19 @@ function scrollCarousel(ref, direction, takeOverRef) {
   node.scrollBy({ left: step * direction, behavior: 'smooth' });
 }
 
-function PartnerPortrait({ letter, tint, seed }) {
-
+/* Markanin bas harfi.
+   Onceden harf bir maskeydi ve icini rastgele uretilmis bir ASCII dokusu
+   dolduruyordu. Fikir buydu: elde fotograf olmayan bir marka icin stok
+   gorsel koymaktansa kendi isaretini uretmek. Uygulamada kirmizi ve mavi
+   noktalama bloklari gibi cikiyordu ve musteri alintisinin yaninda bozuk
+   gorsel olarak okunuyordu — ki bu hic gorsel olmamasindan kotu.
+   Harfin kendisi kaldi, dokusu gitti. */
+function PartnerPortrait({ letter, tint }) {
   return (
     <div className="v2-pcard__portrait" style={{ '--tint': tint }}>
-      <div className="v2-ascii-mask" style={{ '--glyph': glyphMask(letter) }} aria-hidden="true">
-        {/* Blok paneli her yonden asiyor; maskenin altinda karakter bitmesin
-            diye. Tasan kisim zaten kirpiliyor. */}
-        <pre className="v2-ascii">{asciiBlock(46, 52, seed)}</pre>
-      </div>
+      <span className="v2-pcard__monogram" aria-hidden="true">
+        {letter}
+      </span>
       <span className="v2-pcard__glow" aria-hidden="true" />
       <span className="v2-pcard__foil" aria-hidden="true" />
     </div>
@@ -157,10 +136,10 @@ function PartnerPortrait({ letter, tint, seed }) {
    Dort gercek proje, dordu de references.js'te; her yorum o projede
    fiilen yapilan ise dayaniyor. */
 const QUOTE_ART = {
-  'Emsa Otel': { letter: 'E', tint: '#9a3b32', seed: 11 },
-  'Rönesans Edu': { letter: 'R', tint: '#5c9cd8', seed: 29 },
-  'Pawsec Shop': { letter: 'P', tint: '#4f8f6a', seed: 53 },
-  'Argüman Fabrikası': { letter: 'A', tint: '#c08a2e', seed: 71 },
+  'Emsa Otel': { letter: 'E', tint: '#b8564a' },
+  'Rönesans Edu': { letter: 'R', tint: '#5c9cd8' },
+  'Pawsec Shop': { letter: 'P', tint: '#6aa885' },
+  'Argüman Fabrikası': { letter: 'A', tint: '#c08a2e' },
 };
 
 function quotesFrom(copy) {
@@ -234,7 +213,7 @@ export default function PartnersSection() {
                       <span className="v2-pcard__role">{quote.brand}</span>
                     </figcaption>
                   </div>
-                  <PartnerPortrait letter={quote.letter} tint={quote.tint} seed={quote.seed} />
+                  <PartnerPortrait letter={quote.letter} tint={quote.tint} />
                 </figure>
               ))}
 
@@ -251,7 +230,7 @@ export default function PartnersSection() {
                     {c.partners.openCta}
                   </a>
                 </div>
-                <PartnerPortrait letter="?" tint="#d0aa64" seed={47} />
+                <PartnerPortrait letter="?" tint="#d0aa64" />
               </div>
             </React.Fragment>
           ))}

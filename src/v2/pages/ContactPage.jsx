@@ -1,6 +1,5 @@
 import React from 'react';
 import V2Layout from '../shell/V2Layout';
-import PageHead from './PageHead';
 import ContactSection from '../sections/ContactSection';
 import { useCopy, useLang } from '../i18n';
 import { pathFor } from '../i18n/paths';
@@ -8,7 +7,13 @@ import Seo, { breadcrumb } from '../seo/Seo';
 
 /* Iletisim sayfasi.
    Anasayfadaki iletisim bolumunun aynisi — iki ayri form iki ayri metin,
-   iki ayri bakim demek olurdu. Sayfaya yalnizca kendi basligi ekleniyor. */
+   iki ayri bakim demek olurdu.
+
+   Ustune bir de sayfa basligi konuyordu ve sayfa iki kez kendini takdim
+   ediyordu: once "Konusalim." + bir paragraf, hemen altinda "Ne insa
+   ettiginizi anlatin" + bir paragraf daha. Form ancak ondan sonra
+   basliyordu, yani en yuksek niyetli sayfada iki bucuk ekran giris.
+   Baslik kaldirildi; bolumun kendi basligi zaten var. */
 export default function ContactPage() {
   const c = useCopy();
   const { lang } = useLang();
@@ -24,13 +29,7 @@ export default function ContactPage() {
         ])}
       />
 
-      <PageHead
-        label={c.nav.links.find((link) => link.key === 'contact').label}
-        lead={c.pages.contact.lead}
-        tail={c.pages.contact.tail}
-        intro={c.pages.contact.intro}
-      />
-      <ContactSection />
+      <ContactSection as="h1" />
     </V2Layout>
   );
 }

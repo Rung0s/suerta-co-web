@@ -64,7 +64,7 @@ export default function WorkDetailPage() {
             </Item>
             {c.work.results[project.id] && (
               <Item>
-                <span className="v2-tile__result">{c.work.results[project.id]}</span>
+                <span className="v2-detail__result">{c.work.results[project.id]}</span>
               </Item>
             )}
             {!project.translated && (

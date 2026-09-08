@@ -848,7 +848,11 @@
   }
 }
 
-@media (max-width: 620px) {
+/* 900 pikselde acilir menuye geciliyor, 620'de degil.
+   621-900 bandinda (iPad dikey, kucuk dizustu) pil marka + bes baglanti +
+   iki dil + eylemi tek satirda tasiyordu ve hepsi `nowrap`: yazilar birbirine
+   giriyordu. */
+@media (max-width: 900px) {
   .v2-nav {
     gap: var(--space-4);
     padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4);

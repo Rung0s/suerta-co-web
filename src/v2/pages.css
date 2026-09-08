@@ -122,6 +122,21 @@
   box-shadow: var(--shadow-tile);
 }
 
+/* Isin sonucu. Izgara kartinda kucuk bir etiket olarak duruyor ve detay
+   sayfasi da ayni sinifi kullaniyordu: sayfanin en ikna edici cumlesi alt
+   basligin altinda bir dipnot gibi kaliyor, en buyuk oge ise baskasinin
+   ana sayfasinin ekran goruntusu oluyordu. Burada kendi olcusu var. */
+.v2-detail__result {
+  display: inline-block;
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  font-variant-numeric: tabular-nums;
+  padding-left: var(--space-4);
+  border-left: 3px solid var(--accent);
+}
+
 /* Musteri cumlesi. Solda tek cizgi, kutu degil: sayfada zaten kart var,
    ikinci bir cerceve gurultu olurdu. Tirnak metnin kendisinde. */
 .v2-detail__quote {
@@ -246,10 +261,14 @@
 
 /* Uzun metin -------------------------------------------------------------- */
 
+/* Satir uzunlugu olcuye baglaniyor: kabuk genisliginde satirlar 130
+   karaktere kadar cikiyordu ve goz satir sonundan satir basina donerken
+   yerini kaybediyor. Ust sinir yaklasik 72 karakter. */
 .v2-prose {
   display: flex;
   flex-direction: column;
   gap: var(--space-5);
+  max-width: 72ch;
   font-size: 1.0625rem;
   line-height: 1.7;
 }
@@ -344,6 +363,15 @@
   color: var(--ink);
 }
 
+.v2-nav__lang.is-current {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.v2-nav--on-dark .v2-nav__lang.is-current {
+  color: var(--dark-ink);
+}
+
 /* Dar ekranda hizli dil secici: pilin sag ustunde duran kisa kod, tam dil
    adlarinin yerini alan tek dokunuslu acilir liste. */
 .v2-nav__lang-mobile {
@@ -415,8 +443,10 @@
   }
 }
 
-@media (max-width: 620px) {
-  /* Dil baglantisi pilde yer kaplıyor; dar ekranda acilir menude duruyor. */
+/* Ayni esik v2.css'teki menu esigiyle bir olmali: 900'de acilir menuye
+   geciliyor ve dil de oraya tasiniyor, yoksa 621-900 bandinda pilde iki dil
+   baglantisi kalip yine tasiyordu. */
+@media (max-width: 900px) {
   .v2-nav__langs {
     display: none;
   }

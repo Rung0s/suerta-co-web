@@ -76,7 +76,10 @@ export default function V2Nav() {
   const [onDark, setOnDark] = useState(false);
 
   useEffect(() => {
-    const sections = document.querySelectorAll('.v2-section--dark');
+    /* Koyu yuzeyler: koyu bolumler ve footer bandi. Footer ilk yazildiginda
+       disarida kalmisti ve beyaz pil koyu footer'in uzerinde ayni delik
+       etkisini yapiyordu. */
+    const sections = document.querySelectorAll('.v2-section--dark, .v2-band');
     if (!sections.length || !('IntersectionObserver' in window)) return undefined;
 
     let observer;
@@ -190,19 +193,31 @@ export default function V2Nav() {
           {c.nav.links.map((link) => renderLink(link, 'v2-nav__link'))}
         </div>
 
+        {/* Uc dil de duruyor, icinde bulunulan isaretli.
+            Onceden yalnizca oteki iki dil yaziyordu ("English Italiano") ve
+            ziyaretci hangi dilde oldugunu goremiyordu — mobil secicide bu
+            bilgi vardi, masaustunde yoktu. Tam adlar yerine kodlar: pil
+            zaten marka, bes baglanti, iki dil ve eylemi tasiyor. */}
         <span className="v2-nav__langs">
-          {others.map((item) => (
-            <Link
-              key={item.lang}
-              className="v2-nav__lang"
-              to={item.to}
-              hrefLang={item.lang}
-              lang={item.lang}
-              onClick={close}
-            >
-              {item.label}
-            </Link>
-          ))}
+          {LANGS.map((item) =>
+            item === lang ? (
+              <span key={item} className="v2-nav__lang is-current" aria-current="true">
+                {LANG_CODES[item]}
+              </span>
+            ) : (
+              <Link
+                key={item}
+                className="v2-nav__lang"
+                to={swapLangPath(pathname, lang, item)}
+                hrefLang={item}
+                lang={item}
+                aria-label={LANG_NAMES[item]}
+                onClick={close}
+              >
+                {LANG_CODES[item]}
+              </Link>
+            )
+          )}
         </span>
 
         {/* Dar ekranda tam dil adi sigmiyor; sag ustte tek dokunusla acilan

@@ -280,9 +280,10 @@
   padding: 7px 4px 8px;
 }
 
+/* 9 piksel okunacak bir olcu degil; taban 11. */
 .v2-tv__brand {
-  font-size: 0.5625rem;
-  letter-spacing: 0.16em;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   font-weight: 600;
   color: rgba(76, 68, 50, 0.62);
@@ -411,12 +412,18 @@
   gap: 2px;
 }
 
+/* Doto degil.
+   Bunlar sitedeki en ikna edici uc dize ve nokta-matris bir aile ile
+   diziliyordu: "%40" gozde "%4O" oluyor, "1.000+" icindeki binlik ayraci
+   noktalardan ayirt edilmiyordu. Sahte veri (kart maketlerindeki "38 su an
+   sitede") gercek veriden daha okunakli diziliyordu. Doto kalan yerlerde
+   duruyor; kanit rakamlari gövde ailesine geciyor, tabular rakamlarla. */
 .v2-kpi__value {
-  font-family: var(--font-numeric);
+  font-variant-numeric: tabular-nums;
   font-size: clamp(2rem, 3.4vw, 3.25rem);
   font-weight: 700;
   line-height: 1;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.02em;
   display: inline-flex;
   align-items: center;
   gap: 0.35em;

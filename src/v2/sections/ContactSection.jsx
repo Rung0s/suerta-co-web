@@ -68,7 +68,9 @@ function whatsappLink(c, data, type) {
   return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(lines.join('\n'))}`;
 }
 
-export default function ContactSection() {
+/* `as`: bolum anasayfada bir bolum (h2), kendi sayfasinda ise sayfanin
+   kendisi (h1). Sayfa basligi kaldirilinca /iletisim h1'siz kalmisti. */
+export default function ContactSection({ as = 'h2' }) {
   const c = useCopy().contact;
   const [type, setType] = useState(c.types[0]);
   /* Bes durum: 'idle' | 'sending' | 'sent' | 'wa' | 'error'.
@@ -129,7 +131,7 @@ export default function ContactSection() {
           <Item>
             <LaunchScene />
           </Item>
-          <Item as="h2" className="v2-display">
+          <Item as={as} className="v2-display">
             {c.heading}
           </Item>
           {/* Once burada "bu ay 2 yer" yazan yirtik bir bilet duruyordu.
